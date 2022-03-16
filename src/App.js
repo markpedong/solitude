@@ -1,11 +1,11 @@
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.css";
-import NavBarComp from "./components/NavBarComp";
+import NavbarSec from "./components/Navbar";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles/navbar.scss";
 
 function App() {
   return (
     <div className="App">
-      <NavBarComp />
+      <NavbarSec />
     </div>
   );
 }
