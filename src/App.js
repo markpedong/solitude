@@ -1,6 +1,8 @@
 import NavbarSec from "./components/Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./styles/navbar.scss";
+import "./styles/main.scss";
+import "open-props/style";
+import "open-props/normalize";
 
 function App() {
   return (

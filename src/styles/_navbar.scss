@@ -1,5 +1,5 @@
 .navbar-toggler {
-  width: 20px;
+  width: 30px;
   height: 20px;
   position: relative;
   transition: 0.5s ease-in-out;
@@ -67,4 +67,64 @@
 .navbar-toggler.collapsed .bottom-bar {
   margin-top: 20px;
   transform: rotate(0deg);
+}
+
+.navbar {
+  font-family: "Poppins", sans-serif;
+  border-bottom: 1px solid rgba($color: #000000, $alpha: 0.03);
+}
+
+#navbar__Container {
+  max-width: 100%;
+  width: 1140px;
+}
+
+.nav-link {
+  opacity: 0.5;
+}
+
+.nav-link,
+.navbar-brand,
+.form-control {
+  text-decoration: none;
+  font-size: 14.4px;
+  color: var(--gray-9) !important;
+  margin: var(--size-1) var(--size-1);
+}
+
+.active {
+  opacity: 1;
+}
+
+.form-control {
+  border: 1px solid rgba($color: #000000, $alpha: 0.2);
+  width: 75%;
+  border-radius: var(--radius-round);
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+}
+.search-field {
+  width: 100%;
+  padding: 10px 35px 10px 15px;
+  border-radius: 100px;
+}
+
+.search-button {
+  background: transparent;
+  border: none;
+  outline: none;
+  margin-left: -50px;
+}
+
+.search-button img {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+}
+
+.darkmode__toggle {
+  margin-bottom: 2px;
 }
