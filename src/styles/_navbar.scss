@@ -24,7 +24,7 @@
   position: absolute;
   height: 3px;
   width: 100%;
-  background-color: #ff0000;
+  background-color: #292929;
   border-radius: 1px;
   opacity: 1;
   left: 0;
@@ -107,8 +107,8 @@
   flex-direction: row;
 }
 .search-field {
-  width: 100%;
-  padding: 10px 35px 10px 15px;
+  width: 90%;
+  padding: 5px 10px;
   border-radius: 100px;
 }
 
@@ -125,6 +125,13 @@
   object-fit: cover;
 }
 
-.darkmode__toggle {
-  margin-bottom: 2px;
+@media screen and (max-width: 992px) {
+  .search-field {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 576px) {
+  .navbar-brand {
+    margin: auto;
+  }
 }

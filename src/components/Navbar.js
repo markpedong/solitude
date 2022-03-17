@@ -1,9 +1,6 @@
-import React, { useState } from "react";
-import DarkModeToggle from "react-dark-mode-toggle";
+import React from "react";
 
 const NavbarSec = () => {
-  const [isDarkMode, setIsDarkMode] = useState(() => false);
-
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container" id="navbar__Container">
@@ -24,7 +21,7 @@ const NavbarSec = () => {
           <span className="toggler-icon bottom-bar"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div className="navbar-nav ms-auto">
+          <div className="navbar-nav ms-auto text-center">
             <a className="nav-link active" href="#">
               Home
             </a>
@@ -49,12 +46,6 @@ const NavbarSec = () => {
               <img src={require("../images/search.png")} />
             </button>
           </form>
-          <DarkModeToggle
-            className="darkmode__toggle"
-            onChange={setIsDarkMode}
-            checked={isDarkMode}
-            size={95}
-          />
         </div>
       </div>
     </nav>
