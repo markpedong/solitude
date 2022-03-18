@@ -1,0 +1,36 @@
+.details_title {
+  margin-top: var(--size-4);
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-size: var(--font-size-5);
+  font-weight: 700;
+}
+
+.img_link {
+  justify-content: center;
+}
+
+.details_links {
+  margin-top: 2rem;
+  align-items: center;
+}
+
+#links_img_container {
+  height: auto;
+  width: 8rem;
+  margin-bottom: 0;
+}
+
+#links_details {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.link_price,
+.link_site {
+  margin: 0;
+  margin-right: 2rem;
+  text-align: start;
+  font-family: "Poppins", sans-serif;
+}

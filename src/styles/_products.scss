@@ -1,5 +1,6 @@
 .card {
   cursor: pointer;
+  margin-bottom: 1rem;
 }
 
 .card,
@@ -24,10 +25,6 @@
   font-weight: 300;
 }
 
-.image-container {
-  align-items: flex-start;
-}
-
 .img_product {
   height: 20rem;
   width: 100%;
@@ -41,10 +38,34 @@
   font-weight: 700;
 }
 
+.price_container {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.image-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.link_price {
+  color: black;
+  font-family: "Poppins", sans-serif;
+}
+
+.link_price {
+  text-align: center;
+}
+
+#img_container {
+  margin-bottom: 1rem;
+}
+
 .img_link {
   height: 1.5rem;
   width: auto;
-  margin-right: var(--size-2);
 }
 
 @media screen and (max-width: 1200px) {

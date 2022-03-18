@@ -5,7 +5,7 @@ import FeaturedProducts from "./FeaturedProducts";
 
 const Home = () => {
   return (
-    <div className="content container">
+    <div className="content container" id="home_container">
       <div className="home_title_container">
         <p className="home_title">Affiliate Marketing</p>
         <p className="home_description">
