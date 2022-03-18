@@ -1,0 +1,29 @@
+.content {
+  padding-top: var(--size-8);
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+.home_title_container {
+  padding-bottom: var(--size-4);
+
+  .home_title {
+    font-family: "Righteous", cursive;
+    font-size: var(--font-size-5);
+  }
+}
+
+.home_header_container {
+  border-bottom: 1px solid rgba($color: #000000, $alpha: 0.3);
+
+  .featured_title {
+    font-size: var(--font-size-4);
+    letter-spacing: 1px;
+
+    span {
+      margin: 0;
+      border-bottom: 1px solid rgba($color: #000000, $alpha: 1);
+      padding-bottom: 18px;
+    }
+  }
+}

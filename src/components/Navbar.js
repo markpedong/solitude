@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../styles/_navbar.scss";
 
 const NavbarSec = () => {
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container" id="navbar__Container">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand fw-bold" to="/">
           Affiliate Marketing
         </a>
         <button
