@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const NavbarSec = () => {
   return (
@@ -22,15 +23,15 @@ const NavbarSec = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav ms-auto text-center">
-            <a className="nav-link active" href="#">
+            <Link className="nav-link active" to="/">
               Home
-            </a>
-            <a className="nav-link" href="#">
-              Features
-            </a>
-            <a className="nav-link" href="#">
-              Pricing
-            </a>
+            </Link>
+            <Link className="nav-link active" to="/about">
+              About
+            </Link>
+            <Link className="nav-link active" to="/products">
+              Products
+            </Link>
           </div>
           <form className="d-flex form">
             <input
