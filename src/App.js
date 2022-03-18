@@ -6,6 +6,7 @@ import About from "./components/About";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import NavbarSec from "./components/Navbar";
+import ProductDetails from "./components/ProductDetails";
 import Products from "./components/Products";
 import "./styles/main.scss";
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="*" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/products/1" element={<ProductDetails />} />
         </Routes>
         <Footer />
       </BrowserRouter>

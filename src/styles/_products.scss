@@ -1,18 +1,17 @@
 .card {
-  margin-bottom: 1rem;
+  cursor: pointer;
 }
-.link-header,
-.card-title {
-  font-family: "Poppins", sans-serif;
+
+.card,
+.card-title,
+.card-description,
+.link-header {
+  text-decoration: none !important;
+  color: black;
 }
 
 .card_container {
   padding: 1rem 0.5rem 0rem 0.5rem;
-}
-
-.card-description,
-.link-header {
-  font-size: var(--font-size-2);
 }
 
 .card-title {

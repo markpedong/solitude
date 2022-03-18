@@ -9,6 +9,12 @@ const NavbarSec = () => {
         <a className="navbar-brand fw-bold" to="/">
           Affiliate Marketing
         </a>
+        <p
+          className="m-0 ms-5
+        "
+        >
+          Categories
+        </p>
         <button
           className="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around"
           type="button"
