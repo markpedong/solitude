@@ -1,7 +1,5 @@
 .content {
   padding-top: var(--size-8);
-  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
 }
 
 .home_title_container {
@@ -14,16 +12,19 @@
 }
 
 .home_header_container {
-  border-bottom: 1px solid rgba($color: #000000, $alpha: 0.3);
+  margin-bottom: var(--size-8);
 
   .featured_title {
+    max-width: 100%;
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.3);
     font-size: var(--font-size-4);
     letter-spacing: 1px;
+    padding-bottom: 18px;
+    font-weight: 700;
 
     span {
-      margin: 0;
       border-bottom: 1px solid rgba($color: #000000, $alpha: 1);
-      padding-bottom: 18px;
+      padding-bottom: 20px;
     }
   }
 }
