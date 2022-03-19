@@ -1,61 +1,78 @@
 import "../styles/_productdetails.scss";
-import amazon from "../images/amazon.svg";
-import lazada from "../images/lazada.svg";
-import shopee from "../images/shopee.svg";
+import productDetails from "../data/productdetails.json";
+import { useParams } from "react-router-dom";
+import { FacebookShareButton } from "react-share";
+import { FacebookIcon } from "react-share";
 
 const ProductDetails = () => {
+  let { id } = useParams();
+
   return (
     <div className="content container">
-      <div className="product_details_container row">
-        <div className="col-6">
-          <img src={require("../images/food.jpg")} className="img_product" />
-        </div>
-        <div className="details_container col-6">
-          <p className="details_title">
-            Yummy Foods with vegetables and many more Items
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae,
-            explicabo enim eligendi doloremque assumenda recusandae ab corrupti,
-            est perferendis nihil, in velit laboriosam sunt animi ullam placeat
-            perspiciatis voluptate atque incidunt dolores! Dolores sequi
-            accusamus, repudiandae voluptate ad dolore quo aut quia, sunt,
-            aperiam vel nulla deleniti dicta temporibus nostrum!
-          </p>
-        </div>
-        <div className="details_links col-12 row justify-content-center">
-          <div className="col-4" id="links_img_container">
-            <img src={amazon} className="link_img" alt="img_product" />
+      {productDetails.map((product) =>
+        id === product.id ? (
+          <div
+            className="product_details_container row row-cols-1 row-cols-lg-2 "
+            key={product.id}
+          >
+            <div className="col" id="product_details">
+              <img src={product.productimage[0].first} className="detail_img" />
+            </div>
+            <div className="col">
+              <div>
+                <p className="details_title">{product.name}</p>
+                <p className="details_description_header">
+                  Product Description:
+                </p>
+                <p className="details_description">{product.longdescription}</p>
+              </div>
+              <div id="links_container">
+                Original Price: ₽
+                <span className="orig_price">{product.origprice}</span>
+              </div>
+
+              {product.detailslinks.map((details) => {
+                return (
+                  <div id="details_links_container" key={details.id}>
+                    <div id="price_links">
+                      <div
+                        className="link_image_container"
+                        id="links_container"
+                      >
+                        <img
+                          src={details.imagelink}
+                          alt="image_link"
+                          className="link_image"
+                        />
+                      </div>
+
+                      <div className="link_price" id="links_container">
+                        ₽ {details.discountprice}
+                      </div>
+                      <div className="link" id="links_container">
+                        {details.shoplink}
+                      </div>
+                    </div>
+
+                    <div id="share-links">
+                      <p className="m-0">test</p>
+                    </div>
+                  </div>
+                );
+              })}
+              <FacebookShareButton
+                url="https://www.facebook.com/watch/live/?ref=watch_permalink&v=4903545583014775"
+                quote={"Subscribe bitch"}
+                hashtag="#React"
+              >
+                <FacebookIcon logoFillColor="white" round={true}></FacebookIcon>
+              </FacebookShareButton>
+            </div>
           </div>
-          <div className="col-8" id="links_details">
-            <p className="link_price">Price:</p>
-            <p className="link_price">₱ 3,900.00</p>
-            <p className="link_site">https://lazada.ph/TEST-3123213</p>
-          </div>
-        </div>
-        <div className="details_links col-12 row justify-content-center">
-          <div className="col-4" id="links_img_container">
-            <img src={lazada} className="link_img" alt="img_product" />
-          </div>
-          <div className="col-8" id="links_details">
-            <p className="link_price">Price:</p>
-            <p className="link_price">₱ 3,900.00</p>
-            <p className="link_site">https://amazon.ph/TEST-12312312312</p>
-          </div>
-        </div>
-        <div className="details_links col-12 row justify-content-center">
-          <div className="col-4" id="links_img_container">
-            <img src={shopee} className="link_img" alt="img_product" />
-          </div>
-          <div className="col-8" id="links_details">
-            <p className="link_price">Price:</p>
-            <p className="link_price">₱ 3,900.00</p>
-            <p className="link_site">
-              https://shopee.ph/TEST-LINK3123213213123123213123
-            </p>
-          </div>
-        </div>
-      </div>
+        ) : (
+          ""
+        )
+      )}
     </div>
   );
 };

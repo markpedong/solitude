@@ -19,7 +19,7 @@ function App() {
           <Route path="*" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<Products />} />
-          <Route path="/products/lint-remover" element={<ProductDetails />} />
+          <Route path="/products/:id" element={<ProductDetails />} />
         </Routes>
         <Footer />
       </BrowserRouter>

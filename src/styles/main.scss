@@ -8,7 +8,9 @@
   box-sizing: border-box;
 }
 
-.App {
+.navbar,
+#home_container,
+.product_details_container {
   max-width: 100%;
   width: 1140px;
   margin-left: auto;
