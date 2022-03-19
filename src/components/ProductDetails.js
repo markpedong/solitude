@@ -2,8 +2,10 @@ import "../styles/_productdetails.scss";
 import amazon from "../images/amazon.svg";
 import lazada from "../images/lazada.svg";
 import shopee from "../images/shopee.svg";
+import productData from "../data/data.json";
 
 const ProductDetails = () => {
+  console.log(productData);
   return (
     <div className="content container">
       <div className="product_details_container row">
@@ -61,6 +63,3 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
-
-{
-}
