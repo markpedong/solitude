@@ -1,0 +1,40 @@
+[
+  {
+    "id": "lint-remover",
+    "name": "lint remover roller",
+    "shortdescription": "Perfect for pet hair removal if you looking for lint rollers for pet hair!",
+    "longdescription": [
+      {
+        "first": "This pet lint roller works great as a dog hair remover or cat hair remover."
+      },
+      {
+        "second": "BUT Also ideal as just a clothes or furniture lint remover. The perfect lint remover for tackling lint, fuzz, dust, crumbs and other dirt on practically all clothes, furniture, furnishings, and any household, car or office surface."
+      },
+      {
+        "third": "More convenient than a vacuum cleaner and cheaper than dry-cleaning!"
+      },
+      {
+        "fourth": "Even get crumbs in your pocket or purse. If you don't carry cookies around on a regular basis, but sometimes lint or something weird will get in your pocket and who wants to pick it out piece by piece? All pockets don't turn inside out. Just shove a sheet of this sticky lint roller in there and grab that crap."
+      },
+      {
+        "fifth": "Each extra sticky refill consists of 60 sheets, a total of 480 sheets. Affordable pricing and convenient replaceable packaging. "
+      },
+      {
+        "sixth": "Can make you use more long-time to meet almost all your needs."
+      }
+    ],
+
+    "productimage": "https://cf.shopee.ph/file/ceb4302519228586e51ca4f54ac8dd17&quot",
+
+    "linksimages": [
+      {
+        "id": "shopee-image-link",
+        "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png"
+      }
+    ],
+
+    "price": 200,
+    "discountprice": 93,
+    "links": [{ "shopee-link": "https://bit.ly/3CPCkqd" }]
+  }
+]

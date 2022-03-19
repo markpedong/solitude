@@ -18,6 +18,7 @@
 .card-title {
   font-size: var(--font-size-4);
   font-weight: var(--font-weight-7);
+  text-transform: capitalize;
 }
 
 .card-description {
@@ -48,6 +49,7 @@
 .image-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  align-items: center;
 }
 
 .link_price {
@@ -60,12 +62,7 @@
 }
 
 #img_container {
-  margin-bottom: 1rem;
-}
-
-.img_link {
-  height: 1.5rem;
-  width: auto;
+  margin-bottom: 0.1rem;
 }
 
 @media screen and (max-width: 1200px) {
