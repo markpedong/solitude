@@ -1,12 +1,12 @@
 import "../styles/_productdetails.scss";
 import productDetails from "../data/productdetails.json";
-import { useParams } from "react-router-dom";
-import { FacebookShareButton } from "react-share";
-import { FacebookIcon } from "react-share";
+import { useParams, useHistory, useNavigate } from "react-router-dom";
+import { FacebookShareButton, FacebookIcon } from "react-share";
 
 const ProductDetails = () => {
   let { id } = useParams();
 
+  const location = "";
   return (
     <div className="content container">
       {productDetails.map((product) =>
@@ -60,12 +60,8 @@ const ProductDetails = () => {
                   </div>
                 );
               })}
-              <FacebookShareButton
-                url="https://www.facebook.com/watch/live/?ref=watch_permalink&v=4903545583014775"
-                quote={"Subscribe bitch"}
-                hashtag="#React"
-              >
-                <FacebookIcon logoFillColor="white" round={true}></FacebookIcon>
+              <FacebookShareButton url="https://www.facebook.com/sharer/sharer.php?u=https%3A//solitude.web.app/products/shampoo-dispenser">
+                <FacebookIcon round={true}></FacebookIcon>
               </FacebookShareButton>
             </div>
           </div>
