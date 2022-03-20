@@ -73,8 +73,62 @@
   margin-left: 1rem;
 }
 
-#share-links {
+#share_links {
   margin-top: 2rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+}
+
+.share_icon_container > * {
+  margin-right: 10px;
+}
+
+#main_image_container {
+  position: relative;
+}
+
+.left-arrow {
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  font-size: 3rem;
+  color: black;
+  z-index: 100;
+}
+
+.right-arrow {
+  position: absolute;
+  top: 50%;
+  right: 0px;
+  font-size: 3rem;
+  color: black;
+  z-index: 100;
+}
+
+.slide {
+  opacity: 0;
+  transition-duration: 1s ease;
+  transform: scale(0.9);
+}
+
+.slide.active {
+  opacity: 1;
+  transition-duration: 1s;
+  transform: scale(1);
+}
+
+.rest_image_container {
+  display: flex;
+  overflow: hidden;
+}
+
+#rest_image {
+  height: 7rem;
+}
+
+.shop_link {
+  text-decoration: none;
+  color: black;
 }
 
 @media screen and (max-width: 992px) {

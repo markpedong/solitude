@@ -1,12 +1,55 @@
-import "../styles/_productdetails.scss";
+import { useState } from "react";
+import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import {
+  EmailIcon,
+  EmailShareButton,
+  FacebookIcon,
+  FacebookMessengerIcon,
+  FacebookShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+} from "react-share";
 import productDetails from "../data/productdetails.json";
-import { useParams, useHistory, useNavigate } from "react-router-dom";
-import { FacebookShareButton, FacebookIcon } from "react-share";
+import "../styles/_productdetails.scss";
 
 const ProductDetails = () => {
   let { id } = useParams();
+  const location = window.location.href;
 
-  const location = "";
+  const [current, setCurrent] = useState(0);
+
+  //show current image on mouseenter
+  const showCurrentImage = (index) => {
+    setCurrent(index);
+  };
+
+  //show previous image on click
+  const showPreviousImage = () => {
+    if (current === 0) {
+      setCurrent(productDetails.length - 1);
+    } else {
+      setCurrent(current - 1);
+    }
+  };
+
+  //prettier-ignore
+  const currentProduct = productDetails.find((product) => product.id === id).productimage;
+  const length = currentProduct.length;
+
+  // guard clause
+  if (!Array.isArray(currentProduct) || currentProduct.length <= 0) {
+    return null;
+  }
+
+  const nextImage = () => {
+    setCurrent(current === length - 1 ? 0 : current + 1);
+  };
+
+  const prevImage = () => {
+    setCurrent(current === 0 ? length - 1 : current - 1);
+  };
+
   return (
     <div className="content container">
       {productDetails.map((product) =>
@@ -16,7 +59,44 @@ const ProductDetails = () => {
             key={product.id}
           >
             <div className="col" id="product_details">
-              <img src={product.productimage[0].first} className="detail_img" />
+              <div id="main_image_container">
+                <FaArrowAltCircleLeft
+                  className="left-arrow"
+                  onClick={prevImage}
+                />
+                <FaArrowAltCircleRight
+                  className="right-arrow"
+                  onClick={nextImage}
+                />
+
+                {product.productimage.map((slide, index) => {
+                  return (
+                    <div
+                      className={index === current ? "slide active" : "slide"}
+                      key={index}
+                    >
+                      {index === current && (
+                        <img src={slide.image} className="detail_img" />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="rest_image_container">
+                {product.productimage.map((slide, index) => {
+                  return (
+                    <img
+                      src={slide.image}
+                      className={
+                        index === current ? "detail_img active" : "detail_img"
+                      }
+                      key={index}
+                      id="rest_image"
+                      onMouseEnter={() => showCurrentImage(index)}
+                    />
+                  );
+                })}
+              </div>
             </div>
             <div className="col">
               <div>
@@ -50,19 +130,33 @@ const ProductDetails = () => {
                         ₽ {details.discountprice}
                       </div>
                       <div className="link" id="links_container">
-                        {details.shoplink}
+                        <a className="shop_link" href={details.shoplink}>
+                          {details.shoplink}
+                        </a>
                       </div>
                     </div>
 
-                    <div id="share-links">
-                      <p className="m-0">test</p>
+                    <div id="share_links">
+                      <p>Share to Social Media : </p>
                     </div>
                   </div>
                 );
               })}
-              <FacebookShareButton url="https://www.facebook.com/sharer/sharer.php?u=https%3A//solitude.web.app/products/shampoo-dispenser">
-                <FacebookIcon round={true}></FacebookIcon>
-              </FacebookShareButton>
+
+              <div className="share_icon_container">
+                <FacebookShareButton url={location}>
+                  <FacebookIcon size={35} round={true} />
+                </FacebookShareButton>
+                <FacebookShareButton url={location}>
+                  <FacebookMessengerIcon size={35} round={true} />
+                </FacebookShareButton>
+                <TwitterShareButton url={location}>
+                  <TwitterIcon size={35} round={true} />
+                </TwitterShareButton>
+                <EmailShareButton url={location}>
+                  <EmailIcon size={35} round={true} />
+                </EmailShareButton>
+              </div>
             </div>
           </div>
         ) : (
