@@ -1,0 +1,44 @@
+#all_products_container {
+  padding: 0;
+}
+
+#product_container {
+  padding: 0;
+  margin: 0.5rem 0rem;
+}
+#card_products {
+  height: 8rem;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  object-fit: cover;
+  object-position: center;
+}
+
+.card-body {
+  padding: 0.5rem;
+}
+
+.card-title,
+.card-text {
+  font-family: "Nanum Goth", sans-serif;
+}
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 1rem;
+}
+
+.img_link_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#card_img {
+  height: 1.7rem;
+}
