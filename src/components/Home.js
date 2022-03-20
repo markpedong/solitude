@@ -15,24 +15,6 @@ const Home = () => {
           quidem ea et?
         </p>
       </div>
-
-      <div className="home_header_container">
-        <p className="featured_title">
-          <span>Featured Products</span>
-        </p>
-        <Routes>
-          <Route path="*" element={<FeaturedProducts />} />
-        </Routes>
-      </div>
-
-      <div className="home_header_container">
-        <p className="featured_title">
-          <span>All Products</span>
-        </p>
-        <Routes>
-          <Route path="*" element={<AllProducts />} />
-        </Routes>
-      </div>
     </div>
   );
 };

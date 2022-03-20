@@ -24,15 +24,6 @@ const ProductDetails = () => {
     setCurrent(index);
   };
 
-  //show previous image on click
-  const showPreviousImage = () => {
-    if (current === 0) {
-      setCurrent(productDetails.length - 1);
-    } else {
-      setCurrent(current - 1);
-    }
-  };
-
   //prettier-ignore
   const currentProduct = productDetails.find((product) => product.id === id).productimage;
   const length = currentProduct.length;
