@@ -1,16 +1,21 @@
 import { Link } from "react-router-dom";
 
 import "../styles/_allproducts.scss";
-import allProducts from "../data/allproducts.json";
+import products from "../data/products.json";
 
 const AllProducts = () => {
+  // alphabetical order of the products array
+  const sliceProducts = products.sort((a, b) =>
+    a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+  );
+
   return (
     <div className="container" id="all_products_container">
       <div
         className="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5"
         id="product_row"
       >
-        {allProducts.map((product) => {
+        {sliceProducts.map((product) => {
           return (
             <Link
               to={`/products/${product.id}`}

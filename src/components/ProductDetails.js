@@ -1,4 +1,6 @@
+import "glider-js/glider.min.css";
 import { useState } from "react";
+import { default as Glider, default as Pane } from "react-glider";
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import {
@@ -41,6 +43,15 @@ const ProductDetails = () => {
     setCurrent(current === 0 ? length - 1 : current - 1);
   };
 
+  //sshohow the next immage on rest_image_container
+  const showNextImage = () => {
+    if (current === length - 1) {
+      setCurrent(0);
+    } else {
+      setCurrent(current + 1);
+    }
+  };
+
   return (
     <div className="content container">
       {productDetails.map((product) =>
@@ -65,6 +76,7 @@ const ProductDetails = () => {
                     <div
                       className={index === current ? "slide active" : "slide"}
                       key={index}
+                      id="detail_img_container"
                     >
                       {index === current && (
                         <img src={slide.image} className="detail_img" />
@@ -73,20 +85,21 @@ const ProductDetails = () => {
                   );
                 })}
               </div>
-              <div className="rest_image_container">
-                {product.productimage.map((slide, index) => {
-                  return (
-                    <img
-                      src={slide.image}
-                      className={
-                        index === current ? "detail_img active" : "detail_img"
-                      }
-                      key={index}
-                      id="rest_image"
-                      onMouseEnter={() => showCurrentImage(index)}
-                    />
-                  );
-                })}
+              <div id="rest_image_container">
+                {/* prettier-ignore */}
+                <Glider hasDots slidesToShow={4} slidesToScroll={1}>
+                  {product.productimage.map((slide, index) => {
+                    return (
+                      <Pane key={index}>
+                        <img
+                          src={slide.image}
+                          id="rest_image"
+                          onMouseEnter={() => showCurrentImage(index)}
+                        />
+                      </Pane>
+                    )
+                  })}
+                </Glider>
               </div>
             </div>
             <div className="col">
