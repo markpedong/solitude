@@ -1,7 +1,4 @@
-import { Routes, Route } from "react-router-dom";
 import "../styles/_home.scss";
-import AllProducts from "./AllProducts";
-import FeaturedProducts from "./FeaturedProducts";
 
 const Home = () => {
   return (

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/_navbar.scss";
+import { Navbar, Container, Nav } from "react-bootstrap";
 
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 
@@ -37,49 +38,70 @@ const NavbarSec = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg">
-      <div className="container" id="navbar__Container">
-        <a className="navbar-brand fw-bold" to="/">
-          Affiliate Marketing
-        </a>
-        <button
-          className="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="toggler-icon top-bar"></span>
-          <span className="toggler-icon middle-bar"></span>
-          <span className="toggler-icon bottom-bar"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div className="navbar-nav ms-auto text-center">
+    <Navbar bg="light" expand="lg">
+      <Container>
+        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto">
             <Link className="nav-link active" to="/">
               Home
             </Link>
+
             <Link className="nav-link active" to="/about">
               About
             </Link>
+
             <Link className="nav-link active" to="/products">
               Products
             </Link>
-          </div>
-          <form className="d-flex form" onSubmit={handleSubmit}>
-            <div className="search_container">
-              <ReactSearchAutocomplete
-                items={items}
-                autoFocus
-                formatResult={formatResult}
-                onSearch={handleOnSearch}
-              />
-            </div>
-          </form>
-        </div>
-      </div>
-    </nav>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+    // <nav className="navbar navbar-expand-lg">
+    //   <div className="container" id="navbar_container">
+    //     <a className="navbar-brand fw-bold" to="/">
+    //       Affiliate Marketing
+    //     </a>
+    //     <button
+    //       className="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around"
+    //       type="button"
+    //       data-bs-toggle="collapse"
+    //       data-bs-target="#navbarNavAltMarkup"
+    //       aria-controls="navbarNavAltMarkup"
+    //       aria-expanded="false"
+    //       aria-label="Toggle navigation"
+    //     >
+    //       <span className="toggler-icon top-bar"></span>
+    //       <span className="toggler-icon middle-bar"></span>
+    //       <span className="toggler-icon bottom-bar"></span>
+    //     </button>
+    //     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+    //       <div className="navbar-nav ms-auto text-center">
+    //         <Link className="nav-link active" to="/">
+    //           Home
+    //         </Link>
+    //         <Link className="nav-link active" to="/about">
+    //           About
+    //         </Link>
+    //         <Link className="nav-link active" to="/products">
+    //           Products
+    //         </Link>
+    //       </div>
+    //       <form className="d-flex form" onSubmit={handleSubmit}>
+    //         <div className="search_container">
+    //           <ReactSearchAutocomplete
+    //             items={items}
+    //             autoFocus
+    //             formatResult={formatResult}
+    //             onSearch={handleOnSearch}
+    //           />
+    //         </div>
+    //       </form>
+    //     </div>
+    //   </div>
+    // </nav>
   );
 };
 

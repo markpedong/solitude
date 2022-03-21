@@ -1,46 +1,5 @@
-#all_products_container {
-  padding: 0;
-}
-
-#product_container {
-  padding: 0;
-  height: 100%;
-  padding-bottom: 0;
-}
-
 #product_container_link {
   text-decoration: none;
-}
-#card_products {
-  height: 8rem;
-  width: 100%;
-  background-size: cover;
-  background-position: center;
-  object-fit: cover;
-  object-position: center;
-}
-
-.card-body {
-  padding: 0.5rem;
-  padding-bottom: 0rem;
-}
-
-.card-title,
-.card-text {
-  font-family: "Nanum Goth", sans-serif;
-}
-.card-title {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.card-text {
-  font-size: 1rem;
-}
-
-.img_link_container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
+  padding: 0;
+  margin-right: 1rem;
 }
