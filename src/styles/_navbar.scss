@@ -120,6 +120,14 @@
   object-fit: cover;
 }
 
+.search_container {
+  width: 200px;
+}
+.search_suggestion {
+  display: block;
+  text-align: left;
+}
+
 @media screen and (max-width: 992px) {
   .search-field {
     width: 100%;

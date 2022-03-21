@@ -1,8 +1,41 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/_navbar.scss";
 
+import { ReactSearchAutocomplete } from "react-search-autocomplete";
+
 const NavbarSec = () => {
+  let navigate = useNavigate();
+
+  //print the value of search field on change
+  const [search, setSearch] = useState("");
+
+  //get the value of search on submit of the form
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const productName = items.find((item) => item.name === search);
+
+    console.log(productName);
+  };
+  const items = [
+    { id: 1, name: "lint-remover" },
+    { id: 2, name: "shampoo-dispenser" },
+    { id: 3, name: "portable-scooper" },
+  ];
+
+  const formatResult = (item) => {
+    return (
+      <>
+        <span className="search_suggestion">{item.name}</span>
+      </>
+    );
+  };
+
+  const handleOnSearch = (result) => {
+    setSearch(result);
+  };
+
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container" id="navbar__Container">
@@ -34,19 +67,15 @@ const NavbarSec = () => {
               Products
             </Link>
           </div>
-          <form className="d-flex form">
-            <input
-              className="form-control me-2 search-field"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button
-              className="btn btn-outline-success search-button"
-              type="submit"
-            >
-              <img src={require("../images/search.png")} />
-            </button>
+          <form className="d-flex form" onSubmit={handleSubmit}>
+            <div className="search_container">
+              <ReactSearchAutocomplete
+                items={items}
+                autoFocus
+                formatResult={formatResult}
+                onSearch={handleOnSearch}
+              />
+            </div>
           </form>
         </div>
       </div>

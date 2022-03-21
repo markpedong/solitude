@@ -1,7 +1,7 @@
+import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
-import "../styles/_allproducts.scss";
 import products from "../data/products.json";
+import "../styles/_allproducts.scss";
 
 const AllProducts = () => {
   // alphabetical order of the products array
@@ -20,32 +20,15 @@ const AllProducts = () => {
             <Link
               to={`/products/${product.id}`}
               key={product.id}
-              style={{ textDecoration: "none" }}
+              id="product_container_link"
             >
-              <div className="card" id="product_container">
-                <img
-                  className="card-img-top"
-                  src={product.productimage}
-                  alt="Card image cap"
-                  id="card_products"
-                />
-                <div className="card-body">
-                  <p className="card-title">{product.name}</p>
-                  <p className="card-text">{product.shortdescription}</p>
-                  <div className="img_link_container">
-                    {product.linksimages.map((link) => {
-                      return (
-                        <img
-                          key={link.id}
-                          src={link.imagelink}
-                          alt="Card image cap"
-                          id="card_img"
-                        />
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
+              <Card>
+                <Card.Img variant="top" src={product.productimage} />
+                <Card.Body>
+                  <Card.Title>{product.name}</Card.Title>
+                  <Card.Text>{product.shortdescription}</Card.Text>
+                </Card.Body>
+              </Card>
             </Link>
           );
         })}

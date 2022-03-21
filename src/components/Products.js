@@ -4,7 +4,7 @@ import AllProducts from "./AllProducts";
 
 const Products = () => {
   return (
-    <div className="content" id="products_container">
+    <div className="container" id="products_container">
       <h1>Products</h1>
       <p>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus
@@ -25,6 +25,7 @@ const Products = () => {
         <p className="featured_title">
           <span>All Products</span>
         </p>
+
         <Routes>
           <Route path="*" element={<AllProducts />} />
         </Routes>

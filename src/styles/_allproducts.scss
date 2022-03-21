@@ -5,9 +5,19 @@
 #product_container {
   padding: 0;
   height: 100%;
+  padding-bottom: 0;
+}
+
+#product_container_link {
+  text-decoration: none;
 }
 #card_products {
   height: 8rem;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  object-fit: cover;
+  object-position: center;
 }
 
 .card-body {
@@ -33,8 +43,4 @@
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
-}
-
-#card_img {
-  height: 1.7rem;
 }

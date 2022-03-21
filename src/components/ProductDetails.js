@@ -17,6 +17,7 @@ import "../styles/_productdetails.scss";
 
 const ProductDetails = () => {
   let { id } = useParams();
+
   const location = window.location.href;
 
   const [current, setCurrent] = useState(0);
@@ -41,15 +42,6 @@ const ProductDetails = () => {
 
   const prevImage = () => {
     setCurrent(current === 0 ? length - 1 : current - 1);
-  };
-
-  //sshohow the next immage on rest_image_container
-  const showNextImage = () => {
-    if (current === length - 1) {
-      setCurrent(0);
-    } else {
-      setCurrent(current + 1);
-    }
   };
 
   return (
