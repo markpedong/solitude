@@ -12,13 +12,19 @@ const NavbarSec = () => {
   const [search, setSearch] = useState("");
 
   //get the value of search on submit of the form
+
+  const handleOnHover = (res) => {
+    //clear setSearch value
+    setSearch("");
+    setSearch(res.name);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const productName = items.find((item) => item.name === search);
-
-    console.log(productName);
+    navigate(`/products/${search}`);
   };
+
   const items = [
     { id: 1, name: "lint-remover" },
     { id: 2, name: "shampoo-dispenser" },
@@ -33,10 +39,6 @@ const NavbarSec = () => {
     );
   };
 
-  const handleOnSearch = (result) => {
-    setSearch(result);
-  };
-
   //add active className to the navbar link that is clicked
   const handleClick = (e) => {
     const links = document.querySelectorAll(".nav-link");
@@ -49,7 +51,7 @@ const NavbarSec = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container className="navbar_container">
-        <Navbar.Brand href="#home">Solitude</Navbar.Brand>
+        <Navbar.Brand>Solitude</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav">
           <span className="toggler-icon top-bar"></span>
           <span className="toggler-icon middle-bar"></span>
@@ -58,7 +60,7 @@ const NavbarSec = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           {/* prettier-ignore */}
           <Nav className="ms-auto" onClick={handleClick}>
-            <Link className="nav-link"  to="*">Home</Link>
+            <Link className="nav-link"  to="/">Home</Link>
             <Link className="nav-link"  to="/about">About</Link>
             <Link className="nav-link"  to="/products">Products</Link>
           </Nav>
@@ -66,9 +68,9 @@ const NavbarSec = () => {
             <div className="search_container">
               <ReactSearchAutocomplete
                 items={items}
-                autoFocus
                 formatResult={formatResult}
-                onSearch={handleOnSearch}
+                autoFocus
+                onHover={handleOnHover}
               />
             </div>
           </form>
