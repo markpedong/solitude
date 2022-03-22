@@ -8,19 +8,13 @@
   box-sizing: border-box;
 }
 
-@media screen and (min-width: 992px) {
-  .navbar,
-  .product_details_container,
-  #about__container,
-  #home_container,
-  #products_container,
-  #footer_container {
-    max-width: 100%;
-    width: 992px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-  }
+.navbar,
+.product_details_container,
+#about__container,
+#home_container,
+#products_container,
+#footer_container {
+  background-color: white;
 }
 
 body {

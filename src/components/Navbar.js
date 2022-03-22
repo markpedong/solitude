@@ -37,71 +37,44 @@ const NavbarSec = () => {
     setSearch(result);
   };
 
+  //add active className to the navbar link that is clicked
+  const handleClick = (e) => {
+    const links = document.querySelectorAll(".nav-link");
+    links.forEach((link) => {
+      link.classList.remove("active");
+    });
+    e.target.classList.add("active");
+  };
+
   return (
     <Navbar bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Container className="navbar_container">
+        <Navbar.Brand href="#home">Solitude</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav">
+          <span className="toggler-icon top-bar"></span>
+          <span className="toggler-icon middle-bar"></span>
+          <span className="toggler-icon bottom-bar"></span>
+        </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            <Link className="nav-link active" to="/">
-              Home
-            </Link>
-
-            <Link className="nav-link active" to="/about">
-              About
-            </Link>
-
-            <Link className="nav-link active" to="/products">
-              Products
-            </Link>
+          {/* prettier-ignore */}
+          <Nav className="ms-auto" onClick={handleClick}>
+            <Link className="nav-link"  to="*">Home</Link>
+            <Link className="nav-link"  to="/about">About</Link>
+            <Link className="nav-link"  to="/products">Products</Link>
           </Nav>
+          <form className="form" onSubmit={handleSubmit}>
+            <div className="search_container">
+              <ReactSearchAutocomplete
+                items={items}
+                autoFocus
+                formatResult={formatResult}
+                onSearch={handleOnSearch}
+              />
+            </div>
+          </form>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    // <nav className="navbar navbar-expand-lg">
-    //   <div className="container" id="navbar_container">
-    //     <a className="navbar-brand fw-bold" to="/">
-    //       Affiliate Marketing
-    //     </a>
-    //     <button
-    //       className="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around"
-    //       type="button"
-    //       data-bs-toggle="collapse"
-    //       data-bs-target="#navbarNavAltMarkup"
-    //       aria-controls="navbarNavAltMarkup"
-    //       aria-expanded="false"
-    //       aria-label="Toggle navigation"
-    //     >
-    //       <span className="toggler-icon top-bar"></span>
-    //       <span className="toggler-icon middle-bar"></span>
-    //       <span className="toggler-icon bottom-bar"></span>
-    //     </button>
-    //     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-    //       <div className="navbar-nav ms-auto text-center">
-    //         <Link className="nav-link active" to="/">
-    //           Home
-    //         </Link>
-    //         <Link className="nav-link active" to="/about">
-    //           About
-    //         </Link>
-    //         <Link className="nav-link active" to="/products">
-    //           Products
-    //         </Link>
-    //       </div>
-    //       <form className="d-flex form" onSubmit={handleSubmit}>
-    //         <div className="search_container">
-    //           <ReactSearchAutocomplete
-    //             items={items}
-    //             autoFocus
-    //             formatResult={formatResult}
-    //             onSearch={handleOnSearch}
-    //           />
-    //         </div>
-    //       </form>
-    //     </div>
-    //   </div>
-    // </nav>
   );
 };
 

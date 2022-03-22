@@ -1,71 +1,62 @@
-.card {
-  cursor: pointer;
-  margin-bottom: 1rem;
-}
-
-.card,
-.card-title,
-.card-description,
-.link-header {
-  text-decoration: none !important;
-  color: black;
-}
-
 .card_container {
-  padding: 1rem 0.5rem 0rem 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  height: 100%;
 }
 
-.card-title {
-  font-size: var(--font-size-4);
-  font-weight: var(--font-weight-7);
+.card_image_container {
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.card_image {
+  transform: scale(1);
+  height: 100%;
+  transition: all 0.5s ease;
+}
+
+.card_title {
   text-transform: capitalize;
 }
 
-.card-description {
+.card_description {
+  font-size: 1rem;
   font-family: "Lato", sans-serif;
-  font-weight: 300;
 }
 
-.img_product {
-  height: 20rem;
+.card_image:hover {
+  transform: scale(1.1);
 }
 
-.link-header {
-  font-weight: 700;
+.card_image_link {
+  height: 1.5rem;
+  width: 5rem;
 }
 
-.price_container {
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.image-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-items: center;
-}
-
-.link_price {
+.card_link {
+  text-decoration: none;
   color: black;
-  font-family: "Poppins", sans-serif;
 }
 
-.link_price {
-  text-align: center;
+.card_link:hover {
+  text-decoration: none;
+  color: black;
 }
 
-#img_container {
-  margin-bottom: 0.1rem;
-}
-
-@media screen and (max-width: 1200px) {
-  .img_product {
-    height: 12rem;
+@media screen and (max-width: 576px) {
+  .card_outer_container {
+    margin: 0.5rem 0rem;
   }
 
-  .img_link {
-    height: 2rem;
+  .card_image:hover {
+    transform: none;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .card_container {
+    display: flex;
   }
 }
