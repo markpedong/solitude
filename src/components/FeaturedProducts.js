@@ -8,7 +8,7 @@ const FeaturedProducts = () => {
 
   return (
     <Container>
-      <Row xs={1} lg={3}>
+      <Row xs={1} md={2} lg={3}>
         {sliceProducts.map((product) => {
           return (
             // prettier-ignore

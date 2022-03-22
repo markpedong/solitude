@@ -1,5 +1,37 @@
-#product_container_link {
-  text-decoration: none;
+.all_card_outer_container {
+  padding: 0.1rem;
+}
+.all_card_container {
+  display: flex;
+  height: 100%;
+}
+
+.all_card_body {
+  padding: 0.2rem;
+  position: relative;
+}
+
+.all_card_image_container {
   padding: 0;
-  margin-right: 1rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.all_card_image_link {
+  height: 1.5rem;
+  width: 5rem;
+  // position: absolute;
+  // bottom: 5px;
+  // left: 0px;
+}
+
+@media screen and (min-width: 576px) {
+  .all_card_description {
+    margin-bottom: 2rem;
+  }
+  .all_card_image_link {
+    position: absolute;
+    bottom: 5px;
+    left: 0px;
+  }
 }

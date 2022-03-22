@@ -1,4 +1,4 @@
-import { Card } from "react-bootstrap";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import products from "../data/products.json";
 import "../styles/_allproducts.scss";
@@ -6,34 +6,37 @@ import "../styles/_allproducts.scss";
 const AllProducts = () => {
   // alphabetical order of the products array
   const sliceProducts = products.sort((a, b) =>
-    a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+    a.id > b.id ? 1 : b.id > a.id ? -1 : 0
   );
 
   return (
-    <div className="container" id="all_products_container">
-      <div
-        className="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5"
-        id="product_row"
-      >
+    <Container>
+      <Row xs={2} sm={3} md={4} lg={5}>
         {sliceProducts.map((product) => {
           return (
-            <Link
-              to={`/products/${product.id}`}
-              key={product.id}
-              id="product_container_link"
-            >
-              <Card>
-                <Card.Img variant="top" src={product.productimage} />
-                <Card.Body>
-                  <Card.Title>{product.name}</Card.Title>
-                  <Card.Text>{product.shortdescription}</Card.Text>
-                </Card.Body>
-              </Card>
-            </Link>
+            // prettier-ignore
+            <Col key={product.id} className="all_card_outer_container">
+              <Link to={`/products/${product.id}`} className="card_link">
+                <Card className="all_card_container">
+                  <Card.Img className="all_card_image" src={product.productimage} />
+                  <Card.Body className="all_card_body">
+                    <Card.Title className="card_title">{product.name}</Card.Title>
+                    <Card.Text className="all_card_description">{product.shortdescription}</Card.Text>
+                    <Container className="all_card_image_container">
+                      {product.linksimages.map((image) => {
+                        return (
+                          <Card.Img key={image.id} className="all_card_image_link" src={image.imagelink} />
+                        );
+                      })}
+                    </Container>
+                  </Card.Body>
+                </Card>
+              </Link>
+            </Col>
           );
         })}
-      </div>
-    </div>
+      </Row>
+    </Container>
   );
 };
 
