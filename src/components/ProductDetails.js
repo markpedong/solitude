@@ -1,6 +1,6 @@
 import "glider-js/glider.min.css";
 import { useState } from "react";
-import { Col, Container, Row, Image } from "react-bootstrap";
+import { Col, Container, Image, Row } from "react-bootstrap";
 import { default as Glider, default as Pane } from "react-glider";
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import { useParams } from "react-router-dom";

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/_navbar.scss";
 import { Navbar, Container, Nav } from "react-bootstrap";
-
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 
 const NavbarSec = () => {
@@ -15,10 +14,15 @@ const NavbarSec = () => {
 
   const handleOnHover = (res) => {
     //clear setSearch value
-    setSearch("");
     if (!res.name) return;
 
     setSearch(res.name);
+  };
+
+  const handleOnSubmit = (e) => {
+    let res = e;
+
+    res = "";
   };
 
   const handleSubmit = (e) => {
