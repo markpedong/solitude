@@ -23,7 +23,6 @@ const ProductDetails = () => {
 
   //show current image on mouseenter
   const showCurrentImage = (index) => {
-    console.log(index);
     setCurrent(index);
   };
 
@@ -52,7 +51,7 @@ const ProductDetails = () => {
           (
     <Container className="productdetails_container" key={product.id}>
       <Row xs={1} lg={2}>
-        <Col>
+        <Col className="image_container">
         <Container className="main_image_container">
           <FaArrowAltCircleLeft className="left-arrow" onClick={prevImage} />
           <FaArrowAltCircleRight className="right-arrow" onClick={nextImage} />
