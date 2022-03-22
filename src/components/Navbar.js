@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import products from "../data/products";
 import "../styles/_navbar.scss";
-import { Navbar, Container, Nav } from "react-bootstrap";
-import { ReactSearchAutocomplete } from "react-search-autocomplete";
 
 const NavbarSec = () => {
   let navigate = useNavigate();
@@ -19,11 +19,9 @@ const NavbarSec = () => {
     setSearch(res.name);
   };
 
-  const handleOnSubmit = (e) => {
-    let res = e;
-
-    res = "";
-  };
+  function handleOnSearch(res) {
+    return res;
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,13 +29,9 @@ const NavbarSec = () => {
     if (!search) return;
 
     navigate(`/products/${search}`);
-  };
 
-  const items = [
-    { id: 1, name: "lint-remover" },
-    { id: 2, name: "shampoo-dispenser" },
-    { id: 3, name: "portable-scooper" },
-  ];
+    search = "";
+  };
 
   const formatResult = (item) => {
     return (
@@ -55,6 +49,10 @@ const NavbarSec = () => {
     });
     e.target.classList.add("active");
   };
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  console.log(searchTerm);
 
   return (
     <Navbar bg="light" expand="lg">
@@ -75,12 +73,37 @@ const NavbarSec = () => {
 
           <form className="form" onSubmit={handleSubmit}>
             <div className="search_container">
-              <ReactSearchAutocomplete
+              {/* <ReactSearchAutocomplete
                 items={items}
                 formatResult={formatResult}
                 autoFocus
                 onHover={handleOnHover}
+                c
+                onSearch={handleOnSearch}
+              /> */}
+              <input
+                type="text"
+                className="input_search"
+                placeholder="Search..."
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
+              {products
+                .filter((value) => {
+                  if (searchTerm == "") {
+                    return value;
+                  } else if (
+                    value.id.toLowerCase().includes(searchTerm.toLowerCase())
+                  ) {
+                    return value;
+                  }
+                })
+                .map((value, index) => {
+                  return (
+                    <div className="product_id" key={index}>
+                      <p> {value.id} </p>
+                    </div>
+                  );
+                })}
             </div>
           </form>
         </Navbar.Collapse>
