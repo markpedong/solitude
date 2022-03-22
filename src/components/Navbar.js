@@ -16,11 +16,15 @@ const NavbarSec = () => {
   const handleOnHover = (res) => {
     //clear setSearch value
     setSearch("");
+    if (!res.name) return;
+
     setSearch(res.name);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!search) return;
 
     navigate(`/products/${search}`);
   };
@@ -64,6 +68,7 @@ const NavbarSec = () => {
             <Link className="nav-link"  to="/about">About</Link>
             <Link className="nav-link"  to="/products">Products</Link>
           </Nav>
+
           <form className="form" onSubmit={handleSubmit}>
             <div className="search_container">
               <ReactSearchAutocomplete
