@@ -2,19 +2,25 @@ import React, { useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/_navbar.scss";
-import { Search, Close } from "@mui/icons-material";
+import { Search, Close, IconButton } from "@mui/icons-material";
 
 const NavbarSec = ({ placeholder, data }) => {
   let navigate = useNavigate();
 
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setwordEntered] = useState("");
+  const [productId, setproductId] = useState("");
 
   //handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(wordEntered);
+    if (!wordEntered || !productId === "") return;
+
+    //navigate to product page
+    navigate(`/products/${productId}`);
+    setwordEntered("");
+    setFilteredData([]);
   };
 
   //add active className to the navbar link that is clicked
@@ -41,8 +47,19 @@ const NavbarSec = ({ placeholder, data }) => {
   };
 
   const chosenProduct = (e) => {
-    setwordEntered(e);
+    setwordEntered(e.target.innerText);
     setFilteredData([]);
+
+    //transform the e.target.innerText into a lowercase string with hypen in between words
+    const newProductId = e.target.innerText.toLowerCase().split(" ").join("-");
+
+    //set the productId state to the newProductId
+    setproductId(newProductId);
+  };
+
+  const submitInput = () => {
+    //submit the form when the user clicks on the search icon
+    document.querySelector(".search-form").submit();
   };
 
   const clearInput = () => {
@@ -65,9 +82,7 @@ const NavbarSec = ({ placeholder, data }) => {
             <Link className="nav-link"  to="/">Home</Link>
             <Link className="nav-link"  to="/about">About</Link>
             <Link className="nav-link"  to="/products">Products</Link>
-          </Nav>
-
-          <form className="form" onSubmit={handleSubmit}>
+            <form className="form" onSubmit={handleSubmit}>
             <div className="search_container">
               <div className="searchInputs">
                 <input
@@ -79,7 +94,9 @@ const NavbarSec = ({ placeholder, data }) => {
                 />
                 <div className="searchIcon">
                   {filteredData.length === 0 ? (
-                    <Search />
+                    <button type="submit" className="submit_btn">
+                      <Search />
+                    </button>
                   ) : (
                     <Close id="clearBtn" onClick={clearInput} />
                   )}
@@ -92,9 +109,14 @@ const NavbarSec = ({ placeholder, data }) => {
                       <div
                         className="dataItem"
                         key={key}
-                        onClick={chosenProduct.bind(this, product.name)}
+                        onClick={chosenProduct}
                       >
-                        <span>{product.name}</span>
+                        <img
+                          src={product.productimage}
+                          alt="productimage"
+                          className="search_image"
+                        />
+                        <p className="search_description">{product.name}</p>
                       </div>
                     );
                   })}
@@ -102,6 +124,7 @@ const NavbarSec = ({ placeholder, data }) => {
               )}
             </div>
           </form>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
