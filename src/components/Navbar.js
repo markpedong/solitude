@@ -19,8 +19,7 @@ const NavbarSec = ({ placeholder, data }) => {
 
     //navigate to product page
     navigate(`/products/${productId}`);
-    setwordEntered("");
-    setFilteredData([]);
+    clearInput();
   };
 
   //add active className to the navbar link that is clicked
@@ -55,11 +54,10 @@ const NavbarSec = ({ placeholder, data }) => {
 
     //set the productId state to the newProductId
     setproductId(newProductId);
-  };
 
-  const submitInput = () => {
-    //submit the form when the user clicks on the search icon
-    document.querySelector(".search-form").submit();
+    navigate(`/products/${newProductId}`);
+
+    clearInput();
   };
 
   const clearInput = () => {
@@ -106,10 +104,11 @@ const NavbarSec = ({ placeholder, data }) => {
                 <div className="dataResults">
                   {filteredData.slice(0, 15).map((product, key) => {
                     return (
-                      <div
+                      <Link
                         className="dataItem"
                         key={key}
                         onClick={chosenProduct}
+                        to={`/products/${product.id}`}
                       >
                         <img
                           src={product.productimage}
@@ -117,7 +116,7 @@ const NavbarSec = ({ placeholder, data }) => {
                           className="search_image"
                         />
                         <p className="search_description">{product.name}</p>
-                      </div>
+                      </Link>
                     );
                   })}
                 </div>
