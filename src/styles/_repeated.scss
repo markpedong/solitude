@@ -1,8 +1,3 @@
-.home_description,
-.featured_title {
-  max-width: 100%;
-}
-
 .link-header,
 .card-title {
   font-family: "Poppins", sans-serif;
@@ -34,9 +29,9 @@
   z-index: 100;
 }
 
+.landing_image,
 .card_image,
-.img_product,
-.landing_page {
+.img_product {
   width: 100%;
   background-size: cover;
   background-position: center;

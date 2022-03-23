@@ -1,8 +1,8 @@
+import { Close, Search } from "@mui/icons-material";
 import React, { useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/_navbar.scss";
-import { Search, Close, IconButton } from "@mui/icons-material";
 
 const NavbarSec = ({ placeholder, data }) => {
   let navigate = useNavigate();
