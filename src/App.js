@@ -9,12 +9,13 @@ import NavbarSec from "./components/Navbar";
 import ProductDetails from "./components/ProductDetails";
 import Products from "./components/Products";
 import "./styles/main.scss";
+import ProductsData from "./data/products";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <NavbarSec />
+        <NavbarSec placeholder={"Search for a Product!"} data={ProductsData} />
         <Routes>
           <Route path="*" element={<Home />} />
           <Route path="/about" element={<About />} />

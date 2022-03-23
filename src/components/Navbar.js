@@ -1,44 +1,20 @@
 import React, { useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import products from "../data/products";
 import "../styles/_navbar.scss";
+import { Search, Close } from "@mui/icons-material";
 
-const NavbarSec = () => {
+const NavbarSec = ({ placeholder, data }) => {
   let navigate = useNavigate();
 
-  //print the value of search field on change
-  const [search, setSearch] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [wordEntered, setwordEntered] = useState("");
 
-  //get the value of search on submit of the form
-
-  const handleOnHover = (res) => {
-    //clear setSearch value
-    if (!res.name) return;
-
-    setSearch(res.name);
-  };
-
-  function handleOnSearch(res) {
-    return res;
-  }
-
+  //handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!search) return;
-
-    navigate(`/products/${search}`);
-
-    search = "";
-  };
-
-  const formatResult = (item) => {
-    return (
-      <>
-        <span className="search_suggestion">{item.name}</span>
-      </>
-    );
+    console.log(wordEntered);
   };
 
   //add active className to the navbar link that is clicked
@@ -50,9 +26,29 @@ const NavbarSec = () => {
     e.target.classList.add("active");
   };
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const handleFilter = (e) => {
+    const searchWord = e.target.value;
+    setwordEntered(searchWord);
+    const newFilter = data.filter((value) => {
+      return value.name.toLowerCase().includes(searchWord.toLowerCase());
+    });
 
-  console.log(searchTerm);
+    if (searchWord === "") {
+      setFilteredData([]);
+    } else {
+      setFilteredData(newFilter);
+    }
+  };
+
+  const chosenProduct = (e) => {
+    setwordEntered(e);
+    setFilteredData([]);
+  };
+
+  const clearInput = () => {
+    setFilteredData([]);
+    setwordEntered("");
+  };
 
   return (
     <Navbar bg="light" expand="lg">
@@ -73,37 +69,37 @@ const NavbarSec = () => {
 
           <form className="form" onSubmit={handleSubmit}>
             <div className="search_container">
-              {/* <ReactSearchAutocomplete
-                items={items}
-                formatResult={formatResult}
-                autoFocus
-                onHover={handleOnHover}
-                c
-                onSearch={handleOnSearch}
-              /> */}
-              <input
-                type="text"
-                className="input_search"
-                placeholder="Search..."
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              {products
-                .filter((value) => {
-                  if (searchTerm == "") {
-                    return value;
-                  } else if (
-                    value.id.toLowerCase().includes(searchTerm.toLowerCase())
-                  ) {
-                    return value;
-                  }
-                })
-                .map((value, index) => {
-                  return (
-                    <div className="product_id" key={index}>
-                      <p> {value.id} </p>
-                    </div>
-                  );
-                })}
+              <div className="searchInputs">
+                <input
+                  type="text"
+                  value={wordEntered}
+                  placeholder={placeholder}
+                  className="input_search"
+                  onChange={handleFilter}
+                />
+                <div className="searchIcon">
+                  {filteredData.length === 0 ? (
+                    <Search />
+                  ) : (
+                    <Close id="clearBtn" onClick={clearInput} />
+                  )}
+                </div>
+              </div>
+              {filteredData.length != 0 && (
+                <div className="dataResults">
+                  {filteredData.slice(0, 15).map((product, key) => {
+                    return (
+                      <div
+                        className="dataItem"
+                        key={key}
+                        onClick={chosenProduct.bind(this, product.name)}
+                      >
+                        <span>{product.name}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </form>
         </Navbar.Collapse>
