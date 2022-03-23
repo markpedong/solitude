@@ -66,8 +66,8 @@ const NavbarSec = ({ placeholder, data }) => {
   };
 
   return (
-    <Navbar bg="light" expand="lg">
-      <Container className="navbar_container">
+    <Navbar variant="dark" expand="lg">
+      <Container fluid="lg" className="navbar_container">
         <Navbar.Brand>Solitude</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav">
           <span className="toggler-icon top-bar"></span>
