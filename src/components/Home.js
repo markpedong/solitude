@@ -1,18 +1,18 @@
+import { Container, Col, Row, Image } from "react-bootstrap";
 import "../styles/_home.scss";
 
 const Home = () => {
   return (
-    <div className="content container" id="home_container">
-      <div className="home_title_container">
-        <p className="home_title">Affiliate Marketing</p>
-        <p className="home_description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto
-          similique enim quia placeat optio delectus beatae, dolor voluptates
-          natus inventore aperiam officia? Amet fugiat accusantium a natus,
-          quidem ea et?
-        </p>
-      </div>
-    </div>
+    <Container>
+      <Row>
+        <Col>
+          <Image
+            className="landing_image"
+            src={require("../images/landingpage.jpg")}
+          />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
