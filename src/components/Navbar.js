@@ -22,15 +22,6 @@ const NavbarSec = ({ placeholder, data }) => {
     clearInput();
   };
 
-  //add active className to the navbar link that is clicked
-  const handleClick = (e) => {
-    const links = document.querySelectorAll(".nav-link");
-    links.forEach((link) => {
-      link.classList.remove("active");
-    });
-    e.target.classList.add("active");
-  };
-
   const handleFilter = (e) => {
     const searchWord = e.target.value;
     setwordEntered(searchWord);
@@ -76,7 +67,7 @@ const NavbarSec = ({ placeholder, data }) => {
         </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
           {/* prettier-ignore */}
-          <Nav className="ms-auto" onClick={handleClick}>
+          <Nav className="ms-auto">
             <Link className="nav-link"  to="/">Home</Link>
             <Link className="nav-link"  to="/about">About</Link>
             <Link className="nav-link"  to="/products">Products</Link>
