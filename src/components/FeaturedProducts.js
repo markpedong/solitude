@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Card, Container, Row, Col } from "react-bootstrap";
-import "../styles/_products.scss";
+import "../styles/_featuredProducts.scss";
 import products from "../data/products.json";
 
 const FeaturedProducts = () => {
