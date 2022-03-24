@@ -1,6 +1,11 @@
+.product_link {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
 .products_container {
   font-family: "Poppins", sans-serif;
-  margin-top: 2rem;
+  margin: 2rem 0rem;
   position: relative;
 }
 
@@ -12,11 +17,16 @@
   border-radius: 0.9rem;
 }
 
+.description_container .container {
+  padding: 0;
+}
+
 .allproducts_maincontainer,
 .description_container,
 .image_container {
   padding: 0;
 }
+
 .description_container {
   margin: 0.5rem 0rem;
 }

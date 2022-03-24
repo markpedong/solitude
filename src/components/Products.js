@@ -1,28 +1,19 @@
-import { Route, Routes } from "react-router-dom";
-import FeaturedProducts from "./FeaturedProducts";
-import AllProducts from "./AllProducts";
-import { Container, Row, Col, Image } from "react-bootstrap";
-import "../styles/_products.scss";
-import * as React from "react";
-import "glider-js/glider.min.css";
-import products from "../data/products.json";
-import { useState, useEffect } from "react";
 import { ChevronLeftSharp, ChevronRightSharp } from "@mui/icons-material";
+import { useEffect, useState } from "react";
+import { Col, Container, Image, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import productPageImage from "../data/productpageimage.json";
+import products from "../data/products.json";
+import "../styles/_products.scss";
+import "../styles/_allproducts.scss";
 
 const Products = () => {
   const [current, setCurrent] = useState(0);
 
   //prettier-ignore
-  const currentProduct = products.map((product) => product.productimage);
+  const currentProduct = productPageImage.map((product) => product.productimage);
+
   const length = currentProduct.length;
-
-  // run nextImage function after 2 seconds after loading the page
-
-  useEffect(() => {
-    setTimeout(() => {
-      nextImage();
-    }, 2000);
-  }, []);
 
   const nextImage = () => {
     setCurrent(current === length - 1 ? 0 : current + 1);
@@ -31,6 +22,18 @@ const Products = () => {
   const prevImage = () => {
     setCurrent(current === 0 ? length - 1 : current - 1);
   };
+
+  //run nextImage function every 3 seconds until the length of the array is reached
+  useEffect(() => {
+    const interval = setInterval(nextImage, 3000);
+    return () => clearInterval(interval);
+  }, [current]);
+
+  //sort the products array alphabetically
+  const sliceProducts = products.sort((a, b) =>
+    a.id > b.id ? 1 : b.id > a.id ? -1 : 0
+  );
+
   return (
     <Container fluid="lg" className="product_main_container">
       <Row>
@@ -47,16 +50,16 @@ const Products = () => {
           <Container className="product_image_container">
             <ChevronLeftSharp className="left-button" onClick={prevImage} />
             <ChevronRightSharp className="right-button" onClick={nextImage} />
-            {currentProduct.map((slide, index) => {
+            {productPageImage.map((slide, index) => {
               return (
                 <Container
-                  className={index === current ? "slide active " : "slide "}
+                  className={index === current ? "slide active" : "slide"}
                   key={index}
                 >
                   {index === current && (
                     <Image
                       className="product_image"
-                      src={slide}
+                      src={slide.link}
                       alt="product_image"
                     />
                   )}
@@ -70,9 +73,10 @@ const Products = () => {
           <Container className="allproducts_maincontainer">
             <Row xs={2} sm={3} md={4} lg={5} xl={6} xxl={7}>
               {products.map((product) => {
+                // prettier-ignore
                 return (
-                  // prettier-ignore
                   <Col className="products_container" key={product.id}>
+                    <Link to={`/products/${product.id}`} className="product_link">
                     <Image className="product_mainimage" src={product.productimage} />
                     <Container className="description_container">
                       <p className="description_header">{product.name}</p>
@@ -81,6 +85,7 @@ const Products = () => {
                         {product.linksimages.map((image) => <Image key={image.id} className="image_shop" src={image.imagelink}/> )}
                       </Container>
                     </Container>
+                    </Link>
                   </Col>
                 );
               })}
