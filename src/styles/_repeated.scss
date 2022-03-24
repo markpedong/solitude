@@ -1,20 +1,9 @@
-.link-header,
-.card-title {
-  font-family: "Poppins", sans-serif;
-}
-
 .card-description,
 .link-header {
   font-size: var(--font-size-2);
 }
 
-.left-arrow,
-.right-arrow {
-  font-size: 3rem;
-}
-
-.rest_image_container,
-.main_image_container {
+.mainimage_container {
   position: relative;
 }
 
@@ -23,10 +12,10 @@
   cursor: pointer;
   position: absolute;
   top: 50%;
-  color: black;
-  background-color: white;
-  border-radius: var(--radius-round);
+  color: rgb(255, 255, 255);
   z-index: 100;
+  background-color: black;
+  border-radius: var(--radius-round);
 }
 
 .product_image,
@@ -39,6 +28,7 @@
   object-fit: cover;
   object-position: center;
 }
+
 @media screen and (max-width: 992px) {
   .left-arrow,
   .right-arrow {

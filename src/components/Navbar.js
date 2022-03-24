@@ -10,6 +10,7 @@ const NavbarSec = ({ placeholder, data }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setwordEntered] = useState("");
   const [productId, setproductId] = useState("");
+  const [expanded, setExpanded] = useState(false);
 
   //handle submit
   const handleSubmit = (e) => {
@@ -56,21 +57,31 @@ const NavbarSec = ({ placeholder, data }) => {
     setwordEntered("");
   };
 
+  const handleClick = () => {
+    const nav = document.querySelectorAll(".nav-link");
+    nav.forEach((link) => {
+      setExpanded(false);
+    });
+  };
+
   return (
-    <Navbar variant="dark" expand="lg">
+    <Navbar variant="dark" expand="lg" expanded={expanded}>
       <Container fluid="lg" className="navbar_container">
         <Navbar.Brand>Solitude</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav">
+        <Navbar.Toggle
+          aria-controls="basic-navbar-nav"
+          onClick={() => setExpanded(expanded ? false : "expanded")}
+        >
           <span className="toggler-icon top-bar"></span>
           <span className="toggler-icon middle-bar"></span>
           <span className="toggler-icon bottom-bar"></span>
         </Navbar.Toggle>
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Collapse id="basic-navbar-nav" onClick={handleClick}>
           {/* prettier-ignore */}
           <Nav className="ms-auto">
-            <Link className="nav-link"  to="/">Home</Link>
-            <Link className="nav-link"  to="/about">About</Link>
-            <Link className="nav-link"  to="/products">Products</Link>
+            <Link  className="nav-link" to="/">Home</Link>
+            <Link  className="nav-link" to="/about">About</Link>
+            <Link  className="nav-link" to="/products">Products</Link>
             <form className="form" onSubmit={handleSubmit}>
             <div className="search_container">
               <div className="searchInputs">

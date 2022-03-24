@@ -78,13 +78,12 @@
 }
 
 .navbar-nav {
-  align-items: center;
-
-  a {
-    margin: 0rem 0.5rem;
-  }
+  text-align: center;
+  margin-top: 2rem;
 }
-
+.nav-link {
+  margin: 0rem 0.5rem;
+}
 .active {
   opacity: 1;
   transition: all 0.5s ease;
@@ -205,6 +204,10 @@
 
   .search_description {
     justify-self: start;
+  }
+
+  .nav-link {
+    height: 80px;
   }
 }
 
