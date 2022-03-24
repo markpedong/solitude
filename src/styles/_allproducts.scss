@@ -1,37 +1,94 @@
-.all_card_outer_container {
-  padding: 0.1rem;
-}
-.all_card_container {
-  display: flex;
-  height: 100%;
-}
-
-.all_card_body {
-  padding: 0.2rem;
+.products_container {
+  font-family: "Poppins", sans-serif;
+  margin-top: 2rem;
   position: relative;
 }
 
-.all_card_image_container {
+.allproducts_container {
+  margin-top: 3rem;
+}
+
+.product_mainimage {
+  border-radius: 0.9rem;
+}
+
+.allproducts_maincontainer,
+.description_container,
+.image_container {
   padding: 0;
-  display: flex;
-  justify-content: flex-start;
+}
+.description_container {
+  margin: 0.5rem 0rem;
+}
+.description_header {
+  font-size: 1.2rem;
 }
 
-.all_card_image_link {
-  height: 1.5rem;
+.description_details {
+  font-size: 1rem;
+  word-wrap: break-word;
+  height: 100%;
+}
+
+.allproducts_header {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-transform: capitalize;
+  text-align: center;
+  max-width: 100%;
+}
+
+.image_container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  gap: 5px;
+}
+
+.image_shop {
+  position: absolute;
+  bottom: 0px;
+  left: 12px;
+  border-radius: 4px;
   width: 5rem;
-  // position: absolute;
-  // bottom: 5px;
-  // left: 0px;
+  background-color: white;
 }
 
-@media screen and (min-width: 576px) {
-  .all_card_description {
-    margin-bottom: 2rem;
-  }
-  .all_card_image_link {
-    position: absolute;
-    bottom: 5px;
-    left: 0px;
-  }
-}
+// .all_card_outer_container {
+//   padding: 0.1rem;
+// }
+// .all_card_container {
+//   display: flex;
+//   height: 100%;
+// }
+
+// .all_card_body {
+//   padding: 0.2rem;
+//   position: relative;
+// }
+
+// .all_card_image_container {
+//   padding: 0;
+//   display: flex;
+//   justify-content: flex-start;
+// }
+
+// .all_card_image_link {
+//   height: 1.5rem;
+//   width: 5rem;
+//   // position: absolute;
+//   // bottom: 5px;
+//   // left: 0px;
+// }
+
+// @media screen and (min-width: 576px) {
+//   .all_card_description {
+//     margin-bottom: 2rem;
+//   }
+//   .all_card_image_link {
+//     position: absolute;
+//     bottom: 5px;
+//     left: 0px;
+//   }
+// }

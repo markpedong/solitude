@@ -5,7 +5,7 @@ import { Container, Row, Col, Image } from "react-bootstrap";
 import "../styles/_products.scss";
 import * as React from "react";
 import "glider-js/glider.min.css";
-import productDetails from "../data/products.json";
+import products from "../data/products.json";
 import { useState, useEffect } from "react";
 import { ChevronLeftSharp, ChevronRightSharp } from "@mui/icons-material";
 
@@ -13,7 +13,7 @@ const Products = () => {
   const [current, setCurrent] = useState(0);
 
   //prettier-ignore
-  const currentProduct = productDetails.map((product) => product.productimage);
+  const currentProduct = products.map((product) => product.productimage);
   const length = currentProduct.length;
 
   // run nextImage function after 2 seconds after loading the page
@@ -43,7 +43,7 @@ const Products = () => {
             in our site!
           </p>
         </Col>
-        <Col className="product_image_main" lg={6}>
+        <Col xs={12} lg={6} className="product_image_main">
           <Container className="product_image_container">
             <ChevronLeftSharp className="left-button" onClick={prevImage} />
             <ChevronRightSharp className="right-button" onClick={nextImage} />
@@ -65,44 +65,31 @@ const Products = () => {
             })}
           </Container>
         </Col>
+        <Col xs={12} className="allproducts_container">
+          <p className="allproducts_header">all products</p>
+          <Container className="allproducts_maincontainer">
+            <Row xs={2} sm={3} md={4} lg={5} xl={6} xxl={7}>
+              {products.map((product) => {
+                return (
+                  // prettier-ignore
+                  <Col className="products_container" key={product.id}>
+                    <Image className="product_mainimage" src={product.productimage} />
+                    <Container className="description_container">
+                      <p className="description_header">{product.name}</p>
+                      <p className="description_details">{product.shortdescription}</p>
+                      <Container className="image_container">
+                        {product.linksimages.map((image) => <Image key={image.id} className="image_shop" src={image.imagelink}/> )}
+                      </Container>
+                    </Container>
+                  </Col>
+                );
+              })}
+            </Row>
+          </Container>
+        </Col>
       </Row>
     </Container>
   );
 };
 
 export default Products;
-
-{
-  productDetails.map((product) => {
-    return (
-      <Image
-        src={product.productimage}
-        className="product_image"
-        key={product.id}
-      />
-    );
-  });
-}
-
-// <div className="container" id="products_container">
-//
-
-//       <div className="home_header_container">
-//         <p className="featured_title">
-//           <span>Featured Products</span>
-//         </p>
-//         <Routes>
-//           <Route path="*" element={<FeaturedProducts />} />
-//         </Routes>
-//       </div>
-
-//       <div className="home_header_container">
-//         <p className="featured_title">
-//           <span>All Products</span>
-//         </p>
-
-//         <Routes>
-//           <Route path="*" element={<AllProducts />} />
-//         </Routes>
-//       </div>
-//     </div>
