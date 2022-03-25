@@ -3,6 +3,15 @@
   color: white;
 }
 
+.product_image,
+.landing_image {
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  object-fit: cover;
+  object-position: center;
+}
+
 .product_title_container {
   font-family: "Poppins", sans-serif;
 }

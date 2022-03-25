@@ -77,19 +77,28 @@ const ProductDetails = () => {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 3,
+    slidesToShow: 5,
+    slidesToScroll: 5,
     initialSlide: 0,
     adaptiveHeight: true,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 450,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          infinite: false,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 5,
+          infinite: false,
           dots: true,
         },
       },
@@ -100,7 +109,7 @@ const ProductDetails = () => {
     // prettier-ignore
     <Container fluid="lg" className="productdetails_container">
       <Row xs={1} lg={2}>
-        <Col className="p-0">
+        <Col className="p-0 imagecol-container">
           <Container className="mainimage_container">
             <KeyboardDoubleArrowLeft fontSize="large" className="left-arrow" onClick={prevImage}/>
             <KeyboardDoubleArrowRight fontSize="large"  className="right-arrow"  onClick={nextImage}/>
@@ -129,7 +138,7 @@ const ProductDetails = () => {
             <p className="details_title">{currentProduct.name}</p>
             <p className="details_description">{currentProduct.longdescription}</p>
           </Container>
-          <Container className="orig_price_container"> Original Price: ₽<span className="orig_price">{currentProduct.origprice}</span></Container>
+          <Container className="orig_price_container"> Original Price: <span className="orig_price"> ₽{currentProduct.origprice}</span></Container>
           {currentProduct.detailslinks.map((details) => {
               return (
                 <Container className="links_details_container" key={details.id}>
@@ -137,7 +146,7 @@ const ProductDetails = () => {
                     <Image className="link_image" src={details.imagelink} />
                   </Container>
                   <Container className="price_container_link">
-                    ₽<span>{details.discountprice}</span>
+                    <span className="discount_price">₽{details.discountprice}</span>
                   </Container>
                   <Container className="shop_link_container">
                     <a className="shop_link" target="_blank" href={details.shoplink}>{details.shoplink}</a>
