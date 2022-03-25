@@ -24,7 +24,7 @@
 
 .connect_container,
 .location_container {
-  margin-top: 15rem;
+  margin-top: 13rem;
 }
 
 .connect_with_us,
@@ -64,6 +64,15 @@
 
   .connect_container,
   .location_container {
-    margin-top: 9rem;
+    margin-top: 4.5rem;
+  }
+
+  .location_container_details {
+    display: flex;
+    align-items: center;
+
+    p {
+      margin-bottom: 0;
+    }
   }
 }
