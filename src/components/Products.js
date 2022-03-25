@@ -30,7 +30,7 @@ const Products = () => {
   }, [current]);
 
   //sort the products array alphabetically
-  const sliceProducts = products.sort((a, b) =>
+  const sortedProducts = products.sort((a, b) =>
     a.id > b.id ? 1 : b.id > a.id ? -1 : 0
   );
 

@@ -16,6 +16,8 @@ const NavbarSec = ({ placeholder, data }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    setExpanded(false);
+
     if (!wordEntered || !productId === "") return;
 
     //navigate to product page
@@ -59,9 +61,8 @@ const NavbarSec = ({ placeholder, data }) => {
 
   const handleClick = () => {
     const nav = document.querySelectorAll(".nav-link");
-    nav.forEach((link) => {
-      setExpanded(false);
-    });
+
+    if (nav) setExpanded(false);
   };
 
   return (
@@ -70,7 +71,7 @@ const NavbarSec = ({ placeholder, data }) => {
         <Navbar.Brand>Solitude</Navbar.Brand>
         <Navbar.Toggle
           aria-controls="basic-navbar-nav"
-          onClick={() => setExpanded(expanded ? false : "expanded")}
+          onClick={() => setExpanded(expanded ? false : true)}
         >
           <span className="toggler-icon top-bar"></span>
           <span className="toggler-icon middle-bar"></span>
@@ -82,51 +83,51 @@ const NavbarSec = ({ placeholder, data }) => {
             <Link  className="nav-link" to="/">Home</Link>
             <Link  className="nav-link" to="/about">About</Link>
             <Link  className="nav-link" to="/products">Products</Link>
-            <form className="form" onSubmit={handleSubmit}>
-            <div className="search_container">
-              <div className="searchInputs">
-                <input
-                  type="text"
-                  value={wordEntered}
-                  placeholder={placeholder}
-                  className="input_search"
-                  onChange={handleFilter}
-                />
-                <div className="searchIcon">
-                  {filteredData.length === 0 ? (
-                    <button type="submit" className="submit_btn">
-                      <Search />
-                    </button>
-                  ) : (
-                    <Close id="clearBtn" onClick={clearInput} />
-                  )}
-                </div>
-              </div>
-              {filteredData.length != 0 && (
-                <div className="dataResults">
-                  {filteredData.slice(0, 15).map((product, key) => {
-                    return (
-                      <Link
-                        className="dataItem"
-                        key={key}
-                        onClick={chosenProduct}
-                        to={`/products/${product.id}`}
-                      >
-                        <img
-                          src={product.productimage}
-                          alt="productimage"
-                          className="search_image"
-                        />
-                        <p className="search_description">{product.name}</p>
-                      </Link>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          </form>
           </Nav>
         </Navbar.Collapse>
+        <form className="form" onSubmit={handleSubmit}>
+          <div className="search_container">
+            <div className="searchInputs">
+              <input
+                type="text"
+                value={wordEntered}
+                placeholder={placeholder}
+                className="input_search"
+                onChange={handleFilter}
+              />
+              <div className="searchIcon">
+                {filteredData.length === 0 ? (
+                  <button type="submit" className="submit_btn">
+                    <Search />
+                  </button>
+                ) : (
+                  <Close id="clearBtn" onClick={clearInput} />
+                )}
+              </div>
+            </div>
+            {filteredData.length != 0 && (
+              <div className="dataResults">
+                {filteredData.slice(0, 15).map((product, key) => {
+                  return (
+                    <Link
+                      className="dataItem"
+                      key={key}
+                      onClick={chosenProduct}
+                      to={`/products/${product.id}`}
+                    >
+                      <img
+                        src={product.productimage}
+                        alt="productimage"
+                        className="search_image"
+                      />
+                      <p className="search_description">{product.name}</p>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </form>
       </Container>
     </Navbar>
   );

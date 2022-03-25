@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <NavbarSec placeholder={"Search for a Product!"} data={ProductsData} />
+        <NavbarSec placeholder={"Search"} data={ProductsData} />
         <Routes>
           <Route path="*" element={<Home />} />
           <Route path="/about" element={<About />} />

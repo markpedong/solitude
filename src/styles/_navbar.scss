@@ -181,12 +181,21 @@
   background: none;
 }
 
+.form,
+.navbar-brand {
+  margin-block-start: auto;
+}
+
 @media screen and (max-width: 992px) {
-  .form {
-    width: 100%;
+  .navbar-collase .collapse {
     position: relative;
   }
 
+  .form {
+    width: 100%;
+    margin-block-start: 1rem;
+    bottom: 0px;
+  }
   .dataResults {
     width: 100%;
   }
