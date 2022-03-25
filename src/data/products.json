@@ -34,5 +34,29 @@
         "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png"
       }
     ]
+  },
+  {
+    "id": "set-pet-wet-wipes",
+    "name": "Pet Wet Wipes",
+    "shortdescription": "Keeping the outside of the eyes clean helps to reduce the risk of eye irritation.",
+    "productimage": "https://cf.shopee.ph/file/2e2153a8224155a798de974f7185a4b7",
+    "linksimages": [
+      {
+        "id": "shopee-image-link",
+        "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png"
+      }
+    ]
+  },
+  {
+    "id": "cat-kitten-litter-box",
+    "name": "Kitten Litter Box",
+    "shortdescription": "High polished finish that is odor and stain resistant and easy to clean",
+    "productimage": "https://cf.shopee.ph/file/403f91f607634c06b9e536f0d5b8320d",
+    "linksimages": [
+      {
+        "id": "shopee-image-link",
+        "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png"
+      }
+    ]
   }
 ]

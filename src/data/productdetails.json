@@ -100,5 +100,81 @@
         "shoplink": "https://bit.ly/37H59cV"
       }
     ]
+  },
+  {
+    "id": "set-pet-wet-wipes",
+    "name": "200PCS/Set Pet Wet Wipes Dog Eye Cat Tear Cleaning Wipes",
+    "longdescription": "Make pets beautiful, it helps remove tear marks and improve appearance. Easy to use: Use a separate pad in each area to gently wipe each area, which is hygienic to avoid cross-contamination.  Daily use: Keeping the outside of the eyes clean helps to reduce the risk of eye irritation and itching caused by foreign bodies.",
+    "productimage": [
+      {
+        "image": "https://cf.shopee.ph/file/47dbd722758aa66ccec60d315c9cc98f"
+      },
+      {
+        "image": "https://cf.shopee.ph/file/e4576c8deafce942de7a46dbefdd052d"
+      },
+      {
+        "image": "https://cf.shopee.ph/file/b06dfc1676e73676f47522faa1c71cf0"
+      },
+      {
+        "image": "https://cf.shopee.ph/file/2389e6816efdd4e070de13797e42e72e"
+      },
+      {
+        "image": "https://cf.shopee.ph/file/2e2153a8224155a798de974f7185a4b7"
+      }
+    ],
+
+    "linksimages": [
+      {
+        "id": "image-1",
+        "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png"
+      }
+    ],
+    "origprice": 200,
+    "detailslinks": [
+      {
+        "id": "link-1",
+        "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png",
+        "discountprice": 119,
+        "shoplink": "https://bit.ly/3KZpvwp"
+      }
+    ]
+  },
+  {
+    "id": "cat-kitten-litter-box",
+    "name": "Cat Kitten Litter Box Anti Spill Semi-enclosed Open Deodorant",
+    "longdescription": "Colorful kitty cat starter kit perfect for new pet parents, Includes a 40*35.5*12 CM litter pan and scooper. High polished finish that is odor and stain resistant and easy to clean",
+    "productimage": [
+      {
+        "image": "https://cf.shopee.ph/file/403f91f607634c06b9e536f0d5b8320d"
+      },
+      {
+        "image": "https://cf.shopee.ph/file/afff659fa0ca8b55625465204e773ee0"
+      },
+      {
+        "image": "https://cf.shopee.ph/file/7c6912ecd03b0c47c31d4ea996ca392a"
+      },
+      {
+        "image": "https://cf.shopee.ph/file/ddc0363eac618f77070a51566ee2ceaf"
+      },
+      {
+        "image": "https://cf.shopee.ph/file/8dae3cfa3bdf43704d0ff0f4b0b01b6f"
+      }
+    ],
+
+    "linksimages": [
+      {
+        "id": "image-1",
+        "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png"
+      }
+    ],
+    "origprice": "250-300",
+    "detailslinks": [
+      {
+        "id": "link-1",
+        "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png",
+        "discountprice": "155-215",
+        "shoplink": "https://bit.ly/3JpoWvs"
+      }
+    ]
   }
 ]
