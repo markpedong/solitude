@@ -58,5 +58,89 @@
         "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png"
       }
     ]
+  },
+  {
+    "id": "obsidian-stone-bracelet",
+    "name": "Obsidian Stone Bracelet",
+    "shortdescription": "",
+    "productimage": "https://cf.shopee.ph/file/ec88296032fe981ec24a852397f96f42",
+    "linksimages": [
+      {
+        "id": "shopee-image-link",
+        "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png"
+      }
+    ]
+  },
+  {
+    "id": "constellation-leather-bracelet",
+    "name": "Constellation Leather Bracelet",
+    "shortdescription": "Made of qualight split leather, alloy",
+    "productimage": "https://cf.shopee.ph/file/fdc9f76d549435e95c91987aa2388b96",
+    "linksimages": [
+      {
+        "id": "shopee-image-link",
+        "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png"
+      }
+    ]
+  },
+  {
+    "id": "driving-mercury-lens",
+    "name": "Driving Mercury Lens",
+    "shortdescription": "",
+    "productimage": "https://cf.shopee.ph/file/2e640ae8defc7355d838371c772e2874",
+    "linksimages": [
+      {
+        "id": "shopee-image-link",
+        "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png"
+      }
+    ]
+  },
+  {
+    "id": "classic-sunglasses",
+    "name": "Classic Sunglasses",
+    "shortdescription": "It can ensure safe and undamaged during transportation",
+    "productimage": "https://cf.shopee.ph/file/c46c40937408e9cb81d51290b22bb045",
+    "linksimages": [
+      {
+        "id": "shopee-image-link",
+        "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png"
+      }
+    ]
+  },
+  {
+    "id": "personal-driving-shades",
+    "name": "Personal Driving Shades",
+    "shortdescription": "",
+    "productimage": "https://cf.shopee.ph/file/73dcf62867255081c836ed1b22b3cfe2",
+    "linksimages": [
+      {
+        "id": "shopee-image-link",
+        "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png"
+      }
+    ]
+  },
+  {
+    "id": "nike-men-watch",
+    "name": "Nike Men Watch",
+    "shortdescription": "",
+    "productimage": "https://cf.shopee.ph/file/c3e0122fd80f076f5a3759dcf220eda0",
+    "linksimages": [
+      {
+        "id": "shopee-image-link",
+        "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png"
+      }
+    ]
+  },
+  {
+    "id": "fashion-leather-wallet",
+    "name": "Fashion Leather Wallet",
+    "shortdescription": "",
+    "productimage": "https://cf.shopee.ph/file/91c9733dc0b492295e0d5f7467fed9e2",
+    "linksimages": [
+      {
+        "id": "shopee-image-link",
+        "imagelink": "https://www.freepnglogos.com/uploads/shopee-logo/logo-shopee-png-images-download-shopee-1.png"
+      }
+    ]
   }
 ]
