@@ -2,38 +2,27 @@ import { createStyles } from "@mantine/core";
 
 export const LandingStyles = createStyles((theme) => ({
   LandingContainer: {
-    [theme.fn.smallerThan("md")]: {
-      background:
-        theme.colorScheme === "dark"
-          ? "linear-gradient(180deg, rgb(15,18,28) 67%, rgba(0, 0, 0, 1) 33%)"
-          : "linear-gradient(180deg, #dee2e6 67%, rgba(0, 0, 0, 1) 33%)",
-    },
-    [theme.fn.largerThan("md")]: {
-      background:
-        theme.colorScheme === "dark"
-          ? "linear-gradient(100deg, rgb(15,18,28) 48%, rgba(0, 0, 0, 1) 48%)"
-          : "linear-gradient(100deg, #dee2e6 48%, rgba(0, 0, 0, 1) 48%)",
-    },
+    backgroundColor: "black",
+    position: "absolute",
+    width: "100%",
+    zIndex: 1,
   },
 
   Navbar: {
+    color: "white",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-
-    [theme.fn.smallerThan("md")]: {
-      background: "black",
-    },
+    height: "4rem",
   },
 
   Dropdown: {
     position: "absolute",
-    top: "76px",
+    top: "4rem",
     left: "0",
     right: "0",
     zIndex: 1,
-    color: theme.colorScheme === "dark" ? "white" : "black",
-    backgroundColor: theme.colorScheme === "dark" ? "black" : "#dee2e6",
+    backgroundColor: "black",
     width: "100vw",
     textAlign: "center",
     fontWeight: "bold",
@@ -44,11 +33,14 @@ export const LandingStyles = createStyles((theme) => ({
   },
 
   Links: {
-    color: "white",
-
     [theme.fn.smallerThan("md")]: {
       display: "none",
     },
+  },
+
+  Link: {
+    color: "white",
+    textDecoration: "none",
   },
 
   Burger: {
@@ -72,37 +64,32 @@ export const LandingStyles = createStyles((theme) => ({
     },
   },
 
-  LandingTitle: {
-    backgroundColor: "transparent",
-    fontWeight: "bold",
-    color: theme.colorScheme === "dark" ? "white" : "black",
-    paddingTop: "7rem",
-    borderRadius: "0",
+  // Landing Image
+  LandingImage: {
+    position: "relative",
 
-    [theme.fn.smallerThan("md")]: {
+    "::after": {
+      content: '""',
+      backgroundColor: "white",
       position: "absolute",
-      bottom: "0",
-      zIndex: 1,
+      top: 0,
+      left: 0,
       width: "100%",
-      display: "flex",
-      alignItems: "center",
-      flexDirection: "column",
-      paddingBlock: "0.97rem",
-      color: "white",
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-      textAlign: "center",
-    },
-
-    [theme.fn.smallerThan("xs")]: {
-      paddingBlock: "1.4rem",
+      height: "100%",
+      opacity: 0.5,
     },
   },
 
-  Name: {
-    fontSize: "2.5rem",
+  LandingImageText: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  },
 
-    [theme.fn.smallerThan("xs")]: {
-      fontSize: "1.95rem",
-    },
+  LandingTitle: {
+    fontSize: "3rem",
+    fontWeight: "bold",
+    letterSpacing: "1rem",
   },
 }));

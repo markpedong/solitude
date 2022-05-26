@@ -1,5 +1,6 @@
 import {
   ActionIcon,
+  Autocomplete,
   Burger,
   Container,
   Group,
@@ -9,7 +10,7 @@ import {
 } from "@mantine/core";
 import { useBooleanToggle } from "@mantine/hooks";
 import React from "react";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { MdDarkMode, MdLightMode, MdSearch } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { NavLinks } from "../Config/Variable";
 import { BlackText, WhiteText } from "../Styles/StyledComonents/Text";
@@ -23,16 +24,29 @@ export const Navbar = () => {
 
   return (
     <Container fluid px="0" className={classes.LandingContainer} id="home">
-      <Container size="md" px="0">
+      <Container size="lg" px="0">
         <Container fluid className={classes.Navbar}>
-          <Text>Solitude</Text>
+          <Text size="xl">Solitude</Text>
 
           <Group className={classes.Links}>
             {NavLinks?.map((link) => (
-              <Link key={link.name} to={link.link}>
+              <Link className={classes.Link} key={link.name} to={link.link}>
                 <WhiteText>{link.name}</WhiteText>
               </Link>
             ))}
+            <Autocomplete
+              placeholder="Search"
+              icon={<MdSearch size={16} />}
+              data={[
+                "React",
+                "Angular",
+                "Vue",
+                "Next.js",
+                "Riot.js",
+                "Svelte",
+                "Blitz.js",
+              ]}
+            />
             <ActionIcon
               variant="transparent"
               onClick={() => toggleColorScheme()}
@@ -63,14 +77,29 @@ export const Navbar = () => {
                 px="0"
               >
                 {NavLinks?.map((link, index) => (
-                  <Link key={link.name} to={link.link}>
-                    <BlackText key={index}>{link.link}</BlackText>
+                  <Link key={link.name} to={link.link} className={classes.Link}>
+                    <BlackText key={index}>{link.name}</BlackText>
                   </Link>
                 ))}
+                <Autocomplete
+                  placeholder="Search"
+                  icon={<MdSearch size={16} />}
+                  data={[
+                    "React",
+                    "Angular",
+                    "Vue",
+                    "Next.js",
+                    "Riot.js",
+                    "Svelte",
+                    "Blitz.js",
+                  ]}
+                  style={{ paddingInline: "1rem" }}
+                />
                 <ActionIcon
                   variant="transparent"
                   onClick={() => toggleColorScheme()}
                   title="ColorScheme Toggle"
+                  style={{ color: "white" }}
                 >
                   {dark ? <MdLightMode size={18} /> : <MdDarkMode size={18} />}
                 </ActionIcon>

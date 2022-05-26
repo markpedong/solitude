@@ -17,7 +17,9 @@ export const WhiteText = styled(Text)`
   transition: all 0.3s ease;
   cursor: pointer;
   text-transform: capitalize;
+  text-decoration: none;
   font-weight: 500;
+
   &:hover {
     color: black;
     background-color: white;
