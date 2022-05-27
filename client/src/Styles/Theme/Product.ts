@@ -6,6 +6,6 @@ export const ProductStyles = createStyles((theme) => ({
     fontFamily: "Poppins",
   },
   ProductTitle: {
-    marginBottom: "2rem",
+    marginBlock: "2rem",
   },
 }));

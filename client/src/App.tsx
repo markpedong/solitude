@@ -10,6 +10,7 @@ import { Route, Routes } from "react-router-dom";
 import { Landing } from "./Pages/Landing";
 import { About } from "./Pages/About";
 import { Products } from "./Pages/Products";
+import { ProductDetail } from "./Pages/ProductDetail";
 
 export const App = () => {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
@@ -46,6 +47,7 @@ export const App = () => {
             <Route path="/" element={<Landing />} />
             <Route path="/about" element={<About />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
           </Routes>
         </MantineProvider>
       </ColorSchemeProvider>
