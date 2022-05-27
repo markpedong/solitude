@@ -4,11 +4,11 @@ export const NavLinks = [
     name: "home",
   },
   {
-    link: "/about",
-    name: "about",
-  },
-  {
     link: "/products",
     name: "products",
+  },
+  {
+    link: "/about",
+    name: "about",
   },
 ];

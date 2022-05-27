@@ -27,3 +27,9 @@ export const WhiteText = styled(Text)`
     border-radius: 0.5rem;
   }
 `;
+
+export const TitleStyled = styled(Text)`
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: Poppins, sans-serif;
+`;
