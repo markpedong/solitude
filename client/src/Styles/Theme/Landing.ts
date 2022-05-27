@@ -70,7 +70,7 @@ export const LandingStyles = createStyles((theme) => ({
 
     "::after": {
       content: '""',
-      backgroundColor: "white",
+      backgroundColor: theme.colorScheme === "dark" ? "black" : "white",
       position: "absolute",
       top: 0,
       left: 0,
@@ -85,11 +85,11 @@ export const LandingStyles = createStyles((theme) => ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
+    color: theme.colorScheme === "dark" ? "white" : "black",
   },
 
   LandingTitle: {
     fontSize: "3rem",
-    fontWeight: "bold",
-    letterSpacing: "1rem",
+    letterSpacing: "2rem",
   },
 }));

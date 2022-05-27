@@ -13,10 +13,15 @@ export const Landing = () => {
         height="100vh"
       />
       <Box className={classes.LandingImageText}>
-        <Text className={classes.LandingTitle} align="center" mb="xl">
+        <Text
+          className={classes.LandingTitle}
+          weight={600}
+          align="center"
+          mb="xl"
+        >
           SOLITUDE
         </Text>
-        <Text weight={600}>
+        <Text weight={500}>
           Where you can find discounted prices for your favorite online
           products!
         </Text>
