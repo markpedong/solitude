@@ -1,12 +1,6 @@
 import { Box, Container, Grid, Image, Text } from "@mantine/core";
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import {
-  FlexContainer,
-  ProductContainer,
-} from "../Styles/StyledComonents/Container";
-import { TitleStyled } from "../Styles/StyledComonents/Text";
-import { ProductDetails } from "../Styles/Theme/ProductDetail";
+import { useNavigate } from "react-router-dom";
 import {
   EmailIcon,
   EmailShareButton,
@@ -17,9 +11,15 @@ import {
   TwitterShareButton,
 } from "react-share";
 import shopee from "../Images/shopee.svg";
+import {
+  FlexContainer,
+  ProductContainer,
+} from "../Styles/StyledComonents/Container";
+import { TitleStyled } from "../Styles/StyledComonents/Text";
+import { ProductDetails } from "../Styles/Theme/ProductDetail";
 
 export const ProductDetail = () => {
-  const { id } = useParams();
+  // const { id } = useParams();
   const { classes } = ProductDetails();
   const navigate = useNavigate();
 
