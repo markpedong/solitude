@@ -11,4 +11,5 @@ export const FlexContainer = styled(Box)`
   justify-content: start;
   gap: 0.5rem;
   margin-block-start: 0.5rem;
+  align-items: center;
 `;
