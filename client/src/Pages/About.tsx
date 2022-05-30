@@ -1,14 +1,7 @@
-import {
-  Box,
-  Container,
-  Grid,
-  Image,
-  SimpleGrid,
-  Text,
-  useMantineColorScheme,
-} from "@mantine/core";
+import { Box, Container, Grid, Image, SimpleGrid, Text } from "@mantine/core";
 import React from "react";
 import { HiLocationMarker } from "react-icons/hi";
+import { useLoginContext } from "../Context/LoginContext";
 import logodark from "../Images/weblogo-dark.svg";
 import logo from "../Images/weblogocircle-light.svg";
 import {
@@ -18,8 +11,7 @@ import {
 import { ProductDetails } from "../Styles/Theme/ProductDetail";
 
 export const About = () => {
-  const { colorScheme } = useMantineColorScheme();
-  const dark = colorScheme === "dark";
+  const { dark } = useLoginContext();
   const { classes } = ProductDetails();
 
   return (

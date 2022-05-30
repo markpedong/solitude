@@ -13,7 +13,7 @@ export const LandingStyles = createStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    height: "4rem",
+    minHeight: "4rem",
   },
 
   Dropdown: {
@@ -75,7 +75,7 @@ export const LandingStyles = createStyles((theme) => ({
       top: 0,
       left: 0,
       width: "100%",
-      height: "100%",
+      minHeight: "100%",
       opacity: 0.5,
     },
   },

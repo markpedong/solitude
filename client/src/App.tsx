@@ -1,21 +1,26 @@
-import React, { useState } from "react";
-import "./App.css";
 import {
   ColorScheme,
   ColorSchemeProvider,
   MantineProvider,
 } from "@mantine/core";
-import { Navbar } from "./Pages/Navbar";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { Landing } from "./Pages/Landing";
+import "./App.css";
+import { LoginContext, useLoginContext } from "./Context/LoginContext";
 import { About } from "./Pages/About";
-import { Products } from "./Pages/Products";
+import { AddProduct } from "./Pages/AddProduct";
+import { Error } from "./Pages/Error";
+import { Landing } from "./Pages/Landing";
+import { Login } from "./Pages/Login";
+import { Navbar } from "./Pages/Navbar";
 import { ProductDetail } from "./Pages/ProductDetail";
+import { Products } from "./Pages/Products";
 
 export const App = () => {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+  const [checked, setChecked] = useState(false);
 
   return (
     <div className="App">
@@ -43,12 +48,31 @@ export const App = () => {
           }}
         >
           <Navbar />
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/products/:id" element={<ProductDetail />} />
-          </Routes>
+          <LoginContext>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/products/:id" element={<ProductDetail />} />
+              {!checked && (
+                <Route
+                  path="/login"
+                  element={<Login authenticate={() => setChecked(true)} />}
+                />
+              )}
+              {checked && (
+                <Route
+                  path="/add-product"
+                  element={
+                    checked && (
+                      <AddProduct authenticate={() => setChecked(false)} />
+                    )
+                  }
+                />
+              )}
+              <Route path="*" element={<Error />} />
+            </Routes>
+          </LoginContext>
         </MantineProvider>
       </ColorSchemeProvider>
     </div>
