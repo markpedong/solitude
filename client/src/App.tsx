@@ -20,7 +20,7 @@ export const App = () => {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
 
   return (
     <div className="App">
