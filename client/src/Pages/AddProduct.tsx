@@ -5,23 +5,18 @@ import {
   Group,
   Image,
   List,
-  Text,
   TextInput,
-  ThemeIcon,
   Title,
 } from "@mantine/core";
+import { useInputState } from "@mantine/hooks";
 import { useNavigate } from "react-router-dom";
-import { AddProductStyles } from "../Styles/Theme/AddProduct";
-import { LoginProps } from "./Login";
+import { useLoginContext } from "../Context/LoginContext";
 import AddProductDark from "../Images/AddProductDark.svg";
 import AddProductLight from "../Images/AddProductLight.svg";
-import { BsCheckCircleFill } from "react-icons/bs";
-import { LoginContext, useLoginContext } from "../Context/LoginContext";
-import { useState } from "react";
-import { useInputState } from "@mantine/hooks";
+import { AddProductStyles } from "../Styles/Theme/AddProduct";
+import { LoginProps } from "./Login";
 
 export const AddProduct = ({ authenticate }: LoginProps) => {
-  const [focused, setFocused] = useState(false);
   const [product, setProduct] = useInputState("");
   const navigate = useNavigate();
   const { classes } = AddProductStyles();
@@ -42,9 +37,9 @@ export const AddProduct = ({ authenticate }: LoginProps) => {
         </Box>
         <div className={classes.inner}>
           <div className={classes.content}>
-            <Title className={classes.title}>
-              Add a new <span className={classes.highlight}>Product</span> to
-              the Website!
+            <Title className={classes.title} order={2}>
+              Add a new <span className={classes.highlight}>Product</span>{" "}
+              (Short)
             </Title>
 
             <List mt={30} spacing="sm" size="sm">
@@ -61,8 +56,40 @@ export const AddProduct = ({ authenticate }: LoginProps) => {
                   classNames={classes}
                   value={product}
                   onChange={setProduct}
-                  onFocus={() => setFocused(true)}
-                  onBlur={() => setFocused(false)}
+                  mt="md"
+                  autoComplete="nope"
+                />
+              </List.Item>
+              <List.Item
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <TextInput
+                  label="Product Image"
+                  placeholder="Input Product Image Link"
+                  required
+                  classNames={classes}
+                  value={product}
+                  onChange={setProduct}
+                  mt="md"
+                  autoComplete="nope"
+                />
+              </List.Item>
+              <List.Item
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <TextInput
+                  label="Product Description"
+                  placeholder="Input Product Description"
+                  required
+                  classNames={classes}
+                  value={product}
+                  onChange={setProduct}
                   mt="md"
                   autoComplete="nope"
                 />
@@ -70,23 +97,19 @@ export const AddProduct = ({ authenticate }: LoginProps) => {
             </List>
 
             <Group mt={30}>
-              <Button radius="xl" size="md" className={classes.control}>
+              <Button radius="xl" size="sm" className={classes.control}>
                 Submit
               </Button>
               <Button
                 variant="default"
                 radius="xl"
-                size="md"
+                size="sm"
                 className={classes.control}
               >
                 Remove Everything
               </Button>
             </Group>
           </div>
-          <Image
-            src={dark ? AddProductDark : AddProductLight}
-            className={classes.image}
-          />
         </div>
       </Container>
     </div>
