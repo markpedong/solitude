@@ -43,8 +43,8 @@ func Signup(ctx *gin.Context) {
 		return
 	}
 
-	var userByEmail models.User
-	if err := database.DB.Where("email = ? AND phone = ?", body.Email, body.Phone).First(&userByEmail).Error; err != nil {
+	var user models.User
+	if err := database.DB.Where("email = ? AND phone = ?", body.Email, body.Phone).First(&user).Error; err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
 			"success": false,
@@ -52,19 +52,6 @@ func Signup(ctx *gin.Context) {
 		})
 		return
 	}
-
-	// var userByPhone models.User
-	// if err := database.DB.Where("phone = ?", *body.Phone).First(&userByPhone).Error; err != nil {
-	// 	ctx.JSON(http.StatusBadRequest, gin.H{
-	// 		"message": err.Error(),
-	// 		"success": false,
-	// 		"status":  http.StatusBadRequest,
-	// 	})
-	// 	return
-	// }
-
-	// CREATE AN INSERT TO DATABASE METHOD
-	// https://www.youtube.com/watch?v=LdsTUecqFfo&list=PL5dTjWUk_cPaf5uSEmr8ilR-GtO6s7QJJ&index=6 10:12 timestamp
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": "user fetched!!",

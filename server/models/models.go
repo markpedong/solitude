@@ -12,7 +12,7 @@ type User struct {
 	LastName       *string       `json:"last_name" validate:"required,min=2,max=30"`
 	Password       *string       `json:"password" validate:"required,min=6"`
 	Email          *string       `json:"email" validate:"email,required"`
-	Phone          *int          `json:"phone" validate:"required"`
+	Phone          *string       `json:"phone" validate:"required"`
 	Token          *string       `json:"token"`
 	RefreshToken   *string       `json:"refresh_token"`
 	CreatedAt      time.Time     `json:"created_at" gorm:"autoCreateTime"`
