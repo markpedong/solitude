@@ -1,15 +1,25 @@
 package main
 
 import (
-	"fmt"
+	"log"
+	"os"
+	"solitude/database"
+	"solitude/routes"
 
 	"github.com/gin-gonic/gin"
+	_ "github.com/joho/godotenv/autoload"
 )
 
+func init() {
+	database.DBSet()
+}
+
 func main() {
-	fmt.Println("working")
-	app := gin.Default()
+	r := gin.New()
 
-	app.Run(":3001")
+	routes.UserRoutes(r)
+	r.Use(gin.Logger())
+	// r.Use(middleware.Authentication)
 
+	log.Fatal(r.Run(":" + os.Getenv("PORT")))
 }
