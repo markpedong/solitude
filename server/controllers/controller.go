@@ -44,20 +44,23 @@ func Signup(ctx *gin.Context) {
 	}
 
 	var user models.User
-	if err := database.DB.Where("email = ? AND phone = ?", body.Email, body.Phone).First(&user).Error; err != nil {
+	result := database.DB.Where("email = ? OR phone = ?", body.Email, body.Phone).First(&user)
+	if result.RowsAffected > 0 {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
+			"message": "user already exist!!",
 			"success": false,
 			"status":  http.StatusBadRequest,
 		})
 		return
 	}
 
+	// password := HashPassword(*body.Password )
+
 	ctx.JSON(http.StatusOK, gin.H{
-		"message": "user fetched!!",
+		"message": user,
 		"success": false,
 		"status":  http.StatusOK,
-		"data":    body,
+		"body":    body,
 	})
 
 	defer cancel()
