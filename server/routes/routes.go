@@ -25,7 +25,7 @@ func UserRoutes(r *gin.Engine) {
 	api := r.Group("/api")
 
 	{
-		api.GET("/add-to-cart", controllers.AddToCart)
+		api.POST("/add-to-cart", controllers.AddToCart)
 		api.GET("/remove-item", controllers.RemoveItem)
 		api.GET("/cart-checkout", controllers.CartCheckout)
 		api.GET("/instant-buy", controllers.InstantBuy)

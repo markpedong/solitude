@@ -17,7 +17,7 @@ type User struct {
 	RefreshToken   *string       `json:"refresh_token"`
 	CreatedAt      time.Time     `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt      time.Time     `json:"updated_at" gorm:"autoCreateTime"`
-	UserID         string        `json:"user_id"`
+	UserID         []byte        `json:"user_id"`
 	UserCart       []ProductUser `json:"user_cart" gorm:"foreignKey:ProductID"`
 	AddressDetails []Address     `json:"address_details" gorm:"foreignKey:AddressID"`
 	OrderStatus    []Order       `json:"order_status" gorm:"foreignKey:OrderID"`
