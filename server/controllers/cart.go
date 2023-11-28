@@ -11,7 +11,7 @@ func AddToCart(ctx *gin.Context) {
 		ProductID string `json:"product_id" validate:"required"`
 		UserID    string `json:"user_id" validate:"required"`
 	}
-	//https://www.youtube.com/watch?v=iuoAkFoCtOc 10:19
+
 	if err := ctx.ShouldBindJSON(&ids); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"message": "Invalid JSON input",
@@ -30,10 +30,10 @@ func AddToCart(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusBadRequest, gin.H{
-		"data":    ids,
+	ctx.JSON(http.StatusOK, gin.H{
 		"success": false,
-		"status":  http.StatusBadRequest,
+		"status":  http.StatusOK,
+		"message": "added to cart successfully!",
 	})
 }
 func RemoveItem(ctx *gin.Context)   {}

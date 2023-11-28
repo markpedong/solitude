@@ -33,8 +33,8 @@ func DBSet() {
 	DB.AutoMigrate(
 		&models.Address{},
 		&models.Order{},
-		// &models.Payment{},
-		// &models.Product{},
+		&models.Payment{},
+		&models.Product{},
 		&models.ProductUser{},
 	)
 	DB.AutoMigrate(&models.User{})
