@@ -26,7 +26,16 @@ func HashPassword(password string) string {
 }
 
 func VerifyPassword(userPassword string, givenPassword string) (bool, string) {
-	return false, ""
+	err := bcrypt.CompareHashAndPassword([]byte(givenPassword), []byte(userPassword))
+	valid := true
+	msg := ""
+
+	if err != nil {
+		valid = false
+		msg = "Password is incorrect!!"
+	}
+
+	return valid, msg
 }
 
 func Signup(ctx *gin.Context) {
@@ -150,6 +159,16 @@ func AddProduct(ctx *gin.Context) {
 }
 
 func SearchProduct(ctx *gin.Context) {
+
+	var productList []models.Product
+
+	if database.DB.Find(&productList).Error != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "There's a problem getting the products data",
+			"success": false,
+		})
+		return
+	}
 }
 
 func SearchProductByQuery(ctx *gin.Context) {
