@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
 	"solitude/database"
 	"solitude/middleware"
@@ -9,13 +10,21 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 var Validate = validator.New()
 
 func HashPassword(password string) string {
-	return ""
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		log.Panic(err)
+		return ""
+	}
+
+	return string(hash)
 }
+
 func VerifyPassword(userPassword string, givenPassword string) (bool, string) {
 	return false, ""
 }
