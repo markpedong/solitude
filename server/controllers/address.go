@@ -28,11 +28,15 @@ func DeleteAddress(ctx *gin.Context) {
 		})
 	}
 
-	addresses := make([]models.Address, 0)
-
 	cx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	if err := database.DB.WithContext(cx).Model(&models.User{}).Where("id = ?", body.AddressID).Update("address_details", addresses).Error; err != nil {
+
+	addresses := make([]models.Address, 0)
+	if err := database.DB.WithContext(cx).
+		Model(&models.User{}).
+		Where("id = ?", body.AddressID).
+		Update("address_details", addresses).
+		Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": err.Error(),
 			"status":  http.StatusInternalServerError,

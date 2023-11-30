@@ -155,8 +155,7 @@ func Login(ctx *gin.Context) {
 	})
 }
 
-func AddProduct(ctx *gin.Context) {
-}
+func AddProduct(ctx *gin.Context) {}
 
 func GetAllProducts(ctx *gin.Context) {
 	var productList []models.Product

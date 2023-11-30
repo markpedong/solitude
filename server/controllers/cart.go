@@ -1,7 +1,10 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
+	"solitude/database"
+	"solitude/models"
 
 	"github.com/gin-gonic/gin"
 )
@@ -72,7 +75,51 @@ func RemoveItem(ctx *gin.Context) {
 	})
 }
 
-func BuyItemFromCart(ctx *gin.Context) {
+func GetItemFromCart(ctx *gin.Context) {
+	var body struct {
+		UserID string `json:"user_id"`
+	}
+
+	if body.UserID == "" {
+		ctx.Header("Content-Type", "application/json")
+		ctx.JSON(http.StatusNotFound, gin.H{
+			"message": "invalid id",
+			"status":  http.StatusNotFound,
+			"success": false,
+		})
+		return
+	}
+
+	var filledcart models.User
+
+	err := database.DB.First(&filledcart, body.UserID).Error
+	if err != nil {
+		log.Println(err)
+		ctx.IndentedJSON(500, "not id found")
+		return
+	}
+
+	var totalSum uint64
+	err = database.DB.Model(&models.User{}).
+		Where("id = ?", body.UserID).
+		Select("sum(usercart.price) as total").
+		Scan(&totalSum).
+		Error
+
+	if err != nil {
+		log.Println(err)
+		ctx.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	ctx.IndentedJSON(200, gin.H{
+		"total":    totalSum,
+		"userCart": filledcart.UserCart,
+	})
+
+}
+
+func BuyFromCart(ctx *gin.Context) {
 	var ids struct {
 		ProductIDs string `json:"product_ids" validate:"required"`
 		UserID     string `json:"user_id" validate:"required"`
