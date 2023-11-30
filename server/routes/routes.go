@@ -13,7 +13,7 @@ func UserRoutes(r *gin.Engine) {
 		users.POST("/signup", controllers.Signup)
 		users.POST("/login", controllers.Login)
 		users.POST("/add-product", controllers.AddProduct)
-		users.GET("/search", controllers.SearchProduct)
+		users.GET("/search", controllers.GetAllProducts)
 	}
 
 	admin := r.Group("/admin")
@@ -29,5 +29,6 @@ func UserRoutes(r *gin.Engine) {
 		api.GET("/remove-item", controllers.RemoveItem)
 		api.GET("/cart-checkout", controllers.BuyItemFromCart)
 		api.GET("/instant-buy", controllers.InstantBuy)
+		api.POST("/search", controllers.SearchProductByQuery)
 	}
 }

@@ -158,8 +158,7 @@ func Login(ctx *gin.Context) {
 func AddProduct(ctx *gin.Context) {
 }
 
-func SearchProduct(ctx *gin.Context) {
-
+func GetAllProducts(ctx *gin.Context) {
 	var productList []models.Product
 
 	if database.DB.Find(&productList).Error != nil {
@@ -172,6 +171,43 @@ func SearchProduct(ctx *gin.Context) {
 }
 
 func SearchProductByQuery(ctx *gin.Context) {
+	var body struct {
+		ProductID string `json:"product_id"`
+	}
+
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": "check the JSON format!",
+			"success": false,
+		})
+		return
+	}
+
+	if body.ProductID == "" {
+		ctx.Header("Content-Type", "application/json")
+		ctx.JSON(http.StatusNotFound, gin.H{
+			"message": "invalid product_id",
+			"success": false,
+			"status":  http.StatusNotFound,
+		})
+		return
+	}
+
+	var product models.Product
+	if err := database.DB.First(&product, "id = ?", body.ProductID).Error; err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "something went wrong when fetching data",
+			"success": false,
+			"status":  http.StatusInternalServerError,
+		})
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"data":    product,
+		"success": true,
+		"status":  http.StatusOK,
+	})
+
 }
 
 func ProductViewAdmin(ctx *gin.Context) {}
