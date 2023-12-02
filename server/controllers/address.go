@@ -10,7 +10,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddAddress(ctx *gin.Context)      {}
+func AddAddress(ctx *gin.Context) {
+	var body struct {
+		UserID string `json:"user_id"`
+	}
+
+	if body.UserID == "" {
+		ctx.Header("Content-Type", "application/json")
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"message": "invalid id",
+			"status":  http.StatusBadRequest,
+			"success": false,
+		})
+	}
+
+}
+
 func EditHomeAddress(ctx *gin.Context) {}
 func EdiWorkAddress(ctx *gin.Context)  {}
 
