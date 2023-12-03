@@ -8,26 +8,41 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func AddAddress(ctx *gin.Context) {
-	var body struct {
-		UserID string `json:"user_id"`
-	}
-
-	if body.UserID == "" {
-		ctx.Header("Content-Type", "application/json")
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": "invalid id",
-			"status":  http.StatusBadRequest,
-			"success": false,
-		})
+	userID := ctx.Query("id")
+	if userID == "" {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": "Invalid user ID"})
+		return
 	}
 
 	var address models.Address
 	if err := ctx.BindJSON(&address); err != nil {
 		ctx.JSON(http.StatusNotAcceptable, gin.H{"error": err.Error()})
 		return
+	}
+
+	address.AddressID = uuid.MustParse(userID)
+	database.DB.Create(&address)
+
+	var count int64
+	database.DB.Model(&models.Address{}).
+		Select("COUNT(*)").
+		Where("user_id = ?", userID).
+		Group("address_id").
+		Having("COUNT(*) >= 2").
+		Count(&count)
+
+	if count < 2 {
+		database.DB.Model(&models.Address{}).
+			Where("user_id = ?", userID).
+			Updates(map[string]interface{}{"address_id": address.AddressID})
+
+		ctx.JSON(http.StatusOK, gin.H{"message": "Address added successfully"})
+	} else {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Not allowed"})
 	}
 
 }
