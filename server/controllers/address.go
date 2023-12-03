@@ -24,6 +24,12 @@ func AddAddress(ctx *gin.Context) {
 		})
 	}
 
+	var address models.Address
+	if err := ctx.BindJSON(&address); err != nil {
+		ctx.JSON(http.StatusNotAcceptable, gin.H{"error": err.Error()})
+		return
+	}
+
 }
 
 func EditHomeAddress(ctx *gin.Context) {}
