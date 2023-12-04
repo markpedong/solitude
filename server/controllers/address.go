@@ -66,8 +66,57 @@ func AddAddress(ctx *gin.Context) {
 	ctx.JSON(http.StatusBadRequest, gin.H{"error": "Not Allowed"})
 }
 
-func EditHomeAddress(ctx *gin.Context) {}
-func EdiWorkAddress(ctx *gin.Context)  {}
+// REVIEW THIS CODE
+func EditHomeAddress(ctx *gin.Context) {
+	var body struct {
+		UserID  string  `json:"user_id"`
+		House   *string `json:"house"`
+		Street  *string `json:"street"`
+		City    *string `json:"city"`
+		PinCode *string `json:"pin_code"`
+	}
+
+	if *body.City == "" {
+		ctx.Header("Content-Type", "application/json")
+		ctx.JSON(http.StatusNotFound, gin.H{"Error": "Invalid"})
+		ctx.Abort()
+		return
+	}
+
+	var user models.User
+	result := database.DB.Preload("AddressDetails").First(&user, "id = ?", body.City)
+	if result.Error != nil {
+		ctx.IndentedJSON(http.StatusInternalServerError, result.Error)
+		return
+	}
+
+	var editAddress models.Address
+	if err := ctx.BindJSON(&editAddress); err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	if len(user.AddressDetails) > 0 {
+		user.AddressDetails[0].House = editAddress.House
+		user.AddressDetails[0].Street = editAddress.Street
+		user.AddressDetails[0].City = editAddress.City
+		user.AddressDetails[0].Pincode = editAddress.Pincode
+	} else {
+		// Create a new address if the user doesn't have one
+		editAddress.AddressID = user.ID
+		user.AddressDetails = []models.Address{editAddress}
+	}
+
+	result = database.DB.Save(&user)
+	if result.Error != nil {
+		ctx.IndentedJSON(http.StatusInternalServerError, result.Error)
+		return
+	}
+
+	ctx.IndentedJSON(http.StatusOK, "Successfully Updated the Home address")
+}
+
+func EdiWorkAddress(ctx *gin.Context) {}
 
 func DeleteAddress(ctx *gin.Context) {
 	var body struct {
