@@ -45,8 +45,10 @@ func AddAddress(ctx *gin.Context) {
 			Updates(map[string]interface{}{"address_id": address.AddressID})
 
 		ctx.JSON(http.StatusOK, gin.H{"message": "Address added successfully"})
+		return
 	} else {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Not allowed"})
+		return
 	}
 
 }
