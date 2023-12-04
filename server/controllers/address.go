@@ -13,7 +13,11 @@ import (
 
 func AddAddress(ctx *gin.Context) {
 	var body struct {
-		UserID string `json:"user_id"`
+		UserID  string  `json:"user_id"`
+		House   *string `json:"house"`
+		Street  *string `json:"street"`
+		City    *string `json:"city"`
+		PinCode *string `json:"pin_code"`
 	}
 
 	if err := ctx.BindJSON(&body); err != nil {
@@ -39,11 +43,13 @@ func AddAddress(ctx *gin.Context) {
 		return
 	}
 
-	if len(existingAddresses) < 2 {
-		// Create a new address with a new UUID
+	if len(existingAddresses) < 1 {
 		newAddress := models.Address{
 			AddressID: uuid.New(),
-			// Populate other fields as needed
+			House:     body.House,
+			Street:    body.Street,
+			City:      body.City,
+			Pincode:   body.PinCode,
 		}
 
 		// Append the new address to the user's addresses
@@ -51,11 +57,15 @@ func AddAddress(ctx *gin.Context) {
 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
+
+		// GORM automatically updates the user with the new address, no need for explicit update
 		ctx.JSON(http.StatusOK, gin.H{"message": "Address added successfully"})
-	} else {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Not Allowed"})
+		return
 	}
+
+	ctx.JSON(http.StatusBadRequest, gin.H{"error": "Not Allowed"})
 }
+
 func EditHomeAddress(ctx *gin.Context) {}
 func EdiWorkAddress(ctx *gin.Context)  {}
 
