@@ -32,8 +32,11 @@ func AddAddress(ctx *gin.Context) {
 		//count all rows in the result set
 		Select("COUNT(*)").
 		Where("user_id = ?", userID).
+		// creates another column and sort all the matches based on this group
 		Group("address_id").
+		// condition that returns all the address matched greater than or equal to 2
 		Having("COUNT(*) >= 2").
+		// store the count into the count variable
 		Count(&count)
 
 	if count < 2 {
