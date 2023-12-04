@@ -29,6 +29,7 @@ func AddAddress(ctx *gin.Context) {
 
 	var count int64
 	database.DB.Model(&models.Address{}).
+		//count all rows in the result set
 		Select("COUNT(*)").
 		Where("user_id = ?", userID).
 		Group("address_id").
