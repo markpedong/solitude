@@ -43,7 +43,7 @@ func AddAddress(ctx *gin.Context) {
 		return
 	}
 
-	if len(existingAddresses) < 1 {
+	if len(existingAddresses) < 2 {
 		newAddress := models.Address{
 			AddressID: uuid.New(),
 			House:     body.House,
