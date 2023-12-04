@@ -12,47 +12,55 @@ import (
 )
 
 func AddAddress(ctx *gin.Context) {
-	userID := ctx.Query("id")
-	if userID == "" {
-		ctx.JSON(http.StatusNotFound, gin.H{"error": "Invalid user ID"})
-		return
+	var body struct {
+		UserID string `json:"user_id"`
 	}
 
-	var address models.Address
-	if err := ctx.BindJSON(&address); err != nil {
+	if err := ctx.BindJSON(&body); err != nil {
 		ctx.JSON(http.StatusNotAcceptable, gin.H{"error": err.Error()})
+		ctx.Abort()
 		return
 	}
 
-	address.AddressID = uuid.MustParse(userID)
-	database.DB.Create(&address)
+	if body.UserID == "" {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": "Invalid ID"})
+		ctx.Abort()
+		return
+	}
 
-	var count int64
-	database.DB.Model(&models.Address{}).
-		//count all rows in the result set
-		Select("COUNT(*)").
-		Where("user_id = ?", userID).
-		// creates another column and sort all the matches based on this group
-		Group("address_id").
-		// condition that returns all the address matched greater than or equal to 2
-		Having("COUNT(*) >= 2").
-		// store the count into the count variable
-		Count(&count)
+	var user models.User
+	if err := database.DB.Where("id = ?", body.UserID).First(&user).Error; err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+		ctx.Abort()
+		return
+	}
 
-	if count < 2 {
-		database.DB.Model(&models.Address{}).
-			Where("user_id = ?", userID).
-			Updates(map[string]interface{}{"address_id": address.AddressID})
+	// Assuming User model has a field 'AddressDetails' of type []Address
+	var existingAddresses []models.Address
+	if err := database.DB.Model(&user).Association("AddressDetails").Find(&existingAddresses); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+		ctx.Abort()
+		return
+	}
 
+	if len(existingAddresses) < 2 {
+		// Create a new address with a new UUID
+		newAddress := models.Address{
+			AddressID: uuid.New(),
+			// Populate other fields as needed
+		}
+
+		// Append the new address to the user's addresses
+		if err := database.DB.Model(&user).Association("AddressDetails").Append(&newAddress); err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+			ctx.Abort()
+			return
+		}
 		ctx.JSON(http.StatusOK, gin.H{"message": "Address added successfully"})
-		return
 	} else {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Not allowed"})
-		return
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Not Allowed"})
 	}
-
 }
-
 func EditHomeAddress(ctx *gin.Context) {}
 func EdiWorkAddress(ctx *gin.Context)  {}
 
