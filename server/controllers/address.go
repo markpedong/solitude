@@ -33,7 +33,7 @@ func AddAddress(ctx *gin.Context) {
 	}
 
 	var existingAddresses []models.Address
-	// Establish connection with AddressDetails
+	// Establish connection with AddressDetails TABLE
 	if err := database.DB.Model(&user).Association("AddressDetails").Find(&existingAddresses); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
