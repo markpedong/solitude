@@ -28,14 +28,14 @@ func AddAddress(ctx *gin.Context) {
 
 	var user models.User
 	if err := database.DB.Where("id = ?", body.UserID).First(&user).Error; err != nil {
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	// Assuming User model has a field 'AddressDetails' of type []Address
 	var existingAddresses []models.Address
+	// Establish connection with AddressDetails
 	if err := database.DB.Model(&user).Association("AddressDetails").Find(&existingAddresses); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -48,7 +48,7 @@ func AddAddress(ctx *gin.Context) {
 
 		// Append the new address to the user's addresses
 		if err := database.DB.Model(&user).Association("AddressDetails").Append(&newAddress); err != nil {
-			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
 		ctx.JSON(http.StatusOK, gin.H{"message": "Address added successfully"})
