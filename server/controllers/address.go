@@ -76,7 +76,12 @@ func EditHomeAddress(ctx *gin.Context) {
 		PinCode *string `json:"pin_code"`
 	}
 
-	if *body.City == "" {
+	if err := ctx.BindJSON(&body); err != nil {
+		ctx.IndentedJSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	if body.UserID == "" {
 		ctx.Header("Content-Type", "application/json")
 		ctx.JSON(http.StatusNotFound, gin.H{"Error": "Invalid"})
 		ctx.Abort()
