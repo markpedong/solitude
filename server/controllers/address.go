@@ -66,7 +66,6 @@ func AddAddress(ctx *gin.Context) {
 	ctx.JSON(http.StatusBadRequest, gin.H{"error": "Not Allowed"})
 }
 
-// REVIEW THIS CODE
 func EditHomeAddress(ctx *gin.Context) {
 	var body struct {
 		UserID  string  `json:"user_id"`
