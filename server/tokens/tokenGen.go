@@ -1,8 +1,11 @@
 package tokens
 
 import (
+	"context"
 	"log"
 	"os"
+	"solitude/database"
+	"solitude/models"
 	"time"
 
 	"github.com/golang-jwt/jwt"
@@ -48,6 +51,47 @@ func TokenGenerator(email, firstName, lastName, uid string) (signedToken string,
 	return token, refreshToken, nil
 }
 
-func ValidateToken() {}
+func ValidateToken(signedToken string) (claims *SignedDetails, msg string) {
+	token, err := jwt.ParseWithClaims(signedToken, &SignedDetails{}, func(t *jwt.Token) (interface{}, error) {
+		return []byte(SECRET_KEY), nil
+	})
+	if err != nil {
+		msg := err.Error()
+		return &SignedDetails{}, msg
+	}
 
-func UpdateToken() {}
+	// TOKEN.CLAIMS EXTRACT CLAIMS (KEY - VALUE) FROM TOKEN, SO WE NEED TO USE TYPE ASSERTION
+	claims, ok := token.Claims.(*SignedDetails)
+	if !ok {
+		msg = "the token is invalid"
+		return
+	}
+	if claims.ExpiresAt < time.Now().Unix() {
+		msg = "token is already expired"
+		return claims, msg
+	}
+
+	return &SignedDetails{}, msg
+}
+
+func UpdateToken(signedToken, signedRefreshToken, id string) {
+	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	defer cancel()
+
+	// Assuming you have a GORM DB instance
+	db := database.DB
+
+	// Create the update object
+	updateObj := map[string]interface{}{
+		"token":         signedToken,
+		"refresh_token": signedRefreshToken,
+		"updated_at":    time.Now(),
+	}
+
+	// Update the user in the database
+	result := db.WithContext(ctx).Model(&models.User{}).Where("user_id = ?", id).Updates(updateObj)
+	if result.Error != nil {
+		log.Panic(result.Error)
+		return
+	}
+}
