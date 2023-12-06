@@ -82,7 +82,7 @@ func Signup(ctx *gin.Context) {
 
 	body.UserCart = make([]models.ProductUser, 0)
 	body.AddressDetails = make([]models.Address, 0)
-	body.OrderStatus = make([]models.Order, 0)
+	body.Orders = make([]models.Order, 0)
 
 	// Save the new user to the database
 	// if err := database.DB.Create(&body).Error; err != nil {

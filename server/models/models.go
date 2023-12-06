@@ -20,7 +20,7 @@ type User struct {
 	UserID         []byte        `json:"user_id"`
 	UserCart       []ProductUser `json:"user_cart" gorm:"foreignKey:ProductID"`
 	AddressDetails []Address     `json:"address_details" gorm:"foreignKey:AddressID"`
-	OrderStatus    []Order       `json:"order_status" gorm:"foreignKey:OrderID"`
+	Orders         []Order       `json:"orders" gorm:"foreignKey:OrderID"`
 }
 
 type Product struct {
