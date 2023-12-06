@@ -84,7 +84,6 @@ func UpdateToken(signedToken, signedRefreshToken, id string) {
 		"updated_at":    time.Now(),
 	}
 
-	// Update the user in the database
 	result := database.DB.WithContext(ctx).Model(&models.User{}).Where("user_id = ?", id).Updates(updateObj)
 	if result.Error != nil {
 		log.Panic(result.Error)

@@ -1,6 +1,10 @@
 package database
 
-import "errors"
+import (
+	"errors"
+	"log"
+	"solitude/models"
+)
 
 var (
 	ErrCantFindProduct    = errors.New("can't find the product")
@@ -11,7 +15,35 @@ var (
 	ErrCantBuyCartItem    = errors.New("cannot update the purchase")
 )
 
-func AddProductToCart() {}
-func RemoveCartItem()   {}
-func BuyItemFromCart()  {}
-func InstartBuyer()     {}
+func AddProductToCart(productID uint, userID uint) error {
+	var product models.Product
+	result := DB.First(&product, productID)
+	if result.Error != nil {
+		log.Println(result.Error)
+		return ErrCantFindProduct
+	}
+
+	var user models.User
+	result = DB.First(&user, userID)
+	if result.Error != nil {
+		log.Println(result.Error)
+		return ErrUserIdIsNotValid
+	}
+
+	userCart := models.ProductUser{
+		ProductID: product.ProductID,
+	}
+	user.UserCart = append(user.UserCart, userCart)
+
+	result = DB.Save(&user)
+	if result.Error != nil {
+		log.Println(result.Error)
+		return ErrUserIdIsNotValid
+	}
+
+	return nil
+}
+
+func RemoveCartItem()  {}
+func BuyItemFromCart() {}
+func InstartBuyer()    {}
