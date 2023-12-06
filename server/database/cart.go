@@ -98,12 +98,6 @@ func BuyItemsFromCart(userID uint) error {
 		return ErrCantBuyCartItem
 	}
 
-	// Update user with the new order
-	if err := DB.Model(&user).Association("Orders").Append(&order); err != nil {
-		log.Println(err)
-		return ErrCantBuyCartItem
-	}
-
 	// Clear the user cart
 	if err := DB.Model(&user).Association("UserCart").Clear(); err != nil {
 		log.Println(err)
