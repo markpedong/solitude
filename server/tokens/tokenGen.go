@@ -78,10 +78,6 @@ func UpdateToken(signedToken, signedRefreshToken, id string) {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
 
-	// Assuming you have a GORM DB instance
-	db := database.DB
-
-	// Create the update object
 	updateObj := map[string]interface{}{
 		"token":         signedToken,
 		"refresh_token": signedRefreshToken,
@@ -89,7 +85,7 @@ func UpdateToken(signedToken, signedRefreshToken, id string) {
 	}
 
 	// Update the user in the database
-	result := db.WithContext(ctx).Model(&models.User{}).Where("user_id = ?", id).Updates(updateObj)
+	result := database.DB.WithContext(ctx).Model(&models.User{}).Where("user_id = ?", id).Updates(updateObj)
 	if result.Error != nil {
 		log.Panic(result.Error)
 		return
