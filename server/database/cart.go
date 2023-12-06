@@ -4,6 +4,8 @@ import (
 	"errors"
 	"log"
 	"solitude/models"
+
+	"github.com/google/uuid"
 )
 
 var (
@@ -44,6 +46,33 @@ func AddProductToCart(productID uint, userID uint) error {
 	return nil
 }
 
-func RemoveCartItem()  {}
+func RemoveCartItem(productID uuid.UUID, userID uint) error {
+	// Fetch the user from the database
+	var user models.User
+	result := DB.First(&user, userID)
+	if result.Error != nil {
+		log.Println(result.Error)
+		return ErrUserIdIsNotValid
+	}
+
+	// Remove the item from the user's cart
+	for i, item := range user.UserCart {
+		if item.ProductID == productID {
+			// Remove the item from the slice
+			user.UserCart = append(user.UserCart[:i], user.UserCart[i+1:]...)
+			break
+		}
+	}
+
+	// Save the updated user with the item removed from the cart
+	result = DB.Save(&user)
+	if result.Error != nil {
+		log.Println(result.Error)
+		return ErrCantRemoveItemCart
+	}
+
+	return nil
+}
+
 func BuyItemFromCart() {}
 func InstartBuyer()    {}
