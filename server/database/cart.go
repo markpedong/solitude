@@ -12,7 +12,7 @@ import (
 var (
 	ErrCantFindProduct    = errors.New("can't find the product")
 	ErrCantDecodeProducts = errors.New("can't find the product")
-	ErrUserIdIsNotValid   = errors.New("this user is not valid")
+	ErrUserIDIsNotValid   = errors.New("this user is not valid")
 	ErrCantRemoveItemCart = errors.New("cannot add this product to cart")
 	ErrCantGetItem        = errors.New("cannot remove this item from cart")
 	ErrCantBuyCartItem    = errors.New("cannot update the purchase")
@@ -30,7 +30,7 @@ func AddProductToCart(productID uint, userID uint) error {
 	result = DB.First(&user, userID)
 	if result.Error != nil {
 		log.Println(result.Error)
-		return ErrUserIdIsNotValid
+		return ErrUserIDIsNotValid
 	}
 
 	userCart := models.ProductUser{
@@ -41,7 +41,7 @@ func AddProductToCart(productID uint, userID uint) error {
 	result = DB.Save(&user)
 	if result.Error != nil {
 		log.Println(result.Error)
-		return ErrUserIdIsNotValid
+		return ErrUserIDIsNotValid
 	}
 
 	return nil
@@ -52,7 +52,7 @@ func RemoveCartItem(productID uuid.UUID, userID uint) error {
 	result := DB.First(&user, userID)
 	if result.Error != nil {
 		log.Println(result.Error)
-		return ErrUserIdIsNotValid
+		return ErrUserIDIsNotValid
 	}
 
 	for i, item := range user.UserCart {
@@ -75,7 +75,7 @@ func BuyItemsFromCart(userID uint) error {
 	var user models.User
 	if err := DB.Preload("UserCart").First(&user, userID).Error; err != nil {
 		log.Println(err)
-		return ErrUserIdIsNotValid
+		return ErrUserIDIsNotValid
 	}
 
 	var totalPrice int
@@ -107,4 +107,43 @@ func BuyItemsFromCart(userID uint) error {
 	return nil
 }
 
-func InstartBuyer() {}
+func InstantBuyer(productID uint, userID uint) error {
+	var productDetails models.ProductUser
+	var user models.User
+	var order models.Order
+
+	// Fetch product details
+	if err := DB.First(&productDetails, productID).Error; err != nil {
+		log.Println(err)
+		return err
+	}
+
+	// Fetch user and preload Orders association
+	if err := DB.Preload("Orders").First(&user, userID).Error; err != nil {
+		log.Println(err)
+		return ErrUserIDIsNotValid
+	}
+
+	// Create a new order
+	order = models.Order{
+		OrderID:       uuid.New(),
+		OrderedAt:     time.Now(),
+		OrderCart:     []models.ProductUser{productDetails},
+		Price:         productDetails.Price,
+		PaymentMethod: models.Payment{COD: true},
+	}
+
+	// Update user with the new order
+	if err := DB.Model(&user).Association("Orders").Append(&order); err != nil {
+		log.Println(err)
+		return err
+	}
+
+	// Update user order_list
+	if err := DB.Model(&user).Association("Orders").Append(&productDetails); err != nil {
+		log.Println(err)
+		return err
+	}
+
+	return nil
+}
