@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 	"solitude/database"
-	"solitude/middleware"
 	"solitude/models"
+	"solitude/tokens"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -74,9 +74,8 @@ func Signup(ctx *gin.Context) {
 	body.Password = &password
 
 	body.ID = uuid.New()
-	body.UserID = []byte(body.UserID)
-
-	token, refreshToken, _ := middleware.TokenGenerator(body.Email, body.FirstName, body.LastName, string(body.UserID))
+	body.UserID = []byte(body.ID.String())
+	token, refreshToken, _ := tokens.TokenGenerator(body.Email, body.FirstName, body.LastName, body.ID)
 	body.Token = &token
 	body.RefreshToken = &refreshToken
 
@@ -143,9 +142,9 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	token, refreshToken, _ := middleware.TokenGenerator(existingUser.Email, existingUser.FirstName, existingUser.LastName, existingUser.UserID)
+	token, refreshToken, _ := tokens.TokenGenerator(existingUser.Email, existingUser.FirstName, existingUser.LastName, uuid.UUID(existingUser.UserID))
 
-	middleware.UpdateAllTokens(token, refreshToken, string(existingUser.UserID))
+	tokens.UpdateToken(token, refreshToken, string(existingUser.UserID))
 
 	ctx.JSON(http.StatusFound, gin.H{
 		"message": "Logged in successfully!",
@@ -154,8 +153,6 @@ func Login(ctx *gin.Context) {
 		"body":    body,
 	})
 }
-
-func AddProduct(ctx *gin.Context) {}
 
 func GetAllProducts(ctx *gin.Context) {
 	var productList []models.Product
@@ -209,4 +206,20 @@ func SearchProductByQuery(ctx *gin.Context) {
 
 }
 
-func ProductViewAdmin(ctx *gin.Context) {}
+func ProductViewAdmin(ctx *gin.Context) {
+	var product models.Product
+
+	if err := ctx.BindJSON(&product); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	product.ProductID = uuid.New()
+
+	if err := database.DB.Create(&product).Error; err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Not Created"})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, "Successfully added our Product Admin!!")
+}

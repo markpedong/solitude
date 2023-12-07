@@ -43,6 +43,3 @@ func DBSet() {
 		return
 	}
 }
-
-func UserData()    {}
-func ProductData() {}

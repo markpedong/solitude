@@ -120,7 +120,34 @@ func EditHomeAddress(ctx *gin.Context) {
 	ctx.IndentedJSON(http.StatusOK, "Successfully Updated the Home address")
 }
 
-func EdiWorkAddress(ctx *gin.Context) {}
+func EdiWorkAddress(ctx *gin.Context) {
+	var body struct {
+		ID string `json:"id"`
+	}
+
+	if body.ID == "" {
+		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{"Error": "Wrong id not provided"})
+		return
+	}
+
+	var editAddress models.Address
+	if err := ctx.BindJSON(&editAddress); err != nil {
+		ctx.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	if err := database.DB.Model(&models.User{}).Where("id = ?", body.ID).Updates(map[string]interface{}{
+		"address.1.house_name":  editAddress.House,
+		"address.1.street_name": editAddress.Street,
+		"address.1.city_name":   editAddress.City,
+		"address.1.pin_code":    editAddress.Pincode,
+	}).Error; err != nil {
+		ctx.JSON(500, "Something went wrong")
+		return
+	}
+
+	ctx.JSON(200, "Successfully updated the Work Address")
+}
 
 func DeleteAddress(ctx *gin.Context) {
 	var body struct {

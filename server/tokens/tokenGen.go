@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt"
+	"github.com/google/uuid"
 )
 
 type SignedDetails struct {
@@ -21,12 +22,12 @@ type SignedDetails struct {
 
 var SECRET_KEY = os.Getenv("SECRET_KEY")
 
-func TokenGenerator(email, firstName, lastName, uid string) (signedToken string, signedRefreshToken string, err error) {
+func TokenGenerator(email, firstName, lastName *string, uid uuid.UUID) (signedToken string, signedRefreshToken string, err error) {
 	claims := &SignedDetails{
-		Email:     email,
-		FirstName: firstName,
-		LastName:  lastName,
-		Uid:       uid,
+		Email:     *email,
+		FirstName: *firstName,
+		LastName:  *lastName,
+		Uid:       uid.String(),
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(24)).Unix(),
 		},
