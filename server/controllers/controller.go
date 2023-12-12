@@ -102,7 +102,10 @@ func Signup(ctx *gin.Context) {
 }
 
 func Login(ctx *gin.Context) {
-	var body models.User
+	var body struct {
+		Email    *string `json:"email"`
+		Password *string `json:"password"`
+	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{

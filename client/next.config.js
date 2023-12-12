@@ -12,6 +12,14 @@ const nextConfig = {
         extend: {},
     },
     plugins: [],
+    async rewrites() {
+        return [
+            {
+                source: '/users/:path*',
+                destination: 'http://localhost:8081/users/:path*', // Proxy to Backend
+            },
+        ]
+    },
 }
 
 module.exports = nextConfig
