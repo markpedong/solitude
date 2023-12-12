@@ -1,9 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-type Props = {}
-
-const Page = (props: Props) => {
+const Page = () => {
     return (
         <div>
             <Link href="/login">login</Link>
