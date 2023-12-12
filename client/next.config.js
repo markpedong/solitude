@@ -16,7 +16,7 @@ const nextConfig = {
         return [
             {
                 source: '/users/:path*',
-                destination: 'http://localhost:8081/users/:path*', // Proxy to Backend
+                destination: 'http://localhost:8080/users/:path*', // Proxy to Backend
             },
         ]
     },
