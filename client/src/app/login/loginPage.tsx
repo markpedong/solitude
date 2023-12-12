@@ -12,6 +12,8 @@ const LoginPage: FC = () => {
             <ProForm
                 onFinish={async params => {
                     const data = await login({ ...params })
+
+                    console.log('response: ', data.data)
                 }}>
                 <ProFormText label="email" name="email" />
                 <ProFormText.Password label="password" name="password" />

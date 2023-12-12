@@ -1,15 +1,12 @@
-type ApiResponse<T = null> = {
+type ApiResponse = {
     data: any
+    message: string
+    success: boolean
+    status: number
 }
 
-const handleResponse = async (response: Response): Promise<ApiResponse> => {
-    const data = await response.json()
-    console.log('data', data)
-    return { data }
-}
-
-const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
-    const response = await fetch(url, {
+const post = async (url: string, data = {}): Promise<ApiResponse> => {
+    const response = await fetch(`http://localhost:8080${url}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -21,12 +18,12 @@ const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
     return result
 }
 
-// Ensure that handleResponse is properly defined to process the response
-
-const get = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
+const get = async (url: string, data = {}): Promise<ApiResponse> => {
     const response = await fetch(`${url}?${new URLSearchParams(data).toString()}`)
 
-    return handleResponse(response)
+    const result = await response.json()
+
+    return result
 }
 
 export { post, get }
