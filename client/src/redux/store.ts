@@ -7,19 +7,19 @@ type RootType = {
 }
 
 const reducer = combineReducers({
-    booleanSlice,
+    boolean: booleanSlice,
 })
 
 export const store = configureStore({
     reducer,
-    middleware: getDefaultMiddleware => {
-        return getDefaultMiddleware({
-            serializableCheck: {
-                warnAfter: 128,
-            },
-            immutableCheck: { warnAfter: 128 },
-        })
-    },
+    // middleware: getDefaultMiddleware => {
+    //     return getDefaultMiddleware({
+    //         serializableCheck: {
+    //             warnAfter: 128,
+    //         },
+    //         immutableCheck: { warnAfter: 128 },
+    //     })
+    // },
 })
 
 export type RootState = ReturnType<typeof store.getState>

@@ -1,22 +1,25 @@
 'use client'
 
 import Login from '@/components/login/loginPage'
+import { setActiveLoginModal } from '@/redux/features/booleanSlice'
+import { AppDispatch, useAppSelector } from '@/redux/store'
 import { Button } from 'antd'
-import Link from 'next/link'
-import React, { useState } from 'react'
+import React from 'react'
+import { useDispatch } from 'react-redux'
 
 const Page = () => {
-    const [showLogin, setShowLogin] = useState(false)
+    const dispatch = useDispatch<AppDispatch>()
+    const activeModal = useAppSelector(state => state.boolean.activeLoginModal)
     return (
         <div>
             <Button
                 type="primary"
                 onClick={() => {
-                    setShowLogin(!showLogin)
+                    dispatch(setActiveLoginModal(!activeModal))
                 }}>
                 login
             </Button>
-            {showLogin && <Login />}
+            {activeModal && <Login />}
         </div>
     )
 }

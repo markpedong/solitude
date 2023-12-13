@@ -6,12 +6,24 @@ import { FC } from 'react'
 import styles from './styles.module.scss'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Typography } from 'antd'
+import { useDispatch } from 'react-redux'
+import { AppDispatch, useAppSelector } from '@/redux/store'
+import { setActiveLoginModal } from '@/redux/features/booleanSlice'
 
 const Login: FC = () => {
+    const dispatch = useDispatch<AppDispatch>()
+    const activeModal = useAppSelector(state => state.boolean.activeLoginModal)
+
     return (
         <div className={styles.loginWrapper}>
             <div className={styles.loginContainer}>
                 <h1>SOLITUDE LOGIN</h1>
+                <p
+                    onClick={() => {
+                        dispatch(setActiveLoginModal(!activeModal))
+                    }}>
+                    close modal
+                </p>
                 <div className={styles.formContainer}>
                     <ProForm
                         submitter={false}
