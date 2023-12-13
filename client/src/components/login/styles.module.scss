@@ -1,0 +1,31 @@
+.loginWrapper {
+    position: fixed; // Ensures the wrapper is positioned relative to the viewport
+    top: 0;
+    left: 0;
+    width: 100vw; // Viewport width
+    height: 100vh; // Viewport height
+    display: flex;
+    align-items: center; // Centers the container vertically
+    justify-content: center; // Centers the container horizontally
+    background-color: rgba(0, 0, 0, 0.6); // Black background with 0.6 opacity
+}
+
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+}
+
+.formContainer {
+    margin: 4rem 0 0.5rem 0;
+    inline-size: 50%;
+}
+
+.passwordContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}

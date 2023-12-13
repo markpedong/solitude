@@ -1,10 +1,22 @@
+'use client'
+
+import Login from '@/components/login/loginPage'
+import { Button } from 'antd'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 
 const Page = () => {
+    const [showLogin, setShowLogin] = useState(false)
     return (
         <div>
-            <Link href="/login">login</Link>
+            <Button
+                type="primary"
+                onClick={() => {
+                    setShowLogin(!showLogin)
+                }}>
+                login
+            </Button>
+            {showLogin && <Login />}
         </div>
     )
 }

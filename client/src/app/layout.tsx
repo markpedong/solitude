@@ -8,6 +8,8 @@ import '@/styles/global.scss'
 import { ConfigProvider } from 'antd'
 import enUS from 'antd/lib/locale/en_US'
 import theme from '@/styles/theme'
+import { Provider } from 'react-redux'
+import { store } from '@/store'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,11 +21,13 @@ export const metadata = {
 const RootLayout = ({ children }: React.PropsWithChildren) => (
     <html lang="en">
         <body className={inter.className}>
-            <StyledComponentsRegistry>
-                <ConfigProvider theme={theme} locale={enUS}>
-                    {children}
-                </ConfigProvider>
-            </StyledComponentsRegistry>
+            <Provider store={store}>
+                <StyledComponentsRegistry>
+                    <ConfigProvider theme={theme} locale={enUS}>
+                        {children}
+                    </ConfigProvider>
+                </StyledComponentsRegistry>
+            </Provider>
         </body>
     </html>
 )
