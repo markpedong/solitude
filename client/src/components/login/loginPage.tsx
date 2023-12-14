@@ -2,6 +2,8 @@
 
 import { login } from '@/api/index'
 import loginModalCover from '@/public/assets/loginModalCover.png'
+import signUpModalCover from '@/public/assets/signUpModalCover.png'
+import forgotModalCover from '@/public/assets/forgotModalCover.png'
 import logo from '@/public/assets/logo.png'
 import { setActiveLoginForm, setActiveLoginModal } from '@/redux/features/booleanSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
@@ -16,7 +18,8 @@ import styles from './styles.module.scss'
 const Login: FC = () => {
     const dispatch = useDispatch<AppDispatch>()
     const loginForm = useAppSelector(state => state.boolean.activeLoginForm)
-    const login = loginForm === 'create'
+    const create = loginForm === 'create'
+    const forgot = loginForm === 'forgot'
 
     return (
         <div className={styles.loginWrapper}>
@@ -24,9 +27,12 @@ const Login: FC = () => {
                 className={styles.loginContainer}
                 justify="space-between"
                 gap={20}
-                style={{ blockSize: login ? '38rem' : '30rem' }}>
+                style={{ blockSize: create ? '38rem' : forgot ? '20rem' : '30rem' }}>
                 <div className={styles.loginImage}>
-                    <Image alt="loginCover" src={loginModalCover} />
+                    <Image
+                        alt="loginCover"
+                        src={create ? signUpModalCover : forgot ? forgotModalCover : loginModalCover}
+                    />
                 </div>
                 <Flex className={styles.loginForm} vertical>
                     <Flex justify="end" className={styles.closeIcon}>
@@ -42,10 +48,26 @@ const Login: FC = () => {
                         <span>SOLITUDE</span>
                     </Flex>
                     <Flex className={styles.loginHeaderText} justify="center" vertical>
-                        <h1>{login ? 'Create an Account' : `Hello, Let's Sign In`}</h1>
-                        <span>{login ? 'Register New Solitude Account' : 'Please register or sign in'}</span>
+                        <h1>
+                            {create
+                                ? 'Create an Account'
+                                : forgot
+                                ? 'Forgotten your Password?'
+                                : `Hello, Let's Sign In`}
+                        </h1>
+                        <span>
+                            {create
+                                ? 'Register New Solitude Account'
+                                : forgot
+                                ? 'Enter your email to recover your Account!'
+                                : 'Please register or sign in'}
+                        </span>
                     </Flex>
-                    <div className={styles.formContainer}>
+                    <div
+                        className={styles.formContainer}
+                        style={{
+                            margin: `${forgot ? '2.5rem' : '3.5rem'} 0 0.5rem 0`,
+                        }}>
                         <ProForm
                             submitter={false}
                             onFinish={async params => {
@@ -53,7 +75,7 @@ const Login: FC = () => {
 
                                 console.log('params: ', params)
                             }}>
-                            {login && (
+                            {create && (
                                 <Flex gap={10}>
                                     <ProFormText
                                         name="first_name"
@@ -75,7 +97,7 @@ const Login: FC = () => {
                                 label="Email Address"
                                 fieldProps={{ prefix: <UserOutlined />, autoFocus: false }}
                             />
-                            {login && (
+                            {create && (
                                 <ProFormText
                                     name="phone"
                                     placeholder="+63 9*********"
@@ -83,22 +105,32 @@ const Login: FC = () => {
                                     fieldProps={{ prefix: <PhoneOutlined />, autoFocus: false }}
                                 />
                             )}
-                            <ProFormText.Password
-                                name="password"
-                                placeholder="Enter Password"
-                                label="Password"
-                                fieldProps={{ prefix: <LockOutlined /> }}
-                            />
-                            {!login && <Typography.Link type="secondary">Forgot Password?</Typography.Link>}
+                            {!forgot && (
+                                <ProFormText.Password
+                                    name="password"
+                                    placeholder="Enter Password"
+                                    label="Password"
+                                    fieldProps={{ prefix: <LockOutlined /> }}
+                                />
+                            )}
+                            {!forgot && (
+                                <Typography.Link
+                                    type="secondary"
+                                    onClick={() => {
+                                        dispatch(setActiveLoginForm('forgot'))
+                                    }}>
+                                    Forgot Password?
+                                </Typography.Link>
+                            )}
                         </ProForm>
                     </div>
                     <Button
-                        className={login ? styles.loginButton : ''}
+                        className={create ? styles.loginButton : ''}
                         style={{
-                            marginBlockStart: login ? '3rem' : '2rem',
+                            marginBlockStart: create ? '3rem' : forgot ? '0.4rem' : '2rem',
                         }}
                         type="primary">
-                        {login ? 'SIGN IN' : 'LOGIN'}
+                        {create ? 'SIGN IN' : forgot ? 'RECOVER YOUR ACCOUNT' : 'LOGIN'}
                     </Button>
                     <Flex className={styles.createAccountContainer} justify="center">
                         <Typography.Text
@@ -109,7 +141,7 @@ const Login: FC = () => {
                                     dispatch(setActiveLoginForm('login'))
                                 }
                             }}>
-                            {login ? 'SIGN IN TO ACCOUNT' : 'CREATE AN ACCOUNT'}
+                            {create ? 'SIGN IN TO ACCOUNT' : 'CREATE AN ACCOUNT'}
                         </Typography.Text>
                         <RightOutlined />
                     </Flex>
