@@ -15,7 +15,7 @@ const Page = () => {
             <Button
                 type="primary"
                 onClick={() => {
-                    dispatch(setActiveLoginModal(!activeModal))
+                    dispatch(setActiveLoginModal(true))
                 }}>
                 login
             </Button>

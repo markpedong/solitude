@@ -5,6 +5,13 @@ const theme: ThemeConfig = {
         fontSize: 12,
         colorPrimary: '##000000',
     },
+    components: {
+        Form: {
+            itemMarginBottom: 10,
+            labelFontSize: 10,
+            verticalLabelPadding: 0,
+        },
+    },
 }
 
 export default theme

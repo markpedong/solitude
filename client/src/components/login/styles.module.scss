@@ -11,17 +11,18 @@
 }
 
 .loginContainer {
-    block-size: 60%;
-    inline-size: 60%;
+    block-size: 25rem;
+    inline-size: 30rem;
     background-color: white;
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 1rem;
 }
 
 .loginImage {
     display: block;
-    width: 45%;
-    height: 100%;
+    inline-size: 30%;
+    block-size: 100%;
 
     img {
         width: 100%;
@@ -32,15 +33,38 @@
     }
 }
 
-.closeIcon {
-    align-self: flex-end;
-}
-
 .loginForm {
     flex: 1;
+
+    .loginHeader {
+        margin-block-start: 3rem;
+
+        img {
+            block-size: 1rem;
+            inline-size: 1rem;
+        }
+    }
+
+    button {
+        margin-block-start: 1.5rem;
+
+        span {
+            text-transform: uppercase;
+            font-weight: 200;
+            letter-spacing: 0rem;
+        }
+    }
 }
 
-// .formContainer {
-//     margin: 4rem 0 0.5rem 0;
-//     inline-size: 100%;
-// }
+.formContainer {
+    margin: 2rem 0 0.5rem 0;
+    text-align: end;
+}
+
+.rememberPassword {
+    margin-block-end: 2rem;
+}
+
+.createAccountContainer {
+    margin-block-start: 0.5rem;
+}

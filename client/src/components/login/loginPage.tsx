@@ -5,13 +5,14 @@ import loginModalCover from '@/public/assets/loginModalCover.png'
 import logo from '@/public/assets/logo.png'
 import { setActiveLoginModal } from '@/redux/features/booleanSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
-import { CloseOutlined, LockOutlined, UserOutlined } from '@ant-design/icons'
+import { CloseOutlined, LockOutlined, RightOutlined, UserOutlined } from '@ant-design/icons'
 import { ProForm, ProFormText } from '@ant-design/pro-components'
 import { Button, Checkbox, Flex, Typography } from 'antd'
 import Image from 'next/image'
 import { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import styles from './styles.module.scss'
+import { motion } from 'framer-motion'
 
 const Login: FC = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -23,16 +24,17 @@ const Login: FC = () => {
                 <div className={styles.loginImage}>
                     <Image alt="loginCover" src={loginModalCover} />
                 </div>
-                <Flex className={styles.loginForm} vertical align="flex-start" justify="space-between">
-                    <CloseOutlined
-                        className={styles.closeIcon}
-                        onClick={() => {
-                            dispatch(setActiveLoginModal(!activeModal))
-                        }}
-                    />
-                    <Flex justify="center">
-                        <h1>SOLITUDE</h1>
-                        {/* <Image src={logo} alt="loginForm" /> */}
+                <Flex className={styles.loginForm} vertical>
+                    <Flex justify="end" className={styles.closeIcon}>
+                        <CloseOutlined
+                            onClick={() => {
+                                dispatch(setActiveLoginModal(false))
+                            }}
+                        />
+                    </Flex>
+                    <Flex className={styles.loginHeader} justify="center" align="center" gap={10}>
+                        <Image src={logo} alt="loginForm" />
+                        <span>SOLITUDE</span>
                     </Flex>
                     <div className={styles.formContainer}>
                         <ProForm
@@ -42,22 +44,26 @@ const Login: FC = () => {
 
                                 console.log('response: ', data.data)
                             }}>
-                            <ProFormText name="email" placeholder="Email" fieldProps={{ prefix: <UserOutlined /> }} />
+                            <ProFormText
+                                name="email"
+                                placeholder="your@email.com"
+                                label="Email Address"
+                                fieldProps={{ prefix: <UserOutlined />, autoFocus: false }}
+                            />
                             <ProFormText.Password
                                 name="password"
-                                placeholder="Password"
+                                placeholder="Enter Password"
+                                label="Password"
                                 fieldProps={{ prefix: <LockOutlined /> }}
                             />
+                            <Typography.Link type="secondary">Forgot Password</Typography.Link>
                         </ProForm>
                     </div>
-                    <Button type="primary">Login</Button>
-                    <Flex>
-                        <Checkbox>Remember me</Checkbox>
-                        <Typography.Link>Forgot Password</Typography.Link>
+                    <Button type="primary">LOGIN</Button>
+                    <Flex className={styles.createAccountContainer} justify="center">
+                        <Typography.Text>CREATE AN ACCOUNT </Typography.Text>
+                        <RightOutlined />
                     </Flex>
-                    <Typography.Text>
-                        Or <Typography.Link>register now!</Typography.Link>
-                    </Typography.Text>
                 </Flex>
             </Flex>
         </div>
