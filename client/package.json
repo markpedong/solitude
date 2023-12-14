@@ -9,24 +9,24 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "@ant-design/cssinjs": "^1.18.1",
-        "@ant-design/icons": "^5.2.6",
-        "@ant-design/pro-components": "^2.6.43",
-        "@reduxjs/toolkit": "^2.0.1",
-        "antd": "^5.12.1",
-        "framer-motion": "^10.16.16",
+        "@ant-design/cssinjs": "1.18.1",
+        "@ant-design/icons": "5.2.6",
+        "@ant-design/pro-components": "2.6.43",
+        "@reduxjs/toolkit": "2.0.1",
+        "antd": "5.12.2",
+        "framer-motion": "10.16.16",
         "next": "14.0.4",
         "react": "18",
         "react-dom": "18",
-        "react-redux": "^9.0.4",
+        "react-redux": "9.0.4",
         "sass": "1.69.5",
-        "sharp": "^0.33.0"
+        "sharp": "0.33.0"
     },
     "devDependencies": {
         "@types/node": "20",
         "@types/react": "18",
         "@types/react-dom": "18",
-        "autoprefixer": "10.0.1",
+        "autoprefixer": "10.4.16",
         "postcss": "8",
         "typescript": "5"
     },

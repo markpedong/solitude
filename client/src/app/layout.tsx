@@ -1,16 +1,13 @@
-import React from 'react'
 import { Inter } from 'next/font/google'
+import React from 'react'
 
 import StyledComponentsRegistry from '@/lib/antdRegistry'
-import './styles.module.scss'
 
+import { ReduxProvider } from '@/redux/provider'
 import '@/styles/global.scss'
+import theme from '@/theme/theme'
 import { ConfigProvider } from 'antd'
 import enUS from 'antd/lib/locale/en_US'
-import theme from '@/styles/theme'
-import { Provider } from 'react-redux'
-import { store } from '@/redux/store'
-import { ReduxProvider } from '@/redux/provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
