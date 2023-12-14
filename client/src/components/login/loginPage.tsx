@@ -4,19 +4,17 @@ import { login } from '@/api/index'
 import loginModalCover from '@/public/assets/loginModalCover.png'
 import logo from '@/public/assets/logo.png'
 import { setActiveLoginModal } from '@/redux/features/booleanSlice'
-import { AppDispatch, useAppSelector } from '@/redux/store'
+import { AppDispatch } from '@/redux/store'
 import { CloseOutlined, LockOutlined, RightOutlined, UserOutlined } from '@ant-design/icons'
 import { ProForm, ProFormText } from '@ant-design/pro-components'
-import { Button, Checkbox, Flex, Typography } from 'antd'
+import { Button, Flex, Typography } from 'antd'
 import Image from 'next/image'
 import { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import styles from './styles.module.scss'
-import { motion } from 'framer-motion'
 
 const Login: FC = () => {
     const dispatch = useDispatch<AppDispatch>()
-    const activeModal = useAppSelector(state => state.boolean.activeLoginModal)
 
     return (
         <div className={styles.loginWrapper}>
