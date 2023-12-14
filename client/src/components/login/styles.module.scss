@@ -2,8 +2,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    inline-size: 100vw;
-    block-size: 100vh;
+    inline-size: 100dvw;
+    block-size: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -30,6 +30,10 @@
         object-fit: cover;
         object-position: center;
         border-radius: 10px;
+    }
+
+    @media (max-width: 768px) {
+        display: none;
     }
 }
 
