@@ -16,10 +16,15 @@ import styles from './styles.module.scss'
 const Login: FC = () => {
     const dispatch = useDispatch<AppDispatch>()
     const loginForm = useAppSelector(state => state.boolean.activeLoginForm)
+    const login = loginForm === 'create'
 
     return (
         <div className={styles.loginWrapper}>
-            <Flex className={styles.loginContainer} justify="space-between" gap={20}>
+            <Flex
+                className={styles.loginContainer}
+                justify="space-between"
+                gap={20}
+                style={{ blockSize: login ? '38rem' : '30rem' }}>
                 <div className={styles.loginImage}>
                     <Image alt="loginCover" src={loginModalCover} />
                 </div>
@@ -37,10 +42,8 @@ const Login: FC = () => {
                         <span>SOLITUDE</span>
                     </Flex>
                     <Flex className={styles.loginHeaderText} justify="center" vertical>
-                        <h1>{loginForm === 'login' ? `Hello, Let's Sign In` : 'Create an Account'}</h1>
-                        <span>
-                            {loginForm === 'login' ? 'Please register or sign in' : 'Register New Solitude Account'}
-                        </span>
+                        <h1>{login ? 'Create an Account' : `Hello, Let's Sign In`}</h1>
+                        <span>{login ? 'Register New Solitude Account' : 'Please register or sign in'}</span>
                     </Flex>
                     <div className={styles.formContainer}>
                         <ProForm
@@ -50,7 +53,7 @@ const Login: FC = () => {
 
                                 console.log('params: ', params)
                             }}>
-                            {loginForm === 'create' && (
+                            {login && (
                                 <Flex gap={10}>
                                     <ProFormText
                                         name="first_name"
@@ -72,7 +75,7 @@ const Login: FC = () => {
                                 label="Email Address"
                                 fieldProps={{ prefix: <UserOutlined />, autoFocus: false }}
                             />
-                            {loginForm === 'create' && (
+                            {login && (
                                 <ProFormText
                                     name="phone"
                                     placeholder="+63 9*********"
@@ -86,13 +89,16 @@ const Login: FC = () => {
                                 label="Password"
                                 fieldProps={{ prefix: <LockOutlined /> }}
                             />
-                            {loginForm !== 'create' && (
-                                <Typography.Link type="secondary">Forgot Password?</Typography.Link>
-                            )}
+                            {!login && <Typography.Link type="secondary">Forgot Password?</Typography.Link>}
                         </ProForm>
                     </div>
-                    <Button className={loginForm === 'create' ? styles.loginButton : ''} type="primary">
-                        {loginForm === 'create' ? 'SIGN IN' : 'LOGIN'}
+                    <Button
+                        className={login ? styles.loginButton : ''}
+                        style={{
+                            marginBlockStart: login ? '3rem' : '2rem',
+                        }}
+                        type="primary">
+                        {login ? 'SIGN IN' : 'LOGIN'}
                     </Button>
                     <Flex className={styles.createAccountContainer} justify="center">
                         <Typography.Text
@@ -103,7 +109,7 @@ const Login: FC = () => {
                                     dispatch(setActiveLoginForm('login'))
                                 }
                             }}>
-                            {loginForm === 'login' ? 'CREATE AN ACCOUNT' : 'SIGN IN TO ACCOUNT'}
+                            {login ? 'SIGN IN TO ACCOUNT' : 'CREATE AN ACCOUNT'}
                         </Typography.Text>
                         <RightOutlined />
                     </Flex>
