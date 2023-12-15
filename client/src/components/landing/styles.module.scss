@@ -86,7 +86,8 @@
     img {
         opacity: 0.5;
         width: 100dvw;
-        height: auto;
+        height: 70dvh;
+        object-fit: cover;
     }
 }
 
