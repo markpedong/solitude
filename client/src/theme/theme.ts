@@ -11,6 +11,9 @@ const theme: ThemeConfig = {
             labelFontSize: 10,
             verticalLabelPadding: 0,
         },
+        Typography: {
+            colorLinkHover: '#000000',
+        },
     },
 }
 

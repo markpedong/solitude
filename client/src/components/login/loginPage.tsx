@@ -15,6 +15,8 @@ import { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import styles from './styles.module.scss'
 
+const { Link } = Typography
+
 const Login: FC = () => {
     const dispatch = useDispatch<AppDispatch>()
     const loginForm = useAppSelector(state => state.boolean.activeLoginForm)
@@ -114,13 +116,13 @@ const Login: FC = () => {
                                 />
                             )}
                             {!forgot && (
-                                <Typography.Link
+                                <Link
                                     type="secondary"
                                     onClick={() => {
                                         dispatch(setActiveLoginForm('forgot'))
                                     }}>
                                     Forgot Password?
-                                </Typography.Link>
+                                </Link>
                             )}
                         </ProForm>
                     </div>
@@ -133,7 +135,8 @@ const Login: FC = () => {
                         {create ? 'SIGN IN' : forgot ? 'RECOVER YOUR ACCOUNT' : 'LOGIN'}
                     </Button>
                     <Flex className={styles.createAccountContainer} justify="center">
-                        <Typography.Text
+                        <Link
+                            type="secondary"
                             onClick={() => {
                                 if (loginForm === 'login') {
                                     dispatch(setActiveLoginForm('create'))
@@ -142,7 +145,7 @@ const Login: FC = () => {
                                 }
                             }}>
                             {create ? 'SIGN IN TO ACCOUNT' : 'CREATE AN ACCOUNT'}
-                        </Typography.Text>
+                        </Link>
                         <RightOutlined />
                     </Flex>
                 </Flex>

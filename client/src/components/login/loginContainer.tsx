@@ -12,6 +12,8 @@ const LoginContainer = () => {
 
     return (
         <div>
+            <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit, dolorem?</div>
+            {activeModal && <Login />}
             <Button
                 type="primary"
                 onClick={() => {
@@ -19,7 +21,6 @@ const LoginContainer = () => {
                 }}>
                 login
             </Button>
-            {activeModal && <Login />}
         </div>
     )
 }

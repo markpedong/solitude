@@ -8,6 +8,7 @@ import '@/styles/global.scss'
 import theme from '@/theme/theme'
 import { ConfigProvider } from 'antd'
 import enUS from 'antd/lib/locale/en_US'
+import Navigation from '@/components/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,6 +23,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => (
             <ReduxProvider>
                 <StyledComponentsRegistry>
                     <ConfigProvider theme={theme} locale={enUS}>
+                        <Navigation />
                         {children}
                     </ConfigProvider>
                 </StyledComponentsRegistry>
