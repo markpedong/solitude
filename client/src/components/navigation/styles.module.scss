@@ -1,0 +1,17 @@
+.navigationWrapper {
+    inline-size: 100%;
+
+    img {
+        height: 1.3rem;
+        width: auto;
+        padding: 0.1rem;
+    }
+}
+
+.navigationHeader {
+    span {
+        font-size: 1rem;
+        padding-inline-start: 0.2rem;
+        letter-spacing: 0.1rem;
+    }
+}

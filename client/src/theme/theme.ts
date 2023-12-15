@@ -14,6 +14,11 @@ const theme: ThemeConfig = {
         Typography: {
             colorLinkHover: '#000000',
         },
+        Menu: {
+            itemPaddingInline: 25,
+            lineType: 'none',
+            algorithm: true,
+        },
     },
 }
 
