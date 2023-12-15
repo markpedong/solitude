@@ -19,6 +19,10 @@ const Landing: FC = () => {
                 <span>SEARCH PRODUCTS</span>
                 <span>READ OUR CARE GUIDE</span>
             </Flex>
+            <Flex className={styles.featuredContainer} justify="center" align="center" vertical>
+                <span>Featured Products</span>
+                <span>Essential products, best values, lower prices</span>
+            </Flex>
         </div>
     )
 }

@@ -128,3 +128,23 @@
         letter-spacing: 0.1rem;
     }
 }
+
+.featuredContainer {
+    position: absolute;
+    top: 85%;
+    left: 0;
+    right: 0;
+
+    :nth-child(1) {
+        font-size: 2rem;
+        font-weight: 500;
+        font-family: 'Cormorant-600';
+    }
+
+    :nth-child(2) {
+        font-size: 0.8rem;
+        font-family: 400;
+        margin-block-start: 1rem;
+        color: rgba(0, 0, 0, 0.7);
+    }
+}
