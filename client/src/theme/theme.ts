@@ -15,7 +15,7 @@ const theme: ThemeConfig = {
             colorLinkHover: '#000000',
         },
         Menu: {
-            itemPaddingInline: 25,
+            itemPaddingInline: 14,
             lineType: 'none',
         },
     },

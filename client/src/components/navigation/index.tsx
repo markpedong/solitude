@@ -13,6 +13,18 @@ const items: MenuProps['items'] = [
         label: 'PRODUCTS',
         key: 'products',
     },
+    {
+        label: 'BRANDS',
+        key: 'brands',
+    },
+    {
+        label: 'DEALS',
+        key: 'deals',
+    },
+    {
+        label: 'SERVICES',
+        key: 'services',
+    },
 ]
 
 const Navigation: FC = () => {
