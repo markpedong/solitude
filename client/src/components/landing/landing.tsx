@@ -1,13 +1,14 @@
 'use client'
 
 import Image from 'next/image'
-import landing from '@/public/assets/landing-image.webp'
+import landing from '@/public/assets/landing.webp'
 import { FC } from 'react'
+import styles from './styles.module.scss'
 
 const Landing: FC = () => {
     return (
         <div>
-            <div className="">
+            <div className={styles.landingImageContainer}>
                 <Image src={landing} alt="landing" />
             </div>
         </div>
