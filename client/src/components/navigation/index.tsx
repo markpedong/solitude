@@ -6,7 +6,7 @@ import { FC, useState } from 'react'
 import logo from '@/public/assets/logo.png'
 import Image from 'next/image'
 import styles from './styles.module.scss'
-import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
+import { SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
 
 const items: MenuProps['items'] = [
     {
@@ -41,6 +41,8 @@ const Navigation: FC = () => {
             <Flex align="center">
                 <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} disabledOverflow />
                 <Flex className={styles.icons} gap={20}>
+                    <SearchOutlined />
+                    {/* RENDER THIS IF TOKEN EXISTS */}
                     <ShoppingCartOutlined />
                     <UserOutlined />
                 </Flex>
