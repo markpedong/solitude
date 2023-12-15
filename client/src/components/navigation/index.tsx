@@ -13,16 +13,6 @@ const items: MenuProps['items'] = [
         label: 'PRODUCTS',
         key: 'products',
     },
-    {
-        label: 'CART',
-        key: 'cart',
-        icon: <ShoppingCartOutlined />,
-    },
-    {
-        label: 'ACCOUNT',
-        key: 'account',
-        icon: <UserOutlined />,
-    },
 ]
 
 const Navigation: FC = () => {
@@ -35,11 +25,14 @@ const Navigation: FC = () => {
 
     return (
         <Flex className={styles.navigationWrapper} justify="space-around" align="center">
-            {/* <Flex className={styles.navigationHeader} justify="center" align="center"> */}
             <Image src={logo} alt="loginForm" />
-            {/* <span>SOLITUDE</span> */}
-            {/* </Flex> */}
-            <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} disabledOverflow />
+            <Flex align="center">
+                <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} disabledOverflow />
+                <Flex className={styles.icons} gap={20}>
+                    <ShoppingCartOutlined />
+                    <UserOutlined />
+                </Flex>
+            </Flex>
         </Flex>
     )
 }
