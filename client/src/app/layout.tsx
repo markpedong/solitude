@@ -1,4 +1,4 @@
-import { Inter } from 'next/font/google'
+import { Jost } from 'next/font/google'
 import React from 'react'
 
 import StyledComponentsRegistry from '@/lib/antdRegistry'
@@ -10,7 +10,7 @@ import { ConfigProvider } from 'antd'
 import enUS from 'antd/lib/locale/en_US'
 import Navigation from '@/components/navigation'
 
-const inter = Inter({ subsets: ['latin'] })
+const jost = Jost({ subsets: ['latin'] })
 
 export const metadata = {
     title: 'SOLITUDE',
@@ -19,7 +19,7 @@ export const metadata = {
 
 const RootLayout = ({ children }: React.PropsWithChildren) => (
     <html lang="en">
-        <body className={inter.className}>
+        <body className={jost.className}>
             <ReduxProvider>
                 <StyledComponentsRegistry>
                     <ConfigProvider theme={theme} locale={enUS}>

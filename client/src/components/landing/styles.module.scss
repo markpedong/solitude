@@ -89,3 +89,41 @@
         height: auto;
     }
 }
+
+.headerContainerText {
+    position: absolute;
+    top: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    max-width: 38rem;
+
+    span {
+        font-size: 2rem;
+        font-weight: 500;
+        font-family: 'Cormorant-600';
+    }
+}
+
+.landingButtonContainer {
+    position: absolute;
+    top: 43%;
+    left: 0;
+    right: 0;
+    text-align: center;
+
+    :nth-child(1) {
+        background-color: black;
+        color: white;
+        padding: 0.7rem 4rem;
+        font-size: 0.8rem;
+        letter-spacing: 0.2rem;
+        border-radius: 0.3rem;
+    }
+
+    :nth-child(2) {
+        letter-spacing: 0.1rem;
+    }
+}
