@@ -7,6 +7,10 @@ import logo from '@/public/assets/logo.png'
 import Image from 'next/image'
 import styles from './styles.module.scss'
 import { SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
+import { useDispatch } from 'react-redux'
+import { AppDispatch, useAppSelector } from '@/redux/store'
+import { setActiveLoginModal } from '@/redux/features/booleanSlice'
+import Login from '../landing/loginPage'
 
 const items: MenuProps['items'] = [
     {
@@ -28,6 +32,8 @@ const items: MenuProps['items'] = [
 ]
 
 const Navigation: FC = () => {
+    const dispatch = useDispatch<AppDispatch>()
+    const activeModal = useAppSelector(state => state.boolean.activeLoginModal)
     const [current, setCurrent] = useState('mail')
 
     const onClick: MenuProps['onClick'] = e => {
@@ -36,18 +42,25 @@ const Navigation: FC = () => {
     }
 
     return (
-        <Flex className={styles.navigationWrapper} justify="space-around" align="center">
-            <Image src={logo} alt="loginForm" />
-            <Flex align="center">
-                <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} disabledOverflow />
-                <Flex className={styles.icons} gap={20}>
-                    <SearchOutlined />
-                    {/* RENDER THIS IF TOKEN EXISTS */}
-                    <ShoppingCartOutlined />
-                    <UserOutlined />
+        <>
+            {activeModal && <Login />}
+            <Flex className={styles.navigationWrapper} justify="space-around" align="center">
+                <Image src={logo} alt="loginForm" />
+                <Flex align="center">
+                    <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} disabledOverflow />
+                    <Flex className={styles.icons} gap={20}>
+                        <SearchOutlined />
+                        {/* RENDER THIS IF TOKEN EXISTS */}
+                        {/* <ShoppingCartOutlined /> */}
+                        <UserOutlined
+                            onClick={() => {
+                                dispatch(setActiveLoginModal(true))
+                            }}
+                        />
+                    </Flex>
                 </Flex>
             </Flex>
-        </Flex>
+        </>
     )
 }
 

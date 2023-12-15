@@ -1,9 +1,9 @@
-import LoginContainer from '@/components/login/loginContainer'
+import LandingContainer from '@/components/landing/landing'
 
 const Page = () => {
     return (
         <div>
-            <LoginContainer />
+            <LandingContainer />
         </div>
     )
 }
