@@ -45,7 +45,10 @@ const Navigation: FC = () => {
         <>
             {activeModal && <Login />}
             <Flex className={styles.navigationWrapper} justify="space-around" align="center">
-                <Image src={logo} alt="loginForm" />
+                <Flex className={styles.headerContainer} justify="center" align="center" gap={10}>
+                    <Image src={logo} alt="loginForm" />
+                    <span>SOLITUDE</span>
+                </Flex>
                 <Flex align="center">
                     <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} disabledOverflow />
                     <Flex className={styles.icons} gap={20}>

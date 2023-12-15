@@ -17,6 +17,7 @@ const theme: ThemeConfig = {
         Menu: {
             itemPaddingInline: 14,
             lineType: 'none',
+            itemBg: 'none',
         },
     },
 }

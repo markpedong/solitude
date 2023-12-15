@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import landing from '@/public/assets/landing.webp'
+import landing from '@/public/assets/landing.png'
 import { FC } from 'react'
 import styles from './styles.module.scss'
 
