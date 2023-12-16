@@ -1,9 +1,9 @@
-import LandingContainer from '@/components/landing/landing'
+import Landing from '@/components/landing'
 
 const Page = () => {
     return (
         <div>
-            <LandingContainer />
+            <Landing />
         </div>
     )
 }
