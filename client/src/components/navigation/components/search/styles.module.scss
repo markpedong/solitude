@@ -1,0 +1,21 @@
+.searchWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    inline-size: 100dvw;
+    block-size: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.searchContainer {
+    inline-size: 35rem;
+    background-color: white;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+    block-size: 30rem;
+}

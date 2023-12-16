@@ -1,16 +1,17 @@
 'use client'
 
+import logo from '@/public/assets/logo.png'
+import { setActiveLoginModal } from '@/redux/features/booleanSlice'
+import { AppDispatch, useAppSelector } from '@/redux/store'
+import { UserOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Flex, Menu } from 'antd'
-import { FC, useState } from 'react'
-import logo from '@/public/assets/logo.png'
 import Image from 'next/image'
-import styles from './styles.module.scss'
-import { SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
+import { FC, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { AppDispatch, useAppSelector } from '@/redux/store'
-import { setActiveLoginModal } from '@/redux/features/booleanSlice'
 import Login from './components/login'
+import styles from './styles.module.scss'
+import Search from './components/search'
 
 const items: MenuProps['items'] = [
     {
@@ -52,9 +53,7 @@ const Navigation: FC = () => {
                 <Flex align="center">
                     <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} disabledOverflow />
                     <Flex className={styles.icons} gap={20}>
-                        <SearchOutlined />
-                        {/* RENDER THIS IF TOKEN EXISTS */}
-                        {/* <ShoppingCartOutlined /> */}
+                        <Search />
                         <UserOutlined
                             onClick={() => {
                                 dispatch(setActiveLoginModal(true))
