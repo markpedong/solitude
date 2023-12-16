@@ -5,6 +5,7 @@ import landing from '@/public/assets/landing.png'
 import { FC } from 'react'
 import styles from './styles.module.scss'
 import { Flex } from 'antd'
+import Products from './components/products'
 
 const Landing: FC = () => {
     return (

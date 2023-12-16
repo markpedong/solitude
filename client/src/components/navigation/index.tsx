@@ -10,7 +10,7 @@ import { SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/
 import { useDispatch } from 'react-redux'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { setActiveLoginModal } from '@/redux/features/booleanSlice'
-import Login from './login'
+import Login from './components/login'
 
 const items: MenuProps['items'] = [
     {

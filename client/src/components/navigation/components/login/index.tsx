@@ -1,10 +1,9 @@
 'use client'
 
-import { login } from '@/api/index'
-import loginModalCover from '@/public/assets/loginModalCover.png'
-import signUpModalCover from '@/public/assets/signUpModalCover.png'
 import forgotModalCover from '@/public/assets/forgotModalCover.png'
+import loginModalCover from '@/public/assets/loginModalCover.png'
 import logo from '@/public/assets/logo.png'
+import signUpModalCover from '@/public/assets/signUpModalCover.png'
 import { setActiveLoginForm, setActiveLoginModal } from '@/redux/features/booleanSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { CloseOutlined, LockOutlined, PhoneOutlined, RightOutlined, UserOutlined } from '@ant-design/icons'
