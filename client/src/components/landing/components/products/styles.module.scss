@@ -1,5 +1,5 @@
 .productWrapper {
-    margin-block-start: 90dvh;
+    margin-block-start: 95dvh;
 }
 
 .carousel {
@@ -14,10 +14,26 @@
     .item {
         max-height: 40rem;
         width: auto;
-        padding: 5rem;
+        padding: 0 1rem;
+
+        .cardTitle {
+            letter-spacing: 2px;
+            font-weight: 500;
+            font-size: 11px;
+        }
+
+        .cardDescription {
+            font-size: 11px;
+        }
+
+        .cardFooter {
+            color: black;
+            font-size: 14px;
+        }
 
         img {
             pointer-events: none;
+            block-size: 200px;
         }
     }
 }

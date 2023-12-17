@@ -1,9 +1,9 @@
 'use client'
 
-import React, { FC, useEffect, useRef, useState } from 'react'
-import styles from './styles.module.scss'
-import { motion } from 'framer-motion'
 import { Card } from 'antd'
+import { motion } from 'framer-motion'
+import { FC, useEffect, useRef, useState } from 'react'
+import styles from './styles.module.scss'
 
 const Products: FC = () => {
     const [width, setWidth] = useState(0)
@@ -19,62 +19,92 @@ const Products: FC = () => {
                 <motion.div className={styles.innerCarousel} drag="x" dragConstraints={{ right: 0, left: -width }}>
                     <motion.div className={styles.item}>
                         <Card
-                            hoverable
                             style={{ width: 240 }}
                             cover={
-                                <img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
-                            }>
-                            <Card.Meta title="Europe Street beat" description="www.instagram.com" />
+                                <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="example" />
+                            }
+                            bordered={false}>
+                            <Card.Meta
+                                title={<div className={styles.cardTitle}>GOLDSMITHS</div>}
+                                description={
+                                    <>
+                                        <div className={styles.cardDescription}>White Gold 1.20cttw Diamond Line</div>
+                                        <div className={styles.cardFooter}>£2,500.00</div>
+                                    </>
+                                }
+                            />
                         </Card>
                     </motion.div>
                     <motion.div className={styles.item}>
                         <Card
-                            hoverable
                             style={{ width: 240 }}
                             cover={
-                                <img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
-                            }>
-                            <Card.Meta title="Europe Street beat" description="www.instagram.com" />
+                                <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="example" />
+                            }
+                            bordered={false}>
+                            <Card.Meta
+                                title={<div className={styles.cardTitle}>GOLDSMITHS</div>}
+                                description={
+                                    <>
+                                        <div className={styles.cardDescription}>White Gold 1.20cttw Diamond Line</div>
+                                        <div className={styles.cardFooter}>£2,500.00</div>
+                                    </>
+                                }
+                            />
                         </Card>
                     </motion.div>
                     <motion.div className={styles.item}>
                         <Card
-                            hoverable
                             style={{ width: 240 }}
                             cover={
-                                <img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
-                            }>
-                            <Card.Meta title="Europe Street beat" description="www.instagram.com" />
+                                <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="example" />
+                            }
+                            bordered={false}>
+                            <Card.Meta
+                                title={<div className={styles.cardTitle}>GOLDSMITHS</div>}
+                                description={
+                                    <>
+                                        <div className={styles.cardDescription}>White Gold 1.20cttw Diamond Line</div>
+                                        <div className={styles.cardFooter}>£2,500.00</div>
+                                    </>
+                                }
+                            />
                         </Card>
                     </motion.div>
                     <motion.div className={styles.item}>
                         <Card
-                            hoverable
                             style={{ width: 240 }}
                             cover={
-                                <img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
-                            }>
-                            <Card.Meta title="Europe Street beat" description="www.instagram.com" />
+                                <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="example" />
+                            }
+                            bordered={false}>
+                            <Card.Meta
+                                title={<div className={styles.cardTitle}>GOLDSMITHS</div>}
+                                description={
+                                    <>
+                                        <div className={styles.cardDescription}>White Gold 1.20cttw Diamond Line</div>
+                                        <div className={styles.cardFooter}>£2,500.00</div>
+                                    </>
+                                }
+                            />
                         </Card>
                     </motion.div>
                     <motion.div className={styles.item}>
                         <Card
-                            hoverable
                             style={{ width: 240 }}
                             cover={
-                                <img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
-                            }>
-                            <Card.Meta title="Europe Street beat" description="www.instagram.com" />
-                        </Card>
-                    </motion.div>
-                    <motion.div className={styles.item}>
-                        <Card
-                            hoverable
-                            style={{ width: 240 }}
-                            cover={
-                                <img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
-                            }>
-                            <Card.Meta title="Europe Street beat" description="www.instagram.com" />
+                                <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="example" />
+                            }
+                            bordered={false}>
+                            <Card.Meta
+                                title={<div className={styles.cardTitle}>GOLDSMITHS</div>}
+                                description={
+                                    <>
+                                        <div className={styles.cardDescription}>White Gold 1.20cttw Diamond Line</div>
+                                        <div className={styles.cardFooter}>£2,500.00</div>
+                                    </>
+                                }
+                            />
                         </Card>
                     </motion.div>
                 </motion.div>
