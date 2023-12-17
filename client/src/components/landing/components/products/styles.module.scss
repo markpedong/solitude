@@ -1,3 +1,23 @@
 .productWrapper {
     margin-block-start: 90dvh;
 }
+
+.carousel {
+    cursor: grab;
+    overflow: hidden;
+    margin-block-end: 10rem; // for debugging
+}
+
+.innerCarousel {
+    display: flex;
+
+    .item {
+        max-height: 40rem;
+        width: auto;
+        padding: 5rem;
+
+        img {
+            pointer-events: none;
+        }
+    }
+}
