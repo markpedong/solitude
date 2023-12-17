@@ -1,0 +1,54 @@
+.collectionsContainer {
+    background-color: #F4F4F2;
+    height: 22rem;
+    padding-block: 3rem;
+}
+
+.featuresItemContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.featuresItem {
+    display: flex;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 15rem;
+    margin-block-start: 1rem;
+    width: 100%;
+
+    .image {
+        width: 15%;
+        background-size: auto;
+        display: grid;
+        place-content: center;
+
+        img {
+            width: 100%;
+            height: auto
+        }
+    }
+
+    .featuresTextContainer {
+        width: 100%;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+            color: #333;
+        }
+
+        p {
+            font-size: 16px;
+            color: #666;
+        }
+    }
+}
