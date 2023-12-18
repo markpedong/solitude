@@ -2,14 +2,13 @@
 
 .collectionsContainer {
     background-color: #F4F4F2;
-    height: 22rem;
     padding-block: 3rem;
 }
 
 .featuresItemContainer {
     justify-content: center;
     flex-wrap: wrap;
-    margin-block-start: 1rem;
+    margin-block-start: toRem(50);
 }
 
 .featuresItem {
