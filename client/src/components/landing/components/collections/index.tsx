@@ -18,13 +18,13 @@ const Collections: FC = () => {
                     </Flex>
                     <div className={styles.featuresItemContainer}>
                         <div className={styles.featuresItem}>
-                            <div className={styles.image}>
+                            <Flex className={styles.image} justify="center">
                                 <Image src={test} alt="features" />
-                            </div>
-                            <div className={styles.featuresTextContainer}>
+                            </Flex>
+                            <Flex className={styles.featuresTextContainer} justify="center" vertical={true}>
                                 <span>COLLECTION #1</span>
                                 <span>Short Description</span>
-                            </div>
+                            </Flex>
                         </div>
                     </div>
                 </Col>
