@@ -19,56 +19,11 @@ const Collections: FC = () => {
                     <div className={styles.featuresItemContainer}>
                         <div className={styles.featuresItem}>
                             <div className={styles.image}>
-                                <Image src={test} alt="" />
+                                <Image src={test} alt="features" />
                             </div>
                             <div className={styles.featuresTextContainer}>
-                                <h1>COLLECTION #1</h1>
-                                <p>Short Description</p>
-                            </div>
-                        </div>
-                        <div className={styles.featuresItem}>
-                            <div className={styles.image}>
-                                <Image src={test} alt="" />
-                            </div>
-                            <div className={styles.featuresTextContainer}>
-                                <h1>COLLECTION #1</h1>
-                                <p>Short Description</p>
-                            </div>
-                        </div>
-                        <div className={styles.featuresItem}>
-                            <div className={styles.image}>
-                                <Image src={test} alt="" />
-                            </div>
-                            <div className={styles.featuresTextContainer}>
-                                <h1>COLLECTION #1</h1>
-                                <p>Short Description</p>
-                            </div>
-                        </div>
-                        <div className={styles.featuresItem}>
-                            <div className={styles.image}>
-                                <Image src={test} alt="" />
-                            </div>
-                            <div className={styles.featuresTextContainer}>
-                                <h1>COLLECTION #1</h1>
-                                <p>Short Description</p>
-                            </div>
-                        </div>
-                        <div className={styles.featuresItem}>
-                            <div className={styles.image}>
-                                <Image src={test} alt="" />
-                            </div>
-                            <div className={styles.featuresTextContainer}>
-                                <h1>COLLECTION #1</h1>
-                                <p>Short Description</p>
-                            </div>
-                        </div>
-                        <div className={styles.featuresItem}>
-                            <div className={styles.image}>
-                                <Image src={test} alt="" />
-                            </div>
-                            <div className={styles.featuresTextContainer}>
-                                <h1>COLLECTION #1</h1>
-                                <p>Short Description</p>
+                                <span>COLLECTION #1</span>
+                                <span>Short Description</span>
                             </div>
                         </div>
                     </div>

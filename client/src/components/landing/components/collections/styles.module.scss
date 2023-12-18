@@ -1,3 +1,5 @@
+@import "@/styles/_helpers.scss";
+
 .collectionsContainer {
     background-color: #F4F4F2;
     height: 22rem;
@@ -15,39 +17,41 @@
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    max-width: 15rem;
+    max-width: toRem(370);
     margin-block-start: 1rem;
     width: 100%;
+    height: toRem(70);
 
     .image {
-        width: 15%;
-        background-size: auto;
-        display: grid;
-        place-content: center;
-
         img {
-            width: 100%;
-            height: auto
+            width: toRem(80);
+            height: toRem(80);
         }
+
+        // img {
+        //     height: toRem(80);
+        //     width: 100%;
+        // }
     }
 
     .featuresTextContainer {
         width: 100%;
-        padding: 16px;
-        display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: start;
         align-items: center;
         background-color: #fff;
+        font-family: 'Jost';
 
-        h1 {
-            font-size: 24px;
+
+        :nth-child(1) {
+            font-size: toRem(16);
+            font-weight: 400;
             margin: 0;
             color: #333;
         }
 
-        p {
-            font-size: 16px;
+        :nth-child(2) {
+            font-size: toRem(14);
             color: #666;
         }
     }
