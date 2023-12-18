@@ -2,7 +2,7 @@
 
 import React, { FC } from 'react'
 import styles from './styles.module.scss'
-import { Card, Col, Flex, Row } from 'antd'
+import { Card, Col, Flex, Row, Space } from 'antd'
 import test from '@/public/assets/logo.png'
 import Image from 'next/image'
 
@@ -16,7 +16,7 @@ const Collections: FC = () => {
                         <div>FEATURED COLLECTIONS</div>
                         <div>SEE ALL COLLECTIONS</div>
                     </Flex>
-                    <div className={styles.featuresItemContainer}>
+                    <Space className={styles.featuresItemContainer} size="large">
                         <div className={styles.featuresItem}>
                             <Flex className={styles.image} justify="center">
                                 <Image src={test} alt="features" />
@@ -26,7 +26,52 @@ const Collections: FC = () => {
                                 <span>Short Description</span>
                             </Flex>
                         </div>
-                    </div>
+                        <div className={styles.featuresItem}>
+                            <Flex className={styles.image} justify="center">
+                                <Image src={test} alt="features" />
+                            </Flex>
+                            <Flex className={styles.featuresTextContainer} justify="center" vertical={true}>
+                                <span>COLLECTION #1</span>
+                                <span>Short Description</span>
+                            </Flex>
+                        </div>
+                        <div className={styles.featuresItem}>
+                            <Flex className={styles.image} justify="center">
+                                <Image src={test} alt="features" />
+                            </Flex>
+                            <Flex className={styles.featuresTextContainer} justify="center" vertical={true}>
+                                <span>COLLECTION #1</span>
+                                <span>Short Description</span>
+                            </Flex>
+                        </div>
+                        <div className={styles.featuresItem}>
+                            <Flex className={styles.image} justify="center">
+                                <Image src={test} alt="features" />
+                            </Flex>
+                            <Flex className={styles.featuresTextContainer} justify="center" vertical={true}>
+                                <span>COLLECTION #1</span>
+                                <span>Short Description</span>
+                            </Flex>
+                        </div>
+                        <div className={styles.featuresItem}>
+                            <Flex className={styles.image} justify="center">
+                                <Image src={test} alt="features" />
+                            </Flex>
+                            <Flex className={styles.featuresTextContainer} justify="center" vertical={true}>
+                                <span>COLLECTION #1</span>
+                                <span>Short Description</span>
+                            </Flex>
+                        </div>
+                        <div className={styles.featuresItem}>
+                            <Flex className={styles.image} justify="center">
+                                <Image src={test} alt="features" />
+                            </Flex>
+                            <Flex className={styles.featuresTextContainer} justify="center" vertical={true}>
+                                <span>COLLECTION #1</span>
+                                <span>Short Description</span>
+                            </Flex>
+                        </div>
+                    </Space>
                 </Col>
                 <Col></Col>
             </Row>
