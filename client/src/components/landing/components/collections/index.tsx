@@ -71,6 +71,24 @@ const Collections: FC = () => {
                                 <span>Short Description</span>
                             </Flex>
                         </div>
+                        <div className={styles.featuresItem}>
+                            <Flex className={styles.image} justify="center">
+                                <Image src={test} alt="features" />
+                            </Flex>
+                            <Flex className={styles.featuresTextContainer} justify="center" vertical={true}>
+                                <span>COLLECTION #1</span>
+                                <span>Short Description</span>
+                            </Flex>
+                        </div>
+                        <div className={styles.featuresItem}>
+                            <Flex className={styles.image} justify="center">
+                                <Image src={test} alt="features" />
+                            </Flex>
+                            <Flex className={styles.featuresTextContainer} justify="center" vertical={true}>
+                                <span>COLLECTION #1</span>
+                                <span>Short Description</span>
+                            </Flex>
+                        </div>
                     </Space>
                 </Col>
                 <Col></Col>
