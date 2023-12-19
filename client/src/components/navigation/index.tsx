@@ -5,7 +5,7 @@ import { setActiveLoginModal } from '@/redux/features/booleanSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { UserOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
-import { Flex, Menu } from 'antd'
+import { Button, Drawer, Flex, Menu } from 'antd'
 import Image from 'next/image'
 import { FC, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -43,6 +43,16 @@ const Navigation: FC = () => {
         setNavigationMenu(e.key)
     }
 
+    const [open, setOpen] = useState(false)
+
+    const showDrawer = () => {
+        setOpen(true)
+    }
+
+    const onClose = () => {
+        setOpen(false)
+    }
+
     useEffect(() => {}, [selected])
 
     return (
@@ -53,7 +63,7 @@ const Navigation: FC = () => {
                     <Image src={logo} alt="loginForm" />
                     <span>SOLITUDE</span>
                 </Flex>
-                <Flex align="center">
+                <div className={styles.navigation}>
                     <Menu
                         onClick={onClick}
                         selectedKeys={[selected]}
@@ -69,7 +79,17 @@ const Navigation: FC = () => {
                             }}
                         />
                     </Flex>
-                </Flex>
+                </div>
+                <div className={styles.navigationMobile}>
+                    <Button type="primary" onClick={showDrawer}>
+                        Open
+                    </Button>
+                    <Drawer title="Basic Drawer" placement="right" onClose={onClose} open={open}>
+                        <p>Some contents...</p>
+                        <p>Some contents...</p>
+                        <p>Some contents...</p>
+                    </Drawer>
+                </div>
             </Flex>
         </>
     )
