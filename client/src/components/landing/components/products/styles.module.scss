@@ -1,3 +1,5 @@
+@import '@/styles/_helpers.scss';
+
 .productWrapper {
     margin-block-start: 95dvh;
 }
@@ -17,23 +19,23 @@
         padding: 0 1rem;
 
         .cardTitle {
-            letter-spacing: 2px;
+            letter-spacing: toRem(2);
             font-weight: 500;
-            font-size: 11px;
+            font-size: toRem(11);
         }
 
         .cardDescription {
-            font-size: 11px;
+            font-size: toRem(11);
         }
 
         .cardFooter {
             color: black;
-            font-size: 14px;
+            font-size: toRem(14);
         }
 
         img {
             pointer-events: none;
-            block-size: 200px;
+            block-size: toRem(200);
         }
     }
 }

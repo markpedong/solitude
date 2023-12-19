@@ -11,7 +11,7 @@ const Collections: FC = () => {
         <Row justify="center" className={styles.collectionsContainer}>
             <Col></Col>
             <Col span={16}>
-                <Flex justify="space-between">
+                <Flex justify="space-between" className={styles.headerText}>
                     <div>FEATURED COLLECTIONS</div>
                     <div>SEE ALL COLLECTIONS</div>
                 </Flex>

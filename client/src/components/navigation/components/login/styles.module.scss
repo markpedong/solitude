@@ -1,3 +1,5 @@
+@import "@/styles/_helpers.scss";
+
 .loginWrapper {
     position: fixed;
     top: 0;
@@ -29,7 +31,7 @@
         height: 100%;
         object-fit: cover;
         object-position: center;
-        border-radius: 10px;
+        border-radius: toRem(10);
     }
 
     @media (max-width: 768px) {

@@ -61,3 +61,19 @@
         }
     }
 }
+
+@media only screen and (max-width: 600px) {
+    .blogContainer {
+        padding-block-end: 0
+    }
+
+
+}
+
+
+
+@media only screen and (max-width: 400px) {
+    .blogItem {
+        width: toRem(300);
+    }
+}

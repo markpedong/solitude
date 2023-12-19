@@ -12,7 +12,7 @@
 }
 
 .middleContainer {
-    block-size: 100%;
+    min-block-size: toRem(387);
     gap: toRem(30);
 
     h1 {

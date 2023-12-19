@@ -13,8 +13,8 @@
 
 .featuresItem {
     display: flex;
-    border: 1px solid #e8e8e8;
-    border-radius: 8px;
+    border: toRem(1) solid #e8e8e8;
+    border-radius: toRem(8);
     overflow: hidden;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     width: toRem(370);
@@ -48,8 +48,18 @@
     }
 }
 
+.headerText {
+    text-align: center;
+}
+
 @media only screen and (max-width: 600px) {
     .featuresItem {
         width: toRem(300);
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .featuresItem {
+        width: toRem(250);
     }
 }
