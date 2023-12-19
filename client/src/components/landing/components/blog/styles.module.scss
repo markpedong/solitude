@@ -1,4 +1,21 @@
-.blogContainer {
-    padding: toRem(100) toRem(400);
+@import "@/styles/_helpers.scss";
 
+.blogContainer {
+    padding-top: toRem(100)
+}
+
+.titleContainer {
+    padding-block-end: toRem(100);
+
+    :nth-child(1) {
+        font-size: toRem(52);
+        font-family: 'Cormorant-600';
+    }
+
+    :nth-child(2) {
+        font-size: toRem(13);
+        letter-spacing: toRem(1.3);
+        text-transform: uppercase;
+        font-family: 'Jost';
+    }
 }
