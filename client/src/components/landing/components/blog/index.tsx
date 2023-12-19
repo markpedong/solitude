@@ -16,7 +16,7 @@ const Blog: FC = () => {
             <Row justify="center">
                 <Col></Col>
                 <Col>
-                    <Space>
+                    <Space className={styles.blogItemsContainer} align="center">
                         <Flex className={styles.blogItem} vertical>
                             <img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
                             <Flex className={styles.featuresTextContainer} justify="center" vertical={true} gap={10}>

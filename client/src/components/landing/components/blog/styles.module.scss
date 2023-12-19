@@ -20,12 +20,19 @@
     }
 }
 
+.blogItemsContainer {
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 .blogItem {
     width: toRem(371);
 
     img {
         max-height: toRem(200);
         max-width: 100%;
+        object-fit: cover;
+        object-position: center;
     }
 
     .featuresTextContainer {
