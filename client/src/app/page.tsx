@@ -1,4 +1,5 @@
 import Landing from '@/components/landing'
+import Blog from '@/components/landing/components/blog'
 import Collections from '@/components/landing/components/collections'
 import Products from '@/components/landing/components/products'
 
@@ -8,6 +9,7 @@ const Page = () => {
             <Landing />
             <Products />
             <Collections />
+            <Blog />
         </div>
     )
 }
