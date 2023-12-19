@@ -1,3 +1,31 @@
+@import "@/styles/_helpers.scss";
+
 .joinContainer {
     inline-size: 100%;
+}
+
+.joinImageContainer {
+    img {
+        height: 50%;
+        width: 50%;
+    }
+}
+
+.middleContainer {
+    block-size: 100%;
+    gap: toRem(30);
+
+    h1 {
+        font-family: 'Cormorant';
+        font-size: toRem(52);
+    }
+
+    span {
+        padding: toRem(10) toRem(30);
+        border: toRem(1) solid #65635F;
+        border-radius: toRem(4);
+        font-family: 'Jost';
+        font-size: toRem(16);
+        letter-spacing: toRem(1);
+    }
 }

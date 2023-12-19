@@ -9,6 +9,7 @@ import theme from '@/theme/theme'
 import { ConfigProvider } from 'antd'
 import enUS from 'antd/lib/locale/en_US'
 import Navigation from '@/components/navigation'
+import Footer from '@/components/footer'
 
 const jost = Jost({ subsets: ['latin'] })
 
@@ -25,6 +26,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => (
                     <ConfigProvider theme={theme} locale={enUS}>
                         <Navigation />
                         {children}
+                        <Footer />
                     </ConfigProvider>
                 </StyledComponentsRegistry>
             </ReduxProvider>

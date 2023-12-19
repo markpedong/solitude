@@ -18,6 +18,7 @@ const theme: ThemeConfig = {
             itemPaddingInline: 14,
             lineType: 'none',
             itemBg: 'none',
+            activeBarHeight: 0,
         },
     },
 }

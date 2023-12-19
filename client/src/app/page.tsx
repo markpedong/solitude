@@ -1,4 +1,3 @@
-import Footer from '@/components/footer'
 import Landing from '@/components/landing'
 import Blog from '@/components/landing/components/blog'
 import Collections from '@/components/landing/components/collections'
@@ -13,7 +12,6 @@ const Page = () => {
             <Collections />
             <Blog />
             <Join />
-            <Footer />
         </div>
     )
 }

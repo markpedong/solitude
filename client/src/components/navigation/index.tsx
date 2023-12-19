@@ -7,11 +7,12 @@ import { UserOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Flex, Menu } from 'antd'
 import Image from 'next/image'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Login from './components/login'
 import styles from './styles.module.scss'
 import Search from './components/search'
+import { setNavigationMenu } from '@/redux/features/navigationSlice'
 
 const items: MenuProps['items'] = [
     {
@@ -35,12 +36,14 @@ const items: MenuProps['items'] = [
 const Navigation: FC = () => {
     const dispatch = useDispatch<AppDispatch>()
     const activeModal = useAppSelector(state => state.boolean.activeLoginModal)
-    const [current, setCurrent] = useState('mail')
+    const selected = useAppSelector(state => state.navigation.selected)
 
     const onClick: MenuProps['onClick'] = e => {
         console.log('click ', e)
-        setCurrent(e.key)
+        setNavigationMenu(e.key)
     }
+
+    useEffect(() => {}, [selected])
 
     return (
         <>
@@ -51,7 +54,13 @@ const Navigation: FC = () => {
                     <span>SOLITUDE</span>
                 </Flex>
                 <Flex align="center">
-                    <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} disabledOverflow />
+                    <Menu
+                        onClick={onClick}
+                        selectedKeys={[selected]}
+                        mode="horizontal"
+                        items={items}
+                        disabledOverflow
+                    />
                     <Flex className={styles.icons} gap={20}>
                         <Search />
                         <UserOutlined
