@@ -25,9 +25,7 @@
 
     img {
         max-height: toRem(200);
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
+        max-width: 100%;
     }
 
     .featuresTextContainer {
