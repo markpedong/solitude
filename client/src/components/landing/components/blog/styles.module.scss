@@ -1,7 +1,7 @@
 @import "@/styles/_helpers.scss";
 
 .blogContainer {
-    padding-top: toRem(100)
+    padding-block: toRem(100)
 }
 
 .titleContainer {
@@ -17,5 +17,42 @@
         letter-spacing: toRem(1.3);
         text-transform: uppercase;
         font-family: 'Jost';
+    }
+}
+
+.blogItem {
+    width: toRem(371);
+
+    img {
+        max-height: toRem(200);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .featuresTextContainer {
+        padding-block: toRem(10);
+
+        :nth-child(1) {
+            font-family: 'Cormorant-700';
+            font-size: toRem(17);
+            line-height: toRem(24);
+            letter-spacing: toRem(0.3)
+        }
+
+        :nth-child(2) {
+            font-family: 'Jost';
+            font-size: toRem(14);
+            line-height: toRem(19);
+        }
+
+        :nth-child(3) {
+            font-family: 'Jost';
+            font-size: toRem(13);
+            line-height: toRem(25);
+            letter-spacing: toRem(1.3);
+            text-decoration-line: underline;
+            text-transform: uppercase;
+        }
     }
 }
