@@ -1,10 +1,10 @@
 'use client'
 
-import Product from '@/components/products'
 import { motion } from 'framer-motion'
 import { FC, useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import { productsData } from '@/constants/testdata'
+import { Card } from 'antd'
 
 const Products: FC = () => {
     const [width, setWidth] = useState(0)
@@ -33,7 +33,23 @@ const Products: FC = () => {
                     dragConstraints={{ right: 0, left: -width }}
                     whileTap={{ cursor: 'grabbing' }}>
                     {productsData.map(q => (
-                        <Product description={q.description} image={q.image} price={q.price} title={q.name} />
+                        <div className={styles.item}>
+                            <Card
+                                style={{ width: 240 }}
+                                cover={<img src={q.image} alt="example" />}
+                                bordered={false}
+                                hoverable>
+                                <Card.Meta
+                                    title={<div className={styles.cardTitle}>{q.name}</div>}
+                                    description={
+                                        <>
+                                            <div className={styles.cardDescription}>{q.description}</div>
+                                            <div className={styles.cardFooter}>{q.price}</div>
+                                        </>
+                                    }
+                                />
+                            </Card>
+                        </div>
                     ))}
                 </motion.div>
             </motion.div>
