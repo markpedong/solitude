@@ -1,10 +1,10 @@
 'use client'
 
-import { Card } from 'antd'
+import Product from '@/components/products'
 import { motion } from 'framer-motion'
 import { FC, useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
-import Product from '@/components/products'
+import { productsData } from '@/constants/testdata'
 
 const Products: FC = () => {
     const [width, setWidth] = useState(0)
@@ -32,174 +32,9 @@ const Products: FC = () => {
                     drag="x"
                     dragConstraints={{ right: 0, left: -width }}
                     whileTap={{ cursor: 'grabbing' }}>
-                    <Product
-                        description="White Gold 1.20cttw Diamond Line"
-                        image="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                        price="£2,500.00"
-                        title="GOLDSMITHS"
-                    />
-                    <motion.div className={styles.item}>
-                        <Card
-                            style={{ width: 240 }}
-                            cover={
-                                <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="example" />
-                            }
-                            bordered={false}>
-                            <Card.Meta
-                                title={<div className={styles.cardTitle}>GOLDSMITHS</div>}
-                                description={
-                                    <>
-                                        <div className={styles.cardDescription}>White Gold 1.20cttw Diamond Line</div>
-                                        <div className={styles.cardFooter}>£2,500.00</div>
-                                    </>
-                                }
-                            />
-                        </Card>
-                    </motion.div>
-                    <motion.div className={styles.item}>
-                        <Card
-                            style={{ width: 240 }}
-                            cover={
-                                <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="example" />
-                            }
-                            bordered={false}>
-                            <Card.Meta
-                                title={<div className={styles.cardTitle}>GOLDSMITHS</div>}
-                                description={
-                                    <>
-                                        <div className={styles.cardDescription}>White Gold 1.20cttw Diamond Line</div>
-                                        <div className={styles.cardFooter}>£2,500.00</div>
-                                    </>
-                                }
-                            />
-                        </Card>
-                    </motion.div>
-                    <motion.div className={styles.item}>
-                        <Card
-                            style={{ width: 240 }}
-                            cover={
-                                <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="example" />
-                            }
-                            bordered={false}>
-                            <Card.Meta
-                                title={<div className={styles.cardTitle}>GOLDSMITHS</div>}
-                                description={
-                                    <>
-                                        <div className={styles.cardDescription}>White Gold 1.20cttw Diamond Line</div>
-                                        <div className={styles.cardFooter}>£2,500.00</div>
-                                    </>
-                                }
-                            />
-                        </Card>
-                    </motion.div>
-                    <motion.div className={styles.item}>
-                        <Card
-                            style={{ width: 240 }}
-                            cover={
-                                <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="example" />
-                            }
-                            bordered={false}>
-                            <Card.Meta
-                                title={<div className={styles.cardTitle}>GOLDSMITHS</div>}
-                                description={
-                                    <>
-                                        <div className={styles.cardDescription}>White Gold 1.20cttw Diamond Line</div>
-                                        <div className={styles.cardFooter}>£2,500.00</div>
-                                    </>
-                                }
-                            />
-                        </Card>
-                    </motion.div>
-                    <motion.div className={styles.item}>
-                        <Card
-                            style={{ width: 240 }}
-                            cover={
-                                <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="example" />
-                            }
-                            bordered={false}>
-                            <Card.Meta
-                                title={<div className={styles.cardTitle}>GOLDSMITHS</div>}
-                                description={
-                                    <>
-                                        <div className={styles.cardDescription}>White Gold 1.20cttw Diamond Line</div>
-                                        <div className={styles.cardFooter}>£2,500.00</div>
-                                    </>
-                                }
-                            />
-                        </Card>
-                    </motion.div>
-                    <motion.div className={styles.item}>
-                        <Card
-                            style={{ width: 240 }}
-                            cover={
-                                <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="example" />
-                            }
-                            bordered={false}>
-                            <Card.Meta
-                                title={<div className={styles.cardTitle}>GOLDSMITHS</div>}
-                                description={
-                                    <>
-                                        <div className={styles.cardDescription}>White Gold 1.20cttw Diamond Line</div>
-                                        <div className={styles.cardFooter}>£2,500.00</div>
-                                    </>
-                                }
-                            />
-                        </Card>
-                    </motion.div>
-                    <motion.div className={styles.item}>
-                        <Card
-                            style={{ width: 240 }}
-                            cover={
-                                <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="example" />
-                            }
-                            bordered={false}>
-                            <Card.Meta
-                                title={<div className={styles.cardTitle}>GOLDSMITHS</div>}
-                                description={
-                                    <>
-                                        <div className={styles.cardDescription}>White Gold 1.20cttw Diamond Line</div>
-                                        <div className={styles.cardFooter}>£2,500.00</div>
-                                    </>
-                                }
-                            />
-                        </Card>
-                    </motion.div>
-                    <motion.div className={styles.item}>
-                        <Card
-                            style={{ width: 240 }}
-                            cover={
-                                <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="example" />
-                            }
-                            bordered={false}>
-                            <Card.Meta
-                                title={<div className={styles.cardTitle}>GOLDSMITHS</div>}
-                                description={
-                                    <>
-                                        <div className={styles.cardDescription}>White Gold 1.20cttw Diamond Line</div>
-                                        <div className={styles.cardFooter}>£2,500.00</div>
-                                    </>
-                                }
-                            />
-                        </Card>
-                    </motion.div>
-                    <motion.div className={styles.item}>
-                        <Card
-                            style={{ width: 240 }}
-                            cover={
-                                <img src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="example" />
-                            }
-                            bordered={false}>
-                            <Card.Meta
-                                title={<div className={styles.cardTitle}>GOLDSMITHS</div>}
-                                description={
-                                    <>
-                                        <div className={styles.cardDescription}>White Gold 1.20cttw Diamond Line</div>
-                                        <div className={styles.cardFooter}>£2,500.00</div>
-                                    </>
-                                }
-                            />
-                        </Card>
-                    </motion.div>
+                    {productsData.map(q => (
+                        <Product description={q.description} image={q.image} price={q.price} title={q.name} />
+                    ))}
                 </motion.div>
             </motion.div>
         </div>
