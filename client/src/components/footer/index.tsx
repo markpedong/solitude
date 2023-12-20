@@ -1,7 +1,5 @@
 'use client'
 
-import { setNavigationMenu } from '@/redux/features/navigationSlice'
-import { useAppSelector } from '@/redux/store'
 import { Flex, Menu, Space } from 'antd'
 import { MenuProps } from 'antd/lib'
 import { FC, useEffect } from 'react'
@@ -27,19 +25,10 @@ const items: MenuProps['items'] = [
 ]
 
 const Footer: FC = () => {
-    const selected = useAppSelector(state => state.navigation.selected)
-
-    const onClick: MenuProps['onClick'] = e => {
-        console.log('click ', e)
-        setNavigationMenu(e.key)
-    }
-
-    useEffect(() => {}, [selected])
-
     return (
         <div className={styles.footerWrapper}>
             <Flex justify="center" align="center" vertical gap={5}>
-                <Menu onClick={onClick} selectedKeys={[selected]} mode="horizontal" items={items} disabledOverflow />
+                <Menu mode="horizontal" items={items} disabledOverflow />
                 <Space size={30} className={styles.socialMediaContainer}>
                     <span>FACEBOOK</span>
                     <span>INSTAGRAM</span>

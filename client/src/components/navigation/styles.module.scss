@@ -1,5 +1,8 @@
+@import '@/styles/_helpers.scss';
+
 .navigationWrapper {
     inline-size: 100%;
+    padding: toRem(40) toRem(25);
 
     img {
         height: 1.3rem;
@@ -27,6 +30,7 @@
 .navigation {
     display: flex;
     align-items: center;
+    height: 0;
 }
 
 .navigationMobile {
@@ -34,6 +38,15 @@
     align-items: center;
 }
 
+.navigationIcon {
+    display: inline-block;
+    // padding-block-start: toRem(20);
+
+    svg {
+        block-size: toRem(20);
+        inline-size: toRem(20);
+    }
+}
 
 @media only screen and (max-width: 768px) {
     .navigation {
@@ -42,7 +55,7 @@
 }
 
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 769px) {
     .navigationMobile {
         display: none;
     }
