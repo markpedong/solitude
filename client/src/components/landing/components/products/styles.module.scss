@@ -1,13 +1,13 @@
 @import '@/styles/_helpers.scss';
 
 .productWrapper {
-    margin-block-start: 95dvh;
+    margin-block-start: toRem(100);
 }
 
 .carousel {
     cursor: grab;
     overflow: hidden;
-    margin-block-end: 5rem; // for debugging
+    padding-block: 5rem; // for debugging
 }
 
 .innerCarousel {

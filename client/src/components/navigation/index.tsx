@@ -18,19 +18,19 @@ const { Text } = Typography
 
 const items: MenuProps['items'] = [
     {
-        label: 'PRODUCTS',
+        label: <Link href="/products">PRODUCTS</Link>,
         key: 'products',
     },
     {
-        label: 'BRANDS',
+        label: <Link href="/brands">BRANDS</Link>,
         key: 'brands',
     },
     {
-        label: 'DEALS',
+        label: <Link href="/deals">DEALS</Link>,
         key: 'deals',
     },
     {
-        label: 'SERVICES',
+        label: <Link href="/services">SERVICES</Link>,
         key: 'services',
     },
 ]
@@ -68,7 +68,9 @@ const Navigation: FC = () => {
             <Flex className={styles.navigationWrapper} justify="space-between" align="center">
                 <Flex className={styles.headerContainer} justify="center" align="center" gap={10}>
                     <Image src={logo} alt="loginForm" />
-                    <span>SOLITUDE</span>
+                    <span>
+                        <Link href="/">SOLITUDE</Link>
+                    </span>
                 </Flex>
                 <div className={styles.navigation}>
                     <Menu mode="horizontal" items={items} disabledOverflow />
@@ -86,7 +88,9 @@ const Navigation: FC = () => {
                     <Drawer
                         title={
                             <Flex justify="space-between" align="center" gap={10}>
-                                <span>SOLITUDE</span>
+                                <Link href="/">
+                                    <span>SOLITUDE</span>
+                                </Link>
                                 <Flex className={styles.icons} gap={20}>
                                     <Search />
                                     <UserOutlined
@@ -101,16 +105,16 @@ const Navigation: FC = () => {
                         onClose={onClose}
                         open={open}>
                         <Flex className={styles.mobileNavigation} vertical gap={30}>
-                            <Link href="/">
+                            <Link href="/products">
                                 <Typography.Text>PRODUCTS</Typography.Text>
                             </Link>
-                            <Link href="/">
+                            <Link href="/brands">
                                 <Typography.Text>BRANDS</Typography.Text>
                             </Link>
-                            <Link href="/">
+                            <Link href="/deals">
                                 <Typography.Text>DEALS</Typography.Text>
                             </Link>
-                            <Link href="/">
+                            <Link href="/services">
                                 <Typography.Text>SERVICES</Typography.Text>
                             </Link>
                         </Flex>

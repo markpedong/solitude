@@ -8,6 +8,7 @@ const Page = () => {
     return (
         <div>
             <Landing />
+            <div style={{ marginBlockStart: '70dvh' }} />
             <Products />
             <Collections />
             <Blog />
