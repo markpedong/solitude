@@ -185,3 +185,5 @@ func DeleteAddress(ctx *gin.Context) {
 		"success": false,
 	})
 }
+
+func AddProducts(ctx *gin.Context) {}

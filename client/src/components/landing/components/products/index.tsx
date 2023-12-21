@@ -40,7 +40,7 @@ const Products: FC = () => {
                                 bordered={false}
                                 hoverable>
                                 <Card.Meta
-                                    title={<div className={styles.cardTitle}>{q.name}</div>}
+                                    title={<div className={styles.cardTitle}>{q.product_name}</div>}
                                     description={
                                         <>
                                             <div className={styles.cardDescription}>{q.description}</div>
