@@ -3,6 +3,8 @@
 import { Card, Col, Flex, Row, Space } from 'antd'
 import { FC } from 'react'
 import styles from './styles.module.scss'
+import { blogData } from '@/constants/testdata'
+import Link from 'next/link'
 
 const { Meta } = Card
 
@@ -17,45 +19,20 @@ const Blog: FC = () => {
                 <Col></Col>
                 <Col>
                     <Space className={styles.blogItemsContainer} align="center">
-                        <Flex className={styles.blogItem} vertical>
-                            <img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
-                            <Flex className={styles.featuresTextContainer} justify="center" vertical={true} gap={10}>
-                                <span>COLLECTION #1</span>
-                                <span>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed justo, odio vitae
-                                    turpis egestas fermentum. Sagittis cras morbi orci metus, praesent tortor congue
-                                    aliquam. Lacus ac sed ac semper. Donec eu imperdiet hendrerit ultrices at amet
-                                    purus.
-                                </span>
-                                <span>Read More</span>
+                        {blogData.map(q => (
+                            <Flex className={styles.blogItem} vertical>
+                                <img alt="example" src={q.image} />
+                                <Flex
+                                    className={styles.featuresTextContainer}
+                                    justify="center"
+                                    vertical={true}
+                                    gap={10}>
+                                    <span>{q.title}</span>
+                                    <span>{q.description}</span>
+                                    <Link href={q.blog_link}>Read More</Link>
+                                </Flex>
                             </Flex>
-                        </Flex>
-                        <Flex className={styles.blogItem} vertical>
-                            <img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
-                            <Flex className={styles.featuresTextContainer} justify="center" vertical={true} gap={10}>
-                                <span>COLLECTION #1</span>
-                                <span>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed justo, odio vitae
-                                    turpis egestas fermentum. Sagittis cras morbi orci metus, praesent tortor congue
-                                    aliquam. Lacus ac sed ac semper. Donec eu imperdiet hendrerit ultrices at amet
-                                    purus.
-                                </span>
-                                <span>Read More</span>
-                            </Flex>
-                        </Flex>
-                        <Flex className={styles.blogItem} vertical>
-                            <img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
-                            <Flex className={styles.featuresTextContainer} justify="center" vertical={true} gap={10}>
-                                <span>COLLECTION #1</span>
-                                <span>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed justo, odio vitae
-                                    turpis egestas fermentum. Sagittis cras morbi orci metus, praesent tortor congue
-                                    aliquam. Lacus ac sed ac semper. Donec eu imperdiet hendrerit ultrices at amet
-                                    purus.
-                                </span>
-                                <span>Read More</span>
-                            </Flex>
-                        </Flex>
+                        ))}
                     </Space>
                 </Col>
                 <Col></Col>
