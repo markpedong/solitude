@@ -186,4 +186,8 @@ func DeleteAddress(ctx *gin.Context) {
 	})
 }
 
-func AddProducts(ctx *gin.Context) {}
+func AddProducts(ctx *gin.Context) {
+	var body struct {
+		ProductName string `json:"product_name" validate:"required"`
+	}
+}
