@@ -37,7 +37,7 @@ const Products: FC<{ data: ProductsArr[] }> = ({ data }) => {
                     {data.map(q => (
                         <div className={styles.item} key={q.id}>
                             <Card
-                                style={{ width: 240 }}
+                                className={styles.itemContainer}
                                 cover={<img src={q.image} alt="example" />}
                                 bordered={false}
                                 hoverable>

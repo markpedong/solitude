@@ -14,9 +14,16 @@
     display: flex;
 
     .item {
-        max-height: 40rem;
-        width: auto;
-        padding: 0 1rem;
+        padding: 0 toRem(10);
+
+        .itemContainer {
+            width: toRem(240);
+            height: toRem(350);
+
+            :where .ant-card-body {
+                padding-bottom: 0px !important;
+            }
+        }
 
         .cardTitle {
             letter-spacing: toRem(2);
@@ -26,6 +33,7 @@
 
         .cardDescription {
             font-size: toRem(11);
+            white-space: break-spaces;
         }
 
         .cardFooter {
