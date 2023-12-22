@@ -9,9 +9,9 @@ export type ProductsArr = {
     id: string
     product_name: string
     price: number
-    rating: number
     image: string
     created_at: number
+    description: string
 }
 
 export const getProducts = params => get<ProductsArr[]>('/api/products', params)

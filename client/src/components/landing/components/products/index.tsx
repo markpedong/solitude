@@ -3,13 +3,14 @@
 import { motion } from 'framer-motion'
 import { FC, useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
-import { productsData } from '@/constants/testdata'
 import { Card } from 'antd'
 import { ProductsArr } from '@/api'
 
-const Products: FC = () => {
+const Products: FC<{ data: ProductsArr[] }> = ({ data }) => {
     const [width, setWidth] = useState(0)
     const carousel = useRef<HTMLDivElement>(null)
+
+    console.log('data', data)
 
     useEffect(() => {
         const updateWidth = () => {
@@ -33,7 +34,7 @@ const Products: FC = () => {
                     drag="x"
                     dragConstraints={{ right: 0, left: -width }}
                     whileTap={{ cursor: 'grabbing' }}>
-                    {productsData.map(q => (
+                    {data.map(q => (
                         <div className={styles.item}>
                             <Card
                                 style={{ width: 240 }}

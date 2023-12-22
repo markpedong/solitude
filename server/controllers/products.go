@@ -27,12 +27,12 @@ func AddProducts(ctx *gin.Context) {
 		return
 	}
 
-	product := &models.Product{
+	product := &models.LandingProduct{
 		ProductID:   uuid.New(),
 		ProductName: &body.ProductName,
 		Price:       body.Price,
-		Rating:      nil,
 		Image:       &body.Image,
+		Description: body.Description,
 	}
 
 	if err := database.DB.Create(&product).Error; err != nil {
@@ -52,7 +52,7 @@ func AddProducts(ctx *gin.Context) {
 }
 
 func GetAllProducts(ctx *gin.Context) {
-	var productList []models.Product
+	var productList []models.LandingProduct
 
 	if database.DB.Order("created_at DESC").Find(&productList).Error != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{

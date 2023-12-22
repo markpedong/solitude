@@ -30,6 +30,16 @@ type Product struct {
 	Rating      *uint8    `json:"rating"`
 	Image       *string   `json:"image"`
 	CreatedAt   int       `json:"created_at" gorm:"autoCreateTime"`
+	Description string    `json:"description"`
+}
+
+type LandingProduct struct {
+	ProductID   uuid.UUID `json:"id" gorm:"primaryKey;column:id"`
+	ProductName *string   `json:"product_name"`
+	Price       *float64  `json:"price"`
+	Image       *string   `json:"image"`
+	CreatedAt   int       `json:"created_at" gorm:"autoCreateTime"`
+	Description string    `json:"description"`
 }
 
 type Address struct {
