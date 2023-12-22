@@ -7,11 +7,12 @@ import (
 )
 
 func UserRoutes(r *gin.Engine) {
+	r.GET("/products", controllers.GetAllProducts)
+
 	users := r.Group("/users")
 	{
 		users.POST("/signup", controllers.Signup)
 		users.POST("/login", controllers.Login)
-		users.GET("/search", controllers.GetAllProducts)
 	}
 
 	admin := r.Group("/admin")

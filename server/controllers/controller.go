@@ -167,6 +167,12 @@ func GetAllProducts(ctx *gin.Context) {
 		})
 		return
 	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "success",
+		"data":    productList,
+		"success": true,
+	})
 }
 
 func SearchProductByQuery(ctx *gin.Context) {
