@@ -42,3 +42,5 @@
 /server/.env
 
 /server/solitude
+
+/client/.env
