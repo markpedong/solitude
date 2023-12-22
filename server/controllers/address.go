@@ -185,21 +185,3 @@ func DeleteAddress(ctx *gin.Context) {
 		"success": false,
 	})
 }
-
-func AddProducts(ctx *gin.Context) {
-	var body struct {
-		ProductName string `json:"product_name" validate:"required"`
-		Description string `json:"description" validate:"required"`
-		Price       int    `json:"price" validate:"required"`
-		// we will change this to upload file
-		Image string `json:"image" validate:"required"`
-	}
-
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-			"status":  http.StatusBadRequest,
-			"success": "failed",
-		})
-	}
-}

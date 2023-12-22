@@ -160,7 +160,7 @@ func Login(ctx *gin.Context) {
 func GetAllProducts(ctx *gin.Context) {
 	var productList []models.Product
 
-	if database.DB.Find(&productList).Error != nil {
+	if database.DB.Order("created_at DESC").Find(&productList).Error != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "There's a problem getting the products data",
 			"success": false,
