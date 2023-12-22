@@ -20,7 +20,7 @@ const Blog: FC = () => {
                 <Col>
                     <Space className={styles.blogItemsContainer} align="center">
                         {blogData.map(q => (
-                            <Flex className={styles.blogItem} vertical>
+                            <Flex className={styles.blogItem} vertical key={q.image}>
                                 <img alt="example" src={q.image} />
                                 <Flex
                                     className={styles.featuresTextContainer}

@@ -35,7 +35,7 @@ const Products: FC<{ data: ProductsArr[] }> = ({ data }) => {
                     dragConstraints={{ right: 0, left: -width }}
                     whileTap={{ cursor: 'grabbing' }}>
                     {data.map(q => (
-                        <div className={styles.item}>
+                        <div className={styles.item} key={q.id}>
                             <Card
                                 style={{ width: 240 }}
                                 cover={<img src={q.image} alt="example" />}
@@ -46,7 +46,7 @@ const Products: FC<{ data: ProductsArr[] }> = ({ data }) => {
                                     description={
                                         <>
                                             <div className={styles.cardDescription}>{q.description}</div>
-                                            <div className={styles.cardFooter}>{q.price}</div>
+                                            <div className={styles.cardFooter}>$ {q.price.toFixed(2)}</div>
                                         </>
                                     }
                                 />

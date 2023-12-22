@@ -18,7 +18,7 @@ const Collections: FC = () => {
                 </Flex>
                 <Space className={styles.featuresItemContainer} size="large">
                     {collectionData.map(q => (
-                        <div className={styles.featuresItem}>
+                        <div className={styles.featuresItem} key={q.image}>
                             <Flex className={styles.image} justify="center">
                                 <img src={q.image} alt="features" />
                             </Flex>
