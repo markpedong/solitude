@@ -5,6 +5,7 @@ import { FC, useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import { productsData } from '@/constants/testdata'
 import { Card } from 'antd'
+import { ProductsArr } from '@/api'
 
 const Products: FC = () => {
     const [width, setWidth] = useState(0)

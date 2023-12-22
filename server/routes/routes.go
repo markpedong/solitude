@@ -7,7 +7,6 @@ import (
 )
 
 func UserRoutes(r *gin.Engine) {
-	r.GET("/products", controllers.GetAllProducts)
 
 	users := r.Group("/users")
 	{
@@ -28,5 +27,7 @@ func UserRoutes(r *gin.Engine) {
 		api.GET("/instant-buy", controllers.InstantBuy)
 		api.POST("/search", controllers.SearchProductByQuery)
 		api.POST("add-products", controllers.AddProducts)
+		api.GET("/products", controllers.GetAllProducts)
+
 	}
 }

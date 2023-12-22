@@ -2,8 +2,8 @@
 
 import React, { FC } from 'react'
 
-const Prodcuts: FC = () => {
+const Products: FC = () => {
     return <div>Products</div>
 }
 
-export default Prodcuts
+export default Products
