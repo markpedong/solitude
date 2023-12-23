@@ -3,13 +3,13 @@ import React from 'react'
 
 import StyledComponentsRegistry from '@/lib/antdRegistry'
 
-import { ReduxProvider } from '@/redux/provider'
 import '@/styles/global.scss'
 import theme from '@/theme/theme'
 import { ConfigProvider } from 'antd'
 import enUS from 'antd/lib/locale/en_US'
 import Navigation from '@/components/navigation'
 import Footer from '@/components/footer'
+import ReduxProvider from '@/redux/provider'
 
 const jost = Jost({ subsets: ['latin'] })
 

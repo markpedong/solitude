@@ -6,8 +6,15 @@ import Products from '@/components/landing/components/products'
 import { FC } from 'react'
 import { ProductsArr, getProducts } from '@/api/index'
 
+// async function getProducts() {
+//     const data = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`)
+//     const response = await data.json()
+
+//     return response
+// }
+
 const Page: FC = async () => {
-    const products = await getProducts({})
+    const products = await getProducts()
 
     return (
         <div>
