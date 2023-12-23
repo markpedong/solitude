@@ -1,9 +1,9 @@
 import { ProductsArr, getProducts } from '@/api'
-import Landing from '@/components/landing'
-import Blog from '@/components/landing/components/blog'
-import Collections from '@/components/landing/components/collections'
-import Join from '@/components/landing/components/join'
-import ProductsLanding from '@/components/landing/components/products'
+import Landing from '@/app/components/landing'
+import Blog from '@/app/components/landing/components/blog'
+import Collections from '@/app/components/landing/components/collections'
+import Join from '@/app/components/landing/components/join'
+import ProductsLanding from '@/app/components/landing/components/products'
 import { FC } from 'react'
 
 const Page: FC = async () => {
