@@ -10,8 +10,6 @@ const Products: FC<{ data: ProductsArr[] }> = ({ data }) => {
     const [width, setWidth] = useState(0)
     const carousel = useRef<HTMLDivElement>(null)
 
-    console.log('data', data)
-
     useEffect(() => {
         const updateWidth = () => {
             if (carousel.current) {

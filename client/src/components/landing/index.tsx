@@ -1,11 +1,10 @@
 'use client'
 
-import Image from 'next/image'
 import landing from '@/public/assets/landing.png'
+import { Flex } from 'antd'
+import Image from 'next/image'
 import { FC } from 'react'
 import styles from './styles.module.scss'
-import { Flex } from 'antd'
-import Products from './components/products'
 
 const Landing: FC = () => {
     return (

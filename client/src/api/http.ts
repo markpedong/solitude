@@ -1,39 +1,36 @@
 import { message } from 'antd'
 import { stringify } from 'qs'
 
-type ApiResponse<T = null> = {
+type ApiResponse<T> = {
     data: T
     message: string
     success: boolean
     status: number
 }
 
-const post = async (url: string, data = {}): Promise<ApiResponse> => {
+const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
     const response = await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: stringify(data),
     })
-    const result = (await response.json()) as ApiResponse
+    const result = await response.json()
 
-    if (result.status > 200) {
-        message.error(result.message)
-    } else {
-        message.success(result.message)
-    }
-
-    return result
+    return result as ApiResponse<T>
 }
 
-const get = async (url: string, data = {}): Promise<ApiResponse> => {
+const get = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
     const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}${url}${stringify(data) ? '?' + stringify(data) : ''}`
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}${url}${stringify(data) ? '?' + stringify(data) : ''}`,
+        {
+            method: 'GET',
+        }
     )
     const result = await response.json()
 
-    return result
+    return result as ApiResponse<T>
 }
 
-export { post, get }
+export { get, post }

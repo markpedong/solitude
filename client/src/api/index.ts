@@ -14,4 +14,4 @@ export type ProductsArr = {
     description: string
 }
 
-export const getProducts = () => get('/api/products')
+export const getProducts = () => get<ProductsArr[]>('/api/products')
