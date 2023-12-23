@@ -7,9 +7,9 @@ import '@/styles/global.scss'
 import theme from '@/theme/theme'
 import { ConfigProvider } from 'antd'
 import enUS from 'antd/lib/locale/en_US'
-import Navigation from '@/app/components/navigation'
-import Footer from '@/app/components/footer'
 import ReduxProvider from '@/redux/provider'
+import Navigation from '@/components/navigation'
+import Footer from '@/components/footer'
 
 const jost = Jost({ subsets: ['latin'] })
 
