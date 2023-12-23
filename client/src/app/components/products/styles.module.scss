@@ -19,10 +19,6 @@
         .itemContainer {
             width: toRem(240);
             height: toRem(350);
-
-            :where .ant-card-body {
-                padding-bottom: 0px !important;
-            }
         }
 
         .cardTitle {
@@ -39,6 +35,7 @@
         .cardFooter {
             color: black;
             font-size: toRem(14);
+            flex: 1;
         }
 
         img {
