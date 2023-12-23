@@ -34,7 +34,7 @@ func CORSMiddleware() gin.HandlerFunc {
 func main() {
 	r := gin.New()
 
-	r.Use(CORSMiddleware())
+	// r.Use(CORSMiddleware())
 	routes.UserRoutes(r)
 
 	log.Fatal(r.Run(":" + os.Getenv("PORT")))

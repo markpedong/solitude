@@ -13,7 +13,7 @@
         "@ant-design/icons": "5.2.6",
         "@ant-design/pro-components": "2.6.43",
         "@reduxjs/toolkit": "2.0.1",
-        "antd": "5.12.2",
+        "antd": "5.12.5",
         "framer-motion": "^10.16.16",
         "next": "14.0.4",
         "qs": "^6.11.2",
@@ -21,10 +21,10 @@
         "react-dom": "18",
         "react-redux": "9.0.4",
         "sass": "1.69.5",
-        "sharp": "0.33.0"
+        "sharp": "0.33.1"
     },
     "devDependencies": {
-        "@types/node": "20",
+        "@types/node": "^20.10.5",
         "@types/qs": "^6.9.11",
         "@types/react": "18",
         "@types/react-dom": "18",

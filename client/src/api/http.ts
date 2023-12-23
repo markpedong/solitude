@@ -27,8 +27,10 @@ const post = async (url: string, data = {}): Promise<ApiResponse> => {
     return result
 }
 
-const get = async (url: string, data = {}) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`)
+const get = async (url: string, data = {}): Promise<ApiResponse> => {
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}${url}${stringify(data) ? '?' + stringify(data) : ''}`
+    )
     const result = await response.json()
 
     return result
