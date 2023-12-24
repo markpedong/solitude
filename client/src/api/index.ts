@@ -26,3 +26,11 @@ export type TBlog = {
     created_at: number
 }
 export const getBlogs = () => get<TBlog[]>('/api/blogs')
+
+// /api/collections
+export type TCollection = {
+    image: string
+    title: string
+    description
+}
+export const getCollections = () => get('/api/collections')

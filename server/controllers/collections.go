@@ -10,7 +10,7 @@ import (
 )
 
 func GetAllCollections(ctx *gin.Context) {
-	var collections []models.LandingBlog
+	var collections []models.LandingCollections
 
 	if database.DB.Order("created_at DESC").Find(&collections).Error != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
@@ -73,7 +73,7 @@ func AddCollection(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"message": "successfully added blog!",
+		"message": "successfully added collection!!",
 		"success": true,
 		"status":  http.StatusOK,
 	})

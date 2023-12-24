@@ -31,6 +31,6 @@ func UserRoutes(r *gin.Engine) {
 		api.POST("/add-blog", controllers.AddBlog)
 		api.GET("/blogs", controllers.GetAllBlog)
 		api.GET("/collections", controllers.GetAllCollections)
-		api.POST("/add-collections", controllers.AddCollection)
+		api.POST("/add-collection", controllers.AddCollection)
 	}
 }

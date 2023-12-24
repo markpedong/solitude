@@ -1,13 +1,11 @@
 'use client'
 
-import React, { FC } from 'react'
+import { TCollection } from '@/api'
+import { Col, Flex, Row, Space } from 'antd'
+import { FC } from 'react'
 import styles from './styles.module.scss'
-import { Card, Col, Flex, Row, Space } from 'antd'
-import test from '@/public/assets/logo.png'
-import Image from 'next/image'
-import { collectionData } from '@/constants/testdata'
 
-const Collections: FC = () => {
+const Collections: FC<{ data: TCollection[] }> = ({ data }) => {
     return (
         <Row justify="center" className={styles.collectionsContainer}>
             <Col></Col>
@@ -17,13 +15,13 @@ const Collections: FC = () => {
                     <div>SEE ALL COLLECTIONS</div>
                 </Flex>
                 <Space className={styles.featuresItemContainer} size="large">
-                    {collectionData.map(q => (
+                    {data.map(q => (
                         <div className={styles.featuresItem} key={q.image}>
                             <Flex className={styles.image} justify="center">
                                 <img src={q.image} alt="features" />
                             </Flex>
                             <Flex className={styles.featuresTextContainer} justify="center" vertical={true}>
-                                <span>{q.name}</span>
+                                <span>{q.title}</span>
                                 <span>{q.description}</span>
                             </Flex>
                         </div>
