@@ -72,3 +72,12 @@ type Payment struct {
 	Digital bool      `json:"digital"`
 	COD     bool      `json:"cod"`
 }
+
+type LandingBlog struct {
+	ID          uuid.UUID `json:"id" gorm:"primaryKey"`
+	Title       string    `json:"title" validate:"required"`
+	Description string    `json:"description" validate:"required"`
+	Image       string    `json:"image" validate:"required"`
+	BlogLink    string    `json:"blog_link" validate:"required"`
+	CreatedAt   int       `json:"created_at" gorm:"autoCreateTime"`
+}
