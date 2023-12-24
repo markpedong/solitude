@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { FC } from 'react'
 import styles from './styles.module.scss'
 import Link from 'next/link'
+import { jost } from '@/app/page'
 
 const Landing: FC = () => {
     return (
@@ -20,7 +21,7 @@ const Landing: FC = () => {
                 <span>
                     <Link href="/products">SEARCH PRODUCTS</Link>
                 </span>
-                <span>READ OUR CARE GUIDE</span>
+                <span className={jost.className}>READ OUR CARE GUIDE</span>
             </Flex>
             <Flex className={styles.featuredContainer} justify="center" align="center" vertical>
                 <span>Featured Products</span>

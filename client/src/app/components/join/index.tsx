@@ -8,7 +8,7 @@ import img1 from '@/public/assets/forgotModalCover.png'
 import img2 from '@/public/assets/logo.png'
 import img3 from '@/public/assets/loginModalCover.png'
 import img4 from '@/public/assets/signUpModalCover.png'
-import { cormorant } from '@/app/page'
+import { cormorant, jost } from '@/app/page'
 
 const Join: FC = () => {
     return (
@@ -24,7 +24,7 @@ const Join: FC = () => {
             <Col xs={24} lg={10}>
                 <Flex className={styles.middleContainer} justify="center" align="center" vertical>
                     <h1 className={cormorant.className}>Join #solitude</h1>
-                    <span>FOLLOW US ON INSTAGRAM</span>
+                    <span className={jost.className}>FOLLOW US ON INSTAGRAM</span>
                 </Flex>
             </Col>
             <Col xs={0} lg={7}>

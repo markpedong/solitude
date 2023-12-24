@@ -1,15 +1,15 @@
 @import "@/styles/_helpers.scss";
 
 .blogContainer {
-    padding-block: toRem(100)
+    padding-block: toRem(50)
 }
 
 .titleContainer {
-    padding-block-end: toRem(100);
+    padding-block-end: toRem(50);
 
     :nth-child(1) {
         font-size: toRem(52);
-        font-family: 'Cormorant-600';
+        font-weight: 900;
     }
 
     :nth-child(2) {

@@ -1,3 +1,5 @@
+@import '@/styles/_helpers.scss';
+
 .headerContainerText {
     position: absolute;
     top: 25%;
@@ -48,6 +50,7 @@
 
     :nth-child(2) {
         letter-spacing: 0.1rem;
+        font-size: toRem(12);
     }
 }
 

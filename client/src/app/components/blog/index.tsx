@@ -5,12 +5,13 @@ import { FC } from 'react'
 import styles from './styles.module.scss'
 import Link from 'next/link'
 import { TBlog } from '@/api'
+import { cormorant, jost } from '@/app/page'
 
 const Blog: FC<{ data: TBlog[] }> = ({ data }) => {
     return (
         <div className={styles.blogContainer}>
             <Flex className={styles.titleContainer} justify="center" align="center" vertical>
-                <span>Our Blog</span>
+                <span className={cormorant.className}>Our Blog</span>
                 <span>More Articles</span>
             </Flex>
             <Row justify="center">

@@ -13,6 +13,7 @@ import Login from './components/login'
 import styles from './styles.module.scss'
 import Search from './components/search'
 import Link from 'next/link'
+import { jost } from '@/app/page'
 
 const { Text } = Typography
 
@@ -88,7 +89,7 @@ const Navigation: FC = () => {
                     <Drawer
                         title={
                             <Flex justify="space-between" align="center" gap={10}>
-                                <Link href="/">
+                                <Link href="/" style={{ color: 'black' }}>
                                     <span>SOLITUDE</span>
                                 </Link>
                                 <Flex className={styles.icons} gap={20}>
@@ -104,7 +105,7 @@ const Navigation: FC = () => {
                         placement="right"
                         onClose={onClose}
                         open={open}>
-                        <Flex className={styles.mobileNavigation} vertical gap={30}>
+                        <Flex vertical gap={30}>
                             <Link href="/products">
                                 <Typography.Text>PRODUCTS</Typography.Text>
                             </Link>
