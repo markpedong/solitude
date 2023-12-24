@@ -5,6 +5,7 @@ import { Flex } from 'antd'
 import Image from 'next/image'
 import { FC } from 'react'
 import styles from './styles.module.scss'
+import Link from 'next/link'
 
 const Landing: FC = () => {
     return (
@@ -16,7 +17,9 @@ const Landing: FC = () => {
                 <Image src={landing} alt="landing" />
             </div>
             <Flex className={styles.landingButtonContainer} justify="center" align="center" gap={20} vertical>
-                <span>SEARCH PRODUCTS</span>
+                <span>
+                    <Link href="/products">SEARCH PRODUCTS</Link>
+                </span>
                 <span>READ OUR CARE GUIDE</span>
             </Flex>
             <Flex className={styles.featuredContainer} justify="center" align="center" vertical>

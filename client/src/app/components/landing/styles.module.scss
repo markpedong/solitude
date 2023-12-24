@@ -36,12 +36,14 @@
     text-align: center;
 
     :nth-child(1) {
-        background-color: black;
-        color: white;
-        padding: 0.7rem 4rem;
-        font-size: 0.8rem;
-        letter-spacing: 0.2rem;
-        border-radius: 0.3rem;
+        a {
+            background-color: black;
+            color: white;
+            padding: 0.7rem 4rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.2rem;
+            border-radius: 0.3rem;
+        }
     }
 
     :nth-child(2) {
