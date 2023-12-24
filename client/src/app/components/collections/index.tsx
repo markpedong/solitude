@@ -4,15 +4,16 @@ import { TCollection } from '@/api'
 import { Col, Flex, Row, Space } from 'antd'
 import { FC } from 'react'
 import styles from './styles.module.scss'
+import { cormorant, jost } from '@/app/page'
 
 const Collections: FC<{ data: TCollection[] }> = ({ data }) => {
     return (
         <Row justify="center" className={styles.collectionsContainer}>
             <Col></Col>
             <Col span={16}>
-                <Flex justify="space-between" className={styles.headerText}>
-                    <div>FEATURED COLLECTIONS</div>
-                    <div>SEE ALL COLLECTIONS</div>
+                <Flex justify="space-between" className={styles.headerText} vertical>
+                    <span className={cormorant.className}>Featured Collections</span>
+                    <span className={jost.className}>SEE ALL COLLECTIONS</span>
                 </Flex>
                 <Space className={styles.featuresItemContainer} size="large">
                     {data.map(q => (
@@ -20,7 +21,10 @@ const Collections: FC<{ data: TCollection[] }> = ({ data }) => {
                             <Flex className={styles.image} justify="center">
                                 <img src={q.image} alt="features" />
                             </Flex>
-                            <Flex className={styles.featuresTextContainer} justify="center" vertical={true}>
+                            <Flex
+                                className={`${styles.featuresTextContainer} ${jost.className}`}
+                                justify="center"
+                                vertical={true}>
                                 <span>{q.title}</span>
                                 <span>{q.description}</span>
                             </Flex>

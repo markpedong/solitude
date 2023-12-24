@@ -16,7 +16,6 @@
         font-size: toRem(13);
         letter-spacing: toRem(1.3);
         text-transform: uppercase;
-        font-family: 'Jost';
     }
 }
 
@@ -39,20 +38,18 @@
         padding-block: toRem(10);
 
         :nth-child(1) {
-            font-family: 'Cormorant-700';
             font-size: toRem(17);
             line-height: toRem(24);
-            letter-spacing: toRem(0.3)
+            letter-spacing: toRem(0.3);
+            font-weight: 800;
         }
 
         :nth-child(2) {
-            font-family: 'Jost';
             font-size: toRem(14);
             line-height: toRem(19);
         }
 
         :nth-child(3) {
-            font-family: 'Jost';
             font-size: toRem(13);
             line-height: toRem(25);
             letter-spacing: toRem(1.3);

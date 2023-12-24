@@ -30,7 +30,6 @@
     .featuresTextContainer {
         padding: toRem(16);
         background-color: #fff;
-        font-family: 'Jost';
         width: 100%;
 
         :nth-child(1) {
@@ -50,6 +49,17 @@
 
 .headerText {
     text-align: center;
+
+    :nth-child(1) {
+        font-size: toRem(32);
+        font-weight: 800;
+    }
+
+    :nth-child(2) {
+        font-size: 0.8rem;
+        margin-block-start: 1rem;
+        color: rgba(0, 0, 0, 0.6);
+    }
 }
 
 @media only screen and (max-width: 600px) {

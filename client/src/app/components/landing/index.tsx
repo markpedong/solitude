@@ -6,13 +6,15 @@ import Image from 'next/image'
 import { FC } from 'react'
 import styles from './styles.module.scss'
 import Link from 'next/link'
-import { jost } from '@/app/page'
+import { cormorant, jost } from '@/app/page'
 
 const Landing: FC = () => {
     return (
         <div>
             <div className={styles.headerContainerText}>
-                <span>Find products for your friends, family, and special occasions.</span>
+                <span className={cormorant.className}>
+                    Find products for your friends, family, and special occasions.
+                </span>
             </div>
             <div className={styles.landingImageContainer}>
                 <Image src={landing} alt="landing" />
@@ -24,7 +26,7 @@ const Landing: FC = () => {
                 <span className={jost.className}>READ OUR CARE GUIDE</span>
             </Flex>
             <Flex className={styles.featuredContainer} justify="center" align="center" vertical>
-                <span>Featured Products</span>
+                <span className={cormorant.className}>Featured Products</span>
                 <span>Essential products, best values, lower prices</span>
             </Flex>
         </div>

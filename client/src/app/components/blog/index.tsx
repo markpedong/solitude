@@ -12,7 +12,7 @@ const Blog: FC<{ data: TBlog[] }> = ({ data }) => {
         <div className={styles.blogContainer}>
             <Flex className={styles.titleContainer} justify="center" align="center" vertical>
                 <span className={cormorant.className}>Our Blog</span>
-                <span>More Articles</span>
+                <span className={jost.className}>More Articles</span>
             </Flex>
             <Row justify="center">
                 <Col></Col>
@@ -26,9 +26,9 @@ const Blog: FC<{ data: TBlog[] }> = ({ data }) => {
                                     justify="center"
                                     vertical={true}
                                     gap={10}>
-                                    <span>{q.title}</span>
-                                    <span>{q.description}</span>
-                                    <Link href={q.blog_link} target="_blank">
+                                    <span className={cormorant.className}>{q.title}</span>
+                                    <span className={jost.className}>{q.description}</span>
+                                    <Link className={jost.className} href={q.blog_link} target="_blank">
                                         Read More
                                     </Link>
                                 </Flex>
