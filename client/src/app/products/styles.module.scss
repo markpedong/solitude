@@ -14,13 +14,21 @@
 
 .filterWrapper {
     margin-block: toRem(50);
+    gap: toRem(50);
 
     .filterContainer {
-        flex: 2;
+        gap: toRem(30);
 
         .filterLabel {
             text-transform: uppercase;
             letter-spacing: toRem(2);
+            text-wrap: nowrap;
         }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .filterWrapper {
+        display: none !important;
     }
 }

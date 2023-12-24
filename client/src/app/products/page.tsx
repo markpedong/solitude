@@ -11,27 +11,29 @@ const Products: FC = () => {
     return (
         <div>
             <Row justify="center">
-                <Col lg={2}></Col>
-                <Col lg={20} className={styles.productWrapper}>
+                <Col md={2}></Col>
+                <Col span={24} md={20} className={styles.productWrapper}>
                     <Flex className={styles.productHeaderContainer} vertical justify="center" align="center" gap={20}>
                         <span>SOLITUDE / PRODUCTS</span>
                         <h1 className={cormorant.className}>PRODUCTS</h1>
                     </Flex>
-                    <Flex className={styles.filterWrapper} justify="space-between" align="center" gap={50}>
+                    <Flex className={styles.filterWrapper} justify="space-between" align="center">
                         <Flex className={styles.filterContainer} justify="space-between">
                             {PRODUCT_FILTER.map(q => (
-                                <div className={`${jost.className} ${styles.filterLabel}`}>
+                                <Flex
+                                    className={`${jost.className} ${styles.filterLabel}`}
+                                    justify="center"
+                                    align="center">
                                     {q.label} <DownOutlined />
-                                </div>
+                                </Flex>
                             ))}
                         </Flex>
-                        <div style={{ flex: 1 }} />
                         <div>
                             <Input placeholder="Search" style={{ width: 200 }} suffix={<SearchOutlined />} />
                         </div>
                     </Flex>
                 </Col>
-                <Col lg={2}></Col>
+                <Col md={2}></Col>
             </Row>
         </div>
     )
