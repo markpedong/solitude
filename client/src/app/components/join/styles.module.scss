@@ -6,7 +6,7 @@
 
 .joinImageContainer {
     img {
-        height: 50%;
+        height: auto;
         width: 50%;
     }
 }
@@ -14,11 +14,11 @@
 .middleContainer {
     gap: toRem(30);
     height: 100%;
-    padding-block: toRem(100);
+    padding-block: toRem(50);
 
     h1 {
-        font-family: 'Cormorant';
         font-size: toRem(52);
+        font-weight: 900;
     }
 
     span {

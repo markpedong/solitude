@@ -8,11 +8,12 @@ import img1 from '@/public/assets/forgotModalCover.png'
 import img2 from '@/public/assets/logo.png'
 import img3 from '@/public/assets/loginModalCover.png'
 import img4 from '@/public/assets/signUpModalCover.png'
+import { cormorant } from '@/app/page'
 
 const Join: FC = () => {
     return (
         <Row className={styles.joinContainer} justify="center">
-            <Col span={0} xl={7}>
+            <Col xs={0} lg={7}>
                 <Flex className={styles.joinImageContainer} wrap="wrap">
                     <Image src={img1} alt="logo1" />
                     <Image src={img2} alt="logo1" />
@@ -20,13 +21,13 @@ const Join: FC = () => {
                     <Image src={img4} alt="logo1" />
                 </Flex>
             </Col>
-            <Col span={24} xl={10}>
+            <Col xs={24} lg={10}>
                 <Flex className={styles.middleContainer} justify="center" align="center" vertical>
-                    <h1>Join #solitude</h1>
+                    <h1 className={cormorant.className}>Join #solitude</h1>
                     <span>FOLLOW US ON INSTAGRAM</span>
                 </Flex>
             </Col>
-            <Col span={0} xl={7}>
+            <Col xs={0} lg={7}>
                 <Flex className={styles.joinImageContainer} wrap="wrap">
                     <Image src={img1} alt="logo1" />
                     <Image src={img2} alt="logo1" />
