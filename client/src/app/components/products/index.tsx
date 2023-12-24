@@ -4,9 +4,9 @@ import { motion } from 'framer-motion'
 import { FC, useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import { Card, Flex } from 'antd'
-import { ProductsArr } from '@/api'
+import { TProduct } from '@/api'
 
-const Products: FC<{ data: ProductsArr[] }> = ({ data }) => {
+const Products: FC<{ data: TProduct[] }> = ({ data }) => {
     const [width, setWidth] = useState(0)
     const carousel = useRef<HTMLDivElement>(null)
 

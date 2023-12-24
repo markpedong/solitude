@@ -3,12 +3,10 @@
 import { Card, Col, Flex, Row, Space } from 'antd'
 import { FC } from 'react'
 import styles from './styles.module.scss'
-import { blogData } from '@/constants/testdata'
 import Link from 'next/link'
+import { TBlog } from '@/api'
 
-const { Meta } = Card
-
-const Blog: FC = () => {
+const Blog: FC<{ data: TBlog[] }> = ({ data }) => {
     return (
         <div className={styles.blogContainer}>
             <Flex className={styles.titleContainer} justify="center" align="center" vertical>
@@ -19,7 +17,7 @@ const Blog: FC = () => {
                 <Col></Col>
                 <Col>
                     <Space className={styles.blogItemsContainer} align="center">
-                        {blogData.map(q => (
+                        {data.map(q => (
                             <Flex className={styles.blogItem} vertical key={q.image}>
                                 <img alt="example" src={q.image} />
                                 <Flex
@@ -29,7 +27,9 @@ const Blog: FC = () => {
                                     gap={10}>
                                     <span>{q.title}</span>
                                     <span>{q.description}</span>
-                                    <Link href={q.blog_link}>Read More</Link>
+                                    <Link href={q.blog_link} target="_blank">
+                                        Read More
+                                    </Link>
                                 </Flex>
                             </Flex>
                         ))}

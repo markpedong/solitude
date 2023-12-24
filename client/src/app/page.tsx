@@ -1,4 +1,4 @@
-import { ProductsArr, getProducts } from '@/api'
+import { TBlog, TProduct, getBlogs, getProducts } from '@/api'
 import Blog from '@/app/components/blog'
 import Collections from '@/app/components/collections'
 import Join from '@/app/components/join'
@@ -8,14 +8,15 @@ import { FC } from 'react'
 
 const Page: FC = async () => {
     const products = await getProducts()
+    const blogs = await getBlogs()
 
     return (
         <div>
             <Landing />
             <div style={{ marginBlockStart: '70dvh' }} />
-            <Products data={products.data as unknown as ProductsArr[]} />
+            <Products data={products.data as unknown as TProduct[]} />
             <Collections />
-            <Blog />
+            <Blog data={blogs.data as unknown as TBlog[]} />
             <Join />
         </div>
     )

@@ -5,7 +5,7 @@ export const signUp = params => post('/users/signup', params)
 export const login = params => post('/users/login', params)
 
 // /api/products
-export type ProductsArr = {
+export type TProduct = {
     id: string
     product_name: string
     price: number
@@ -14,4 +14,15 @@ export type ProductsArr = {
     description: string
 }
 
-export const getProducts = () => get<ProductsArr[]>('/api/products')
+export const getProducts = () => get<TProduct[]>('/api/products')
+
+// /api/blogs
+export type TBlog = {
+    id: string
+    title: string
+    description: string
+    image: string
+    blog_link: string
+    created_at: number
+}
+export const getBlogs = () => get<TBlog[]>('/api/blogs')

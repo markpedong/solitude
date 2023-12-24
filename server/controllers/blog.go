@@ -27,6 +27,16 @@ func AddBlog(ctx *gin.Context) {
 		return
 	}
 
+	if err := Validate.Struct(body); err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+			"status":  http.StatusBadRequest,
+			"success": false,
+		})
+
+		return
+	}
+
 	blog := &models.LandingBlog{
 		ID:          uuid.New(),
 		Title:       body.Title,
@@ -48,7 +58,6 @@ func AddBlog(ctx *gin.Context) {
 		"message": "successfully added blog!",
 		"success": true,
 		"status":  http.StatusOK,
-		"data":    blog,
 	})
 }
 
