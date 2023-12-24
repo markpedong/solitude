@@ -1,0 +1,26 @@
+@import '@/styles/_helpers.scss';
+
+.productHeaderContainer {
+    span {
+        font-weight: 300;
+        letter-spacing: toRem(3);
+    }
+
+    h1 {
+        font-size: toRem(50);
+        font-weight: 800;
+    }
+}
+
+.filterWrapper {
+    margin-block: toRem(50);
+
+    .filterContainer {
+        flex: 2;
+
+        .filterLabel {
+            text-transform: uppercase;
+            letter-spacing: toRem(2);
+        }
+    }
+}

@@ -13,3 +13,43 @@ export const MODAL_FORM_PROPS: ModalFormProps = {
     preserve: false,
     size: 'large',
 }
+
+export const PRODUCT_FILTER = [
+    {
+        label: 'all materials',
+        value: 'materials',
+        options: {
+            fabric: 'fabric',
+            cotton: 'cotton',
+        },
+    },
+    {
+        label: 'any gender',
+        value: 'gender',
+        options: {
+            male: 'male',
+            female: 'female',
+        },
+    },
+    {
+        label: 'in stock',
+        value: 'stock',
+        options: {
+            allstock: 'allstock',
+            out: 'out',
+            available: 'available',
+        },
+    },
+    {
+        label: 'any type',
+        value: 'type',
+        options: {
+            clothes: 'clothes',
+            accessories: 'accessories',
+        },
+    },
+    {
+        label: 'price',
+        value: 'price',
+    },
+]

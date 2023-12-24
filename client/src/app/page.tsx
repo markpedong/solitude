@@ -5,6 +5,10 @@ import Landing from '@/app/components/landing'
 import Products from '@/app/components/products'
 import Collections from '@/app/components/collections'
 import { FC } from 'react'
+import { Cormorant, Jost } from 'next/font/google'
+
+export const cormorant = Cormorant({ weight: '400', subsets: ['latin'] })
+export const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 const Page: FC = async () => {
     const products = await getProducts()
