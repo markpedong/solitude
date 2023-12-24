@@ -37,6 +37,7 @@ func DBSet() {
 		&models.LandingProduct{},
 		&models.ProductUser{},
 		&models.LandingBlog{},
+		&models.LandingCollections{},
 	)
 	DB.AutoMigrate(&models.User{})
 	if err != nil {

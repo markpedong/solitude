@@ -30,6 +30,7 @@ func UserRoutes(r *gin.Engine) {
 		api.GET("/products", controllers.GetAllProducts)
 		api.POST("/add-blog", controllers.AddBlog)
 		api.GET("/blogs", controllers.GetAllBlog)
-
+		api.GET("/collections", controllers.GetAllCollections)
+		api.POST("/add-collections", controllers.AddCollection)
 	}
 }
