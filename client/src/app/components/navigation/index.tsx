@@ -1,37 +1,43 @@
 'use client'
 
+import { jost } from '@/app/page'
 import logo from '@/public/assets/logo.png'
 import { setActiveLoginModal } from '@/redux/features/booleanSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { MenuOutlined, UserOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
-import { Button, Drawer, Flex, Menu, Typography } from 'antd'
+import { Drawer, Flex, Menu, Typography } from 'antd'
 import Image from 'next/image'
+import Link from 'next/link'
 import { FC, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Login from './components/login'
-import styles from './styles.module.scss'
 import Search from './components/search'
-import Link from 'next/link'
-import { jost } from '@/app/page'
+import styles from './styles.module.scss'
 
-const { Text } = Typography
-
+const MenuItem: FC<{ url: string }> = ({ url }) => (
+    <Link
+        href={`/${url}`}
+        className={jost.className}
+        style={{ letterSpacing: '0.1rem', textTransform: 'uppercase', color: 'black' }}>
+        {url.toUpperCase()}
+    </Link>
+)
 const items: MenuProps['items'] = [
     {
-        label: <Link href="/products">PRODUCTS</Link>,
+        label: <MenuItem url="products" />,
         key: 'products',
     },
     {
-        label: <Link href="/brands">BRANDS</Link>,
+        label: <MenuItem url="brands" />,
         key: 'brands',
     },
     {
-        label: <Link href="/deals">DEALS</Link>,
+        label: <MenuItem url="deals" />,
         key: 'deals',
     },
     {
-        label: <Link href="/services">SERVICES</Link>,
+        label: <MenuItem url="services" />,
         key: 'services',
     },
 ]
@@ -106,18 +112,10 @@ const Navigation: FC = () => {
                         onClose={onClose}
                         open={open}>
                         <Flex vertical gap={30}>
-                            <Link href="/products">
-                                <Typography.Text>PRODUCTS</Typography.Text>
-                            </Link>
-                            <Link href="/brands">
-                                <Typography.Text>BRANDS</Typography.Text>
-                            </Link>
-                            <Link href="/deals">
-                                <Typography.Text>DEALS</Typography.Text>
-                            </Link>
-                            <Link href="/services">
-                                <Typography.Text>SERVICES</Typography.Text>
-                            </Link>
+                            <MenuItem url="products" />
+                            <MenuItem url="brands" />
+                            <MenuItem url="deals" />
+                            <MenuItem url="services" />
                         </Flex>
                     </Drawer>
                 </div>

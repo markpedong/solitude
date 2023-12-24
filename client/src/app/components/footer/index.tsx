@@ -4,22 +4,32 @@ import { Flex, Menu, Space } from 'antd'
 import { MenuProps } from 'antd/lib'
 import { FC, useEffect } from 'react'
 import styles from './styles.module.scss'
+import Link from 'next/link'
+import { jost } from '@/app/page'
 
+const MenuItem: FC<{ url: string }> = ({ url }) => (
+    <Link
+        href={`/${url}`}
+        className={jost.className}
+        style={{ letterSpacing: '0.1rem', textTransform: 'uppercase', color: 'black' }}>
+        {url.toUpperCase()}
+    </Link>
+)
 const items: MenuProps['items'] = [
     {
-        label: 'OUR CARE GUIDE',
-        key: 'guide',
+        label: <MenuItem url="products" />,
+        key: 'products',
     },
     {
-        label: 'ABOUT US',
-        key: 'about',
+        label: <MenuItem url="brands" />,
+        key: 'brands',
     },
     {
-        label: 'SOLITUDE',
-        key: 'solitude',
+        label: <MenuItem url="deals" />,
+        key: 'deals',
     },
     {
-        label: 'SERVICES',
+        label: <MenuItem url="services" />,
         key: 'services',
     },
 ]
