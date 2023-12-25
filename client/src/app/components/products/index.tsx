@@ -1,13 +1,12 @@
 'use client'
 
 import { TProduct } from '@/api'
+import { jost } from '@/app/page'
 import Image from 'next/image'
 import { FC } from 'react'
 import styles from './styles.module.scss'
-import { Flex, Space } from 'antd'
-import { jost } from '@/app/page'
 
-const Products: FC<{ data: TProduct[] }> = ({ data }) => {
+const RProducts: FC<{ data: TProduct[] }> = ({ data }) => {
     return (
         <div className={styles.productWrapper}>
             <div className={styles.carousel}>
@@ -24,4 +23,4 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
     )
 }
 
-export default Products
+export default RProducts
