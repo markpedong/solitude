@@ -6,6 +6,7 @@ import styles from './styles.module.scss'
 import Link from 'next/link'
 import { TBlog } from '@/api'
 import { cormorant, jost } from '@/app/page'
+import Image from 'next/image'
 
 const Blog: FC<{ data: TBlog[] }> = ({ data }) => {
     return (
@@ -20,13 +21,15 @@ const Blog: FC<{ data: TBlog[] }> = ({ data }) => {
                     <Space className={styles.blogItemsContainer} align="center">
                         {data.map(q => (
                             <Flex className={styles.blogItem} vertical key={q.image}>
-                                <img alt="example" src={q.image} />
+                                <Image src={q.image} alt={q.image} width={1000} height={1000} />
                                 <Flex
                                     className={styles.featuresTextContainer}
                                     justify="center"
                                     vertical={true}
                                     gap={10}>
-                                    <span className={cormorant.className}>{q.title}</span>
+                                    <span className={cormorant.className} style={{ fontWeight: '' }}>
+                                        {q.title}
+                                    </span>
                                     <span className={jost.className}>{q.description}</span>
                                     <Link className={jost.className} href={q.blog_link} target="_blank">
                                         Read More

@@ -8,8 +8,8 @@
     padding-block-end: toRem(50);
 
     :nth-child(1) {
-        font-size: toRem(52);
-        font-weight: 900;
+        font-size: toRem(38);
+        font-weight: 700;
     }
 
     :nth-child(2) {
@@ -32,6 +32,7 @@
         max-width: 100%;
         object-fit: cover;
         object-position: center;
+        border-radius: toRem(20);
     }
 
     .featuresTextContainer {
@@ -40,8 +41,8 @@
         :nth-child(1) {
             font-size: toRem(17);
             line-height: toRem(24);
-            letter-spacing: toRem(0.3);
-            font-weight: 800;
+            letter-spacing: toRem(1);
+            font-weight: 700;
         }
 
         :nth-child(2) {

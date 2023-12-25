@@ -11,8 +11,8 @@
     max-width: 38rem;
 
     span {
-        font-size: 2rem;
-        font-weight: 500;
+        font-size: toRem(32);
+        font-weight: 700;
     }
 }
 
@@ -37,6 +37,7 @@
     text-align: center;
 
     :nth-child(1) {
+
         a {
             background-color: black;
             color: white;
@@ -61,7 +62,7 @@
 
     :nth-child(1) {
         font-size: 2rem;
-        font-weight: 500;
+        font-weight: 700;
     }
 
     :nth-child(2) {
