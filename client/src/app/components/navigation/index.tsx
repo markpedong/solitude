@@ -8,7 +8,7 @@ import { AppDispatch, useAppSelector } from '@/redux/store'
 import { MenuOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons'
 import { ModalForm } from '@ant-design/pro-components'
 import type { MenuProps } from 'antd'
-import { Drawer, Flex, Input, Menu } from 'antd'
+import { Col, Drawer, Flex, Grid, Input, Menu, Row, Space } from 'antd'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FC, useEffect, useState } from 'react'
@@ -20,7 +20,7 @@ const MenuItem: FC<{ url: string }> = ({ url }) => (
     <Link
         href={`/${url}`}
         className={jost.className}
-        style={{ letterSpacing: '0.1rem', textTransform: 'uppercase', color: 'black' }}>
+        style={{ letterSpacing: '0.1rem', textTransform: 'uppercase', color: 'black', textAlign: 'center' }}>
         {url.toUpperCase()}
     </Link>
 )
@@ -107,17 +107,15 @@ const Navigation: FC = () => {
                     <MenuOutlined onClick={showDrawer} className={styles.navigationIcon} height={1000} width={1000} />
                     <Drawer
                         title={
-                            <Flex justify="space-between" align="center" gap={10}>
-                                <Link href="/" style={{ color: 'black' }}>
-                                    <span>SOLITUDE</span>
-                                </Link>
-                                <Flex className={styles.icons} gap={20}>
-                                    <UserOutlined
-                                        onClick={() => {
-                                            dispatch(setActiveLoginModal(true))
-                                        }}
-                                    />
+                            <Flex justify="center">
+                                <Flex justify="center" align="center" style={{ flex: 1 }}>
+                                    <Image src={logo} alt="loginForm" width={20} height={20} />
                                 </Flex>
+                                <SearchOutlined
+                                    onClick={() => {
+                                        dispatch(setActiveLoginModal(true))
+                                    }}
+                                />
                             </Flex>
                         }
                         placement="right"
@@ -128,6 +126,7 @@ const Navigation: FC = () => {
                             <MenuItem url="brands" />
                             <MenuItem url="deals" />
                             <MenuItem url="services" />
+                            <MenuItem url="account" />
                         </Flex>
                     </Drawer>
                 </div>

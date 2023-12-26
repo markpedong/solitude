@@ -23,15 +23,6 @@
     }
 }
 
-.icons {
-    padding-inline-start: 1.5rem;
-
-    svg {
-        height: 0.9rem;
-        width: auto;
-    }
-}
-
 .navigation {
     display: flex;
     align-items: center;
@@ -63,5 +54,12 @@
 @media only screen and (min-width: 769px) {
     .navigationMobile {
         display: none;
+
+        img {
+            height: toRem(10);
+            width: toRem(10);
+        }
     }
+
+
 }
