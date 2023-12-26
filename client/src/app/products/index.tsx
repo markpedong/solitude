@@ -3,7 +3,7 @@
 import { PRODUCT_FILTER } from '@/constants'
 import { DownOutlined, SearchOutlined } from '@ant-design/icons'
 import { Col, Flex, Input, Row } from 'antd'
-import { FC } from 'react'
+import { FC, memo } from 'react'
 import { cormorant, jost } from '@/app/page'
 import styles from './styles.module.scss'
 import { TProduct } from '@/api'
@@ -52,4 +52,4 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
     )
 }
 
-export default Products
+export default memo(Products)
