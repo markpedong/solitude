@@ -13,6 +13,7 @@ import Image from 'next/image'
 import { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import styles from './styles.module.scss'
+import { motion } from 'framer-motion'
 
 const { Link } = Typography
 
@@ -23,7 +24,12 @@ const Login: FC = () => {
     const forgot = loginForm === 'forgot'
 
     return (
-        <div className={styles.loginWrapper}>
+        <motion.div
+            className={styles.loginWrapper}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.2, ease: [0.42, 0, 0.58, 1] }}
+            style={{ transformOrigin: 'top right' }}>
             <Flex
                 className={styles.loginContainer}
                 justify="space-between"
@@ -128,7 +134,7 @@ const Login: FC = () => {
                     <Button
                         className={create ? styles.loginButton : ''}
                         style={{
-                            marginBlockStart: create ? '3rem' : forgot ? '0.4rem' : '2rem',
+                            marginBlockStart: create ? '2rem' : forgot ? '0.4rem' : '2rem',
                         }}
                         type="primary">
                         {create ? 'SIGN IN' : forgot ? 'RECOVER YOUR ACCOUNT' : 'LOGIN'}
@@ -149,7 +155,7 @@ const Login: FC = () => {
                     </Flex>
                 </Flex>
             </Flex>
-        </div>
+        </motion.div>
     )
 }
 
