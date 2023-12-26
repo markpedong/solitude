@@ -7,8 +7,8 @@ import { FC, memo } from 'react'
 import { cormorant, jost } from '@/app/page'
 import styles from './styles.module.scss'
 import { TProduct } from '@/api'
-import RProducts from '@/app/components/products'
 import Image from 'next/image'
+import Product from '@/components/products'
 
 const Products: FC<{ data: TProduct[] }> = ({ data }) => {
     return (
@@ -37,12 +37,14 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
                     </Flex>
                     <Flex className={styles.productContainer} wrap="wrap" justify="center">
                         {data.map(q => (
-                            <div className={styles.itemContainer} key={q.id}>
-                                <Image src={q.image} alt={q.product_name} width={1000} height={1000} />
-                                <span className={`${styles.cardTitle} ${jost.className}`}>{q.product_name}</span>
-                                <span className={styles.cardDescription}>{q.description}</span>
-                                <span className={styles.cardFooter}>$ {q.price.toFixed(2)}</span>
-                            </div>
+                            <Product
+                                description={q.description}
+                                id={q.id}
+                                image={q.image}
+                                price={q.price}
+                                product_name={q.product_name}
+                                key={q.id}
+                            />
                         ))}
                     </Flex>
                 </Col>

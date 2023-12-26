@@ -1,0 +1,11 @@
+@import '@/styles/_helpers.scss';
+
+.productWrapper {
+    margin-block-start: toRem(100);
+}
+
+.carousel {
+    display: flex;
+    padding-block: toRem(100);
+    overflow: auto;
+}
