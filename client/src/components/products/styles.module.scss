@@ -21,11 +21,19 @@
         letter-spacing: toRem(1);
         font-weight: 900;
         font-size: toRem(13);
+
+        a {
+            color: black;
+        }
     }
 
     .cardDescription {
         font-size: toRem(11);
         white-space: break-spaces;
+
+        a {
+            color: black;
+        }
     }
 
     .cardFooter {

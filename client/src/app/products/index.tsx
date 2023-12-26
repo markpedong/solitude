@@ -35,7 +35,7 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
                             <Input placeholder="Search" style={{ width: 200 }} suffix={<SearchOutlined />} />
                         </div>
                     </Flex>
-                    ADD FILTER FOR MOBILE HERE
+                    ADD FILTER FOR MOBILE
                     <Flex className={styles.productContainer} wrap="wrap" justify="center">
                         {data.map(q => (
                             <Product

@@ -69,3 +69,11 @@ func GetAllProducts(ctx *gin.Context) {
 		"status":  http.StatusOK,
 	})
 }
+
+func GetProductsByID(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"id": id,
+	})
+}
