@@ -4,16 +4,17 @@ import { jost } from '@/app/page'
 import logo from '@/public/assets/logo.png'
 import { setActiveLoginModal } from '@/redux/features/booleanSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
-import { MenuOutlined, UserOutlined } from '@ant-design/icons'
+import { MenuOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
-import { Drawer, Flex, Menu, Typography } from 'antd'
+import { Button, Drawer, Flex, Input, Menu, Typography } from 'antd'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FC, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Login from './components/login'
-import Search from './components/search'
 import styles from './styles.module.scss'
+import { ModalForm } from '@ant-design/pro-components'
+import { MODAL_FORM_PROPS } from '@/constants'
 
 const MenuItem: FC<{ url: string }> = ({ url }) => (
     <Link
@@ -69,6 +70,18 @@ const Navigation: FC = () => {
         return () => window.removeEventListener('resize', handleResize)
     }, [])
 
+    const renderSearch = () => {
+        return (
+            <ModalForm
+                {...MODAL_FORM_PROPS}
+                title="SEARCH FOR A PRODUCT"
+                trigger={<SearchOutlined />}
+                submitter={false}>
+                <Input placeholder="eg. Sweater, T-Shirts, Shorts" />
+            </ModalForm>
+        )
+    }
+
     return (
         <>
             {activeModal && <Login />}
@@ -82,7 +95,7 @@ const Navigation: FC = () => {
                 <div className={styles.navigation}>
                     <Menu mode="horizontal" items={items} disabledOverflow />
                     <Flex className={styles.icons} gap={20}>
-                        <Search />
+                        {renderSearch()}
                         <UserOutlined
                             onClick={() => {
                                 dispatch(setActiveLoginModal(true))
@@ -99,7 +112,6 @@ const Navigation: FC = () => {
                                     <span>SOLITUDE</span>
                                 </Link>
                                 <Flex className={styles.icons} gap={20}>
-                                    <Search />
                                     <UserOutlined
                                         onClick={() => {
                                             dispatch(setActiveLoginModal(true))
