@@ -12,16 +12,18 @@ type Props = {
     price
 }
 
+const style = { color: 'black', textDecoration: 'none' }
+
 const Product: FC<Props> = ({ id, image, product_name, description, price }: Props) => {
     return (
-        <div className={styles.itemContainer} key={id}>
-            <Image src={image} alt={product_name} width={1000} height={1000} />
-            <span className={`${styles.cardTitle} ${jost.className}`}>
-                {<Link href={`/products/${id}`}>{product_name}</Link>}
-            </span>
-            <span className={styles.cardDescription}>{<Link href={`/products/${id}`}>{description}</Link>}</span>
-            <span className={styles.cardFooter}>$ {price.toFixed(2)}</span>
-        </div>
+        <Link href={`/products/${id}`} style={style}>
+            <div className={styles.itemContainer} key={id}>
+                <Image src={image} alt={product_name} width={1000} height={1000} />
+                <span className={`${styles.cardTitle} ${jost.className}`}>{product_name}</span>
+                <span className={styles.cardDescription}>{description}</span>
+                <span className={styles.cardFooter}>$ {price.toFixed(2)}</span>
+            </div>
+        </Link>
     )
 }
 
