@@ -73,9 +73,21 @@ func GetAllProducts(ctx *gin.Context) {
 func GetProductsByID(ctx *gin.Context) {
 	id := ctx.Param("id")
 
-	// if err := {}
+	var product models.LandingProduct
+	if err := database.DB.Find(&product, "where ID = ?", id).Error; err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+			"status":  http.StatusInternalServerError,
+			"success": false,
+		})
+		return
+	}
+
 	ctx.JSON(http.StatusOK, gin.H{
-		"id": id,
+		"data":    product,
+		"success": true,
+		"message": "successfully got the product details!!",
+		"status":  http.StatusOK,
 	})
 
 }
