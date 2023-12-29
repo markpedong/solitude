@@ -34,3 +34,6 @@ export type TCollection = {
     description
 }
 export const getCollections = () => get('/api/collections')
+
+// /api/getProductData
+export const getProductData = ({ id }) => get(`/api/product/${id}`)

@@ -36,6 +36,7 @@ func main() {
 
 	// r.Use(CORSMiddleware())
 	routes.UserRoutes(r)
+	r.Use(gin.Logger())
 
 	log.Fatal(r.Run(":" + os.Getenv("PORT")))
 }
