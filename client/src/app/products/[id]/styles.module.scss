@@ -15,19 +15,13 @@
         border-radius: 0 !important;
     }
 
-    .cardTitle {
-        text-wrap: wrap !important;
+    span {
+        display: inline-block;
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
     }
 
-    .cardDescription {
-        font-size: toRem(11);
-        white-space: break-spaces;
-    }
-
-    .cardFooter {
-        color: black;
-        font-size: toRem(14);
-        margin-top: auto;
-        font-weight: 500;
-    }
 }
