@@ -1,5 +1,24 @@
 @import '@/styles/_helpers.scss';
 
+.productContainer {
+    img {
+        height: toRem(300);
+        width: auto;
+        border-radius: toRem(10);
+    }
+
+    .productDescription {
+        display: flex;
+        flex-direction: column;
+        gap: toRem(10);
+
+        span:nth-child(3) {
+            padding-block-start: toRem(20);
+            font-weight: 800;
+        }
+    }
+}
+
 .extraProductHeader {
     text-align: center;
     padding-block: toRem(0);

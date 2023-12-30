@@ -6,6 +6,7 @@ import React, { FC, memo } from 'react'
 import styles from './styles.module.scss'
 import Product from '@/components/products'
 import { cormorant } from '@/app/page'
+import Image from 'next/image'
 
 type Props = {
     data: TProduct
@@ -18,7 +19,16 @@ const ProductDetails: FC<Props> = ({ data, list }) => {
             <Row justify="center">
                 <Col md={2}></Col>
                 <Col span={24} md={20}>
-                    {JSON.stringify(data)}
+                    <Row gutter={20} className={styles.productContainer}>
+                        <Col span={9}>
+                            <Image src={data.image} alt={data.id} height={1000} width={1000} />
+                        </Col>
+                        <Col span={11} className={styles.productDescription}>
+                            <h1>{data.product_name}</h1>
+                            <span>{data.description}</span>
+                            <span>$ {data.price.toFixed(2)}</span>
+                        </Col>
+                    </Row>
                     <div>
                         <Flex
                             className={`${cormorant.className} ${styles.extraProductHeader}`}
