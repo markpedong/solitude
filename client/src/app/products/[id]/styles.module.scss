@@ -1,7 +1,18 @@
 @import '@/styles/_helpers.scss';
 
-.productContainer {
+.extraProductHeader {
+    text-align: center;
+    padding-block: toRem(0);
+
+    span {
+        font-size: toRem(30);
+        font-weight: 700;
+    }
+}
+
+.extraProductContainer {
     gap: toRem(10);
+    overflow: hidden;
 }
 
 .itemContainer {
@@ -23,8 +34,9 @@
         text-overflow: ellipsis;
     }
 
-    span:nth-of-type(2) {
-        background-color: red;
+    span:nth-of-type(3) {
+        font-size: toRem(13);
+        font-weight: 700;
     }
 
 }
