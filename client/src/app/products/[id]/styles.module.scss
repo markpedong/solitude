@@ -21,7 +21,10 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
 
+    span:nth-of-type(2) {
+        background-color: red;
     }
 
 }
