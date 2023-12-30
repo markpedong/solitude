@@ -1,0 +1,33 @@
+@import '@/styles/_helpers.scss';
+
+.productContainer {
+    gap: toRem(10);
+}
+
+.itemContainer {
+    inline-size: toRem(150) !important;
+    block-size: toRem(230) !important;
+    gap: toRem(20);
+
+    img {
+        block-size: toRem(150) !important;
+        inline-size: toRem(150) !important;
+        border-radius: 0 !important;
+    }
+
+    .cardTitle {
+        text-wrap: wrap !important;
+    }
+
+    .cardDescription {
+        font-size: toRem(11);
+        white-space: break-spaces;
+    }
+
+    .cardFooter {
+        color: black;
+        font-size: toRem(14);
+        margin-top: auto;
+        font-weight: 500;
+    }
+}
