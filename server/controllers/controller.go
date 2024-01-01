@@ -6,7 +6,6 @@ import (
 	"solitude/database"
 	"solitude/models"
 	"solitude/tokens"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -224,30 +223,30 @@ func UploadImage(ctx *gin.Context) {
 	}
 
 	// Generate a unique file name and save the file
-	filePath := "uploads/" + uniqueFileName(file.Filename)
-	if err := ctx.SaveUploadedFile(file, filePath); err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
+	// filePath := "uploads/" + uniqueFileName(file.Filename)
+	// if err := ctx.SaveUploadedFile(file, filePath); err != nil {
+	// 	ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	// 	return
+	// }
 
-	// Save the file path in the database
-	image := Image{Path: filePath}
-	result := db.Create(&image)
-	if result.Error != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
-		return
-	}
+	// // Save the file path in the database
+	// image := Image{Path: filePath}
+	// result := db.Create(&image)
+	// if result.Error != nil {
+	// 	ctx.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+	// 	return
+	// }
 
 	// Return the image URL
-	ctx.JSON(http.StatusOK, gin.H{"url": "/image/" + strconv.Itoa(int(image.ID))})
+	ctx.JSON(http.StatusOK, gin.H{"url": file})
 }
 
-func GetImage(ctx *gin.Context) {
-	var image Image
-	if err := db.First(&image, ctx.Param("id")).Error; err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"error": "Image not found"})
-		return
-	}
+// func GetImage(ctx *gin.Context) {
+// 	var image Image
+// 	if err := db.First(&image, ctx.Param("id")).Error; err != nil {
+// 		ctx.JSON(http.StatusNotFound, gin.H{"error": "Image not found"})
+// 		return
+// 	}
 
-	ctx.File(image.Path)
-}
+// 	ctx.File(image.Path)
+// }
