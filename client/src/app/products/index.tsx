@@ -3,7 +3,7 @@
 import { PRODUCT_FILTER } from '@/constants'
 import { DownOutlined, SearchOutlined } from '@ant-design/icons'
 import { Col, Flex, Input, Row } from 'antd'
-import { FC, memo } from 'react'
+import { FC, memo, useState } from 'react'
 import { cormorant, jost } from '@/app/page'
 import styles from './styles.module.scss'
 import { TProduct } from '@/api'
@@ -11,6 +11,13 @@ import Image from 'next/image'
 import Product from '@/components/products'
 
 const Products: FC<{ data: TProduct[] }> = ({ data }) => {
+    const [products, setProducts] = useState<TProduct[]>(data)
+
+    const handleSearch = e => {
+        const value = e.target.value.toLowerCase()
+
+        setProducts(data.filter(product => product.product_name.toLowerCase().includes(value)))
+    }
     return (
         <div>
             <Row justify="center">
@@ -32,12 +39,17 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
                             ))}
                         </Flex>
                         <div>
-                            <Input placeholder="Search" style={{ width: 200 }} suffix={<SearchOutlined />} />
+                            <Input
+                                placeholder="Search"
+                                style={{ width: 200 }}
+                                suffix={<SearchOutlined />}
+                                onChange={handleSearch}
+                            />
                         </div>
                     </Flex>
                     ADD FILTER FOR MOBILE
                     <Flex className={styles.productContainer} wrap="wrap" justify="center">
-                        {data.map(q => (
+                        {products.map(q => (
                             <Product
                                 description={q.description}
                                 id={q.id}
