@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"solitude/database"
@@ -221,6 +222,8 @@ func UploadImage(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	fmt.Printf("file %v", file.Filename)
 
 	// Generate a unique file name and save the file
 	// filePath := "uploads/" + uniqueFileName(file.Filename)
