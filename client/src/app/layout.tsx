@@ -1,15 +1,13 @@
-import { Jost } from 'next/font/google'
-import React from 'react'
-
-import StyledComponentsRegistry from '@/lib/antdRegistry'
-
+import Footer from '@/app/components/footer'
+import Navigation from '@/app/components/navigation'
+import ReduxProvider from '@/redux/provider'
 import '@/styles/global.scss'
 import theme from '@/theme/theme'
+import { AntdRegistry } from '@ant-design/nextjs-registry'
 import { ConfigProvider } from 'antd'
 import enUS from 'antd/lib/locale/en_US'
-import ReduxProvider from '@/redux/provider'
-import Navigation from '@/app/components/navigation'
-import Footer from '@/app/components/footer'
+import { Jost } from 'next/font/google'
+import React from 'react'
 
 const jost = Jost({ subsets: ['latin'] })
 
@@ -22,13 +20,13 @@ const RootLayout = ({ children }: React.PropsWithChildren) => (
     <html lang="en">
         <body className={jost.className}>
             <ReduxProvider>
-                <StyledComponentsRegistry>
+                <AntdRegistry>
                     <ConfigProvider theme={theme} locale={enUS}>
                         <Navigation />
                         {children}
                         <Footer />
                     </ConfigProvider>
-                </StyledComponentsRegistry>
+                </AntdRegistry>
             </ReduxProvider>
         </body>
     </html>

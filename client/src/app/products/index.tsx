@@ -1,14 +1,13 @@
 'use client'
 
+import { TProduct } from '@/api'
+import { cormorant, jost } from '@/app/page'
+import Product from '@/components/products'
 import { PRODUCT_FILTER } from '@/constants'
 import { DownOutlined, SearchOutlined } from '@ant-design/icons'
 import { Col, Flex, Input, Row } from 'antd'
 import { FC, memo, useState } from 'react'
-import { cormorant, jost } from '@/app/page'
 import styles from './styles.module.scss'
-import { TProduct } from '@/api'
-import Image from 'next/image'
-import Product from '@/components/products'
 
 const Products: FC<{ data: TProduct[] }> = ({ data }) => {
     const [products, setProducts] = useState<TProduct[]>(data)
@@ -31,6 +30,7 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
                         <Flex className={styles.filterContainer} justify="space-between">
                             {PRODUCT_FILTER.map(q => (
                                 <Flex
+                                    key={q.value}
                                     className={`${jost.className} ${styles.filterLabel}`}
                                     justify="center"
                                     align="center">
