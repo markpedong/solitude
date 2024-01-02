@@ -44,6 +44,14 @@
     }
 }
 
+.collectionsContainer {
+    padding-block-start: toRem(10);
+}
+
+.collectionItem {
+    inline-size: 100% !important;
+}
+
 @media only screen and (max-width: 768px) {
     .navigation {
         display: none;

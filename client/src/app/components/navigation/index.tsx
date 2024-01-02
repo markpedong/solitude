@@ -15,6 +15,8 @@ import { FC, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Login from './components/login'
 import styles from './styles.module.scss'
+import { TProduct, getProducts } from '@/api'
+import Collection from '@/components/collections'
 
 const MenuItem: FC<{ url: string }> = ({ url }) => (
     <Link
@@ -44,8 +46,9 @@ const items: MenuProps['items'] = [
 ]
 
 const Navigation: FC = () => {
-    const dispatch = useDispatch<AppDispatch>()
     const [open, setOpen] = useState(false)
+    const [products, setProducts] = useState<TProduct[]>([])
+    const dispatch = useDispatch<AppDispatch>()
     const activeModal = useAppSelector(state => state.boolean.activeLoginModal)
 
     const showDrawer = () => {
@@ -62,12 +65,16 @@ const Navigation: FC = () => {
         }
     }
 
+    const handleGetFeatures = async () => {
+        const res = await getProducts()
+
+        console.log('promise', res.data)
+        setProducts(res.data)
+    }
+
     useEffect(() => {
-        window.addEventListener('resize', handleResize)
-
         handleResize()
-
-        return () => window.removeEventListener('resize', handleResize)
+        handleGetFeatures()
     }, [])
 
     const renderSearch = () => {
@@ -76,8 +83,26 @@ const Navigation: FC = () => {
                 {...MODAL_FORM_PROPS}
                 title="SEARCH FOR A PRODUCT"
                 trigger={<SearchOutlined />}
-                submitter={false}>
-                <Input placeholder="eg. Sweater, T-Shirts, Shorts" />
+                submitter={false}
+                style={{ height: 300, overflowY: 'auto' }}>
+                <div
+                    style={{
+                        position: 'sticky',
+                        top: 0,
+                    }}>
+                    <Input placeholder="eg. Sweater, T-Shirts, Shorts" />
+                </div>
+                <Flex className={styles.collectionsContainer} justify="center" vertical gap={10}>
+                    {products.map(q => (
+                        <Collection
+                            key={q.id}
+                            description={q.description}
+                            image={q.image}
+                            title={q.product_name}
+                            className={styles.collectionItem}
+                        />
+                    ))}
+                </Flex>
             </ModalForm>
         )
     }
