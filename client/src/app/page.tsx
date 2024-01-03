@@ -64,7 +64,27 @@ const Page: FC = async () => {
                     <Collection description={q.description} image={q.image} title={q.title} key={q.title} />
                 ))}
             </div>
-            <Blog data={blogs.data as unknown as TBlog[]} />
+            {/* <Blog data={blogs.data as unknown as TBlog[]} /> */}
+            <div className={styles.titleContainer}>
+                <span className={cormorant.className}>Our Blog</span>
+                <span className={jost.className}>More Articles</span>
+            </div>
+            <div className={styles.blogItemsContainer}>
+                {blogs.data.map(q => (
+                    <div className={styles.blogItem} key={q.image}>
+                        <Image src={q.image} alt={q.image} width={1000} height={1000} />
+                        <div className={styles.featuresTextContainer}>
+                            <span className={cormorant.className} style={{ fontWeight: '' }}>
+                                {q.title}
+                            </span>
+                            <span className={jost.className}>{q.description}</span>
+                            <Link className={jost.className} href={q.blog_link} target="_blank">
+                                Read More
+                            </Link>
+                        </div>
+                    </div>
+                ))}
+            </div>
             <Join />
         </div>
     )
