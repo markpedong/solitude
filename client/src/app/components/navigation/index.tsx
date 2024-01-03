@@ -11,7 +11,7 @@ import type { MenuProps } from 'antd'
 import { Col, Drawer, Flex, Grid, Input, Menu, Row, Space } from 'antd'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Login from './components/login'
 import styles from './styles.module.scss'
@@ -48,6 +48,7 @@ const items: MenuProps['items'] = [
 const Navigation: FC = () => {
     const [open, setOpen] = useState(false)
     const [products, setProducts] = useState<TProduct[]>([])
+    const [searchFilter, setSearchFilter] = useState('')
     const dispatch = useDispatch<AppDispatch>()
     const activeModal = useAppSelector(state => state.boolean.activeLoginModal)
 
@@ -68,9 +69,17 @@ const Navigation: FC = () => {
     const handleGetFeatures = async () => {
         const res = await getProducts()
 
-        console.log('promise', res.data)
         setProducts(res.data)
     }
+
+    const handleSearch = e => {
+        const value = e.target.value.toLowerCase()
+        setSearchFilter(value) // Update search filter
+    }
+
+    const filteredProducts = useMemo(() => {
+        return products.filter(product => product.product_name.toLowerCase().includes(searchFilter))
+    }, [products, searchFilter])
 
     useEffect(() => {
         handleResize()
@@ -90,10 +99,10 @@ const Navigation: FC = () => {
                         position: 'sticky',
                         top: 0,
                     }}>
-                    <Input placeholder="eg. Sweater, T-Shirts, Shorts" />
+                    <Input placeholder="eg. Sweater, T-Shirts, Shorts" onChange={handleSearch} />
                 </div>
                 <Flex className={styles.collectionsContainer} justify="center" vertical gap={10}>
-                    {products.map(q => (
+                    {filteredProducts.map(q => (
                         <Collection
                             key={q.id}
                             description={q.description}
