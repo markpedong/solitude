@@ -1,4 +1,4 @@
-import { TBlog, TCollection, TProduct, getBlogs, getCollections, getProducts } from '@/api'
+import { getBlogs, getCollections, getProducts } from '@/api'
 import { FC } from 'react'
 import { Cormorant, Jost } from 'next/font/google'
 import Product from '@/components/products'

@@ -1,5 +1,5 @@
-import Footer from '@/app/components/footer'
-import Navigation from '@/app/components/navigation'
+import Footer from '@/components/footer'
+import Navigation from '@/components/navigation'
 import ReduxProvider from '@/redux/provider'
 import '@/styles/global.scss'
 import theme from '@/theme/theme'
