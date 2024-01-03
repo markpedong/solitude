@@ -50,6 +50,12 @@
             font-size: 0.8rem;
             letter-spacing: 0.2rem;
             border-radius: 0.3rem;
+            text-decoration: none;
+
+            &:hover {
+                background-color: #65635F;
+                color: white;
+            }
         }
     }
 
@@ -212,12 +218,23 @@
             font-weight: 900;
         }
 
-        span {
-            padding: toRem(10) toRem(30);
-            border: toRem(1) solid #65635F;
-            border-radius: toRem(4);
-            font-size: toRem(12);
-            letter-spacing: toRem(1);
+        a {
+            text-decoration: none;
+            color: black;
+
+            span {
+                padding: toRem(10) toRem(30);
+                border: toRem(1) solid #65635F;
+                border-radius: toRem(4);
+                font-size: toRem(12);
+                letter-spacing: toRem(1);
+                cursor: pointer;
+
+                &:hover {
+                    background-color: black;
+                    color: white !important;
+                }
+            }
         }
     }
 }

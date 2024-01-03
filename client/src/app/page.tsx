@@ -96,7 +96,9 @@ const Page: FC = async () => {
                 </div>
                 <div className={styles.middleContainer}>
                     <h1 className={cormorant.className}>Join #solitude</h1>
-                    <span className={jost.className}>FOLLOW US ON INSTAGRAM</span>
+                    <Link href="/">
+                        <span className={jost.className}>FOLLOW US ON INSTAGRAM</span>
+                    </Link>
                 </div>
                 <div className={styles.imageContainer}>
                     <Image src={img1} alt="logo1" />
