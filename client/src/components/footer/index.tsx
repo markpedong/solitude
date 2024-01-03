@@ -2,7 +2,7 @@
 
 import { Flex, Menu, Space } from 'antd'
 import { MenuProps } from 'antd/lib'
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 import styles from './styles.module.scss'
 import Link from 'next/link'
 import { jost } from '@/app/page'
@@ -40,9 +40,15 @@ const Footer: FC = () => {
             <Flex justify="center" align="center" vertical gap={5}>
                 <Menu mode="horizontal" items={items} disabledOverflow />
                 <Space size={30} className={styles.socialMediaContainer}>
-                    <span>FACEBOOK</span>
-                    <span>INSTAGRAM</span>
-                    <span>SNAPCHAT</span>
+                    <span>
+                        <Link href="/">FACEBOOK</Link>
+                    </span>
+                    <span>
+                        <Link href="/">INSTAGRAM</Link>
+                    </span>
+                    <span>
+                        <Link href="/">SNAPCHAT</Link>
+                    </span>
                 </Space>
             </Flex>
         </div>

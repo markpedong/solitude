@@ -10,6 +10,9 @@
     span {
         letter-spacing: toRem(2);
         font-size: toRem(10);
-        color: #65635F;
+
+        a {
+            color: #65635F;
+        }
     }
 }
