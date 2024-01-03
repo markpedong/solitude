@@ -145,11 +145,7 @@ const Navigation: FC = () => {
                                 <Flex justify="center" align="center" style={{ flex: 1 }}>
                                     <Image src={logo} alt="loginForm" width={20} height={20} />
                                 </Flex>
-                                <SearchOutlined
-                                    onClick={() => {
-                                        dispatch(setActiveLoginModal(true))
-                                    }}
-                                />
+                                {renderSearch()}
                             </Flex>
                         }
                         placement="right"
