@@ -90,3 +90,29 @@
     padding-block: toRem(100);
     overflow: auto;
 }
+
+.featuresItemContainer {
+    display: grid;
+    gap: toRem(20);
+    justify-content: center;
+    margin-block-start: toRem(50);
+
+}
+
+.headerText {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    :nth-child(1) {
+        font-size: toRem(32);
+        font-weight: 800;
+    }
+
+    :nth-child(2) {
+        font-size: 0.8rem;
+        margin-block-start: 1rem;
+        color: rgba(0, 0, 0, 0.6);
+    }
+}

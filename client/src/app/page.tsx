@@ -1,7 +1,6 @@
 import { TBlog, TCollection, TProduct, getBlogs, getCollections, getProducts } from '@/api'
 import Blog from '@/app/components/blog'
 import Join from '@/app/components/join'
-import Collections from '@/app/components/collections'
 import { FC } from 'react'
 import { Cormorant, Jost } from 'next/font/google'
 import Product from '@/components/products'
@@ -9,6 +8,7 @@ import styles from './styles.module.scss'
 import Image from 'next/image'
 import Link from 'next/link'
 import landing from '@/public/assets/landing.png'
+import Collection from '@/components/collections'
 
 export const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 export const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -55,7 +55,15 @@ const Page: FC = async () => {
                     ))}
                 </div>
             </div>
-            <Collections data={collections.data as unknown as TCollection[]} />
+            <div className={styles.headerText}>
+                <span className={cormorant.className}>Featured Collections</span>
+                <span className={jost.className}>SEE ALL COLLECTIONS</span>
+            </div>
+            <div className={styles.featuresItemContainer}>
+                {collections.data.map(q => (
+                    <Collection description={q.description} image={q.image} title={q.title} key={q.title} />
+                ))}
+            </div>
             <Blog data={blogs.data as unknown as TBlog[]} />
             <Join />
         </div>
