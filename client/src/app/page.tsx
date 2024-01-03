@@ -1,5 +1,4 @@
 import { TBlog, TCollection, TProduct, getBlogs, getCollections, getProducts } from '@/api'
-import Join from '@/app/components/join'
 import { FC } from 'react'
 import { Cormorant, Jost } from 'next/font/google'
 import Product from '@/components/products'
@@ -8,6 +7,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import landing from '@/public/assets/landing.png'
 import Collection from '@/components/collections'
+import img1 from '@/public/assets/forgotModalCover.png'
+import img2 from '@/public/assets/logo.png'
+import img3 from '@/public/assets/loginModalCover.png'
+import img4 from '@/public/assets/signUpModalCover.png'
 
 export const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 export const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -84,7 +87,24 @@ const Page: FC = async () => {
                     </div>
                 ))}
             </div>
-            <Join />
+            <div className={styles.joinWrapper}>
+                <div className={styles.imageContainer}>
+                    <Image src={img1} alt="logo1" />
+                    <Image src={img2} alt="logo1" />
+                    <Image src={img3} alt="logo1" />
+                    <Image src={img4} alt="logo1" />
+                </div>
+                <div className={styles.middleContainer}>
+                    <h1 className={cormorant.className}>Join #solitude</h1>
+                    <span className={jost.className}>FOLLOW US ON INSTAGRAM</span>
+                </div>
+                <div className={styles.imageContainer}>
+                    <Image src={img1} alt="logo1" />
+                    <Image src={img2} alt="logo1" />
+                    <Image src={img3} alt="logo1" />
+                    <Image src={img4} alt="logo1" />
+                </div>
+            </div>
         </div>
     )
 }
