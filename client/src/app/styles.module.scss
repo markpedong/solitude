@@ -82,12 +82,12 @@
 }
 
 .productWrapper {
-    margin-block-start: toRem(100);
+    margin-block-start: toRem(130);
 }
 
 .carousel {
     display: flex;
-    padding-block: toRem(100);
+    padding-block: toRem(120) toRem(80);
     overflow: auto;
 }
 
@@ -95,7 +95,7 @@
     display: grid;
     gap: toRem(20);
     justify-content: center;
-    margin-block-start: toRem(50);
+    margin-block-start: toRem(30);
 
 }
 
@@ -136,7 +136,9 @@
 
 .blogItemsContainer {
     display: grid;
-    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(toRem(371), 1fr));
 }
 
 .blogItem {

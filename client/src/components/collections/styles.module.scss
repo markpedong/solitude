@@ -12,7 +12,8 @@
         img {
             width: toRem(80);
             height: auto;
-
+            object-fit: cover;
+            object-position: center center;
         }
     }
 
