@@ -1,9 +1,12 @@
 import React from 'react'
+import Account from '.'
 
-type Props = {}
-
-const Page = (props: Props) => {
-    return <div>Page</div>
+const Page = () => {
+    return (
+        <div>
+            <Account />
+        </div>
+    )
 }
 
 export default Page
