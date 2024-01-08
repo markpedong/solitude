@@ -10,3 +10,17 @@
         font-size: toRem(12);
     }
 }
+
+.tabsContainer {
+    padding-block: toRem(20);
+
+    :global {
+        .ant-tabs-tab-btn {
+            letter-spacing: toRem(1);
+        }
+
+        .ant-tabs-tab {
+            border-radius: toRem(4) toRem(4) 0 0 !important;
+        }
+    }
+}

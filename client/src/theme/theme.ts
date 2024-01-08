@@ -23,8 +23,7 @@ const theme: ThemeConfig = {
         },
         Tabs: {
             colorBgContainer: 'black',
-            colorBgBase: '#ffffff',
-            horizontalItemPadding: '10px',
+            cardPadding: '0.5rem 1.5rem',
         },
     },
 }

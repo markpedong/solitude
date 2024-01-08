@@ -21,18 +21,18 @@ const Account: FC<Props> = () => {
                     <span className={cormorant.className}>Welcome back! {`{Username}`}</span>
                     <span className={jost.className}>Enjoy shopping with ease and happiness.</span>
                 </Flex>
-                <Tabs
-                    onChange={onChange}
-                    type="card"
-                    items={new Array(3).fill(null).map((_, i) => {
-                        const id = String(i + 1)
-                        return {
-                            label: `Tab ${id}`,
-                            key: id,
-                            children: `Content of Tab Pane ${id}`,
-                        }
-                    })}
-                />
+                <div className={styles.tabsContainer}>
+                    <Tabs
+                        onChange={onChange}
+                        type="card"
+                        items={[
+                            { key: 'profile', label: 'PROFILE', children: <div>PROFILE</div> },
+                            { key: 'favourites', label: 'FAVOURITES', children: <div>FAVOURITES</div> },
+                            { key: 'products', label: 'PRODUCTS', children: <div>PRODUCTS</div> },
+                            { key: 'collections', label: 'COLLECTIONS', children: <div>COLLECTIONS</div> },
+                        ]}
+                    />
+                </div>
             </Col>
             <Col xs={0} lg={4} />
         </Row>
