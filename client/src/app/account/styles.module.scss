@@ -1,0 +1,12 @@
+@import '@/styles/_helpers.scss';
+
+.profileHeader {
+    span:nth-child(1) {
+        font-size: toRem(40);
+        font-weight: 500;
+    }
+
+    span:nth-child(2) {
+        font-size: toRem(12);
+    }
+}

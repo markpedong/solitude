@@ -1,9 +1,10 @@
+import { cormorant } from '@/app/page'
 import type { ThemeConfig } from 'antd'
 
 const theme: ThemeConfig = {
     token: {
         fontSize: 12,
-        colorPrimary: '##000000',
+        colorPrimary: 'white',
     },
     components: {
         Form: {
@@ -19,6 +20,11 @@ const theme: ThemeConfig = {
             lineType: 'none',
             itemBg: 'none',
             activeBarHeight: 0,
+        },
+        Tabs: {
+            colorBgContainer: 'black',
+            colorBgBase: '#ffffff',
+            horizontalItemPadding: '10px',
         },
     },
 }

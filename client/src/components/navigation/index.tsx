@@ -119,48 +119,59 @@ const Navigation: FC = () => {
     return (
         <>
             {activeModal && <Login />}
-            <Flex className={styles.navigationWrapper} justify="space-between" align="center">
-                <Flex className={styles.headerContainer} justify="center" align="center" gap={10}>
-                    <Image src={logo} alt="loginForm" />
-                    <span>
-                        <Link href="/">SOLITUDE</Link>
-                    </span>
-                </Flex>
-                <div className={styles.navigation}>
-                    <Menu mode="horizontal" items={items} disabledOverflow />
-                    <Flex className={styles.icons} gap={20}>
-                        {renderSearch()}
-                        <UserOutlined
-                            onClick={() => {
-                                dispatch(setActiveLoginModal(true))
-                            }}
-                        />
-                    </Flex>
-                </div>
-                <div className={styles.navigationMobile}>
-                    <MenuOutlined onClick={showDrawer} className={styles.navigationIcon} height={1000} width={1000} />
-                    <Drawer
-                        title={
-                            <Flex justify="center">
-                                <Flex justify="center" align="center" style={{ flex: 1 }}>
-                                    <Image src={logo} alt="loginForm" width={20} height={20} />
-                                </Flex>
-                                {renderSearch()}
-                            </Flex>
-                        }
-                        placement="right"
-                        onClose={onClose}
-                        open={open}>
-                        <Flex vertical gap={30}>
-                            <MenuItem url="products" />
-                            <MenuItem url="brands" />
-                            <MenuItem url="deals" />
-                            <MenuItem url="services" />
-                            <MenuItem url="account" />
+            <Row>
+                <Col xs={0} lg={4} />
+                <Col lg={16}>
+                    <Flex className={styles.navigationWrapper} justify="space-between" align="center">
+                        <Flex className={styles.headerContainer} justify="center" align="center" gap={10}>
+                            <Image src={logo} alt="loginForm" />
+                            <span>
+                                <Link href="/">SOLITUDE</Link>
+                            </span>
                         </Flex>
-                    </Drawer>
-                </div>
-            </Flex>
+                        <div className={styles.navigation}>
+                            <Menu mode="horizontal" items={items} disabledOverflow />
+                            <Flex className={styles.icons} gap={20}>
+                                {renderSearch()}
+                                <UserOutlined
+                                    onClick={() => {
+                                        dispatch(setActiveLoginModal(true))
+                                    }}
+                                />
+                            </Flex>
+                        </div>
+                        <div className={styles.navigationMobile}>
+                            <MenuOutlined
+                                onClick={showDrawer}
+                                className={styles.navigationIcon}
+                                height={1000}
+                                width={1000}
+                            />
+                            <Drawer
+                                title={
+                                    <Flex justify="center">
+                                        <Flex justify="center" align="center" style={{ flex: 1 }}>
+                                            <Image src={logo} alt="loginForm" width={20} height={20} />
+                                        </Flex>
+                                        {renderSearch()}
+                                    </Flex>
+                                }
+                                placement="right"
+                                onClose={onClose}
+                                open={open}>
+                                <Flex vertical gap={30}>
+                                    <MenuItem url="products" />
+                                    <MenuItem url="brands" />
+                                    <MenuItem url="deals" />
+                                    <MenuItem url="services" />
+                                    <MenuItem url="account" />
+                                </Flex>
+                            </Drawer>
+                        </div>
+                    </Flex>
+                </Col>
+                <Col xs={0} lg={4} />
+            </Row>
         </>
     )
 }
