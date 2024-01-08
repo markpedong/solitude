@@ -5,6 +5,7 @@ import React, { FC } from 'react'
 import { cormorant, jost } from '../page'
 import classNames from 'classnames'
 import styles from './styles.module.scss'
+import Profile from './components/profile'
 
 type Props = {}
 
@@ -26,7 +27,7 @@ const Account: FC<Props> = () => {
                         onChange={onChange}
                         type="card"
                         items={[
-                            { key: 'profile', label: 'PROFILE', children: <div>PROFILE</div> },
+                            { key: 'profile', label: 'PROFILE', children: <Profile /> },
                             { key: 'favourites', label: 'FAVOURITES', children: <div>FAVOURITES</div> },
                             { key: 'products', label: 'PRODUCTS', children: <div>PRODUCTS</div> },
                             { key: 'collections', label: 'COLLECTIONS', children: <div>COLLECTIONS</div> },

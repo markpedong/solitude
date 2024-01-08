@@ -1,0 +1,21 @@
+@import "@/styles/_helpers.scss";
+
+.profileWrapper {
+    padding-block-start: toRem(10);
+}
+
+.profileHeader {
+    font-size: toRem(21);
+    color: #161412;
+    line-height: toRem(24);
+    letter-spacing: toRem(1);
+}
+
+.extraContentHeader {
+    font-size: toRem(21);
+}
+
+.extraDescription,
+.extraFooter {
+    font-size: toRem(14);
+}

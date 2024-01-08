@@ -1,10 +1,10 @@
-import { cormorant } from '@/app/page'
+import { cormorant, jost } from '@/app/page'
 import type { ThemeConfig } from 'antd'
 
 const theme: ThemeConfig = {
     token: {
         fontSize: 12,
-        colorPrimary: 'white',
+        colorPrimary: 'black',
     },
     components: {
         Form: {
@@ -24,6 +24,18 @@ const theme: ThemeConfig = {
         Tabs: {
             colorBgContainer: 'black',
             cardPadding: '0.5rem 1.5rem',
+            itemHoverColor: '#737272',
+            itemColor: 'black',
+            itemSelectedColor: 'white',
+        },
+        Input: {
+            hoverBorderColor: 'black',
+            activeBorderColor: 'black',
+            activeShadow: '0px 4px #65635F',
+            boxShadow: '1rem',
+        },
+        Button: {
+            controlItemBgHover: 'red',
         },
     },
 }
