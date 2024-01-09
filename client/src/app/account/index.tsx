@@ -7,6 +7,7 @@ import classNames from 'classnames'
 import styles from './styles.module.scss'
 import Profile from './components/profile'
 import Orders from './components/orders'
+import AddProduct from './components/addProduct'
 
 type Props = {}
 
@@ -30,7 +31,7 @@ const Account: FC<Props> = () => {
                         items={[
                             { key: 'profile', label: 'PROFILE', children: <Profile /> },
                             { key: 'favourites', label: 'ORDERS', children: <Orders /> },
-                            { key: 'products', label: 'PRODUCTS', children: <div>PRODUCTS</div> },
+                            { key: 'products', label: 'PRODUCTS', children: <AddProduct /> },
                             { key: 'collections', label: 'COLLECTIONS', children: <div>COLLECTIONS</div> },
                         ]}
                     />
