@@ -14,6 +14,7 @@ const Profile: FC = () => {
                 <span className={classNames(jost.className, styles.profileHeader)}>Your Information</span>
                 <ProForm
                     grid
+                    autoFocusFirstInput={false}
                     submitter={{
                         resetButtonProps: false,
                     }}

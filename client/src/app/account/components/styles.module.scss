@@ -19,3 +19,34 @@
 .extraFooter {
     font-size: toRem(14);
 }
+
+.orderContainer {
+    gap: toRem(20);
+    padding-block: toRem(3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+    img {
+        width: toRem(100);
+        height: toRem(100);
+    }
+
+    .orderDescription {
+        flex: 2;
+
+        :nth-child(1) {
+            font-size: toRem(16);
+            font-weight: 600;
+        }
+    }
+
+    .orderPrice {
+        align-self: center;
+        flex: 0.25;
+        display: flex;
+        justify-content: space-between;
+
+        :nth-child(1) {
+            text-decoration: line-through;
+        }
+    }
+}

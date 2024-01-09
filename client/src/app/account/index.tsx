@@ -6,6 +6,7 @@ import { cormorant, jost } from '../page'
 import classNames from 'classnames'
 import styles from './styles.module.scss'
 import Profile from './components/profile'
+import Orders from './components/orders'
 
 type Props = {}
 
@@ -28,7 +29,7 @@ const Account: FC<Props> = () => {
                         type="card"
                         items={[
                             { key: 'profile', label: 'PROFILE', children: <Profile /> },
-                            { key: 'favourites', label: 'FAVOURITES', children: <div>FAVOURITES</div> },
+                            { key: 'favourites', label: 'ORDERS', children: <Orders /> },
                             { key: 'products', label: 'PRODUCTS', children: <div>PRODUCTS</div> },
                             { key: 'collections', label: 'COLLECTIONS', children: <div>COLLECTIONS</div> },
                         ]}
