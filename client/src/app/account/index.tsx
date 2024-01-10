@@ -8,10 +8,13 @@ import styles from './styles.module.scss'
 import Profile from './components/profile'
 import Orders from './components/orders'
 import AddProduct from './components/addProduct'
+import { TProduct } from '@/api'
 
-type Props = {}
+type Props = {
+    products: TProduct[]
+}
 
-const Account: FC<Props> = () => {
+const Account: FC<Props> = ({ products }) => {
     const onChange = (key: string) => {
         console.log(key)
     }
@@ -28,10 +31,11 @@ const Account: FC<Props> = () => {
                     <Tabs
                         onChange={onChange}
                         type="card"
+                        defaultActiveKey="products"
                         items={[
                             { key: 'profile', label: 'PROFILE', children: <Profile /> },
                             { key: 'favourites', label: 'ORDERS', children: <Orders /> },
-                            { key: 'products', label: 'PRODUCTS', children: <AddProduct /> },
+                            { key: 'products', label: 'PRODUCTS', children: <AddProduct products={products} /> },
                             { key: 'collections', label: 'COLLECTIONS', children: <div>COLLECTIONS</div> },
                         ]}
                     />

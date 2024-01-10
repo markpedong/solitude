@@ -1,10 +1,12 @@
 import React from 'react'
 import Account from '.'
+import { TProduct, getProducts } from '@/api'
 
-const Page = () => {
+const Page = async () => {
+    const products = await getProducts()
     return (
         <div>
-            <Account />
+            <Account products={products.data} />
         </div>
     )
 }

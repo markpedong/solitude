@@ -4,12 +4,15 @@ import styles from './styles.module.scss'
 import classNames from 'classnames'
 import { jost } from '@/app/page'
 import Image from 'next/image'
-import { ProForm, ProFormText } from '@ant-design/pro-components'
+import { ProForm, ProFormRadio, ProFormSelect, ProFormText, ProFormUploadButton } from '@ant-design/pro-components'
 import { DeleteOutlined } from '@ant-design/icons'
+import { TProduct } from '@/api'
 
-type Props = {}
+type Props = {
+    products: TProduct[]
+}
 
-const AddProduct: FC = () => {
+const AddProduct: FC<Props> = ({ products }) => {
     return (
         <Row className={styles.addProductWrapper}>
             <Col span={12}>
@@ -34,24 +37,61 @@ const AddProduct: FC = () => {
                         </ProForm>
                     </div>
                 </Flex>
+                <span className={classNames(styles.addProductHeader, jost.className)}>Gallery</span>
+                <Flex className={styles.galleryContainer} justify="start" wrap="wrap">
+                    {new Array(4).fill('https://random.imagecdn.app/150/150?random=965622').map(q => (
+                        <Image src={q} alt="product_image" width={1000} height={1000} />
+                    ))}
+                    <ProFormUploadButton
+                        name="upload"
+                        fieldProps={{
+                            name: 'file',
+                            listType: 'picture-card',
+                        }}
+                        title="UPLOAD YOUR IMAGE"
+                    />
+                </Flex>
+                <span className={classNames(jost.className, styles.profileHeader)}>Details</span>
+                <ProForm
+                    grid
+                    autoFocusFirstInput={false}
+                    submitter={{
+                        resetButtonProps: false,
+                    }}
+                    onFinish={async params => {
+                        console.log(params)
+                    }}>
+                    <ProFormText label="ID" name="id" placeholder="Product id" colProps={{ span: 12 }} />
+                    <ProFormSelect
+                        label="Amount in Stock"
+                        name="stock"
+                        placeholder="in Stock"
+                        colProps={{ span: 12 }}
+                    />
+                    <ProFormSelect label="Body Part" name="part" placeholder="Part" colProps={{ span: 12 }} />
+                    <ProFormSelect label="Material" name="material" placeholder="Material" colProps={{ span: 12 }} />
+                    <ProFormSelect label="Gender" name="gender" placeholder="Gender" colProps={{ span: 12 }} />
+                    <ProFormSelect label="Type" name="type" placeholder="Type" colProps={{ span: 12 }} />
+                </ProForm>
             </Col>
             <Col span={1} />
             <Col span={11}>
                 <Input.Search />
-                <Flex className={styles.allProducts}>
-                    <Image
-                        src="https://random.imagecdn.app/150/150?random=965622"
-                        alt="product_image"
-                        width={1000}
-                        height={1000}
-                    />
-                    <div className={classNames(styles.allProductDescription, jost.className)}>
-                        <span>GOLDSMITHS</span>
-                        <span>White Gold 1.20cttw Diamond Line</span>
-                        <span>₱ 2,500.00</span>
-                    </div>
-                    <DeleteOutlined />
-                </Flex>
+                <Space className={styles.allProductContainer} direction="vertical" size={10}>
+                    {products?.slice(0, 5).map(q => {
+                        return (
+                            <Flex className={styles.allProducts}>
+                                <Image src={q.image} alt="product_image" width={1000} height={1000} />
+                                <div className={classNames(styles.allProductDescription, jost.className)}>
+                                    <span>{q.product_name}</span>
+                                    <span>{q.description}</span>
+                                    <span>₱ {q.price?.toFixed(2)}</span>
+                                </div>
+                                <DeleteOutlined />
+                            </Flex>
+                        )
+                    })}
+                </Space>
             </Col>
         </Row>
     )

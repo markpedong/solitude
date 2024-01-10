@@ -1,8 +1,8 @@
 'use client'
 
 import { jost } from '@/app/page'
-import { ProForm, ProFormText } from '@ant-design/pro-components'
-import { Checkbox, Col, Flex, Row } from 'antd'
+import { ProForm, ProFormCheckbox, ProFormRadio, ProFormSelect, ProFormText } from '@ant-design/pro-components'
+import { Checkbox, Col, Flex, Row, Space } from 'antd'
 import classNames from 'classnames'
 import { FC } from 'react'
 import styles from './styles.module.scss'
@@ -40,6 +40,31 @@ const Profile: FC = () => {
                         placeholder="Enter Password"
                         colProps={{ span: 12 }}
                     />
+                    <ProFormRadio.Group
+                        label="Gender"
+                        name="gender"
+                        options={[
+                            {
+                                label: 'Male',
+                                value: 'male',
+                            },
+                            {
+                                label: 'Female',
+                                value: 'female',
+                            },
+                            {
+                                label: `I'd rather not say`,
+                                value: 'n/a',
+                            },
+                        ]}
+                    />
+                    <ProFormText label="Birthday">
+                        <Space direction="horizontal">
+                            <ProFormSelect name="month" colProps={{ span: 4 }} placeholder="month" />
+                            <ProFormSelect name="day" colProps={{ span: 4 }} placeholder="day" />
+                            <ProFormSelect name="year" colProps={{ span: 4 }} placeholder="year" />
+                        </Space>
+                    </ProFormText>
                 </ProForm>
             </Col>
             <Col span={1} />
