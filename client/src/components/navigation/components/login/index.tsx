@@ -1,9 +1,9 @@
 'use client'
 
-// import forgotModalCover from '@/public/assets/forgotModalCover.png'
-// import loginModalCover from '@/public/assets/loginModalCover.png'
-// import logo from '@/public/assets/logo.png'
-// import signUpModalCover from '@/public/assets/signUpModalCover.png'
+import forgotModalCover from '@/public/assets/forgotModalCover.webp'
+import loginModalCover from '@/public/assets/loginModalCover.webp'
+import logo from '@/public/assets/logo.webp'
+import signUpModalCover from '@/public/assets/signUpModalCover.webp'
 import { setActiveLoginForm, setActiveLoginModal } from '@/redux/features/booleanSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { CloseOutlined, LockOutlined, PhoneOutlined, RightOutlined, UserOutlined } from '@ant-design/icons'
@@ -35,12 +35,12 @@ const Login: FC = () => {
                 justify="space-between"
                 gap={20}
                 style={{ blockSize: create ? '38rem' : forgot ? '20rem' : '30rem' }}>
-                {/* <div className={styles.loginImage}>
+                <div className={styles.loginImage}>
                     <Image
                         alt="loginCover"
                         src={create ? signUpModalCover : forgot ? forgotModalCover : loginModalCover}
                     />
-                </div> */}
+                </div>
                 <Flex className={styles.loginForm} vertical>
                     <Flex justify="end" className={styles.closeIcon}>
                         <CloseOutlined
@@ -50,10 +50,10 @@ const Login: FC = () => {
                             }}
                         />
                     </Flex>
-                    {/* <Flex className={styles.loginHeader} justify="center" align="center" gap={10}>
+                    <Flex className={styles.loginHeader} justify="center" align="center" gap={10}>
                         <Image src={logo} alt="loginForm" />
                         <span>SOLITUDE</span>
-                    </Flex> */}
+                    </Flex>
                     <Flex className={styles.loginHeaderText} justify="center" vertical>
                         <h1>
                             {create

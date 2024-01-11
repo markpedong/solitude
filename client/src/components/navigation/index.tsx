@@ -2,9 +2,8 @@
 
 import { jost } from '@/app/page'
 import { MODAL_FORM_PROPS } from '@/constants'
-// import logo from '@/public/assets/logo.png'
-// import { setActiveLoginModal } from '@/redux/features/booleanSlice'
-// import { AppDispatch, useAppSelector } from '@/redux/store'
+import logo from '@/public/assets/logo.webp'
+import { setActiveLoginModal } from '@/redux/features/booleanSlice'
 import { MenuOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons'
 import { ModalForm } from '@ant-design/pro-components'
 import type { MenuProps } from 'antd'
@@ -13,12 +12,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FC, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
-// import Login from './components/login'
+import Login from './components/login'
 import styles from './styles.module.scss'
 import { TProduct, getProducts } from '@/api'
-import Login from './components/login'
 import { AppDispatch, useAppSelector } from '@/redux/store'
-// import Collection from '@/components/collections'
+import Collection from '../collections'
 
 const MenuItem: FC<{ url: string }> = ({ url }) => (
     <Link
@@ -103,7 +101,7 @@ const Navigation: FC = () => {
                     }}>
                     <Input placeholder="eg. Sweater, T-Shirts, Shorts" onChange={handleSearch} />
                 </div>
-                {/* <Flex className={styles.collectionsContainer} justify="center" vertical gap={10}>
+                <Flex className={styles.collectionsContainer} justify="center" vertical gap={10}>
                     {filteredProducts.map(q => (
                         <Collection
                             key={q.id}
@@ -113,7 +111,7 @@ const Navigation: FC = () => {
                             className={styles.collectionItem}
                         />
                     ))}
-                </Flex> */}
+                </Flex>
             </ModalForm>
         )
     }
@@ -126,7 +124,7 @@ const Navigation: FC = () => {
                 <Col lg={16}>
                     <Flex className={styles.navigationWrapper} justify="space-between" align="center">
                         <Flex className={styles.headerContainer} justify="center" align="center" gap={10}>
-                            {/* <Image src={logo} alt="loginForm" /> */}
+                            <Image src={logo} alt="loginForm" />
                             <span>
                                 <Link href="/">SOLITUDE</Link>
                             </span>
@@ -137,7 +135,7 @@ const Navigation: FC = () => {
                                 {renderSearch()}
                                 <UserOutlined
                                     onClick={() => {
-                                        // dispatch(setActiveLoginModal(true))
+                                        dispatch(setActiveLoginModal(true))
                                     }}
                                 />
                             </Flex>
@@ -152,9 +150,9 @@ const Navigation: FC = () => {
                             <Drawer
                                 title={
                                     <Flex justify="center">
-                                        {/* <Flex justify="center" align="center" style={{ flex: 1 }}>
+                                        <Flex justify="center" align="center" style={{ flex: 1 }}>
                                             <Image src={logo} alt="loginForm" width={20} height={20} />
-                                        </Flex> */}
+                                        </Flex>
                                         {renderSearch()}
                                     </Flex>
                                 }
