@@ -9,6 +9,7 @@ import Profile from './components/profile'
 import Orders from './components/orders'
 import AddProduct from './components/addProduct'
 import { TProduct } from '@/api'
+import Address from './components/address'
 
 type Props = {
     products: TProduct[]
@@ -31,12 +32,12 @@ const Account: FC<Props> = ({ products }) => {
                     <Tabs
                         onChange={onChange}
                         type="card"
-                        defaultActiveKey="products"
+                        defaultActiveKey="profile"
                         items={[
                             { key: 'profile', label: 'PROFILE', children: <Profile /> },
                             { key: 'favourites', label: 'ORDERS', children: <Orders /> },
                             { key: 'products', label: 'PRODUCTS', children: <AddProduct products={products} /> },
-                            { key: 'collections', label: 'COLLECTIONS', children: <div>COLLECTIONS</div> },
+                            { key: 'address', label: 'ADDRESS', children: <Address /> },
                         ]}
                     />
                 </div>

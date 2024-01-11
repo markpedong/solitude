@@ -1,8 +1,8 @@
 import { ModalFormProps } from '@ant-design/pro-components'
 
 export const MODAL_FORM_PROPS: ModalFormProps = {
-    labelCol: { flex: '110px' },
-    layout: 'horizontal',
+    labelCol: { flex: '30px' },
+    layout: 'vertical',
     width: 800,
     modalProps: {
         destroyOnClose: true,
