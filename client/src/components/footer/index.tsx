@@ -8,12 +8,9 @@ import Link from 'next/link'
 import { jost } from '@/app/page'
 
 const MenuItem: FC<{ url: string }> = ({ url }) => (
-    <Link
-        href={`/${url}`}
-        className={jost.className}
-        style={{ letterSpacing: '0.1rem', textTransform: 'uppercase', color: 'black' }}>
+    <div className={jost.className} style={{ letterSpacing: '0.1rem', textTransform: 'uppercase', color: 'black' }}>
         {url.toUpperCase()}
-    </Link>
+    </div>
 )
 const items: MenuProps['items'] = [
     {

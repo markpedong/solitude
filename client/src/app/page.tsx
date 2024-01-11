@@ -1,16 +1,17 @@
 import { getBlogs, getCollections, getProducts } from '@/api'
 import { FC } from 'react'
 import { Cormorant, Jost } from 'next/font/google'
-import Product from '@/components/products'
+// import Product from '@/components/products'
 import styles from './styles.module.scss'
 import Image from 'next/image'
 import Link from 'next/link'
-import landing from '@/public/assets/landing.png'
-import Collection from '@/components/collections'
-import img1 from '@/public/assets/forgotModalCover.png'
-import img2 from '@/public/assets/logo.png'
-import img3 from '@/public/assets/loginModalCover.png'
-import img4 from '@/public/assets/signUpModalCover.png'
+import Product from '@/components/products'
+// import landing from '@/public/assets/landing.png'
+// import Collection from '@/components/collections'
+// import img1 from '@/public/assets/forgotModalCover.png'
+// import img2 from '@/public/assets/logo.png'
+// import img3 from '@/public/assets/loginModalCover.png'
+// import img4 from '@/public/assets/signUpModalCover.png'
 
 export const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 export const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -28,9 +29,7 @@ const Page: FC = async () => {
                         Find products for your friends, family, and special occasions.
                     </span>
                 </div>
-                <div className={styles.landingImageContainer}>
-                    <Image src={landing} alt="landing" />
-                </div>
+                <div className={styles.landingImageContainer}>{/* <Image src={landing} alt="landing" /> */}</div>
                 <div className={styles.landingButtonContainer}>
                     <span>
                         <Link href="/products">SEARCH PRODUCTS</Link>
@@ -62,9 +61,9 @@ const Page: FC = async () => {
                 <span className={jost.className}>SEE ALL COLLECTIONS</span>
             </div>
             <div className={styles.featuresItemContainer}>
-                {collections.data.map(q => (
+                {/* {collections.data.map(q => (
                     <Collection description={q.description} image={q.image} title={q.title} key={q.title} />
-                ))}
+                ))} */}
             </div>
             {/* <Blog data={blogs.data as unknown as TBlog[]} /> */}
             <div className={styles.titleContainer}>
@@ -89,10 +88,10 @@ const Page: FC = async () => {
             </div>
             <div className={styles.joinWrapper}>
                 <div className={styles.imageContainer}>
-                    <Image src={img1} alt="logo1" />
+                    {/* <Image src={img1} alt="logo1" />
                     <Image src={img2} alt="logo1" />
                     <Image src={img3} alt="logo1" />
-                    <Image src={img4} alt="logo1" />
+                    <Image src={img4} alt="logo1" /> */}
                 </div>
                 <div className={styles.middleContainer}>
                     <h1 className={cormorant.className}>Join #solitude</h1>
@@ -101,10 +100,10 @@ const Page: FC = async () => {
                     </Link>
                 </div>
                 <div className={styles.imageContainer}>
-                    <Image src={img1} alt="logo1" />
+                    {/* <Image src={img1} alt="logo1" />
                     <Image src={img2} alt="logo1" />
                     <Image src={img3} alt="logo1" />
-                    <Image src={img4} alt="logo1" />
+                    <Image src={img4} alt="logo1" /> */}
                 </div>
             </div>
         </div>

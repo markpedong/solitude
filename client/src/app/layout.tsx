@@ -1,33 +1,24 @@
-import Footer from '@/components/footer'
-import Navigation from '@/components/navigation'
-import ReduxProvider from '@/redux/provider'
-import '@/styles/global.scss'
-import theme from '@/theme/theme'
-import { AntdRegistry } from '@ant-design/nextjs-registry'
-import { ConfigProvider } from 'antd'
-import enUS from 'antd/lib/locale/en_US'
-import { Jost } from 'next/font/google'
 import React from 'react'
-
-const jost = Jost({ subsets: ['latin'] })
-
-export const metadata = {
-    title: 'SOLITUDE',
-    description: 'E-Commerce projet that is being written in React and GO',
-}
+import { AntdRegistry } from '@ant-design/nextjs-registry'
+import Navigation from '@/components/navigation'
+import { ConfigProvider } from 'antd'
+import theme from '@/styles/theme'
+import enUS from 'antd/locale/en_US'
+import Footer from '@/components/footer'
+import ReduxProvider from '@/redux/provider'
 
 const RootLayout = ({ children }: React.PropsWithChildren) => (
     <html lang="en">
-        <body className={jost.className}>
-            <ReduxProvider>
-                <AntdRegistry>
-                    <ConfigProvider theme={theme} locale={enUS}>
+        <body>
+            <AntdRegistry>
+                <ConfigProvider theme={theme} locale={enUS}>
+                    <ReduxProvider>
                         <Navigation />
                         {children}
-                        <Footer />
-                    </ConfigProvider>
-                </AntdRegistry>
-            </ReduxProvider>
+                    </ReduxProvider>
+                    <Footer />
+                </ConfigProvider>
+            </AntdRegistry>
         </body>
     </html>
 )
