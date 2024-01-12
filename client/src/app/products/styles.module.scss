@@ -17,7 +17,6 @@
     gap: toRem(50);
 
     .filterContainer {
-        gap: toRem(30);
 
         .filterLabel {
             text-transform: uppercase;
@@ -70,6 +69,18 @@
         font-weight: 500;
     }
 
+}
+
+.selectContainer {
+    :global {
+        .ant-select-selector {
+
+            span {
+                color: black;
+                letter-spacing: toRem(2);
+            }
+        }
+    }
 }
 
 @media only screen and (max-width: 768px) {

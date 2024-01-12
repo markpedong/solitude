@@ -5,9 +5,10 @@ import { cormorant, jost } from '@/app/page'
 import Product from '@/components/products'
 import { PRODUCT_FILTER } from '@/constants'
 import { DownOutlined, SearchOutlined } from '@ant-design/icons'
-import { Col, Flex, Input, Row } from 'antd'
+import { Col, Flex, Input, Row, Select } from 'antd'
 import { FC, memo, useState } from 'react'
 import styles from './styles.module.scss'
+import classNames from 'classnames'
 
 const Products: FC<{ data: TProduct[] }> = ({ data }) => {
     const [products, setProducts] = useState<TProduct[]>(data)
@@ -28,15 +29,21 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
                     </Flex>
                     <Flex className={styles.filterWrapper} justify="space-between" align="center">
                         <Flex className={styles.filterContainer} justify="space-between">
-                            {PRODUCT_FILTER.map(q => (
-                                <Flex
-                                    key={q.value}
-                                    className={`${jost.className} ${styles.filterLabel}`}
-                                    justify="center"
-                                    align="center">
-                                    {q.label} <DownOutlined />
-                                </Flex>
-                            ))}
+                            {PRODUCT_FILTER.map(q => {
+                                const options = Object.entries(q.options ?? {}).map(([label, value]) => ({
+                                    label,
+                                    value,
+                                }))
+
+                                return (
+                                    <Select
+                                        className={classNames(jost.className, styles.selectContainer)}
+                                        options={options}
+                                        placeholder={q.label.toUpperCase()}
+                                        bordered={false}
+                                    />
+                                )
+                            })}
                         </Flex>
                         <div>
                             <Input
