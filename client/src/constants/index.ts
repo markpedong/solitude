@@ -51,5 +51,10 @@ export const PRODUCT_FILTER = [
     {
         label: 'price',
         value: 'price',
+        options: {
+            '0-500': 500,
+            '500-1000': 1000,
+            '1000+': 1001,
+        },
     },
 ]

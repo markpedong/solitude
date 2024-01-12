@@ -60,9 +60,9 @@ const Profile: FC = () => {
                     />
                     <ProFormText label="Birthday">
                         <Space direction="horizontal">
-                            <ProFormSelect name="month" colProps={{ span: 4 }} placeholder="month" />
-                            <ProFormSelect name="day" colProps={{ span: 4 }} placeholder="day" />
-                            <ProFormSelect name="year" colProps={{ span: 4 }} placeholder="year" />
+                            <ProFormSelect name="month" colProps={{ span: 4 }} placeholder="MONTH" />
+                            <ProFormSelect name="day" colProps={{ span: 4 }} placeholder="DAY" />
+                            <ProFormSelect name="year" colProps={{ span: 4 }} placeholder="YEAR" />
                         </Space>
                     </ProFormText>
                 </ProForm>

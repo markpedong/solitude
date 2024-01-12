@@ -28,6 +28,7 @@ body {
     font-family: 'Jost' !important;
     text-transform: uppercase;
     letter-spacing: toRem(1);
+    inline-size: auto !important;
 
     .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
         background-color: rgba(0, 0, 0, 0.5) !important;

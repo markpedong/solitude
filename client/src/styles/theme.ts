@@ -31,7 +31,7 @@ const theme: ThemeConfig = {
         Input: {
             hoverBorderColor: 'black',
             activeBorderColor: 'black',
-            activeShadow: '0px 4px #65635F',
+            activeShadow: '0px 2px rgba(101, 99, 95, 0.5)',
             boxShadow: '1rem',
         },
         Button: {

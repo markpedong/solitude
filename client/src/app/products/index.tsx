@@ -54,7 +54,6 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
                             />
                         </div>
                     </Flex>
-                    ADD FILTER FOR MOBILE
                     <Flex className={styles.productContainer} wrap="wrap" justify="center">
                         {products.map(q => (
                             <Product
