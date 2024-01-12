@@ -14,6 +14,7 @@ import { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import styles from './styles.module.scss'
 import { motion } from 'framer-motion'
+import { jost } from '@/app/page'
 
 const { Link } = Typography
 
@@ -55,7 +56,7 @@ const Login: FC = () => {
                         <span>SOLITUDE</span>
                     </Flex>
                     <Flex className={styles.loginHeaderText} justify="center" vertical>
-                        <h1>
+                        <h1 className={jost.className}>
                             {create
                                 ? 'Create an Account'
                                 : forgot

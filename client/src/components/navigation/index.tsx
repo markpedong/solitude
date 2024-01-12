@@ -19,32 +19,10 @@ import { AppDispatch, useAppSelector } from '@/redux/store'
 import Collection from '../collections'
 
 const MenuItem: FC<{ url: string }> = ({ url }) => (
-    <Link
-        href={`/${url}`}
-        className={jost.className}
-        style={{ letterSpacing: '0.1rem', textTransform: 'uppercase', color: 'black', textAlign: 'center' }}>
-        {url.toUpperCase()}
-    </Link>
+    <a className={styles.menuItem} href={url}>
+        {url}
+    </a>
 )
-const items: MenuProps['items'] = [
-    {
-        label: <MenuItem url="products" />,
-        key: 'products',
-    },
-    {
-        label: <MenuItem url="brands" />,
-        key: 'brands',
-    },
-    {
-        label: <MenuItem url="deals" />,
-        key: 'deals',
-    },
-    {
-        label: <MenuItem url="services" />,
-        key: 'services',
-    },
-]
-
 const Navigation: FC = () => {
     const [open, setOpen] = useState(false)
     const [products, setProducts] = useState<TProduct[]>([])
@@ -130,7 +108,11 @@ const Navigation: FC = () => {
                             </span>
                         </Flex>
                         <div className={styles.navigation}>
-                            <Menu mode="horizontal" items={items} disabledOverflow />
+                            <MenuItem url="products" />
+                            <MenuItem url="brands" />
+                            <MenuItem url="deals" />
+                            <MenuItem url="services" />
+                            <MenuItem url="account" />
                             <Flex className={styles.icons} gap={20}>
                                 {renderSearch()}
                                 <UserOutlined
