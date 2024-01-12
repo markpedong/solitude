@@ -80,6 +80,10 @@
                 letter-spacing: toRem(2);
             }
         }
+
+        .ant-select-selection-item {
+            text-transform: uppercase;
+        }
     }
 }
 
