@@ -11,6 +11,7 @@ import img1 from '@/public/assets/forgotModalCover.webp'
 import img2 from '@/public/assets/logo.webp'
 import img3 from '@/public/assets/loginModalCover.webp'
 import img4 from '@/public/assets/signUpModalCover.webp'
+import classNames from 'classnames'
 
 export const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 export const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -31,7 +32,7 @@ const Page: FC = async () => {
                 <div className={styles.landingImageContainer}>
                     <Image src={landing} alt="landing" />
                 </div>
-                <div className={styles.landingButtonContainer}>
+                <div className={classNames(styles.landingButtonContainer, jost.className)}>
                     <span>
                         <Link href="/products">SEARCH PRODUCTS</Link>
                     </span>

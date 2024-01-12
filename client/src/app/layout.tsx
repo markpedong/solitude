@@ -6,6 +6,7 @@ import theme from '@/styles/theme'
 import enUS from 'antd/locale/en_US'
 import Footer from '@/components/footer'
 import ReduxProvider from '@/redux/provider'
+import '../styles/global.scss'
 
 const RootLayout = ({ children }: React.PropsWithChildren) => (
     <html lang="en">

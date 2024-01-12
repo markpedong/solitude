@@ -4,12 +4,14 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    transition: all 0.3s ease-in;
-    // touch-action: pan-x pan-y !important;
 }
 
 html,
 body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in;
 
     // touch-action: pan-x pan-y !important;
     ::-webkit-scrollbar {
