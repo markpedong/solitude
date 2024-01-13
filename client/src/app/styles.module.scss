@@ -147,10 +147,12 @@
     justify-items: center;
     align-content: center;
     grid-template-columns: repeat(auto-fill, minmax(toRem(371), 1fr));
+    gap: toRem(12);
 }
 
 .blogItem {
     width: toRem(371);
+    transition: all 0.1s ease-out;
 
     img {
         max-height: toRem(200);
@@ -188,6 +190,10 @@
             text-transform: uppercase;
             color: black;
         }
+    }
+
+    &:hover {
+        transform: scale(1.1);
     }
 }
 

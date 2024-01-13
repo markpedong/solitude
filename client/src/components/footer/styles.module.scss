@@ -4,9 +4,13 @@
     background-color: #F4F4F2;
     block-size: toRem(170);
     padding-block: toRem(45);
+    display: grid;
+    justify-content: center;
 }
 
 .socialMediaContainer {
+    gap: toRem(10);
+
     span {
         letter-spacing: toRem(2);
         font-size: toRem(10);
@@ -14,5 +18,23 @@
         a {
             color: #65635F;
         }
+    }
+}
+
+.menuItem {
+    text-transform: uppercase;
+    letter-spacing: toRem(1);
+    pointer-events: auto;
+    color: black;
+    transition: all 0.1s ease-out;
+
+    a {
+        font-size: toReM(10);
+
+    }
+
+    &:hover {
+        color: rgba(50, 50, 50, 0.5);
+        transform: scale(1.1);
     }
 }

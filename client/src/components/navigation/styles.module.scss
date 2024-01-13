@@ -28,7 +28,7 @@
     letter-spacing: toRem(1);
     pointer-events: auto;
     color: black;
-    transition: all 0.1s ease;
+    transition: all 0.1s ease-out;
 
     &:hover {
         color: rgba(50, 50, 50, 0.5);
