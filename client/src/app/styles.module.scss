@@ -51,7 +51,7 @@
             letter-spacing: 0.2rem;
             border-radius: 0.3rem;
             text-decoration: none;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.2s ease-out;
 
 
             &:hover {
@@ -231,6 +231,7 @@
                 font-size: toRem(12);
                 letter-spacing: toRem(1);
                 cursor: pointer;
+                transition: all 0.2s ease-out;
 
                 &:hover {
                     background-color: black;
