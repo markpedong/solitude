@@ -6,6 +6,7 @@ import { FC } from 'react'
 import styles from './styles.module.scss'
 import { jost } from '@/app/page'
 import classNames from 'classnames'
+import { motion } from 'framer-motion'
 
 const MenuItem: FC<{ url: string }> = ({ url }) => (
     <a className={styles.menuItem} href={url}>
@@ -23,15 +24,15 @@ const Footer: FC = () => {
                 <MenuItem url="services" />
             </Flex>
             <Flex className={classNames(jost.className, styles.socialMediaContainer)} justify="center" align="center">
-                <span>
+                <motion.span whileTap={{ scale: 0.9 }}>
                     <Link href="/">FACEBOOK</Link>
-                </span>
-                <span>
+                </motion.span>
+                <motion.span whileTap={{ scale: 0.9 }}>
                     <Link href="/">INSTAGRAM</Link>
-                </span>
-                <span>
+                </motion.span>
+                <motion.span whileTap={{ scale: 0.9 }}>
                     <Link href="/">SNAPCHAT</Link>
-                </span>
+                </motion.span>
             </Flex>
         </div>
     )
