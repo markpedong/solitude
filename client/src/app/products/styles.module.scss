@@ -17,12 +17,15 @@
     gap: toRem(50);
 
     .filterContainer {
-
         .filterLabel {
             text-transform: uppercase;
             letter-spacing: toRem(2);
             text-wrap: nowrap;
         }
+    }
+
+    @media (max-width: 992px) {
+        display: none;
     }
 }
 
@@ -87,7 +90,7 @@
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 992px) {
     .filterWrapper {
         display: none !important;
     }

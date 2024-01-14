@@ -231,8 +231,8 @@ const Navigation: FC = () => {
     return (
         <>
             <Row>
-                <Col xs={0} lg={4} />
-                <Col lg={16}>
+                <Col xs={2} lg={2} />
+                <Col xs={20} lg={20}>
                     <Flex className={styles.navigationWrapper} justify="space-between" align="center">
                         <Flex className={styles.headerContainer} justify="center" align="center" gap={10}>
                             <Image src={logo} alt="loginForm" />
@@ -280,7 +280,7 @@ const Navigation: FC = () => {
                         </div>
                     </Flex>
                 </Col>
-                <Col xs={0} lg={4} />
+                <Col xs={2} lg={2} />
             </Row>
         </>
     )

@@ -17,7 +17,7 @@ export const MODAL_FORM_PROPS: ModalFormProps = {
 export const PRODUCT_FILTER = [
     {
         label: 'all materials',
-        value: 'materials',
+        value: 'material',
         options: {
             fabric: 'fabric',
             cotton: 'cotton',

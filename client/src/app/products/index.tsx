@@ -4,15 +4,15 @@ import { TProduct } from '@/api'
 import { cormorant, jost } from '@/app/page'
 import Product from '@/components/products'
 import { PRODUCT_FILTER } from '@/constants'
-import { DownOutlined, SearchOutlined } from '@ant-design/icons'
+import { SearchOutlined } from '@ant-design/icons'
 import { Col, Flex, Input, Row, Select } from 'antd'
+import classNames from 'classnames'
 import { FC, memo, useState } from 'react'
 import styles from './styles.module.scss'
-import classNames from 'classnames'
 
 const Products: FC<{ data: TProduct[] }> = ({ data }) => {
     const [products, setProducts] = useState<TProduct[]>(data)
-
+    const [filter, setFiler] = useState({})
     const handleSearch = e => {
         const value = e.target.value.toLowerCase()
 
@@ -37,7 +37,9 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
 
                                 return (
                                     <Select
+                                        key={q.value}
                                         className={classNames(jost.className, styles.selectContainer)}
+                                        onChange={e => console.log(e, q.value)}
                                         options={options}
                                         placeholder={q.label.toUpperCase()}
                                         bordered={false}
