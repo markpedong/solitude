@@ -21,12 +21,17 @@
     }
 }
 
+.menuContainer {
+    gap: toRem(20);
+}
+
 .menuItem {
     text-transform: uppercase;
-    letter-spacing: toRem(1);
+    letter-spacing: toRem(2);
     pointer-events: auto;
     color: black;
     transition: all 0.1s ease-out;
+    font-size: toRem(12);
 
     a {
         font-size: toReM(10);

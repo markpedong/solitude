@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { FC } from 'react'
 import styles from './styles.module.scss'
 import { jost } from '@/app/page'
+import classNames from 'classnames'
 
 const MenuItem: FC<{ url: string }> = ({ url }) => (
     <a className={styles.menuItem} href={url}>
@@ -15,13 +16,13 @@ const MenuItem: FC<{ url: string }> = ({ url }) => (
 const Footer: FC = () => {
     return (
         <div className={styles.footerWrapper}>
-            <Flex className={jost.className} justify="center" align="center" gap={5}>
+            <Flex className={classNames(jost.className, styles.menuContainer)} justify="center" align="center">
                 <MenuItem url="products" />
                 <MenuItem url="brands" />
                 <MenuItem url="deals" />
                 <MenuItem url="services" />
             </Flex>
-            <Flex className={styles.socialMediaContainer} justify="center" align="center">
+            <Flex className={classNames(jost.className, styles.socialMediaContainer)} justify="center" align="center">
                 <span>
                     <Link href="/">FACEBOOK</Link>
                 </span>
