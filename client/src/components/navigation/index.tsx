@@ -7,7 +7,7 @@ import forgotModalCover from '@/public/assets/forgotModalCover.webp'
 import loginModalCover from '@/public/assets/loginModalCover.webp'
 import logo from '@/public/assets/logo.webp'
 import signUpModalCover from '@/public/assets/signUpModalCover.webp'
-import { setActiveLoginForm } from '@/redux/features/booleanSlice'
+import { setActiveLoginForm, setDarkMode } from '@/redux/features/booleanSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import {
     LockOutlined,
@@ -25,6 +25,9 @@ import { CSSProperties, FC, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Collection from '../collections'
 import styles from './styles.module.scss'
+import moon from '@/public/assets/moon.png'
+import sun from '@/public/assets/sun.png'
+import { getLocalStorage, setLocalStorage } from '@/utils/xLocalStorage'
 
 const MenuItem: FC<{ url: string }> = ({ url }) => (
     <a className={styles.menuItem} href={url}>
@@ -38,13 +41,19 @@ const searchStyle: CSSProperties = {
 }
 
 const Navigation: FC = () => {
+    const dispatch = useDispatch<AppDispatch>()
     const [open, setOpen] = useState(false)
     const [products, setProducts] = useState<TProduct[]>([])
     const [searchFilter, setSearchFilter] = useState('')
-    const loginForm = useAppSelector(state => state.boolean.activeLoginForm)
-    const create = loginForm === 'create'
-    const forgot = loginForm === 'forgot'
-    const dispatch = useDispatch<AppDispatch>()
+    const { activeLoginForm } = useAppSelector(state => state.boolean)
+    const create = activeLoginForm === 'create'
+    const forgot = activeLoginForm === 'forgot'
+    const login = activeLoginForm === 'login'
+    const darkMode = getLocalStorage('dark')
+
+    const filteredProducts = useMemo(() => {
+        return products.filter(product => product.product_name.toLowerCase().includes(searchFilter))
+    }, [products, searchFilter])
 
     const showDrawer = () => {
         setOpen(true)
@@ -68,17 +77,8 @@ const Navigation: FC = () => {
 
     const handleSearch = e => {
         const value = e.target.value.toLowerCase()
-        setSearchFilter(value) // Update search filter
+        setSearchFilter(value)
     }
-
-    const filteredProducts = useMemo(() => {
-        return products.filter(product => product.product_name.toLowerCase().includes(searchFilter))
-    }, [products, searchFilter])
-
-    useEffect(() => {
-        handleResize()
-        handleGetFeatures()
-    }, [])
 
     const renderSearch = () => {
         return (
@@ -213,7 +213,7 @@ const Navigation: FC = () => {
                         <Typography.Link
                             type="secondary"
                             onClick={() => {
-                                if (loginForm === 'login') {
+                                if (login) {
                                     dispatch(setActiveLoginForm('create'))
                                 } else {
                                     dispatch(setActiveLoginForm('login'))
@@ -227,6 +227,11 @@ const Navigation: FC = () => {
             </Flex>
         </ModalForm>
     )
+
+    useEffect(() => {
+        handleResize()
+        handleGetFeatures()
+    }, [])
 
     return (
         <>
@@ -248,6 +253,11 @@ const Navigation: FC = () => {
                             <Flex className={styles.icons} gap={20}>
                                 {renderSearch()}
                                 {renderLogin()}
+                                <Image
+                                    src={darkMode ? moon : sun}
+                                    alt="darkmode"
+                                    onClick={() => setLocalStorage('dark', String(!!darkMode))}
+                                />
                             </Flex>
                         </div>
                         <div className={styles.navigationMobile}>
