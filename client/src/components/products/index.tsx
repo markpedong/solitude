@@ -19,7 +19,7 @@ const Product: FC<Props> = ({ id, image, product_name, description, price, class
     return (
         <Link href={`/products/${id}`} style={style}>
             <div className={className ?? styles.itemContainer} key={id}>
-                <Image src={image} alt={product_name} width={1000} height={1000} />
+                <Image src={image} alt={product_name} width={1000} height={1000} priority />
                 <span className={`${styles.cardTitle} ${jost.className}`}>{product_name}</span>
                 <span className={styles.cardDescription}>{description}</span>
                 <span className={styles.cardFooter}>$ {price.toFixed(2)}</span>

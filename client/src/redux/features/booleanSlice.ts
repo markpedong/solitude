@@ -1,10 +1,12 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 type InitialSlice = {
+    darkMode: boolean
     activeLoginForm: 'login' | 'create' | 'forgot'
     activeSearchForm: boolean
 }
 const initialState: InitialSlice = {
+    darkMode: false,
     activeLoginForm: 'login',
     activeSearchForm: false,
 }
@@ -13,6 +15,9 @@ export const BooleanSlice = createSlice({
     name: 'Boolean',
     initialState,
     reducers: {
+        setDarkMode: (state, action: PayloadAction<boolean>) => {
+            state.darkMode = action.payload
+        },
         setActiveLoginForm: (state, action: PayloadAction<'login' | 'create' | 'forgot'>) => {
             state.activeLoginForm = action.payload
         },
@@ -22,5 +27,5 @@ export const BooleanSlice = createSlice({
     },
 })
 
-export const { setActiveLoginForm, setActiveSearchForm } = BooleanSlice.actions
+export const { setDarkMode, setActiveLoginForm, setActiveSearchForm } = BooleanSlice.actions
 export default BooleanSlice.reducer

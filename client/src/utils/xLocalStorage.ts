@@ -1,7 +1,7 @@
 import { isArray, isObject, isString } from 'lodash'
 import { compress, decompress } from 'lz-string'
 
-export const setLocalStorage = (key: string, value: string | object | [any]) => {
+export const setLocalStorage = (key: string, value: string | object | [any] | any) => {
     if (isObject(value) || isArray(value) || isString(value)) {
         value = JSON.stringify(value)
     }

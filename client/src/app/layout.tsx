@@ -4,14 +4,17 @@ import Navigation from '@/components/navigation'
 import Footer from '@/components/footer'
 import ReduxProvider from '@/redux/provider'
 import '../styles/global.scss'
+import AntdProvider from './antdProvider'
 
 const RootLayout = ({ children }: React.PropsWithChildren) => (
     <html lang="en">
         <body>
             <AntdRegistry>
                 <ReduxProvider>
-                    <Navigation />
-                    {children}
+                    <AntdProvider>
+                        <Navigation />
+                        {children}
+                    </AntdProvider>
                 </ReduxProvider>
                 <Footer />
             </AntdRegistry>

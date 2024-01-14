@@ -27,7 +27,6 @@ import Collection from '../collections'
 import styles from './styles.module.scss'
 import moon from '@/public/assets/moon.png'
 import sun from '@/public/assets/sun.png'
-import { getLocalStorage, setLocalStorage } from '@/utils/xLocalStorage'
 
 const MenuItem: FC<{ url: string }> = ({ url }) => (
     <a className={styles.menuItem} href={url}>
@@ -45,11 +44,10 @@ const Navigation: FC = () => {
     const [open, setOpen] = useState(false)
     const [products, setProducts] = useState<TProduct[]>([])
     const [searchFilter, setSearchFilter] = useState('')
-    const { activeLoginForm } = useAppSelector(state => state.boolean)
+    const { activeLoginForm, darkMode } = useAppSelector(state => state.boolean)
     const create = activeLoginForm === 'create'
     const forgot = activeLoginForm === 'forgot'
     const login = activeLoginForm === 'login'
-    const darkMode = getLocalStorage('dark')
 
     const filteredProducts = useMemo(() => {
         return products.filter(product => product.product_name.toLowerCase().includes(searchFilter))
@@ -256,7 +254,7 @@ const Navigation: FC = () => {
                                 <Image
                                     src={darkMode ? moon : sun}
                                     alt="darkmode"
-                                    onClick={() => setLocalStorage('dark', String(!!darkMode))}
+                                    onClick={() => dispatch(setDarkMode(!darkMode))}
                                 />
                             </Flex>
                         </div>
