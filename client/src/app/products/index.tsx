@@ -1,8 +1,8 @@
 'use client'
 
 import { TProduct } from '@/api'
-import { cormorant, jost } from '@/app/page'
-import Product from '@/components/products'
+import { jost } from '@/app/page'
+import { PageHeader, Product } from '@/components/reusable'
 import { PRODUCT_FILTER } from '@/constants'
 import { SearchOutlined } from '@ant-design/icons'
 import { Col, Flex, Input, Row, Select } from 'antd'
@@ -23,10 +23,7 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
             <Row justify="center">
                 <Col md={2}></Col>
                 <Col span={24} md={20} className={styles.productWrapper}>
-                    <Flex className={styles.productHeaderContainer} vertical justify="center" align="center" gap={20}>
-                        <span>SOLITUDE / PRODUCTS</span>
-                        <h1 className={cormorant.className}>PRODUCTS</h1>
-                    </Flex>
+                    <PageHeader title="PRODUCTS" />
                     <Flex className={styles.filterWrapper} justify="space-between" align="center">
                         <Flex className={styles.filterContainer} justify="space-between">
                             {PRODUCT_FILTER.map(q => {

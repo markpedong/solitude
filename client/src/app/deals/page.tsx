@@ -4,7 +4,7 @@ import React from 'react'
 const Page = () => {
     return (
         <div>
-            <PageHeader title="BRANDS" />
+            <PageHeader title="DEALS" />
         </div>
     )
 }

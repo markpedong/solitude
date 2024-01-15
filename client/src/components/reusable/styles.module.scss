@@ -38,6 +38,56 @@
 }
 
 
+.itemContainer {
+    margin-inline: toRem(5);
+    inline-size: toRem(300);
+    block-size: toRem(280);
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+
+    img {
+        pointer-events: none;
+        block-size: toRem(200);
+        inline-size: toRem(300);
+        border-radius: toRem(10);
+        padding-block-end: toRem(10);
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .cardTitle {
+        letter-spacing: toRem(1);
+        font-weight: 900;
+        font-size: toRem(13);
+    }
+
+    .cardDescription {
+        font-size: toRem(11);
+        white-space: break-spaces;
+    }
+
+    .cardFooter {
+        color: black;
+        font-size: toRem(14);
+        margin-top: auto;
+        font-weight: 500;
+    }
+
+}
+
+.productHeaderContainer {
+    span {
+        font-weight: 300;
+        letter-spacing: toRem(3);
+    }
+
+    h1 {
+        font-size: toRem(50);
+        font-weight: 800;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     .featuresItem {
         width: toRem(300);

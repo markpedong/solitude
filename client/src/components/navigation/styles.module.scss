@@ -41,6 +41,13 @@
     align-items: center;
     height: 0;
     gap: toRem(20);
+
+    .icons {
+        img {
+            height: toRem(20) !important;
+            width: toRem(20) !important;
+        }
+    }
 }
 
 .navigationMobile {

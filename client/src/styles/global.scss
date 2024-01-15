@@ -14,15 +14,10 @@ body {
     box-sizing: border-box;
     transition: all 0.3s ease-in;
 
-    // touch-action: pan-x pan-y !important;
     ::-webkit-scrollbar {
         display: none !important;
     }
 }
-
-// .ant-form-item .ant-input-affix-wrapper {
-//     box-shadow: 0 toRem(1.5) #65635F;
-// }
 
 .ant-select-dropdown {
     font-family: 'Jost' !important;

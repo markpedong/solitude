@@ -1,4 +1,3 @@
-import { message } from 'antd'
 import { stringify } from 'qs'
 
 type ApiResponse<T> = {

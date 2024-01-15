@@ -23,10 +23,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { CSSProperties, FC, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import Collection from '../collections'
 import styles from './styles.module.scss'
 import moon from '@/public/assets/moon.png'
 import sun from '@/public/assets/sun.png'
+import { Collection } from '../reusable'
 
 const MenuItem: FC<{ url: string }> = ({ url }) => (
     <a className={styles.menuItem} href={url}>
@@ -255,6 +255,8 @@ const Navigation: FC = () => {
                                     src={darkMode ? moon : sun}
                                     alt="darkmode"
                                     onClick={() => dispatch(setDarkMode(!darkMode))}
+                                    width={100}
+                                    height={100}
                                 />
                             </Flex>
                         </div>
