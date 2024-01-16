@@ -13,7 +13,7 @@ const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: stringify(data) || '{}',
     })
     const result = await response.json()
 
