@@ -50,7 +50,7 @@ const Navigation: FC = () => {
     const login = activeLoginForm === 'login'
 
     const filteredProducts = useMemo(() => {
-        return products.filter(product => product.product_name.toLowerCase().includes(searchFilter))
+        return products?.filter(product => product.product_name.toLowerCase().includes(searchFilter))
     }, [products, searchFilter])
 
     const showDrawer = () => {
@@ -68,7 +68,7 @@ const Navigation: FC = () => {
     }
 
     const handleGetFeatures = async () => {
-        const res = await getProducts()
+        const res = await getProducts({})
 
         setProducts(res.data)
     }
@@ -90,7 +90,7 @@ const Navigation: FC = () => {
                     <Input placeholder="eg. Sweater, T-Shirts, Shorts" onChange={handleSearch} />
                 </div>
                 <Flex className={styles.collectionsContainer} justify="center" vertical gap={10}>
-                    {filteredProducts.map(q => (
+                    {filteredProducts?.map(q => (
                         <Collection
                             key={q.id}
                             description={q.description}

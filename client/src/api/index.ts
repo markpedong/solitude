@@ -14,7 +14,7 @@ export type TProduct = {
     description: string
 }
 
-export const getProducts = () => post<TProduct[]>('/api/products')
+export const getProducts = params => post<TProduct[]>('/api/products', params)
 
 // /api/blogs
 export type TBlog = {

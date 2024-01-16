@@ -3,7 +3,7 @@ import Account from '.'
 import { TProduct, getProducts } from '@/api'
 
 const Page = async () => {
-    const products = await getProducts()
+    const products = await getProducts({})
     return (
         <div>
             <Account products={products.data} />

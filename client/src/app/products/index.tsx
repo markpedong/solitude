@@ -50,6 +50,7 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
                                                 }))
                                             }
                                         }}
+                                        defaultValue={q.label}
                                         options={options}
                                         placeholder={q.label.toUpperCase()}
                                         bordered={false}

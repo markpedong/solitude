@@ -6,7 +6,7 @@ type Params = { params: { id: string } }
 
 const ProductItem: FC<Params> = async ({ params }) => {
     const data = await getProductData({ id: params.id })
-    const products = await getProducts()
+    const products = await getProducts({})
     const filtered = products.data.filter(q => q.id !== params.id)
 
     return (

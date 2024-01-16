@@ -16,7 +16,7 @@ export const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 export const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 const Page: FC = async () => {
-    const products = await getProducts()
+    const products = await getProducts({})
     const blogs = await getBlogs()
     const collections = await getCollections()
 
