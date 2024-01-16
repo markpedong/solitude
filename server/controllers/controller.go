@@ -33,7 +33,7 @@ func VerifyPassword(userPassword string, givenPassword string) (bool, string) {
 
 	if err != nil {
 		valid = false
-		msg = "Password is incorrect!!"
+		msg = "Password is incorrect!"
 	}
 
 	return valid, msg

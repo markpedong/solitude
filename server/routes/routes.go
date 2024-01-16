@@ -27,7 +27,7 @@ func UserRoutes(r *gin.Engine) {
 		// api.GET("/instant-buy", controllers.InstantBuy)
 		// api.POST("/search", controllers.SearchProductByQuery)
 		api.POST("/add-products", controllers.AddProducts)
-		api.GET("/products", controllers.GetAllProducts)
+		api.POST("/products", controllers.GetAllProducts)
 		api.POST("/add-blog", controllers.AddBlog)
 		api.GET("/blogs", controllers.GetAllBlog)
 		api.GET("/collections", controllers.GetAllCollections)
