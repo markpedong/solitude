@@ -8,7 +8,7 @@ type ApiResponse<T> = {
 }
 
 const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
-    const response = await fetch(url, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
