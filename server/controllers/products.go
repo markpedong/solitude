@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 	"solitude/database"
+	"solitude/helpers"
 	"solitude/models"
 
 	"github.com/gin-gonic/gin"
@@ -52,13 +53,19 @@ func AddProducts(ctx *gin.Context) {
 }
 
 func GetAllProducts(ctx *gin.Context) {
-	var productList []models.LandingProduct
+	var body struct {
+		Material string `json:"material"`
+		Price    int    `json:"price"`
+	}
 
-	if database.DB.Order("created_at DESC").Find(&productList).Error != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"message": "There's a problem getting the products data",
-			"success": false,
-		})
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		helpers.ErrJsonResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	var productList []models.LandingProduct
+	if err := database.DB.Order("created_at DESC").Find(&productList).Error; err != nil {
+		helpers.ErrJsonResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
