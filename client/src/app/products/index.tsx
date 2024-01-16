@@ -57,8 +57,10 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
                                 )
                             })}
                         </Flex>
-                        <Button type="primary">SEARCH</Button>
-                        <Button onClick={() => setFilter({})}>RESET</Button>
+                        <Flex gap={10}>
+                            <Button type="primary">SEARCH</Button>
+                            <Button onClick={() => setFilter({})}>RESET</Button>
+                        </Flex>
                     </Flex>
                     <Flex className={styles.productContainer} wrap="wrap" justify="center">
                         {products.map(q => (
