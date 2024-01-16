@@ -54,8 +54,8 @@ func AddProducts(ctx *gin.Context) {
 
 func GetAllProducts(ctx *gin.Context) {
 	var body struct {
-		Material string `json:"material"`
-		Price    int    `json:"price"`
+		Material *string `json:"material"`
+		Price    *int    `json:"price"`
 	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
@@ -74,6 +74,7 @@ func GetAllProducts(ctx *gin.Context) {
 		"data":    productList,
 		"success": true,
 		"status":  http.StatusOK,
+		"body":    body,
 	})
 }
 
