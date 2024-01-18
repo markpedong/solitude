@@ -31,6 +31,8 @@ type Product struct {
 	Image       *string   `json:"image"`
 	CreatedAt   int       `json:"created_at" gorm:"autoCreateTime"`
 	Description string    `json:"description"`
+	Material    string    `json:"material"`
+	Gender      string    `json:"gender"`
 }
 type Address struct {
 	AddressID uuid.UUID `json:"id"  gorm:"primaryKey;column:id"`

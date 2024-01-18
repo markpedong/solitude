@@ -54,8 +54,8 @@ func AddProducts(ctx *gin.Context) {
 
 func GetAllProducts(ctx *gin.Context) {
 	var body struct {
-		Material *string `json:"material"`
-		Price    *int    `json:"price"`
+		Material string `json:"material"`
+		Price    int    `json:"price"`
 	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
@@ -63,8 +63,18 @@ func GetAllProducts(ctx *gin.Context) {
 		return
 	}
 
+	var query = database.DB.Order("created_at DESC")
+	if body.Material != "" {
+		query = query.Where("material = ?", body.Material)
+	}
+	if body.Price > 0 {
+		query = query.Where("price <= ?", body.Price)
+	}
+
 	var products []models.Product
-	if err := database.DB.Order("created_at DESC").Find(&products).Error; err != nil {
+	if err := query.
+		Find(&products).
+		Error; err != nil {
 		helpers.ErrJsonResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
