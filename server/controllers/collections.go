@@ -20,13 +20,24 @@ func GetAllCollections(ctx *gin.Context) {
 			"message": "There's a problem getting the blog data",
 			"success": false,
 		})
-
 		return
+	}
+
+	var responseProducts []models.Collections
+	for _, product := range products {
+		responseProduct := models.Collections{
+			ID:          product.ProductID,
+			Title:       *product.ProductName,
+			Image:       *product.Image,
+			CreatedAt:   product.CreatedAt,
+			Description: product.Description,
+		}
+		responseProducts = append(responseProducts, responseProduct)
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": "success",
-		"data":    products,
+		"data":    responseProducts,
 		"success": true,
 		"status":  http.StatusOK,
 	})
@@ -59,7 +70,7 @@ func AddCollection(ctx *gin.Context) {
 		return
 	}
 
-	blog := &models.LandingCollections{
+	blog := &models.Collections{
 		ID:          uuid.New(),
 		Title:       body.Title,
 		Description: body.Description,

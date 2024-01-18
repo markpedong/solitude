@@ -26,8 +26,8 @@ type User struct {
 type Product struct {
 	ProductID   uuid.UUID `json:"id" gorm:"primaryKey;column:id"`
 	ProductName *string   `json:"product_name"`
-	Price       *float64  `json:"price,omitempty"`
-	Rating      *uint8    `json:"rating,omitempty"`
+	Price       *float64  `json:"price"`
+	Rating      *uint8    `json:"rating"`
 	Image       *string   `json:"image"`
 	CreatedAt   int       `json:"created_at" gorm:"autoCreateTime"`
 	Description string    `json:"description"`
@@ -82,7 +82,7 @@ type LandingBlog struct {
 	CreatedAt   int       `json:"created_at" gorm:"autoCreateTime"`
 }
 
-type LandingCollections struct {
+type Collections struct {
 	ID          uuid.UUID `json:"id" gorm:"primaryKey"`
 	Title       string    `json:"title" validate:"required"`
 	Description string    `json:"description" validate:"required"`
