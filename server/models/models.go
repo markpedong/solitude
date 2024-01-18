@@ -32,16 +32,6 @@ type Product struct {
 	CreatedAt   int       `json:"created_at" gorm:"autoCreateTime"`
 	Description string    `json:"description"`
 }
-
-type LandingProduct struct {
-	ProductID   uuid.UUID `json:"id" gorm:"primaryKey;column:id"`
-	ProductName *string   `json:"product_name"`
-	Price       *float64  `json:"price"`
-	Image       *string   `json:"image"`
-	CreatedAt   int       `json:"created_at" gorm:"autoCreateTime"`
-	Description string    `json:"description"`
-}
-
 type Address struct {
 	AddressID uuid.UUID `json:"id"  gorm:"primaryKey;column:id"`
 	House     *string   `json:"house"`
@@ -73,12 +63,12 @@ type Payment struct {
 	COD     bool      `json:"cod"`
 }
 
-type LandingBlog struct {
+type Blogs struct {
 	ID          uuid.UUID `json:"id" gorm:"primaryKey"`
 	Title       string    `json:"title" validate:"required"`
 	Description string    `json:"description" validate:"required"`
 	Image       string    `json:"image" validate:"required"`
-	BlogLink    string    `json:"blog_link" validate:"required"`
+	Link        string    `json:"link" validate:"required"`
 	CreatedAt   int       `json:"created_at" gorm:"autoCreateTime"`
 }
 

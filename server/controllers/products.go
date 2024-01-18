@@ -28,7 +28,7 @@ func AddProducts(ctx *gin.Context) {
 		return
 	}
 
-	product := &models.LandingProduct{
+	product := &models.Product{
 		ProductID:   uuid.New(),
 		ProductName: &body.ProductName,
 		Price:       body.Price,
@@ -80,7 +80,7 @@ func GetAllProducts(ctx *gin.Context) {
 func GetProductsByID(ctx *gin.Context) {
 	id := ctx.Param("id")
 
-	var product models.LandingProduct
+	var product models.Product
 	if err := database.DB.Where("ID = ?", id).First(&product).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": err.Error(),

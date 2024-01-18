@@ -14,7 +14,7 @@ func AddBlog(ctx *gin.Context) {
 		Title       string `json:"title" validate:"required"`
 		Description string `json:"description" validate:"required"`
 		Image       string `json:"image" validate:"required"`
-		BlogLink    string `json:"blog_link" validate:"required"`
+		Link        string `json:"link" validate:"required"`
 	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
@@ -37,12 +37,12 @@ func AddBlog(ctx *gin.Context) {
 		return
 	}
 
-	blog := &models.LandingBlog{
+	blog := &models.Blogs{
 		ID:          uuid.New(),
 		Title:       body.Title,
 		Description: body.Description,
 		Image:       body.Image,
-		BlogLink:    body.BlogLink,
+		Link:        body.Link,
 	}
 	if err := database.DB.Create(&blog).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
@@ -62,7 +62,7 @@ func AddBlog(ctx *gin.Context) {
 }
 
 func GetAllBlog(ctx *gin.Context) {
-	var blogList []models.LandingBlog
+	var blogList []models.Blogs
 
 	if database.DB.Order("created_at DESC").Find(&blogList).Error != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
