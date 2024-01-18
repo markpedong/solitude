@@ -10,9 +10,12 @@ import (
 )
 
 func GetAllCollections(ctx *gin.Context) {
-	var collections []models.LandingCollections
+	var products []models.Product
 
-	if database.DB.Order("created_at DESC").Find(&collections).Error != nil {
+	if database.DB.
+		Order("created_at DESC").
+		Select("description, image, product_name, id, created_at").
+		Find(&products).Error != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "There's a problem getting the blog data",
 			"success": false,
@@ -23,7 +26,7 @@ func GetAllCollections(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": "success",
-		"data":    collections,
+		"data":    products,
 		"success": true,
 		"status":  http.StatusOK,
 	})

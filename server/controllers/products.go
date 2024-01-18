@@ -63,18 +63,17 @@ func GetAllProducts(ctx *gin.Context) {
 		return
 	}
 
-	var productList []models.LandingProduct
-	if err := database.DB.Order("created_at DESC").Find(&productList).Error; err != nil {
+	var products []models.Product
+	if err := database.DB.Order("created_at DESC").Find(&products).Error; err != nil {
 		helpers.ErrJsonResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": "success",
-		"data":    productList,
+		"data":    products,
 		"success": true,
 		"status":  http.StatusOK,
-		"body":    body,
 	})
 }
 

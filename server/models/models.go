@@ -26,8 +26,8 @@ type User struct {
 type Product struct {
 	ProductID   uuid.UUID `json:"id" gorm:"primaryKey;column:id"`
 	ProductName *string   `json:"product_name"`
-	Price       *float64  `json:"price"`
-	Rating      *uint8    `json:"rating"`
+	Price       *float64  `json:"price,omitempty"`
+	Rating      *uint8    `json:"rating,omitempty"`
 	Image       *string   `json:"image"`
 	CreatedAt   int       `json:"created_at" gorm:"autoCreateTime"`
 	Description string    `json:"description"`
