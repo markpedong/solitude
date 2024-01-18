@@ -56,6 +56,7 @@ func GetAllProducts(ctx *gin.Context) {
 	var body struct {
 		Material string `json:"material"`
 		Price    int    `json:"price"`
+		Gender   string `json:"gender"`
 	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
@@ -69,6 +70,20 @@ func GetAllProducts(ctx *gin.Context) {
 	}
 	if body.Price > 0 {
 		query = query.Where("price <= ?", body.Price)
+	}
+	if body.Gender != "" {
+		validGenders := map[string]bool{"male": true, "female": true, "others": true}
+
+		if _, found := validGenders[body.Gender]; found {
+			query = query.Where("gender = ?", body.Gender)
+		} else {
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"message": "Invalid Gender! Please check",
+				"success": false,
+				"status":  http.StatusBadRequest,
+			})
+			return
+		}
 	}
 
 	var products []models.Product
