@@ -9,14 +9,19 @@ export const setLocalStorage = (key: string, value: string | object | [any] | an
     const compressedKey = compress(key)
     const compressedValue = compress(JSON.stringify(value))
 
-    localStorage.setItem(compressedKey, compressedValue)
+    if (typeof window !== 'undefined') {
+        localStorage.setItem(compressedKey, compressedValue)
+    }
 }
 
 export const getLocalStorage = (key: string) => {
-    const compressedValue = localStorage.getItem(compress(key))
+    let compressedValue
+    if (typeof window !== 'undefined') {
+        compressedValue = localStorage.getItem(compress(key))
+    }
 
     if (compressedValue !== null) {
-        const decompressedValue = decompress(compressedValue)
-        return JSON.parse(decompressedValue)
+        const decompressedValue = decompress(compressedValue) 
+        return JSON.parse(decompressedValue || "{}")
     }
 }
