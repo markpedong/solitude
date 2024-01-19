@@ -22,7 +22,7 @@ export type TBlog = {
     title: string
     description: string
     image: string
-    blog_link: string
+    link: string
     created_at: number
 }
 export const getBlogs = () => get<TBlog[]>('/api/blogs')
@@ -31,7 +31,8 @@ export const getBlogs = () => get<TBlog[]>('/api/blogs')
 export type TCollection = {
     image: string
     title: string
-    description
+    description: string
+    link: string
 }
 export const getCollections = () => get<TCollection[]>('/api/collections')
 

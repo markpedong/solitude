@@ -29,7 +29,7 @@ const Page: FC = async () => {
                     </span>
                 </div>
                 <div className={styles.landingImageContainer}>
-                    <Image src={landing} alt="landing" />
+                    <Image src={landing} alt="landing" priority />
                 </div>
                 <div className={classNames(styles.landingButtonContainer, jost.className)}>
                     <span>
@@ -79,7 +79,7 @@ const Page: FC = async () => {
                                 {q.title}
                             </span>
                             <span className={jost.className}>{q.description}</span>
-                            <Link className={jost.className} href={q.blog_link} target="_blank">
+                            <Link className={jost.className} href={q.link} target="_blank">
                                 Read More
                             </Link>
                         </div>
