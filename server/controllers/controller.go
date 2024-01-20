@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"solitude/database"
@@ -214,34 +213,6 @@ func ProductViewAdmin(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, "Successfully added our Product Admin!!")
-}
-
-func UploadImage(ctx *gin.Context) {
-	file, err := ctx.FormFile("file")
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	fmt.Printf("file %v", file.Filename)
-
-	// Generate a unique file name and save the file
-	// filePath := "uploads/" + uniqueFileName(file.Filename)
-	// if err := ctx.SaveUploadedFile(file, filePath); err != nil {
-	// 	ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	// 	return
-	// }
-
-	// // Save the file path in the database
-	// image := Image{Path: filePath}
-	// result := db.Create(&image)
-	// if result.Error != nil {
-	// 	ctx.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
-	// 	return
-	// }
-
-	// Return the image URL
-	ctx.JSON(http.StatusOK, gin.H{"url": file})
 }
 
 // func GetImage(ctx *gin.Context) {

@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"solitude/cloudinary"
 	"solitude/database"
 	"solitude/routes"
 
@@ -32,11 +33,13 @@ func CORSMiddleware() gin.HandlerFunc {
 }
 
 func main() {
-	r := gin.New()
+	cloudinary.Init()
 
+	r := gin.New()
 	r.Use(CORSMiddleware())
-	routes.UserRoutes(r)
 	r.Use(gin.Logger())
+
+	routes.UserRoutes(r)
 
 	log.Fatal(r.Run(":" + os.Getenv("PORT")))
 }

@@ -2,10 +2,12 @@ package controllers
 
 import (
 	"net/http"
+	"solitude/cloudinary"
 	"solitude/database"
 	"solitude/helpers"
 	"solitude/models"
 
+	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
@@ -121,4 +123,21 @@ func GetProductsByID(ctx *gin.Context) {
 		"message": "successfully got the product details!!",
 		"status":  http.StatusOK,
 	})
+}
+
+func UploadImage(ctx *gin.Context) {
+	file, err := ctx.FormFile("file")
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	uploadResult, err := cloudinary.CloudinaryService.Upload.Upload(ctx, file, uploader.UploadParams{Folder: "products"})
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// add this url to the database
+	ctx.JSON(http.StatusOK, gin.H{"url": uploadResult.URL})
 }
