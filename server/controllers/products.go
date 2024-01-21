@@ -15,7 +15,7 @@ import (
 func AddProducts(ctx *gin.Context) {
 	var body models.Product
 	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJsonResponse(ctx, http.StatusBadRequest, err.Error())
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -31,15 +31,11 @@ func AddProducts(ctx *gin.Context) {
 	}
 
 	if err := database.DB.Create(&product).Error; err != nil {
-		helpers.ErrJsonResponse(ctx, http.StatusInternalServerError, err.Error())
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"message": "successfully added product",
-		"success": true,
-		"status":  http.StatusOK,
-	})
+	helpers.JSONResponse(ctx, nil, "successfully added product")
 }
 
 func GetAllProducts(ctx *gin.Context) {
@@ -50,7 +46,7 @@ func GetAllProducts(ctx *gin.Context) {
 	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJsonResponse(ctx, http.StatusBadRequest, err.Error())
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -67,11 +63,7 @@ func GetAllProducts(ctx *gin.Context) {
 		if _, found := validGenders[body.Gender]; found {
 			query = query.Where("gender = ?", body.Gender)
 		} else {
-			ctx.JSON(http.StatusBadRequest, gin.H{
-				"message": "Invalid Gender! Please check",
-				"success": false,
-				"status":  http.StatusBadRequest,
-			})
+			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid Gender! Please check")
 			return
 		}
 	}
@@ -80,16 +72,11 @@ func GetAllProducts(ctx *gin.Context) {
 	if err := query.
 		Find(&products).
 		Error; err != nil {
-		helpers.ErrJsonResponse(ctx, http.StatusInternalServerError, err.Error())
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"message": "success",
-		"data":    products,
-		"success": true,
-		"status":  http.StatusOK,
-	})
+	helpers.JSONResponse(ctx, nil)
 }
 
 func GetProductsByID(ctx *gin.Context) {
@@ -116,13 +103,13 @@ func GetProductsByID(ctx *gin.Context) {
 func UploadImage(ctx *gin.Context) {
 	file, err := ctx.FormFile("file")
 	if err != nil {
-		helpers.ErrJsonResponse(ctx, http.StatusBadRequest, err.Error())
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	uploadResult, err := cloudinary.CloudinaryService.Upload.Upload(ctx, file, uploader.UploadParams{Folder: "products"})
 	if err != nil {
-		helpers.ErrJsonResponse(ctx, http.StatusInternalServerError, err.Error())
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
