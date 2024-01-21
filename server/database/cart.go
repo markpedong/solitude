@@ -47,7 +47,7 @@ func AddProductToCart(productID uint, userID uint) error {
 	return nil
 }
 
-func RemoveCartItem(productID uuid.UUID, userID uint) error {
+func RemoveCartItem(productID string, userID uint) error {
 	var user models.User
 	result := DB.First(&user, userID)
 	if result.Error != nil {

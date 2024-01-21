@@ -10,10 +10,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
+	"github.com/rs/xid"
 	"golang.org/x/crypto/bcrypt"
 )
 
 var Validate = validator.New()
+var Guid = xid.New()
 
 func HashPassword(password string) string {
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
@@ -205,7 +207,7 @@ func ProductViewAdmin(ctx *gin.Context) {
 		return
 	}
 
-	product.ProductID = uuid.New()
+	product.ProductID = Guid.String()
 
 	if err := database.DB.Create(&product).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Not Created"})

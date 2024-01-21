@@ -6,44 +6,32 @@ import (
 	"solitude/database"
 	"solitude/helpers"
 	"solitude/models"
+	"time"
 
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 func AddProducts(ctx *gin.Context) {
-	var body struct {
-		ProductName string   `json:"product_name" validate:"required"`
-		Description string   `json:"description" validate:"required"`
-		Price       *float64 `json:"price" validate:"required"`
-		// we will change this to upload file
-		Image string `json:"image" validate:"required"`
-	}
-
+	var body models.Product
 	if err := ctx.ShouldBindJSON(&body); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-			"status":  http.StatusBadRequest,
-			"success": "failed",
-		})
+		helpers.ErrJsonResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	product := &models.Product{
-		ProductID:   uuid.New(),
-		ProductName: &body.ProductName,
+		ProductID:   Guid.String(),
+		ProductName: body.ProductName,
 		Price:       body.Price,
-		Image:       &body.Image,
+		Image:       body.Image,
 		Description: body.Description,
+		CreatedAt:   int(time.Now().Unix()),
+		Material:    body.Material,
+		Gender:      body.Gender,
 	}
 
 	if err := database.DB.Create(&product).Error; err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-			"status":  http.StatusBadRequest,
-			"success": "failed",
-		})
+		helpers.ErrJsonResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -128,16 +116,15 @@ func GetProductsByID(ctx *gin.Context) {
 func UploadImage(ctx *gin.Context) {
 	file, err := ctx.FormFile("file")
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		helpers.ErrJsonResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	uploadResult, err := cloudinary.CloudinaryService.Upload.Upload(ctx, file, uploader.UploadParams{Folder: "products"})
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		helpers.ErrJsonResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	// add this url to the database
-	ctx.JSON(http.StatusOK, gin.H{"url": uploadResult.URL})
+	ctx.JSON(http.StatusOK, gin.H{"url": uploadResult.URL, "success": true, "message": "success"})
 }

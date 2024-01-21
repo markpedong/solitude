@@ -24,15 +24,15 @@ type User struct {
 }
 
 type Product struct {
-	ProductID   uuid.UUID `json:"id" gorm:"primaryKey;column:id"`
-	ProductName *string   `json:"product_name"`
-	Price       *float64  `json:"price"`
-	Rating      *uint8    `json:"rating"`
-	Image       *string   `json:"image"`
-	CreatedAt   int       `json:"created_at" gorm:"autoCreateTime"`
-	Description string    `json:"description"`
-	Material    string    `json:"material"`
-	Gender      string    `json:"gender"`
+	ProductID   string   `json:"id" gorm:"primaryKey;column:id"`
+	ProductName *string  `json:"product_name" validate:"required"`
+	Price       *float64 `json:"price" validate:"required"`
+	// Rating      *uint8    `json:"rating" validate:"required"`
+	Image       *string `json:"image"`
+	CreatedAt   int     `json:"created_at" gorm:"autoCreateTime"`
+	Description string  `json:"description" validate:"required"`
+	Material    string  `json:"material" validate:"required"`
+	Gender      string  `json:"gender" validate:"required"`
 }
 type Address struct {
 	AddressID uuid.UUID `json:"id"  gorm:"primaryKey;column:id"`
@@ -43,11 +43,11 @@ type Address struct {
 }
 
 type ProductUser struct {
-	ProductID   uuid.UUID `json:"id" gorm:"primaryKey;column:id"`
-	ProductName *string   `json:"product_name"`
-	Price       int       `json:"price"`
-	Rating      *uint     `json:"rating"`
-	Image       *string   `json:"image"`
+	ProductID   string  `json:"id" gorm:"primaryKey;column:id"`
+	ProductName *string `json:"product_name"`
+	Price       int     `json:"price"`
+	Rating      *uint   `json:"rating"`
+	Image       *string `json:"image"`
 }
 
 type Order struct {
@@ -75,9 +75,9 @@ type Blogs struct {
 }
 
 type Collections struct {
-	ID          uuid.UUID `json:"id" gorm:"primaryKey"`
-	Title       string    `json:"title" validate:"required"`
-	Description string    `json:"description" validate:"required"`
-	Image       string    `json:"image" validate:"required"`
-	CreatedAt   int       `json:"created_at" gorm:"autoCreateTime"`
+	ID          string `json:"id" gorm:"primaryKey"`
+	Title       string `json:"title" validate:"required"`
+	Description string `json:"description" validate:"required"`
+	Image       string `json:"image" validate:"required"`
+	CreatedAt   int    `json:"created_at" gorm:"autoCreateTime"`
 }
