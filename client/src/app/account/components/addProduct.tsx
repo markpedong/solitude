@@ -2,11 +2,13 @@ import { Col, Flex, Input, Row, Space } from 'antd'
 import React, { FC } from 'react'
 import styles from './styles.module.scss'
 import classNames from 'classnames'
-import { jost } from '@/app/page'
 import Image from 'next/image'
-import { ProForm, ProFormRadio, ProFormSelect, ProFormText, ProFormUploadButton } from '@ant-design/pro-components'
+import { ProForm, ProFormSelect, ProFormText, ProFormUploadButton } from '@ant-design/pro-components'
 import { DeleteOutlined } from '@ant-design/icons'
 import { TProduct } from '@/api'
+import { Jost } from 'next/font/google'
+
+const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 type Props = {
     products: TProduct[]

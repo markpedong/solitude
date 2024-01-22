@@ -4,9 +4,11 @@ import { TProduct } from '@/api'
 import { Col, Divider, Flex, Row, Space } from 'antd'
 import React, { FC, memo } from 'react'
 import styles from './styles.module.scss'
-import { cormorant } from '@/app/page'
 import Image from 'next/image'
 import { Product } from '@/components/reusable'
+import { Cormorant } from 'next/font/google'
+
+const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 
 type Props = {
     data: TProduct

@@ -2,14 +2,16 @@
 
 import { Col, Flex, Row, Tabs, Typography } from 'antd'
 import React, { FC } from 'react'
-import { cormorant, jost } from '../page'
-import classNames from 'classnames'
 import styles from './styles.module.scss'
 import Profile from './components/profile'
 import Orders from './components/orders'
 import AddProduct from './components/addProduct'
 import { TProduct } from '@/api'
 import Address from './components/address'
+import { Cormorant, Jost } from 'next/font/google'
+
+const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
+const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 type Props = {
     products: TProduct[]

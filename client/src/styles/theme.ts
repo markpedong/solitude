@@ -1,4 +1,3 @@
-import { cormorant, jost } from '@/app/page'
 import { theme as t, type ThemeConfig } from 'antd'
 
 const theme: ThemeConfig = {

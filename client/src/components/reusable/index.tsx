@@ -3,10 +3,13 @@
 import React, { FC } from 'react'
 import styles from './styles.module.scss'
 import { Flex } from 'antd'
-import { cormorant, jost } from '@/app/page'
 import classNames from 'classnames'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Cormorant, Jost } from 'next/font/google'
+
+const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
+const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 type CProps = {
     image: string

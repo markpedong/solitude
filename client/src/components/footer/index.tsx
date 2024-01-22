@@ -4,9 +4,11 @@ import { Flex, Space } from 'antd'
 import Link from 'next/link'
 import { FC } from 'react'
 import styles from './styles.module.scss'
-import { jost } from '@/app/page'
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
+import { Jost } from 'next/font/google'
+
+const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 const MenuItem: FC<{ url: string }> = ({ url }) => (
     <a className={styles.menuItem} href={url}>

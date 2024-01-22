@@ -1,11 +1,13 @@
 'use client'
 
-import { jost } from '@/app/page'
-import { ProForm, ProFormCheckbox, ProFormRadio, ProFormSelect, ProFormText } from '@ant-design/pro-components'
+import { ProForm, ProFormRadio, ProFormSelect, ProFormText } from '@ant-design/pro-components'
 import { Checkbox, Col, Flex, Row, Space } from 'antd'
 import classNames from 'classnames'
 import { FC } from 'react'
 import styles from './styles.module.scss'
+import { Jost } from 'next/font/google'
+
+const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 const Profile: FC = () => {
     return (

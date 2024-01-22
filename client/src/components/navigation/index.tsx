@@ -1,7 +1,6 @@
 'use client'
 
 import { TProduct, getProducts } from '@/api'
-import { jost } from '@/app/page'
 import { MODAL_FORM_PROPS } from '@/constants'
 import forgotModalCover from '@/public/assets/forgotModalCover.webp'
 import loginModalCover from '@/public/assets/loginModalCover.webp'
@@ -27,6 +26,9 @@ import styles from './styles.module.scss'
 import moon from '@/public/assets/moon.png'
 import sun from '@/public/assets/sun.png'
 import { Collection } from '../reusable'
+import { Jost } from 'next/font/google'
+
+const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 const MenuItem: FC<{ url: string }> = ({ url }) => (
     <a className={styles.menuItem} href={url}>

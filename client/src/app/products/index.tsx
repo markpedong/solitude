@@ -1,7 +1,6 @@
 'use client'
 
 import { TProduct } from '@/api'
-import { jost } from '@/app/page'
 import { PageHeader, Product } from '@/components/reusable'
 import { PRODUCT_FILTER } from '@/constants'
 import { SearchOutlined } from '@ant-design/icons'
@@ -9,6 +8,9 @@ import { Button, Col, Flex, Input, Row, Select } from 'antd'
 import classNames from 'classnames'
 import { FC, memo, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
+import { Jost } from 'next/font/google'
+
+const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 type SearchProps = {
     material?: string

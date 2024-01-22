@@ -12,8 +12,8 @@ import { FC } from 'react'
 import styles from './styles.module.scss'
 import { Collection, Product } from '@/components/reusable'
 
-export const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
-export const jost = Jost({ weight: '400', subsets: ['latin'] })
+const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
+const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 const Page: FC = async () => {
     const products = await getProducts({})
@@ -62,7 +62,7 @@ const Page: FC = async () => {
                 <span className={jost.className}>SEE ALL COLLECTIONS</span>
             </div>
             <div className={styles.featuresItemContainer}>
-                {collections.data.map(q => (
+                {collections?.data?.map(q => (
                     <Collection description={q.description} image={q.image} title={q.title} key={q.title} />
                 ))}
             </div>
