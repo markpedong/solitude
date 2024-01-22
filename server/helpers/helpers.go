@@ -7,17 +7,18 @@ import (
 )
 
 func ErrJSONResponse(ctx *gin.Context, status int, message string) {
-	ctx.JSON(status, gin.H{
+	ctx.AbortWithStatusJSON(status, gin.H{
 		"message": message,
 		"success": false,
 		"status":  status,
 	})
 }
 
-func JSONResponse(ctx *gin.Context, data interface{}, optionalMessage ...string) {
-	message := "success"
-	if len(optionalMessage) > 0 {
-		message = optionalMessage[0]
+func JSONResponse(ctx *gin.Context, optionalMessage string, jsonData ...map[string]interface{}) {
+	message := "Success"
+
+	if optionalMessage != "" {
+		message = optionalMessage
 	}
 
 	response := gin.H{
@@ -26,9 +27,20 @@ func JSONResponse(ctx *gin.Context, data interface{}, optionalMessage ...string)
 		"status":  http.StatusOK,
 	}
 
-	if data != nil {
-		response["data"] = data
+	if len(jsonData) > 0 && jsonData[0] != nil {
+		for key, value := range jsonData[0] {
+			response[key] = value
+		}
 	}
 
 	ctx.JSON(http.StatusOK, response)
+}
+
+func DataHelper(data interface{}) map[string]interface{} {
+	q := map[string]interface{}{
+		"data": data,
+	}
+
+	return q
+
 }

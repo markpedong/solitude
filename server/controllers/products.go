@@ -35,7 +35,7 @@ func AddProducts(ctx *gin.Context) {
 		return
 	}
 
-	helpers.JSONResponse(ctx, nil, "successfully added product")
+	helpers.JSONResponse(ctx, "successfully added product", helpers.DataHelper(product))
 }
 
 func GetAllProducts(ctx *gin.Context) {
@@ -76,7 +76,7 @@ func GetAllProducts(ctx *gin.Context) {
 		return
 	}
 
-	helpers.JSONResponse(ctx, nil)
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(products))
 }
 
 func GetProductsByID(ctx *gin.Context) {
@@ -84,20 +84,11 @@ func GetProductsByID(ctx *gin.Context) {
 
 	var product models.Product
 	if err := database.DB.Where("ID = ?", id).First(&product).Error; err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"message": err.Error(),
-			"status":  http.StatusInternalServerError,
-			"success": false,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"data":    product,
-		"success": true,
-		"message": "successfully got the product details!!",
-		"status":  http.StatusOK,
-	})
+	helpers.JSONResponse(ctx, "successfully got the product details!")
 }
 
 func UploadImage(ctx *gin.Context) {
@@ -113,5 +104,10 @@ func UploadImage(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"url": uploadResult.URL, "success": true, "message": "success"})
+	imageRes := map[string]interface{}{
+		"url":      uploadResult.URL,
+		"fileName": uploadResult.OriginalFilename,
+		"size":     uploadResult.Bytes,
+	}
+	helpers.JSONResponse(ctx, "upload successful!", helpers.DataHelper(imageRes))
 }
