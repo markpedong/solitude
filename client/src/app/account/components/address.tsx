@@ -60,9 +60,9 @@ const Address: FC = () => {
                     align="center">
                     <div>
                         <div>
-                            <span>Omega</span> | <span>(+63) 9760588324</span>
+                            <span>Mark</span> | <span>(+63) 9760588324</span>
                         </div>
-                        <div>Y Tower Bldg, Blk 4 Lot 1 corner Coral Way St, Diosdado Macapagal Blvd, Pasay</div>
+                        <div>GG, Blk 4 Lot 1 corner Coral Way St, Diosdado Macapagal Blvd, Pasay</div>
                         <div>Barangay 78, Pasay City, Metro Manila, Metro Manila, 1709</div>
                         <div>
                             <span>Default</span>
