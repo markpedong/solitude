@@ -1,15 +1,10 @@
 package tokens
 
 import (
-	"context"
-	"log"
 	"os"
-	"solitude/database"
-	"solitude/models"
 	"time"
 
 	"github.com/golang-jwt/jwt"
-	"github.com/google/uuid"
 )
 
 type SignedDetails struct {
@@ -22,21 +17,26 @@ type SignedDetails struct {
 
 var SECRET_KEY = os.Getenv("SECRET_KEY")
 
-func TokenGenerator(email, firstName, lastName *string, uid uuid.UUID) (signedToken string, signedRefreshToken string, err error) {
-	claims := &SignedDetails{
-		Email:     *email,
-		FirstName: *firstName,
-		LastName:  *lastName,
-		Uid:       uid.String(),
+const (
+	tokenDuration        = 24 * time.Hour
+	refreshTokenDuration = 168 * time.Hour
+)
+
+func generateTokenClaims(email, firstName, lastName, uid string, duration time.Duration) jwt.Claims {
+	return &SignedDetails{
+		Email:     email,
+		FirstName: firstName,
+		LastName:  lastName,
+		Uid:       uid,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(24)).Unix(),
+			ExpiresAt: time.Now().Add(duration).Unix(),
 		},
 	}
-	refreshClaims := &SignedDetails{
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(168)).Unix(),
-		},
-	}
+}
+
+func TokenGenerator(email, firstName, lastName, uid string) (signedToken, signedRefreshToken string, err error) {
+	claims := generateTokenClaims(email, firstName, lastName, uid, tokenDuration)
+	refreshClaims := generateTokenClaims("", "", "", "", refreshTokenDuration)
 
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(SECRET_KEY))
 	if err != nil {
@@ -45,7 +45,6 @@ func TokenGenerator(email, firstName, lastName *string, uid uuid.UUID) (signedTo
 
 	refreshToken, err := jwt.NewWithClaims(jwt.SigningMethodES384, refreshClaims).SignedString([]byte(SECRET_KEY))
 	if err != nil {
-		log.Panic(err)
 		return "", "", err
 	}
 
@@ -56,38 +55,22 @@ func ValidateToken(signedToken string) (claims *SignedDetails, msg string) {
 	token, err := jwt.ParseWithClaims(signedToken, &SignedDetails{}, func(t *jwt.Token) (interface{}, error) {
 		return []byte(SECRET_KEY), nil
 	})
+
 	if err != nil {
-		msg := err.Error()
+		msg = err.Error()
 		return &SignedDetails{}, msg
 	}
 
-	// TOKEN.CLAIMS EXTRACT CLAIMS (KEY - VALUE) FROM TOKEN, SO WE NEED TO USE TYPE ASSERTION
 	claims, ok := token.Claims.(*SignedDetails)
-	if !ok {
+	if !ok || !token.Valid {
 		msg = "the token is invalid"
-		return
+		return &SignedDetails{}, msg
 	}
-	if claims.ExpiresAt < time.Now().Unix() {
+
+	if time.Now().Before(time.Unix(claims.ExpiresAt, 0)) {
 		msg = "token is already expired"
 		return claims, msg
 	}
 
 	return &SignedDetails{}, msg
-}
-
-func UpdateToken(signedToken, signedRefreshToken, id string) {
-	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
-	defer cancel()
-
-	updateObj := map[string]interface{}{
-		"token":         signedToken,
-		"refresh_token": signedRefreshToken,
-		"updated_at":    time.Now(),
-	}
-
-	result := database.DB.WithContext(ctx).Model(&models.User{}).Where("user_id = ?", id).Updates(updateObj)
-	if result.Error != nil {
-		log.Panic(result.Error)
-		return
-	}
 }

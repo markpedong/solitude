@@ -107,7 +107,14 @@ const Navigation: FC = () => {
     }
 
     const renderLogin = () => (
-        <ModalForm trigger={<UserOutlined />} submitter={false} width={600}>
+        <ModalForm
+            trigger={<UserOutlined />}
+            submitter={false}
+            width={create ? 1000 : 600}
+            modalProps={{ style: { top: create ? '5%' : '10%' } }}
+            onFinish={async params => {
+                console.log(params)
+            }}>
             <Flex
                 className={styles.loginContainer}
                 justify="space-between"
@@ -146,6 +153,7 @@ const Navigation: FC = () => {
                             margin: `${forgot ? '2.5rem' : '3.5rem'} 0 0.5rem 0`,
                         }}>
                         <ProForm
+                            grid
                             submitter={false}
                             onFinish={async params => {
                                 // const data = await login({ ...params })
@@ -153,20 +161,22 @@ const Navigation: FC = () => {
                                 console.log('params: ', params)
                             }}>
                             {create && (
-                                <Flex gap={10}>
+                                <>
                                     <ProFormText
                                         name="first_name"
                                         placeholder="eg: John"
                                         label="First Name"
                                         fieldProps={{ prefix: <UserOutlined />, autoFocus: false }}
+                                        colProps={{ span: 8 }}
                                     />
                                     <ProFormText
                                         name="last_name"
                                         placeholder="eg: Smith"
                                         label="Last Name"
                                         fieldProps={{ autoFocus: false }}
+                                        colProps={{ span: 8 }}
                                     />
-                                </Flex>
+                                </>
                             )}
                             <ProFormText
                                 name="email"

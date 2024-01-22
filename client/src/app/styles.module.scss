@@ -22,10 +22,11 @@
     z-index: -10;
 
     img {
-        opacity: 0.5;
+        opacity: 0.8;
         width: 100dvw;
         height: 70dvh;
         object-fit: cover;
+        object-position: center center;
     }
 }
 
@@ -59,8 +60,8 @@
 
 
         &:hover {
-            background-color: #65635F;
-            color: white;
+            background-color: white;
+            color: black;
             transform: scale(1.1);
         }
     }

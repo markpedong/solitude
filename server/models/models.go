@@ -7,20 +7,18 @@ import (
 )
 
 type User struct {
-	ID             uuid.UUID     `json:"id" gorm:"primaryKey"`
-	FirstName      *string       `json:"first_name" validate:"required,min=2,max=30"`
-	LastName       *string       `json:"last_name" validate:"required,min=2,max=30"`
-	Password       *string       `json:"password" validate:"required,min=6"`
-	Email          *string       `json:"email" validate:"email,required"`
-	Phone          *string       `json:"phone" validate:"required"`
-	Token          *string       `json:"token"`
-	RefreshToken   *string       `json:"refresh_token"`
+	ID             string        `json:"id" gorm:"primaryKey"`
 	CreatedAt      time.Time     `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt      time.Time     `json:"updated_at" gorm:"autoCreateTime"`
-	UserID         []byte        `json:"user_id"`
 	UserCart       []ProductUser `json:"user_cart" gorm:"foreignKey:ProductID"`
 	AddressDetails []Address     `json:"address_details" gorm:"foreignKey:AddressID"`
 	Orders         []Order       `json:"orders" gorm:"foreignKey:OrderID"`
+	FirstName      string        `json:"first_name" validate:"required,min=2,max=30"`
+	LastName       string        `json:"last_name" validate:"required,min=2,max=30"`
+	Password       string        `json:"password" validate:"required,min=6"`
+	Email          string        `json:"email" validate:"required,email"`
+	Phone          string        `json:"phone" validate:"required"`
+	Username       string        `json:"username" validate:"required"`
 }
 
 type Product struct {
@@ -35,11 +33,11 @@ type Product struct {
 	Gender      string  `json:"gender" validate:"required"`
 }
 type Address struct {
-	AddressID uuid.UUID `json:"id"  gorm:"primaryKey;column:id"`
-	House     *string   `json:"house"`
-	Street    *string   `json:"street"`
-	City      *string   `json:"city"`
-	Pincode   *string   `json:"pin_code"`
+	AddressID string  `json:"id"  gorm:"primaryKey;column:id"`
+	House     *string `json:"house"`
+	Street    *string `json:"street"`
+	City      *string `json:"city"`
+	Pincode   *string `json:"pin_code"`
 }
 
 type ProductUser struct {

@@ -1,15 +1,16 @@
 package controllers
 
 import (
+	"errors"
 	"log"
 	"net/http"
 	"solitude/database"
+	"solitude/helpers"
 	"solitude/models"
 	"solitude/tokens"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"github.com/google/uuid"
 	"github.com/rs/xid"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -27,19 +28,24 @@ func HashPassword(password string) string {
 	return string(hash)
 }
 
-func VerifyPassword(userPassword string, givenPassword string) (bool, string) {
-	err := bcrypt.CompareHashAndPassword([]byte(givenPassword), []byte(userPassword))
+func VerifyPassword(expectedPassword, givenPassword string) (bool, string) {
+	err := bcrypt.CompareHashAndPassword([]byte(expectedPassword), []byte(givenPassword))
 	valid := true
 	msg := ""
 
-	if err != nil {
+	switch {
+	case err == nil:
+		return true, "Password matched!"
+	case errors.Is(err, bcrypt.ErrMismatchedHashAndPassword):
 		valid = false
 		msg = "Password is incorrect!"
+	default:
+		valid = false
+		msg = "Failed to verify password"
 	}
 
 	return valid, msg
 }
-
 func Signup(ctx *gin.Context) {
 	var body models.User
 
@@ -72,34 +78,28 @@ func Signup(ctx *gin.Context) {
 		return
 	}
 
-	password := HashPassword(*body.Password)
-	body.Password = &password
+	password := HashPassword(body.Password)
+	body.Password = password
 
-	body.ID = uuid.New()
-	body.UserID = []byte(body.ID.String())
+	body.ID = Guid.String()
 	token, refreshToken, _ := tokens.TokenGenerator(body.Email, body.FirstName, body.LastName, body.ID)
-	body.Token = &token
-	body.RefreshToken = &refreshToken
 
 	body.UserCart = make([]models.ProductUser, 0)
 	body.AddressDetails = make([]models.Address, 0)
 	body.Orders = make([]models.Order, 0)
 
-	// Save the new user to the database
-	// if err := database.DB.Create(&body).Error; err != nil {
-	// 	ctx.JSON(http.StatusInternalServerError, gin.H{
-	// 		"message": "Failed to create user",
-	// 		"success": false,
-	// 		"status":  http.StatusInternalServerError,
-	// 	})
-	// 	return
-	// }
+	if err := database.DB.Create(&body).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Failed to create user")
+		return
+	}
 
 	ctx.JSON(http.StatusCreated, gin.H{
-		"message": "User has been created!",
-		"success": true,
-		"status":  http.StatusOK,
-		"body":    body,
+		"message":       "User has been created!",
+		"success":       true,
+		"status":        http.StatusOK,
+		"data":          body,
+		"token":         token,
+		"refresh_token": refreshToken,
 	})
 }
 
@@ -129,15 +129,11 @@ func Login(ctx *gin.Context) {
 
 	var existingUser models.User
 	if err := database.DB.Where("email = ?", body.Email).First(&existingUser).Error; err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "User not found!",
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "User not found!")
 		return
 	}
 
-	validPass, msg := VerifyPassword(*body.Password, *existingUser.Password)
+	validPass, msg := VerifyPassword(*body.Password, existingUser.Password)
 	if !validPass {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": msg,
@@ -147,15 +143,15 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	token, refreshToken, _ := tokens.TokenGenerator(existingUser.Email, existingUser.FirstName, existingUser.LastName, uuid.UUID(existingUser.UserID))
-
-	tokens.UpdateToken(token, refreshToken, string(existingUser.UserID))
+	token, refreshToken, _ := tokens.TokenGenerator(existingUser.Email, existingUser.FirstName, existingUser.LastName, existingUser.ID)
 
 	ctx.JSON(http.StatusFound, gin.H{
-		"message": "Logged in successfully!",
-		"success": true,
-		"status":  http.StatusOK,
-		"body":    body,
+		"message":       "Logged in successfully!",
+		"success":       true,
+		"status":        http.StatusOK,
+		"body":          body,
+		"token":         token,
+		"refresh_token": refreshToken,
 	})
 }
 
@@ -216,13 +212,3 @@ func ProductViewAdmin(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, "Successfully added our Product Admin!!")
 }
-
-// func GetImage(ctx *gin.Context) {
-// 	var image Image
-// 	if err := db.First(&image, ctx.Param("id")).Error; err != nil {
-// 		ctx.JSON(http.StatusNotFound, gin.H{"error": "Image not found"})
-// 		return
-// 	}
-
-// 	ctx.File(image.Path)
-// }
