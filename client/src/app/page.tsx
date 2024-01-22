@@ -19,7 +19,7 @@ const Page: FC = async () => {
     const products = await getProducts({})
     const blogs = await getBlogs()
     const collections = await getCollections()
-    //
+
     return (
         <div>
             <div>
@@ -35,7 +35,6 @@ const Page: FC = async () => {
                     <span>
                         <Link href="/products">SEARCH PRODUCTS</Link>
                     </span>
-                    <span className={jost.className}>READ OUR CARE GUIDE</span>
                 </div>
                 <div className={styles.featuredContainer}>
                     <span className={cormorant.className}>Featured Products</span>

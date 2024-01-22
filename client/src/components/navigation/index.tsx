@@ -253,13 +253,13 @@ const Navigation: FC = () => {
                             <Flex className={styles.icons} gap={20}>
                                 {renderSearch()}
                                 {renderLogin()}
-                                <Image
+                                {/* <Image
                                     src={darkMode ? moon : sun}
                                     alt="darkmode"
                                     onClick={() => dispatch(setDarkMode(!darkMode))}
                                     width={100}
                                     height={100}
-                                />
+                                /> */}
                             </Flex>
                         </div>
                         <div className={styles.navigationMobile}>
