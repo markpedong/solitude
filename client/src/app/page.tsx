@@ -19,7 +19,7 @@ const Page: FC = async () => {
     const products = await getProducts({})
     const blogs = await getBlogs()
     const collections = await getCollections()
-
+    //
     return (
         <div>
             <div>
