@@ -49,6 +49,5 @@ func main() {
 	r.Use(gin.Logger())
 
 	routes.UserRoutes(r)
-
 	log.Fatal(r.Run(":" + os.Getenv("PORT")))
 }

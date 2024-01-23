@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"net/http"
 	"solitude/database"
@@ -28,24 +29,20 @@ func HashPassword(password string) string {
 	return string(hash)
 }
 
-func VerifyPassword(expectedPassword, givenPassword string) (bool, string) {
-	err := bcrypt.CompareHashAndPassword([]byte(expectedPassword), []byte(givenPassword))
-	valid := true
-	msg := ""
+func VerifyPassword(expectedHashedPassword, givenPassword string) (bool, string) {
+	err := bcrypt.CompareHashAndPassword([]byte(expectedHashedPassword), []byte(givenPassword))
 
 	switch {
 	case err == nil:
 		return true, "Password matched!"
 	case errors.Is(err, bcrypt.ErrMismatchedHashAndPassword):
-		valid = false
-		msg = "Password is incorrect!"
+		return false, "Password is incorrect!"
 	default:
-		valid = false
-		msg = "Failed to verify password"
+		fmt.Printf("Password verification error: %s\n", err)
+		return false, "Failed to verify password"
 	}
-
-	return valid, msg
 }
+
 func Signup(ctx *gin.Context) {
 	var body models.User
 
@@ -78,9 +75,7 @@ func Signup(ctx *gin.Context) {
 		return
 	}
 
-	password := HashPassword(body.Password)
-	body.Password = password
-
+	body.Password = HashPassword(body.Password)
 	body.ID = Guid.String()
 	token, refreshToken, _ := tokens.TokenGenerator(body.Email, body.FirstName, body.LastName, body.ID)
 
@@ -105,25 +100,22 @@ func Signup(ctx *gin.Context) {
 
 func Login(ctx *gin.Context) {
 	var body struct {
-		Email    *string `json:"email"`
-		Password *string `json:"password"`
+		Email    string `json:"email" validate:"required"`
+		Password string `json:"password" validate:"required,min=6"`
 	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid JSON input",
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid JSON input")
 		return
 	}
 
 	if err := Validate.Struct(body); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	if body.Email == "" || body.Password == "" {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Email and password are required")
 		return
 	}
 
@@ -133,23 +125,23 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	validPass, msg := VerifyPassword(*body.Password, existingUser.Password)
+	validPass, msg := VerifyPassword(existingUser.Password, body.Password)
 	if !validPass {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"message": msg,
-			"success": false,
-			"status":  http.StatusInternalServerError,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusUnauthorized, msg)
 		return
 	}
 
-	token, refreshToken, _ := tokens.TokenGenerator(existingUser.Email, existingUser.FirstName, existingUser.LastName, existingUser.ID)
+	token, refreshToken, err := tokens.TokenGenerator(existingUser.Email, existingUser.FirstName, existingUser.LastName, existingUser.ID)
+	if err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Error generating tokens")
+		return
+	}
 
 	ctx.JSON(http.StatusFound, gin.H{
 		"message":       "Logged in successfully!",
 		"success":       true,
 		"status":        http.StatusOK,
-		"body":          body,
+		"body":          existingUser,
 		"token":         token,
 		"refresh_token": refreshToken,
 	})

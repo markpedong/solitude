@@ -1,6 +1,7 @@
 package tokens
 
 import (
+	"fmt"
 	"os"
 	"time"
 
@@ -40,12 +41,12 @@ func TokenGenerator(email, firstName, lastName, uid string) (signedToken, signed
 
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(SECRET_KEY))
 	if err != nil {
-		return "", "", err
+		return "", "", fmt.Errorf("failed to generate access token: %v", err)
 	}
 
-	refreshToken, err := jwt.NewWithClaims(jwt.SigningMethodES384, refreshClaims).SignedString([]byte(SECRET_KEY))
+	refreshToken, err := jwt.NewWithClaims(jwt.SigningMethodHS256, refreshClaims).SignedString([]byte(SECRET_KEY))
 	if err != nil {
-		return "", "", err
+		return "", "", fmt.Errorf("failed to generate refresh token: %v", err)
 	}
 
 	return token, refreshToken, nil
