@@ -53,7 +53,7 @@ const Address: FC = () => {
     return (
         <div>
             <span className={classNames(jost.className, styles.profileHeader)}>Address</span>
-            {new Array(5).fill('').map(() => (
+            {/* {new Array(5).fill('').map(() => (
                 <Flex
                     className={classNames(jost.className, styles.addressContainer)}
                     justify="space-between"
@@ -76,7 +76,7 @@ const Address: FC = () => {
                         <span>Set as Default</span>
                     </div>
                 </Flex>
-            ))}
+            ))} */}
         </div>
     )
 }

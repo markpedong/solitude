@@ -10,7 +10,7 @@ const Orders: FC<Props> = () => {
     return (
         <Row>
             <Col span={24}>
-                {new Array(5).fill('').map(() => (
+                {/* {new Array(5).fill('').map(() => (
                     <Flex className={styles.orderContainer}>
                         <Image
                             src="https://random.imagecdn.app/150/150?random=965622"
@@ -28,7 +28,7 @@ const Orders: FC<Props> = () => {
                             <span>₱156</span>
                         </div>
                     </Flex>
-                ))}
+                ))} */}
             </Col>
         </Row>
     )
