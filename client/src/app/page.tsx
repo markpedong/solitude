@@ -70,7 +70,7 @@ const Page: FC = async () => {
                 <span className={jost.className}>More Articles</span>
             </div>
             <div className={styles.blogItemsContainer}>
-                {blogs.data.map(q => (
+                {blogs.data?.map(q => (
                     <div className={styles.blogItem} key={q.image}>
                         <Image src={q.image} alt={q.image} width={1000} height={1000} />
                         <div className={styles.featuresTextContainer}>
@@ -87,10 +87,10 @@ const Page: FC = async () => {
             </div>
             <div className={styles.joinWrapper}>
                 <div className={styles.imageContainer}>
-                    <Image src={img1} alt="logo1" />
-                    <Image src={img2} alt="logo1" />
-                    <Image src={img3} alt="logo1" />
-                    <Image src={img4} alt="logo1" />
+                    <Image src={img1} alt="logo1" priority />
+                    <Image src={img2} alt="logo1" priority />
+                    <Image src={img3} alt="logo1" priority />
+                    <Image src={img4} alt="logo1" priority />
                 </div>
                 <div className={styles.middleContainer}>
                     <h1 className={cormorant.className}>Join #solitude</h1>
@@ -99,10 +99,10 @@ const Page: FC = async () => {
                     </Link>
                 </div>
                 <div className={styles.imageContainer}>
-                    <Image src={img1} alt="logo1" />
-                    <Image src={img2} alt="logo1" />
-                    <Image src={img3} alt="logo1" />
-                    <Image src={img4} alt="logo1" />
+                    <Image src={img1} alt="logo1" priority />
+                    <Image src={img2} alt="logo1" priority />
+                    <Image src={img3} alt="logo1" priority />
+                    <Image src={img4} alt="logo1" priority />
                 </div>
             </div>
         </div>

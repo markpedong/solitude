@@ -30,3 +30,12 @@ body {
         color: white !important;
     }
 }
+
+label.ant-form-item-required::before {
+    align-self: flex-end !important;
+}
+
+.ant-form-item-explain-error {
+    text-align: center;
+    font-size: toRem(10);
+}

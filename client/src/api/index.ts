@@ -2,9 +2,9 @@ import { get, post } from './http'
 
 export const signUp = params => post('/users/signup', params)
 
-export const login = params => post('/users/login', params)
+export const userLogin = params => post('/users/login', params)
 
-// /api/products
+// /public/products
 export type TProduct = {
     id: string
     product_name: string
@@ -14,7 +14,7 @@ export type TProduct = {
     description: string
 }
 
-export const getProducts = params => post<TProduct[]>('/api/products', params)
+export const getProducts = params => post<TProduct[]>('/public/products', params)
 
 // /api/blogs
 export type TBlog = {

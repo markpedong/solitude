@@ -1,7 +1,7 @@
 'use client'
 
 import { TProduct, getProducts } from '@/api'
-import { MODAL_FORM_PROPS } from '@/constants'
+import { MODAL_FORM_PROPS, FORM_INPUT_TRIM } from '@/constants'
 import forgotModalCover from '@/public/assets/forgotModalCover.webp'
 import loginModalCover from '@/public/assets/loginModalCover.webp'
 import logo from '@/public/assets/logo.webp'
@@ -16,11 +16,11 @@ import {
     SearchOutlined,
     UserOutlined,
 } from '@ant-design/icons'
-import { ModalForm, ProForm, ProFormText } from '@ant-design/pro-components'
+import { ModalForm, ProForm, ProFormInstance, ProFormText } from '@ant-design/pro-components'
 import { Button, Col, Drawer, Flex, Input, Row, Typography } from 'antd'
 import Image from 'next/image'
 import Link from 'next/link'
-import { CSSProperties, FC, useEffect, useMemo, useState } from 'react'
+import { CSSProperties, FC, useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styles from './styles.module.scss'
 import moon from '@/public/assets/moon.png'
@@ -47,6 +47,7 @@ const Navigation: FC = () => {
     const [products, setProducts] = useState<TProduct[]>([])
     const [searchFilter, setSearchFilter] = useState('')
     const { activeLoginForm, darkMode } = useAppSelector(state => state.boolean)
+    const formRef = useRef<ProFormInstance>()
     const create = activeLoginForm === 'create'
     const forgot = activeLoginForm === 'forgot'
     const login = activeLoginForm === 'login'
@@ -122,9 +123,10 @@ const Navigation: FC = () => {
             modalProps={{ style: { top: create ? '5%' : '10%' } }}
             onFinish={async params => {
                 console.log(params)
-                // const data = await login
             }}
-            autoFocus={false}>
+            grid={true}
+            formRef={formRef}
+            defaultValue={''}>
             <Flex
                 className={styles.loginContainer}
                 justify="space-between"
@@ -162,39 +164,34 @@ const Navigation: FC = () => {
                         style={{
                             margin: `${forgot ? '2.5rem' : '3.5rem'} 0 0.5rem 0`,
                         }}>
-                        <ProForm
-                            grid
-                            autoFocus={false}
-                            submitter={false}
-                            onFinish={async params => {
-                                // const data = await login({ ...params })
-
-                                console.log('params: ', params)
-                            }}>
-                            {create && (
-                                <>
-                                    <ProFormText
-                                        name="first_name"
-                                        placeholder="eg: John"
-                                        label="First Name"
-                                        fieldProps={{ prefix: <UserOutlined /> }}
-                                        colProps={{ span: 8 }}
-                                    />
-                                    <ProFormText
-                                        name="last_name"
-                                        placeholder="eg: Smith"
-                                        label="Last Name"
-                                        colProps={{ span: 8 }}
-                                    />
-                                    <ProFormText
-                                        name="phone"
-                                        placeholder="+63 9*********"
-                                        label="Phone Number"
-                                        fieldProps={{ prefix: <PhoneOutlined /> }}
-                                        colProps={{ span: 8 }}
-                                    />
-                                </>
-                            )}
+                        {create && (
+                            <ProForm.Group>
+                                <ProFormText
+                                    name="first_name"
+                                    placeholder="eg: John"
+                                    label="First Name"
+                                    fieldProps={{
+                                        prefix: <UserOutlined />,
+                                    }}
+                                    colProps={{ span: 8 }}
+                                    rules={[{ required: true }]}
+                                />
+                                <ProFormText
+                                    name="last_name"
+                                    placeholder="eg: Smith"
+                                    label="Last Name"
+                                    colProps={{ span: 8 }}
+                                />
+                                <ProFormText
+                                    name="phone"
+                                    placeholder="+63 9*********"
+                                    label="Phone Number"
+                                    fieldProps={{ prefix: <PhoneOutlined /> }}
+                                    colProps={{ span: 8 }}
+                                />
+                            </ProForm.Group>
+                        )}
+                        <ProForm.Group>
                             <ProFormText
                                 name="email"
                                 placeholder="your@email.com"
@@ -210,37 +207,37 @@ const Navigation: FC = () => {
                                     colProps={{ span: 12 }}
                                 />
                             )}
-                            {!forgot && (
-                                <>
+                        </ProForm.Group>
+                        {!forgot && (
+                            <ProForm.Group>
+                                <ProFormText.Password
+                                    name="password"
+                                    placeholder="Enter Password"
+                                    label="Password"
+                                    fieldProps={{ prefix: <LockOutlined /> }}
+                                    colProps={create ? { span: 12 } : {}}
+                                />
+                                {create && (
                                     <ProFormText.Password
-                                        name="password"
-                                        placeholder="Enter Password"
-                                        label="Password"
-                                        fieldProps={{ prefix: <LockOutlined /> }}
-                                        colProps={create ? { span: 12 } : {}}
+                                        name="confirm_password"
+                                        placeholder="Re-enter Password"
+                                        label="Confirm Password"
+                                        colProps={{ span: 12 }}
                                     />
-                                    {create && (
-                                        <ProFormText.Password
-                                            name="confirm_password"
-                                            placeholder="Re-enter Password"
-                                            label="Confirm Password"
-                                            colProps={{ span: 12 }}
-                                        />
-                                    )}
-                                </>
-                            )}
-                            {!forgot && !create && (
-                                <div style={{ display: 'flex', justifyContent: 'end', width: '100%' }}>
-                                    <Typography.Link
-                                        type="secondary"
-                                        onClick={() => {
-                                            dispatch(setActiveLoginForm('forgot'))
-                                        }}>
-                                        Forgot Password?
-                                    </Typography.Link>
-                                </div>
-                            )}
-                        </ProForm>
+                                )}
+                            </ProForm.Group>
+                        )}
+                        {!forgot && !create && (
+                            <div style={{ display: 'flex', justifyContent: 'end', width: '100%' }}>
+                                <Typography.Link
+                                    type="secondary"
+                                    onClick={() => {
+                                        dispatch(setActiveLoginForm('forgot'))
+                                    }}>
+                                    Forgot Password?
+                                </Typography.Link>
+                            </div>
+                        )}
                     </div>
                     <Flex style={{ height: '100%' }} justify="end" vertical>
                         <Button
@@ -248,7 +245,8 @@ const Navigation: FC = () => {
                             style={{
                                 marginBlockStart: create ? '2rem' : forgot ? '0.4rem' : '2rem',
                             }}
-                            type="primary">
+                            type="primary"
+                            onClick={() => formRef.current?.submit()}>
                             {create ? 'SIGN IN' : forgot ? 'RECOVER YOUR ACCOUNT' : 'LOGIN'}
                         </Button>
                         <Flex className={styles.createAccountContainer} justify="center" align="center">

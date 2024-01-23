@@ -137,6 +137,7 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
+	ctx.Header("token", token)
 	ctx.JSON(http.StatusFound, gin.H{
 		"message":       "Logged in successfully!",
 		"success":       true,
