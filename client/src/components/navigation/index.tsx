@@ -128,7 +128,7 @@ const Navigation: FC = () => {
                 className={styles.loginContainer}
                 justify="space-between"
                 gap={20}
-                style={{ blockSize: create ? '38rem' : forgot ? '20rem' : '30rem' }}>
+                style={{ blockSize: create ? '29rem' : forgot ? '22rem' : '26rem' }}>
                 <div className={styles.loginImage}>
                     <Image
                         alt="loginCover"
@@ -241,19 +241,21 @@ const Navigation: FC = () => {
                             )}
                         </ProForm>
                     </div>
-                    <Button
-                        className={create ? styles.loginButton : ''}
-                        style={{
-                            marginBlockStart: create ? '2rem' : forgot ? '0.4rem' : '2rem',
-                        }}
-                        type="primary">
-                        {create ? 'SIGN IN' : forgot ? 'RECOVER YOUR ACCOUNT' : 'LOGIN'}
-                    </Button>
-                    <Flex className={styles.createAccountContainer} justify="center" align="center">
-                        <Typography.Link type="secondary" onClick={handleLoginRegister}>
-                            {create ? 'SIGN IN TO ACCOUNT' : 'CREATE AN ACCOUNT'}
-                        </Typography.Link>
-                        <RightOutlined onClick={handleLoginRegister} />
+                    <Flex style={{ height: '100%' }} justify="end" vertical>
+                        <Button
+                            className={create ? styles.loginButton : ''}
+                            style={{
+                                marginBlockStart: create ? '2rem' : forgot ? '0.4rem' : '2rem',
+                            }}
+                            type="primary">
+                            {create ? 'SIGN IN' : forgot ? 'RECOVER YOUR ACCOUNT' : 'LOGIN'}
+                        </Button>
+                        <Flex className={styles.createAccountContainer} justify="center" align="center">
+                            <Typography.Link type="secondary" onClick={handleLoginRegister}>
+                                {create ? 'SIGN IN TO ACCOUNT' : 'CREATE AN ACCOUNT'}
+                            </Typography.Link>
+                            <RightOutlined onClick={handleLoginRegister} />
+                        </Flex>
                     </Flex>
                 </Flex>
             </Flex>
