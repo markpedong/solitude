@@ -80,6 +80,14 @@ const Navigation: FC = () => {
         setSearchFilter(value)
     }
 
+    const handleLoginRegister = () => {
+        if (login) {
+            dispatch(setActiveLoginForm('create'))
+        } else {
+            dispatch(setActiveLoginForm('login'))
+        }
+    }
+
     const renderSearch = () => {
         return (
             <ModalForm
@@ -114,7 +122,8 @@ const Navigation: FC = () => {
             modalProps={{ style: { top: create ? '5%' : '10%' } }}
             onFinish={async params => {
                 console.log(params)
-            }}>
+            }}
+            autoFocus={false}>
             <Flex
                 className={styles.loginContainer}
                 justify="space-between"
@@ -154,6 +163,7 @@ const Navigation: FC = () => {
                         }}>
                         <ProForm
                             grid
+                            autoFocus={false}
                             submitter={false}
                             onFinish={async params => {
                                 // const data = await login({ ...params })
@@ -166,14 +176,20 @@ const Navigation: FC = () => {
                                         name="first_name"
                                         placeholder="eg: John"
                                         label="First Name"
-                                        fieldProps={{ prefix: <UserOutlined />, autoFocus: false }}
+                                        fieldProps={{ prefix: <UserOutlined /> }}
                                         colProps={{ span: 8 }}
                                     />
                                     <ProFormText
                                         name="last_name"
                                         placeholder="eg: Smith"
                                         label="Last Name"
-                                        fieldProps={{ autoFocus: false }}
+                                        colProps={{ span: 8 }}
+                                    />
+                                    <ProFormText
+                                        name="phone"
+                                        placeholder="+63 9*********"
+                                        label="Phone Number"
+                                        fieldProps={{ prefix: <PhoneOutlined /> }}
                                         colProps={{ span: 8 }}
                                     />
                                 </>
@@ -182,32 +198,46 @@ const Navigation: FC = () => {
                                 name="email"
                                 placeholder="your@email.com"
                                 label="Email Address"
-                                fieldProps={{ prefix: <UserOutlined />, autoFocus: false }}
+                                fieldProps={{ prefix: <UserOutlined /> }}
+                                colProps={create ? { span: 12 } : {}}
                             />
                             {create && (
                                 <ProFormText
-                                    name="phone"
-                                    placeholder="+63 9*********"
-                                    label="Phone Number"
-                                    fieldProps={{ prefix: <PhoneOutlined />, autoFocus: false }}
+                                    name="username"
+                                    placeholder="eg: johnsmith"
+                                    label="Username"
+                                    colProps={{ span: 12 }}
                                 />
                             )}
                             {!forgot && (
-                                <ProFormText.Password
-                                    name="password"
-                                    placeholder="Enter Password"
-                                    label="Password"
-                                    fieldProps={{ prefix: <LockOutlined /> }}
-                                />
+                                <>
+                                    <ProFormText.Password
+                                        name="password"
+                                        placeholder="Enter Password"
+                                        label="Password"
+                                        fieldProps={{ prefix: <LockOutlined /> }}
+                                        colProps={create ? { span: 12 } : {}}
+                                    />
+                                    {create && (
+                                        <ProFormText.Password
+                                            name="confirm_password"
+                                            placeholder="Re-enter Password"
+                                            label="Confirm Password"
+                                            colProps={{ span: 12 }}
+                                        />
+                                    )}
+                                </>
                             )}
-                            {!forgot && (
-                                <Typography.Link
-                                    type="secondary"
-                                    onClick={() => {
-                                        dispatch(setActiveLoginForm('forgot'))
-                                    }}>
-                                    Forgot Password?
-                                </Typography.Link>
+                            {!forgot && !create && (
+                                <div style={{ display: 'flex', justifyContent: 'end', width: '100%' }}>
+                                    <Typography.Link
+                                        type="secondary"
+                                        onClick={() => {
+                                            dispatch(setActiveLoginForm('forgot'))
+                                        }}>
+                                        Forgot Password?
+                                    </Typography.Link>
+                                </div>
                             )}
                         </ProForm>
                     </div>
@@ -219,19 +249,11 @@ const Navigation: FC = () => {
                         type="primary">
                         {create ? 'SIGN IN' : forgot ? 'RECOVER YOUR ACCOUNT' : 'LOGIN'}
                     </Button>
-                    <Flex className={styles.createAccountContainer} justify="center">
-                        <Typography.Link
-                            type="secondary"
-                            onClick={() => {
-                                if (login) {
-                                    dispatch(setActiveLoginForm('create'))
-                                } else {
-                                    dispatch(setActiveLoginForm('login'))
-                                }
-                            }}>
+                    <Flex className={styles.createAccountContainer} justify="center" align="center">
+                        <Typography.Link type="secondary" onClick={handleLoginRegister}>
                             {create ? 'SIGN IN TO ACCOUNT' : 'CREATE AN ACCOUNT'}
                         </Typography.Link>
-                        <RightOutlined />
+                        <RightOutlined onClick={handleLoginRegister} />
                     </Flex>
                 </Flex>
             </Flex>
@@ -241,6 +263,8 @@ const Navigation: FC = () => {
     useEffect(() => {
         handleResize()
         handleGetFeatures()
+
+        dispatch(setActiveLoginForm('create'))
     }, [])
 
     return (
