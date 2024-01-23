@@ -32,9 +32,6 @@ const theme: ThemeConfig = {
             activeBorderColor: 'black',
             activeShadow: 'none',
         },
-        Button: {
-            controlItemBgHover: 'red',
-        },
     },
 }
 
