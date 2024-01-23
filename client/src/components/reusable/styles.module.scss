@@ -5,7 +5,7 @@
     border: toRem(1) solid #e8e8e8;
     border-radius: toRem(8);
     overflow: hidden;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 toRem(4) toRem(8) 0 rgba(0, 0, 0, 0.2);
     width: toRem(370);
 
     .image {
