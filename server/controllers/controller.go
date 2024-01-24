@@ -47,31 +47,19 @@ func Signup(ctx *gin.Context) {
 	var body models.User
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid JSON input",
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid JSON input")
 		return
 	}
 
 	if err := Validate.Struct(body); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid inputs! Check your form.")
 		return
 	}
 
 	var existingUser models.User
 	result := database.DB.Where("email = ? OR phone = ?", body.Email, body.Phone).First(&existingUser)
 	if result.RowsAffected > 0 {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "User already exists!",
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "User already exists!")
 		return
 	}
 

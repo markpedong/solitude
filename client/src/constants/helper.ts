@@ -1,4 +1,5 @@
 import { message } from 'antd'
+import { MutableRefObject } from 'react'
 
 export const INPUT_NOSPACE = [
     { required: true },
@@ -8,18 +9,19 @@ export const INPUT_NOSPACE = [
     },
 ]
 
-export const afterModalformFinish = (actionRef, msg, boolean = true) => {
+export const afterModalformFinish = (actionRef: MutableRefObject<any>, msg: string, success: boolean) => {
     if (actionRef) {
         actionRef?.current?.reload()
     }
 
-    if (boolean) {
+    if (!success) {
         message.error(msg)
+        return
     }
 
-    if (msg) {
+    if (success && msg) {
         message.success(msg)
     }
 
-    return boolean
+    return success
 }
