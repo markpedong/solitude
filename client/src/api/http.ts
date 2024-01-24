@@ -14,10 +14,6 @@ export const throttleAlert = (msg: string) => throttle(message.error(msg), 1500,
 
 const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
     const token = getLocalStorage('token')
-    console.log({
-        'Content-Type': 'application/json',
-        ...(token ? { 'token': String(token)?.replaceAll(`"`,"") } : {}),
-    })
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`, {
         method: 'POST',
         headers: {

@@ -125,14 +125,12 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"message":       "Logged in successfully!",
-		"success":       true,
-		"status":        http.StatusOK,
-		"data":          existingUser,
+	res := map[string]interface{}{
+		"data": existingUser,
 		"token":         token,
 		"refresh_token": refreshToken,
-	})
+	}
+	helpers.JSONResponse(ctx, "Logged in successfully", res)
 }
 
 func CheckToken(ctx *gin.Context) {

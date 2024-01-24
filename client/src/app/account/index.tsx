@@ -1,7 +1,7 @@
 'use client'
 
 import { Col, Flex, Row, Tabs, Typography } from 'antd'
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import styles from './styles.module.scss'
 import Profile from './components/profile'
 import Orders from './components/orders'
@@ -9,6 +9,8 @@ import AddProduct from './components/addProduct'
 import { TProduct } from '@/api'
 import Address from './components/address'
 import { Cormorant, Jost } from 'next/font/google'
+import { isLoggedIn } from '@/constants/helper'
+import { useRouter } from 'next/navigation'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -18,9 +20,14 @@ type Props = {
 }
 
 const Account: FC<Props> = ({ products }) => {
+    const router = useRouter()
     const onChange = (key: string) => {
         console.log(key)
     }
+
+    useEffect(() => {
+        !isLoggedIn() && router.push('/')
+    }, [])
 
     return (
         <Row>
