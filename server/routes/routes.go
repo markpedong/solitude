@@ -13,16 +13,7 @@ func UserRoutes(r *gin.Engine) {
 	{
 		users.POST("/signup", controllers.Signup)
 		users.POST("/login", controllers.Login)
-	}
-
-	admin := r.Group("/admin")
-	{
-		admin.POST("/add-product", controllers.ProductViewAdmin)
-	}
-
-	public := r.Group("/public")
-	{
-		public.POST("/products", controllers.GetAllProducts)
+		users.POST("/products", controllers.GetAllProducts)
 	}
 
 	api := r.Group("/api")
@@ -41,5 +32,6 @@ func UserRoutes(r *gin.Engine) {
 		api.GET("/product/:id", controllers.GetProductsByID)
 		api.POST("/uploadImage", controllers.UploadImage)
 		// api.GET("/image/:id", controllers.GetImage)
+		api.POST("/add-product", controllers.ProductViewAdmin)
 	}
 }
