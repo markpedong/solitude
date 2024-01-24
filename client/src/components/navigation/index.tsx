@@ -1,6 +1,6 @@
 'use client'
 
-import { TProduct, getProducts, userLogin, userSignup } from '@/api'
+import { TProduct, UserData, getProducts, userLogin, userSignup } from '@/api'
 import { MODAL_FORM_PROPS } from '@/constants'
 import { INPUT_NOSPACE, afterModalformFinish } from '@/constants/helper'
 import forgotModalCover from '@/public/assets/forgotModalCover.webp'
@@ -28,6 +28,7 @@ import moon from '@/public/assets/moon.png'
 import sun from '@/public/assets/sun.png'
 import { Collection } from '../reusable'
 import { Jost } from 'next/font/google'
+import { setUserData } from '@/redux/features/userSlice'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -47,7 +48,8 @@ const Navigation: FC = () => {
     const [open, setOpen] = useState(false)
     const [products, setProducts] = useState<TProduct[]>([])
     const [searchFilter, setSearchFilter] = useState('')
-    const { activeLoginForm, darkMode } = useAppSelector(state => state.boolean)
+    const { activeLoginForm } = useAppSelector(state => state.boolean)
+    const { userData } = useAppSelector(state => state.userData)
     const formRef = useRef<ProFormInstance>()
     const actionRef = useRef<ActionType>()
     const create = activeLoginForm === 'create'
@@ -118,17 +120,19 @@ const Navigation: FC = () => {
     }
 
     const handleFinish = async params => {
-        let data
+        let res
 
         if (create) {
-            data = await userSignup(params)
+            res = await userSignup(params)
         }
 
         if (login) {
-            data = await userLogin(params)
+            res = await userLogin(params)
+            console.log("res: ",res)
         }
-
-        return afterModalformFinish(actionRef, data.message, data.success)
+        
+        dispatch(setUserData(res?.data))
+        return afterModalformFinish(actionRef, res.message, res.success)
     }
 
     const renderLogin = () => (

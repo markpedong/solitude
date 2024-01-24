@@ -14,14 +14,10 @@ export const afterModalformFinish = (actionRef: MutableRefObject<any>, msg: stri
         actionRef?.current?.reload()
     }
 
-    if (!success) {
-        message.error(msg)
-        return
-    }
-
     if (success && msg) {
         message.success(msg)
     }
 
     return success
+
 }

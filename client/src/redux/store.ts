@@ -1,13 +1,16 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import booleanSlice from './features/booleanSlice'
+import userSlice from './features/userSlice'
 
 type RootType = {
     boolean: ReturnType<typeof booleanSlice>
+    userData: ReturnType<typeof userSlice>
 }
 
 const reducer = combineReducers({
     boolean: booleanSlice,
+    userData: userSlice
 })
 
 export const store = configureStore({

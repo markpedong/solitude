@@ -1,4 +1,6 @@
 import { stringify } from 'qs'
+import { throttle } from 'lodash'
+import { message } from 'antd'
 
 type ApiResponse<T> = {
     data: T
@@ -6,6 +8,8 @@ type ApiResponse<T> = {
     success: boolean
     status: number
 }
+
+export const throttleAlert = (msg: string) => throttle(message.error(msg), 1500, {trailing: false})
 
 const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`, {
@@ -16,6 +20,11 @@ const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
         body: JSON.stringify(data) || '{}',
     })
     const result = await response.json()
+    
+    if (!result.success){
+        throttleAlert(result?.message)
+        return result
+    }
 
     return result as ApiResponse<T>
 }

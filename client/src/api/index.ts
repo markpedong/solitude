@@ -1,8 +1,19 @@
 import { get, post } from './http'
 
+export type UserData = {
+    id: string
+    created_at:string
+    updated_at: string
+    user_cart: []
+    address_details: []
+    orders: []
+    password: string
+    email: string
+}
+
 export const userSignup = params => post('/users/signup', params)
 
-export const userLogin = params => post('/users/login', params)
+export const userLogin = params => post<UserData>('/users/login', params)
 
 // /public/products
 export type TProduct = {

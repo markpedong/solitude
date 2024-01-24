@@ -125,13 +125,18 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	ctx.Header("token", token)
-	ctx.JSON(http.StatusFound, gin.H{
+	ctx.JSON(http.StatusOK, gin.H{
 		"message":       "Logged in successfully!",
 		"success":       true,
 		"status":        http.StatusOK,
-		"body":          existingUser,
+		"data":          existingUser,
 		"token":         token,
 		"refresh_token": refreshToken,
 	})
+}
+
+func CheckToken(ctx *gin.Context) {
+	token := ctx.GetHeader("token")
+	
+	helpers.JSONResponse(ctx, "token verified!!", helpers.DataHelper(token))
 }
