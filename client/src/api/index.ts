@@ -1,6 +1,6 @@
 import { get, post } from './http'
 
-export const signUp = params => post('/users/signup', params)
+export const userSignup = params => post('/users/signup', params)
 
 export const userLogin = params => post('/users/login', params)
 

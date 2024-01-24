@@ -58,11 +58,3 @@ export const PRODUCT_FILTER = [
         },
     },
 ]
-
-export const INPUT_NOSPACE = [
-    { required: true },
-    {
-        validator: (_, value) =>
-            !value.includes(' ') ? Promise.resolve() : Promise.reject(new Error('No spaces allowed')),
-    },
-]

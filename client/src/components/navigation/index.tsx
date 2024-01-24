@@ -1,7 +1,8 @@
 'use client'
 
-import { TProduct, getProducts } from '@/api'
-import { INPUT_NOSPACE, MODAL_FORM_PROPS } from '@/constants'
+import { TProduct, getProducts, userSignup } from '@/api'
+import { MODAL_FORM_PROPS } from '@/constants'
+import { INPUT_NOSPACE, afterModalformFinish } from '@/constants/helper'
 import forgotModalCover from '@/public/assets/forgotModalCover.webp'
 import loginModalCover from '@/public/assets/loginModalCover.webp'
 import logo from '@/public/assets/logo.webp'
@@ -16,7 +17,7 @@ import {
     SearchOutlined,
     UserOutlined,
 } from '@ant-design/icons'
-import { ModalForm, ProForm, ProFormInstance, ProFormText } from '@ant-design/pro-components'
+import { ActionType, ModalForm, ProForm, ProFormInstance, ProFormText } from '@ant-design/pro-components'
 import { Button, Col, Drawer, Flex, Input, Row, Typography } from 'antd'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -48,6 +49,7 @@ const Navigation: FC = () => {
     const [searchFilter, setSearchFilter] = useState('')
     const { activeLoginForm, darkMode } = useAppSelector(state => state.boolean)
     const formRef = useRef<ProFormInstance>()
+    const actionRef = useRef<ActionType>()
     const create = activeLoginForm === 'create'
     const forgot = activeLoginForm === 'forgot'
     const login = activeLoginForm === 'login'
@@ -115,6 +117,19 @@ const Navigation: FC = () => {
         )
     }
 
+    const handleFinish = async params => {
+        console.log('params: ', params)
+        let data
+
+        if (create) {
+            data = await userSignup(params)
+        }
+
+        console.log('SIGNUP', data)
+
+        return afterModalformFinish(actionRef, data.message, data.success)
+    }
+
     const renderLogin = () => (
         <ModalForm
             trigger={<UserOutlined />}
@@ -124,9 +139,7 @@ const Navigation: FC = () => {
             grid={true}
             formRef={formRef}
             preserve={false}
-            onFinish={async params => {
-                console.log(params.first_name.trim())
-            }}>
+            onFinish={handleFinish}>
             <Flex
                 className={styles.loginContainer}
                 justify="space-between"
@@ -174,7 +187,6 @@ const Navigation: FC = () => {
                                         prefix: <UserOutlined />,
                                     }}
                                     colProps={{ span: 8 }}
-                                    rules={INPUT_NOSPACE}
                                 />
                                 <ProFormText
                                     name="last_name"
@@ -198,6 +210,7 @@ const Navigation: FC = () => {
                                 label="Email Address"
                                 fieldProps={{ prefix: <UserOutlined /> }}
                                 colProps={create ? { span: 12 } : {}}
+                                rules={INPUT_NOSPACE}
                             />
                             {create && (
                                 <ProFormText
@@ -216,6 +229,7 @@ const Navigation: FC = () => {
                                     label="Password"
                                     fieldProps={{ prefix: <LockOutlined /> }}
                                     colProps={create ? { span: 12 } : {}}
+                                    rules={INPUT_NOSPACE}
                                 />
                                 {create && (
                                     <ProFormText.Password
@@ -223,6 +237,18 @@ const Navigation: FC = () => {
                                         placeholder="Re-enter Password"
                                         label="Confirm Password"
                                         colProps={{ span: 12 }}
+                                        dependencies={['password']}
+                                        rules={[
+                                            ...INPUT_NOSPACE,
+                                            ({ getFieldValue }) => ({
+                                                validator(_, value) {
+                                                    if (!value || getFieldValue('password') === value) {
+                                                        return Promise.resolve()
+                                                    }
+                                                    return Promise.reject(new Error('The passwords do not match'))
+                                                },
+                                            }),
+                                        ]}
                                     />
                                 )}
                             </ProForm.Group>
