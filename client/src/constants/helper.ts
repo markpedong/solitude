@@ -2,8 +2,13 @@ import { getLocalStorage } from '@/utils/xLocalStorage'
 import { message } from 'antd'
 import { MutableRefObject } from 'react'
 
+export const REQUIRED = [
+    {
+        required: true,
+    },
+]
+
 export const INPUT_NOSPACE = [
-    { required: true },
     {
         validator: (_, value) =>
             !value?.includes(' ') ? Promise.resolve() : Promise.reject(new Error('No spaces allowed')),

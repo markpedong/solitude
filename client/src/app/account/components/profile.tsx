@@ -6,10 +6,14 @@ import classNames from 'classnames'
 import { FC } from 'react'
 import styles from './styles.module.scss'
 import { Jost } from 'next/font/google'
+import { INPUT_NOSPACE, REQUIRED } from '@/constants/helper'
+import { useAppSelector } from '@/redux/store'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 const Profile: FC = () => {
+    const { userData } = useAppSelector(state => state.userData)
+
     return (
         <Row className={styles.profileWrapper}>
             <Col span={12}>
@@ -17,18 +21,37 @@ const Profile: FC = () => {
                 <ProForm
                     grid
                     autoFocusFirstInput={false}
+                    initialValues={{ ...userData, password: '' }}
                     submitter={{
                         resetButtonProps: false,
                     }}
                     onFinish={async params => {
                         console.log(params)
+                        console.log(userData)
                     }}>
+                    <ProForm.Group>
+                        <ProFormText
+                            label="First Name"
+                            name="first_name"
+                            placeholder="eg: John"
+                            colProps={{ span: 12 }}
+                            rules={[...INPUT_NOSPACE]}
+                        />
+                        <ProFormText
+                            label="Last Name"
+                            name="last_name"
+                            placeholder="eg: Smith"
+                            colProps={{ span: 12 }}
+                            rules={[...INPUT_NOSPACE]}
+                        />
+                    </ProForm.Group>
                     <ProFormText label="Username" name="username" placeholder="Your Username" colProps={{ span: 12 }} />
                     <ProFormText.Password
                         label="Password"
                         name="password"
                         placeholder="Enter Password"
                         colProps={{ span: 12 }}
+                        rules={[...INPUT_NOSPACE, { min: 6 }]}
                     />
                     <ProFormText
                         label="Email Address"
@@ -41,6 +64,19 @@ const Profile: FC = () => {
                         name="confirm_password"
                         placeholder="Enter Password"
                         colProps={{ span: 12 }}
+                        dependencies={['password']}
+                        rules={[
+                            ...INPUT_NOSPACE,
+                            { min: 6 },
+                            ({ getFieldValue }) => ({
+                                validator(_, value) {
+                                    if (!value || getFieldValue('password') === value) {
+                                        return Promise.resolve()
+                                    }
+                                    return Promise.reject(new Error('The passwords do not match'))
+                                },
+                            }),
+                        ]}
                     />
                     <ProFormRadio.Group
                         label="Gender"

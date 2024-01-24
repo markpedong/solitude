@@ -1,14 +1,16 @@
 'use client'
 
-import { TProduct, UserData, getProducts, userLogin, userSignup } from '@/api'
+import { TProduct, getProducts, userLogin, userSignup } from '@/api'
 import { MODAL_FORM_PROPS } from '@/constants'
-import { INPUT_NOSPACE, afterModalformFinish } from '@/constants/helper'
+import { INPUT_NOSPACE, REQUIRED, afterModalformFinish } from '@/constants/helper'
 import forgotModalCover from '@/public/assets/forgotModalCover.webp'
 import loginModalCover from '@/public/assets/loginModalCover.webp'
 import logo from '@/public/assets/logo.webp'
 import signUpModalCover from '@/public/assets/signUpModalCover.webp'
-import { setActiveLoginForm, setDarkMode } from '@/redux/features/booleanSlice'
+import { setActiveLoginForm } from '@/redux/features/booleanSlice'
+import { setUserData } from '@/redux/features/userSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
+import { setLocalStorage } from '@/utils/xLocalStorage'
 import {
     LockOutlined,
     MenuOutlined,
@@ -19,16 +21,14 @@ import {
 } from '@ant-design/icons'
 import { ActionType, ModalForm, ProForm, ProFormInstance, ProFormText } from '@ant-design/pro-components'
 import { Button, Col, Drawer, Flex, Input, Row, Typography } from 'antd'
+import { Jost } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { CSSProperties, FC, useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import styles from './styles.module.scss'
-import moon from '@/public/assets/moon.png'
-import sun from '@/public/assets/sun.png'
 import { Collection } from '../reusable'
-import { Jost } from 'next/font/google'
-import { setUserData } from '@/redux/features/userSlice'
+import styles from './styles.module.scss'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -49,9 +49,9 @@ const Navigation: FC = () => {
     const [products, setProducts] = useState<TProduct[]>([])
     const [searchFilter, setSearchFilter] = useState('')
     const { activeLoginForm } = useAppSelector(state => state.boolean)
-    const { userData } = useAppSelector(state => state.userData)
     const formRef = useRef<ProFormInstance>()
     const actionRef = useRef<ActionType>()
+    const router = useRouter()
     const create = activeLoginForm === 'create'
     const forgot = activeLoginForm === 'forgot'
     const login = activeLoginForm === 'login'
@@ -128,10 +128,12 @@ const Navigation: FC = () => {
 
         if (login) {
             res = await userLogin(params)
-            console.log("res: ",res)
+            console.log('res: ', res)
         }
 
         dispatch(setUserData(res?.data))
+        setLocalStorage('token', res?.token)
+        router.push('/account')
         return afterModalformFinish(actionRef, res.message, res.success)
     }
 
@@ -234,7 +236,7 @@ const Navigation: FC = () => {
                                     label="Password"
                                     fieldProps={{ prefix: <LockOutlined /> }}
                                     colProps={create ? { span: 12 } : {}}
-                                    rules={INPUT_NOSPACE}
+                                    rules={[...REQUIRED, ...INPUT_NOSPACE, { min: 6 }]}
                                 />
                                 {create && (
                                     <ProFormText.Password
@@ -244,7 +246,9 @@ const Navigation: FC = () => {
                                         colProps={{ span: 12 }}
                                         dependencies={['password']}
                                         rules={[
+                                            ...REQUIRED,
                                             ...INPUT_NOSPACE,
+                                            { min: 6 },
                                             ({ getFieldValue }) => ({
                                                 validator(_, value) {
                                                     if (!value || getFieldValue('password') === value) {

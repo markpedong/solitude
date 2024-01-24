@@ -125,9 +125,8 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	ctx.Request.Header.Set("token", token)
 	res := map[string]interface{}{
-		"data": existingUser,
+		"data":          existingUser,
 		"token":         token,
 		"refresh_token": refreshToken,
 	}
@@ -136,6 +135,6 @@ func Login(ctx *gin.Context) {
 
 func CheckToken(ctx *gin.Context) {
 	token := ctx.GetHeader("token")
-	
+
 	helpers.JSONResponse(ctx, "token verified!!", helpers.DataHelper(token))
 }

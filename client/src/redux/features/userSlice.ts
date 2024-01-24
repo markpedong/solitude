@@ -3,26 +3,28 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 type InitialSlice = {
     userData: {
         id: string
-        created_at:string
+        created_at: string
         updated_at: string
         user_cart: []
         address_details: []
         orders: []
         password: string
         email: string
+        first_name: string
     }
 }
 const initialState: InitialSlice = {
     userData: {
-        id: "",
-        created_at: "",
-        updated_at: "",
+        id: '',
+        created_at: '',
+        updated_at: '',
         user_cart: [],
         address_details: [],
         orders: [],
-        password: "",
-        email: ""
-    }
+        password: '',
+        email: '',
+        first_name: '',
+    },
 }
 
 export const UserSlice = createSlice({
@@ -31,7 +33,7 @@ export const UserSlice = createSlice({
     reducers: {
         setUserData: (state, action) => {
             state.userData = action.payload
-        }
+        },
     },
 })
 

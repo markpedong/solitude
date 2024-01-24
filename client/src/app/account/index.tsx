@@ -11,6 +11,7 @@ import Address from './components/address'
 import { Cormorant, Jost } from 'next/font/google'
 import { isLoggedIn } from '@/constants/helper'
 import { useRouter } from 'next/navigation'
+import { useAppSelector } from '@/redux/store'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -21,20 +22,22 @@ type Props = {
 
 const Account: FC<Props> = ({ products }) => {
     const router = useRouter()
+    const { userData } = useAppSelector(state => state.userData)
+
     const onChange = (key: string) => {
         console.log(key)
     }
 
-    // useEffect(() => {
-    //     !isLoggedIn() && router.push('/')
-    // }, [])
+    useEffect(() => {
+        !isLoggedIn() && router.push('/')
+    }, [])
 
     return (
         <Row>
             <Col xs={0} lg={4} />
             <Col lg={16}>
                 <Flex className={styles.profileHeader} vertical gap={5} justify="center">
-                    <span className={cormorant.className}>Welcome back! {`{Username}`}</span>
+                    <span className={cormorant.className}>Welcome back! {userData.first_name}</span>
                     <span className={jost.className}>Enjoy shopping with ease and happiness.</span>
                 </Flex>
                 <div className={styles.tabsContainer}>
