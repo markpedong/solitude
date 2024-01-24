@@ -29,7 +29,6 @@ import sun from '@/public/assets/sun.png'
 import { Collection } from '../reusable'
 import { Jost } from 'next/font/google'
 import { setUserData } from '@/redux/features/userSlice'
-import { setLocalStorage } from '@/utils/xLocalStorage'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -133,7 +132,6 @@ const Navigation: FC = () => {
         }
 
         dispatch(setUserData(res?.data))
-        setLocalStorage('token', res?.token)
         return afterModalformFinish(actionRef, res.message, res.success)
     }
 
