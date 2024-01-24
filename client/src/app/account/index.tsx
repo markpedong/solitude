@@ -25,9 +25,9 @@ const Account: FC<Props> = ({ products }) => {
         console.log(key)
     }
 
-    useEffect(() => {
-        !isLoggedIn() && router.push('/')
-    }, [])
+    // useEffect(() => {
+    //     !isLoggedIn() && router.push('/')
+    // }, [])
 
     return (
         <Row>
