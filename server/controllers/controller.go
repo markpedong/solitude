@@ -125,6 +125,7 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
+	ctx.Request.Header.Set("token", token)
 	res := map[string]interface{}{
 		"data": existingUser,
 		"token":         token,
