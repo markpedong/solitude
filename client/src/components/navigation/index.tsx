@@ -1,6 +1,6 @@
 'use client'
 
-import { TProduct, getProducts, userSignup } from '@/api'
+import { TProduct, getProducts, userLogin, userSignup } from '@/api'
 import { MODAL_FORM_PROPS } from '@/constants'
 import { INPUT_NOSPACE, afterModalformFinish } from '@/constants/helper'
 import forgotModalCover from '@/public/assets/forgotModalCover.webp'
@@ -118,14 +118,15 @@ const Navigation: FC = () => {
     }
 
     const handleFinish = async params => {
-        console.log('params: ', params)
         let data
 
         if (create) {
             data = await userSignup(params)
         }
 
-        console.log('SIGNUP', data)
+        if (login) {
+            data = await userLogin(params)
+        }
 
         return afterModalformFinish(actionRef, data.message, data.success)
     }

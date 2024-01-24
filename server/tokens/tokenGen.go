@@ -23,21 +23,22 @@ const (
 	refreshTokenDuration = 168 * time.Hour
 )
 
-func generateTokenClaims(email, firstName, lastName, uid string, duration time.Duration) jwt.Claims {
-	return &SignedDetails{
+func TokenGenerator(email, firstName, lastName, uid string) (signedToken, signedRefreshToken string, err error) {
+	claims := &SignedDetails{
 		Email:     email,
 		FirstName: firstName,
 		LastName:  lastName,
 		Uid:       uid,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(duration).Unix(),
+			ExpiresAt: time.Now().Add(tokenDuration).Unix(),
 		},
 	}
-}
 
-func TokenGenerator(email, firstName, lastName, uid string) (signedToken, signedRefreshToken string, err error) {
-	claims := generateTokenClaims(email, firstName, lastName, uid, tokenDuration)
-	refreshClaims := generateTokenClaims("", "", "", "", refreshTokenDuration)
+	refreshClaims := &SignedDetails{
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: time.Now().Add(refreshTokenDuration).Unix(),
+		},
+	}
 
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(SECRET_KEY))
 	if err != nil {
@@ -68,10 +69,10 @@ func ValidateToken(signedToken string) (claims *SignedDetails, msg string) {
 		return &SignedDetails{}, msg
 	}
 
-	if time.Now().Before(time.Unix(claims.ExpiresAt, 0)) {
+	if time.Now().After(time.Unix(claims.ExpiresAt, 0)) {
 		msg = "token is already expired"
 		return claims, msg
 	}
 
-	return &SignedDetails{}, msg
+	return claims, msg
 }
