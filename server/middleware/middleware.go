@@ -3,6 +3,7 @@ package middleware
 import (
 	"net/http"
 
+	"solitude/helpers"
 	token "solitude/tokens"
 
 	"github.com/gin-gonic/gin"
@@ -11,17 +12,13 @@ import (
 func Authentication(ctx *gin.Context) {
 	clientToken := ctx.Request.Header.Get("token")
 	if clientToken == "" {
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-			"error": "No Authorization",
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "No Authorization")
 		return
 	}
 
 	claims, err := token.ValidateToken(clientToken)
 	if err != "" {
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-			"error": err,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err)
 		return
 	}
 

@@ -1,6 +1,7 @@
 import { stringify } from 'qs'
 import { throttle } from 'lodash'
 import { message } from 'antd'
+import { getLocalStorage } from '@/utils/xLocalStorage'
 
 type ApiResponse<T> = {
     data: T
@@ -9,19 +10,25 @@ type ApiResponse<T> = {
     status: number
 }
 
-export const throttleAlert = (msg: string) => throttle(message.error(msg), 1500, {trailing: false})
+export const throttleAlert = (msg: string) => throttle(message.error(msg), 1500, { trailing: false })
 
 const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
+    const token = getLocalStorage('token')
+    console.log({
+        'Content-Type': 'application/json',
+        ...(token ? { 'token': String(token)?.replaceAll(`"`,"") } : {}),
+    })
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            ...(token ? { 'token': String(token)?.replaceAll(`"`,"") } : {}),
         },
         body: JSON.stringify(data) || '{}',
     })
     const result = await response.json()
-    
-    if (!result.success){
+
+    if (!result.success) {
         throttleAlert(result?.message)
         return result
     }
