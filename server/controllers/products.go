@@ -111,3 +111,20 @@ func UploadImage(ctx *gin.Context) {
 	}
 	helpers.JSONResponse(ctx, "upload successful!", helpers.DataHelper(imageRes))
 }
+
+func SearchProductByQuery(ctx *gin.Context) {
+	var body struct {
+		ProductID string `json:"product_id"`
+	}
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "check the JSON format!")
+		return
+	}
+
+	var product models.Product
+	if err := database.DB.First(&product, "id = ?", body.ProductID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "something went wrong when fetching data")
+	}
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(product))
+}
