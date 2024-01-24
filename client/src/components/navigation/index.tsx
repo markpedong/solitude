@@ -1,7 +1,7 @@
 'use client'
 
 import { TProduct, getProducts } from '@/api'
-import { MODAL_FORM_PROPS, FORM_INPUT_TRIM } from '@/constants'
+import { INPUT_NOSPACE, MODAL_FORM_PROPS } from '@/constants'
 import forgotModalCover from '@/public/assets/forgotModalCover.webp'
 import loginModalCover from '@/public/assets/loginModalCover.webp'
 import logo from '@/public/assets/logo.webp'
@@ -120,13 +120,13 @@ const Navigation: FC = () => {
             trigger={<UserOutlined />}
             submitter={false}
             width={create ? 1000 : 600}
-            modalProps={{ style: { top: create ? '5%' : '10%' } }}
-            onFinish={async params => {
-                console.log(params)
-            }}
+            modalProps={{ style: { top: create ? '5%' : '10%' }, destroyOnClose: true, maskClosable: false }}
             grid={true}
             formRef={formRef}
-            defaultValue={''}>
+            preserve={false}
+            onFinish={async params => {
+                console.log(params.first_name.trim())
+            }}>
             <Flex
                 className={styles.loginContainer}
                 justify="space-between"
@@ -174,7 +174,7 @@ const Navigation: FC = () => {
                                         prefix: <UserOutlined />,
                                     }}
                                     colProps={{ span: 8 }}
-                                    rules={[{ required: true }]}
+                                    rules={INPUT_NOSPACE}
                                 />
                                 <ProFormText
                                     name="last_name"
