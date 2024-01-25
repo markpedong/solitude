@@ -125,7 +125,7 @@ const Navigation: FC = () => {
 
     const handleFinish = async params => {
         let res
-
+    
         if (create) {
             res = await userSignup(params)
         }
@@ -264,7 +264,13 @@ const Navigation: FC = () => {
                                     label="Email Address"
                                     fieldProps={{ prefix: <UserOutlined /> }}
                                     colProps={create ? { span: 12 } : {}}
-                                    rules={[...INPUT_NOSPACE, ...REQUIRED]}
+                                    rules={[
+                                        ...REQUIRED,
+                                        {
+                                            type:'email',
+                                            message: 'input is not email format!'
+                                        }
+                                    ]}
                                 />
                                 {create && (
                                     <ProFormText
@@ -330,7 +336,6 @@ const Navigation: FC = () => {
                                 type="primary"
                                 onClick={() => {
                                     formRef.current?.submit()
-                                    formRef?.current?.resetFields()
                                 }}>
                                 {create ? 'SIGN IN' : forgot ? 'RECOVER YOUR ACCOUNT' : 'LOGIN'}
                             </Button>
