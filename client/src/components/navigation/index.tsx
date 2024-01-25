@@ -12,7 +12,6 @@ import { setUserData } from '@/redux/features/userSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { setLocalStorage } from '@/utils/xLocalStorage'
 import {
-    DownOutlined,
     LockOutlined,
     MenuOutlined,
     PhoneOutlined,
@@ -22,7 +21,7 @@ import {
     UserOutlined,
 } from '@ant-design/icons'
 import { ActionType, ModalForm, ProForm, ProFormInstance, ProFormText } from '@ant-design/pro-components'
-import { Button, Col, Drawer, Dropdown, Flex, Input, Row, Space, Typography } from 'antd'
+import { Button, Col, Drawer, Dropdown, Flex, Input, Row, Typography } from 'antd'
 import type { MenuProps } from 'antd'
 import { Jost } from 'next/font/google'
 import Image from 'next/image'
@@ -265,7 +264,7 @@ const Navigation: FC = () => {
                                     label="Email Address"
                                     fieldProps={{ prefix: <UserOutlined /> }}
                                     colProps={create ? { span: 12 } : {}}
-                                    rules={INPUT_NOSPACE}
+                                    rules={[...INPUT_NOSPACE, ...REQUIRED]}
                                 />
                                 {create && (
                                     <ProFormText
