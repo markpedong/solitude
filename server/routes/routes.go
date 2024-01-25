@@ -32,6 +32,7 @@ func UserRoutes(r *gin.Engine) {
 		api.GET("/product/:id", controllers.GetProductsByID)
 		api.POST("/uploadImage", controllers.UploadImage)
 		api.POST("/checkToken", controllers.CheckToken)
+		api.POST("/updateUser", controllers.UpdateUser)
 		// api.GET("/image/:id", controllers.GetImage)
 	}
 }
