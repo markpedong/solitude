@@ -12,6 +12,7 @@ import { Cormorant, Jost } from 'next/font/google'
 import { isLoggedIn } from '@/constants/helper'
 import { useRouter } from 'next/navigation'
 import { useAppSelector } from '@/redux/store'
+import { getLocalStorage } from '@/utils/xLocalStorage'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -29,8 +30,9 @@ const Account: FC<Props> = ({ products }) => {
     }
 
     useEffect(() => {
-        !isLoggedIn() && router.push('/')
-    }, [])
+       !!!userData?.id && router.push('/')
+       
+    }, [userData?.id])
 
     return (
         <Row>
