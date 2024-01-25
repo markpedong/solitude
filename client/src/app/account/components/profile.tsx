@@ -2,7 +2,7 @@
 
 import { INPUT_NOSPACE, afterModalformFinish } from '@/constants/helper'
 import { useAppSelector } from '@/redux/store'
-import { ActionType, ProForm, ProFormDatePicker, ProFormRadio, ProFormText } from '@ant-design/pro-components'
+import { ActionType, ProForm, ProFormDatePicker, ProFormInstance, ProFormRadio, ProFormText } from '@ant-design/pro-components'
 import { Col, Row } from 'antd'
 import classNames from 'classnames'
 import { Jost } from 'next/font/google'
@@ -15,6 +15,7 @@ const jost = Jost({ weight: '400', subsets: ['latin'] })
 const Profile: FC = () => {
     const { userData } = useAppSelector(state => state.userData)
     const actionRef = useRef<ActionType>()
+    const formRef = useRef<ProFormInstance>()
 
     return (
         <Row className={styles.profileWrapper}>
@@ -22,16 +23,17 @@ const Profile: FC = () => {
                 <span className={classNames(jost.className, styles.profileHeader)}>Your Information</span>
                 <ProForm
                     grid
+                    formRef={formRef}
                     autoFocusFirstInput={false}
                     initialValues={{ ...userData, password: '' }}
                     submitter={{
                         resetButtonProps: false,
                     }}
                     onFinish={async params => {
+                        console.log(params)
                         const res = await updateUserData({...params, id: userData?.id})
 
-                        console.log("RES", res)
-
+                        formRef?.current.resetFields()
                         return afterModalformFinish(actionRef, res.message, res.success)
                     }}>
                     <ProForm.Group>
@@ -106,7 +108,7 @@ const Profile: FC = () => {
                     />
                     <ProFormDatePicker
                         label="Birthday"
-                        name="month"
+                        name="birthday"
                         placeholder="MONTH"
                         width="xl"
                         fieldProps={{ variant: 'outlined' }}

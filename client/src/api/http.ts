@@ -10,7 +10,7 @@ type ApiResponse<T> = {
     status: number
 }
 
-export const throttleAlert = (msg: string) => throttle(message.error(msg), 1500, { trailing: false })
+export const throttleAlert = (msg: string) => throttle(message.error(msg), 1500, { trailing: false, leading: true })
 
 const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
     const token = getLocalStorage('token')

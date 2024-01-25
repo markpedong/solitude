@@ -10,7 +10,10 @@ import (
 )
 
 func UpdateUser(ctx *gin.Context) {
-	var body models.User
+	var body struct {
+		ID string `json:"id"`
+		FirstName string `json:"first_name"`
+	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
@@ -18,7 +21,9 @@ func UpdateUser(ctx *gin.Context) {
 	}
 
 	var foundUser models.User
-	if err := database.DB.Where("id = ?", body.ID).First(&foundUser).Error; err != nil {
+	if err := database.DB.Where("id = ?", body.ID).First(&models.User{}).Updates(map[string]interface{}{
+		"first_name": body.FirstName,
+		"last_name":  body.LastName}).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
