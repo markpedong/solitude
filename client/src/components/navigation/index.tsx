@@ -17,12 +17,12 @@ import {
     PhoneOutlined,
     RightOutlined,
     SearchOutlined,
-    SmileOutlined,
     UserOutlined,
 } from '@ant-design/icons'
 import { ActionType, ModalForm, ProForm, ProFormInstance, ProFormText } from '@ant-design/pro-components'
-import { Button, Col, Drawer, Dropdown, Flex, Input, Row, Typography } from 'antd'
 import type { MenuProps } from 'antd'
+import { Button, Col, Drawer, Dropdown, Flex, Input, Row, Typography } from 'antd'
+import classNames from 'classnames'
 import { Jost } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -61,14 +61,6 @@ const Navigation: FC = () => {
     const filteredProducts = useMemo(() => {
         return products?.filter(product => product.product_name.toLowerCase().includes(searchFilter))
     }, [products, searchFilter])
-
-    const showDrawer = () => {
-        setOpen(true)
-    }
-
-    const onClose = () => {
-        setOpen(false)
-    }
 
     const handleResize = () => {
         if (window.innerWidth > 768) {
@@ -125,7 +117,7 @@ const Navigation: FC = () => {
 
     const handleFinish = async params => {
         let res
-    
+
         if (create) {
             res = await userSignup(params)
         }
@@ -144,40 +136,7 @@ const Navigation: FC = () => {
         return afterModalformFinish(actionRef, res?.message, res?.success)
     }
 
-    const items: MenuProps['items'] = [
-        {
-            key: '1',
-            label: (
-                <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-                    1st menu item
-                </a>
-            ),
-        },
-        {
-            key: '2',
-            label: (
-                <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-                    2nd menu item (disabled)
-                </a>
-            ),
-            icon: <SmileOutlined />,
-            disabled: true,
-        },
-        {
-            key: '3',
-            label: (
-                <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-                    3rd menu item (disabled)
-                </a>
-            ),
-            disabled: true,
-        },
-        {
-            key: '4',
-            danger: true,
-            label: 'a danger item',
-        },
-    ]
+    const handleLogout = async () => {}
 
     const renderLogin = () =>
         isLoggedIn() ? (
@@ -267,9 +226,9 @@ const Navigation: FC = () => {
                                     rules={[
                                         ...REQUIRED,
                                         {
-                                            type:'email',
-                                            message: 'input is not email format!'
-                                        }
+                                            type: 'email',
+                                            message: 'input is not email format!',
+                                        },
                                     ]}
                                 />
                                 {create && (
@@ -351,6 +310,29 @@ const Navigation: FC = () => {
             </ModalForm>
         )
 
+    const items: MenuProps['items'] = [
+        {
+            key: 'account',
+            label: (
+                <Link className={classNames(styles.linkItem, jost.className)} href="/account">
+                    ACCOUNT
+                </Link>
+            ),
+        },
+        {
+            key: 'logout',
+            danger: true,
+            label: (
+                <Typography.Link
+                    className={classNames(styles.linkItem, jost.className)}
+                    onClick={handleLogout}
+                    type="danger">
+                    LOGOUT
+                </Typography.Link>
+            ),
+        },
+    ]
+
     useEffect(() => {
         handleResize()
         handleGetFeatures()
@@ -389,7 +371,7 @@ const Navigation: FC = () => {
                         </div>
                         <div className={styles.navigationMobile}>
                             <MenuOutlined
-                                onClick={showDrawer}
+                                onClick={() => setOpen(true)}
                                 className={styles.navigationIcon}
                                 height={1000}
                                 width={1000}
@@ -404,7 +386,7 @@ const Navigation: FC = () => {
                                     </Flex>
                                 }
                                 placement="right"
-                                onClose={onClose}
+                                onClose={() => setOpen(false)}
                                 open={open}>
                                 <Flex vertical gap={30}>
                                     <MenuItem url="products" />

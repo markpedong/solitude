@@ -49,3 +49,6 @@ export const getCollections = () => get<TCollection[]>('/api/collections')
 
 // /api/getProductData
 export const getProductData = ({ id }) => get<TProduct>(`/api/product/${id}`)
+
+// /api/updateUser 
+export const updateUserData = (params) => post('/api/updateUser', params)

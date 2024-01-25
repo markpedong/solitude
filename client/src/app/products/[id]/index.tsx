@@ -1,7 +1,7 @@
 'use client'
 
 import { TProduct } from '@/api'
-import { Col, Divider, Flex, Row, Space } from 'antd'
+import { Col, Divider, Flex, Row } from 'antd'
 import React, { FC, memo } from 'react'
 import styles from './styles.module.scss'
 import Image from 'next/image'
