@@ -37,7 +37,7 @@ const Account: FC<Props> = ({ products }) => {
             <Col xs={0} lg={4} />
             <Col lg={16}>
                 <Flex className={styles.profileHeader} vertical gap={5} justify="center">
-                    <span className={cormorant.className}>Welcome back! {userData.first_name}</span>
+                    <span className={cormorant.className}>Welcome back! {userData?.first_name}</span>
                     <span className={jost.className}>Enjoy shopping with ease and happiness.</span>
                 </Flex>
                 <div className={styles.tabsContainer}>

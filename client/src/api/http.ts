@@ -4,7 +4,7 @@ import { message } from 'antd'
 import { getLocalStorage } from '@/utils/xLocalStorage'
 
 type ApiResponse<T> = {
-    data: T
+    data?: T
     message: string
     success: boolean
     status: number
@@ -14,22 +14,26 @@ export const throttleAlert = (msg: string) => throttle(message.error(msg), 1500,
 
 const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
     const token = getLocalStorage('token')
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            ...(token ? { 'token': String(token)?.replaceAll(`"`,"") } : {}),
-        },
-        body: JSON.stringify(data) || '{}',
-    })
-    const result = await response.json()
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                ...(token ? { token: String(token)?.replaceAll(`"`, '') } : {}),
+            },
+            body: JSON.stringify(data) || '{}',
+        })
+        const result = await response.json()
 
-    if (!result.success) {
-        throttleAlert(result?.message)
-        return result
+        if (!result?.success) {
+            throw new Error(JSON.stringify({ success: false, message: result.message, status: result.status }))
+        }
+
+        return result as ApiResponse<T>
+    } catch (err) {
+        throttleAlert(err.message?.message)
+        return { success: false, message: err.message, status: err.status }
     }
-
-    return result as ApiResponse<T>
 }
 
 const get = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
