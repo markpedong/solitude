@@ -89,6 +89,8 @@ const Navigation: FC = () => {
     }
 
     const handleLoginRegister = () => {
+        formRef?.current.resetFields()
+
         if (login) {
             dispatch(setActiveLoginForm('create'))
         } else {
@@ -133,10 +135,14 @@ const Navigation: FC = () => {
             res = await userLogin(params)
         }
 
-        dispatch(setUserData(res?.data))
-        setLocalStorage('token', res?.token)
-        router.push('/account')
-        return afterModalformFinish(actionRef, res.message, res.success)
+        if (res?.status === 200) {
+            dispatch(setUserData(res?.data))
+            setLocalStorage('token', res?.token)
+            router.push('/account')
+        }
+
+        formRef?.current.resetFields()
+        return afterModalformFinish(actionRef, res?.message, res?.success)
     }
 
     const items: MenuProps['items'] = [
@@ -323,7 +329,10 @@ const Navigation: FC = () => {
                                     marginBlockStart: create ? '2rem' : forgot ? '0.4rem' : '2rem',
                                 }}
                                 type="primary"
-                                onClick={() => formRef.current?.submit()}>
+                                onClick={() => {
+                                    formRef.current?.submit()
+                                    formRef?.current?.resetFields()
+                                }}>
                                 {create ? 'SIGN IN' : forgot ? 'RECOVER YOUR ACCOUNT' : 'LOGIN'}
                             </Button>
                             <Flex className={styles.createAccountContainer} justify="center" align="center">
