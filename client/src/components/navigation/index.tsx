@@ -175,7 +175,7 @@ const Navigation: FC = () => {
     ]
 
     const renderLogin = () =>
-        !isLoggedIn() ? (
+        isLoggedIn() ? (
             <Dropdown menu={{ items }}>
                 <UserOutlined onClick={e => e.preventDefault()} />
             </Dropdown>
