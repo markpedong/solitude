@@ -1,22 +1,24 @@
 'use client'
 
-import { ProForm, ProFormRadio, ProFormSelect, ProFormText } from '@ant-design/pro-components'
-import { Checkbox, Col, Flex, Row, Space } from 'antd'
-import classNames from 'classnames'
-import { FC } from 'react'
-import styles from './styles.module.scss'
-import { Jost } from 'next/font/google'
-import { INPUT_NOSPACE, REQUIRED } from '@/constants/helper'
+import { INPUT_NOSPACE, afterModalformFinish } from '@/constants/helper'
 import { useAppSelector } from '@/redux/store'
+import { ActionType, ProForm, ProFormDatePicker, ProFormRadio, ProFormText } from '@ant-design/pro-components'
+import { Col, Row } from 'antd'
+import classNames from 'classnames'
+import { Jost } from 'next/font/google'
+import { FC, useRef } from 'react'
+import styles from './styles.module.scss'
+import { updateUserData } from '@/api'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 const Profile: FC = () => {
     const { userData } = useAppSelector(state => state.userData)
+    const actionRef = useRef<ActionType>()
 
     return (
         <Row className={styles.profileWrapper}>
-            <Col span={12}>
+            <Col span={24}>
                 <span className={classNames(jost.className, styles.profileHeader)}>Your Information</span>
                 <ProForm
                     grid
@@ -26,8 +28,11 @@ const Profile: FC = () => {
                         resetButtonProps: false,
                     }}
                     onFinish={async params => {
-                        console.log(params)
-                        console.log(userData)
+                        const res = await updateUserData({...params, id: userData?.id})
+
+                        console.log("RES", res)
+
+                        return afterModalformFinish(actionRef, res.message, res.success)
                     }}>
                     <ProForm.Group>
                         <ProFormText
@@ -45,6 +50,12 @@ const Profile: FC = () => {
                             rules={[...INPUT_NOSPACE]}
                         />
                     </ProForm.Group>
+                    <ProFormText
+                        label="Email Address"
+                        name="email"
+                        placeholder="your@email.com"
+                        colProps={{ span: 12 }}
+                    />
                     <ProFormText label="Username" name="username" placeholder="Your Username" colProps={{ span: 12 }} />
                     <ProFormText.Password
                         label="Password"
@@ -53,12 +64,7 @@ const Profile: FC = () => {
                         colProps={{ span: 12 }}
                         rules={[...INPUT_NOSPACE, { min: 6 }]}
                     />
-                    <ProFormText
-                        label="Email Address"
-                        name="email"
-                        placeholder="your@email.com"
-                        colProps={{ span: 12 }}
-                    />
+                
                     <ProFormText.Password
                         label="Confirm Password"
                         name="confirm_password"
@@ -78,6 +84,7 @@ const Profile: FC = () => {
                             }),
                         ]}
                     />
+                    <ProForm.Group>
                     <ProFormRadio.Group
                         label="Gender"
                         name="gender"
@@ -95,18 +102,21 @@ const Profile: FC = () => {
                                 value: 'n/a',
                             },
                         ]}
+                        colProps={{span: 12}}
                     />
-                    <ProFormText label="Birthday">
-                        <Space direction="horizontal">
-                            <ProFormSelect name="month" colProps={{ span: 4 }} placeholder="MONTH" />
-                            <ProFormSelect name="day" colProps={{ span: 4 }} placeholder="DAY" />
-                            <ProFormSelect name="year" colProps={{ span: 4 }} placeholder="YEAR" />
-                        </Space>
-                    </ProFormText>
+                    <ProFormDatePicker
+                        label="Birthday"
+                        name="month"
+                        placeholder="MONTH"
+                        width="xl"
+                        fieldProps={{ variant: 'outlined' }}
+                        colProps={{span: 12}}
+                    />
+                    </ProForm.Group>
                 </ProForm>
             </Col>
-            <Col span={1} />
-            <Col span={11}>
+            {/* <Col span={1} /> */}
+            {/* <Col span={11}>
                 <Flex className={jost.className} justify="center" align="start" vertical gap={20}>
                     <span className={styles.extraContentHeader}>Solitude Emails</span>
                     <span className={styles.extraDescription}>
@@ -115,7 +125,7 @@ const Profile: FC = () => {
                     </span>
                     <Checkbox className={styles.extraFooter}>Check the box to subscribe to our newsletter</Checkbox>
                 </Flex>
-            </Col>
+            </Col> */}
         </Row>
     )
 }

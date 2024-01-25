@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"solitude/database"
 	"solitude/helpers"
 	"solitude/models"
 
@@ -16,5 +17,11 @@ func UpdateUser(ctx *gin.Context) {
 		return
 	}
 
-	helpers.JSONResponse(ctx, "successfully updated user!", helpers.DataHelper(body))
+	var foundUser models.User
+	if err := database.DB.Where("id = ?", body.ID).First(&foundUser).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	helpers.JSONResponse(ctx, "successfully updated user!", helpers.DataHelper(foundUser))
 }

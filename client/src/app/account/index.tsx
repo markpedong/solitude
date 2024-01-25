@@ -1,6 +1,6 @@
 'use client'
 
-import { Col, Flex, Row, Tabs, Typography } from 'antd'
+import { Col, Flex, Row, Tabs } from 'antd'
 import React, { FC, useEffect } from 'react'
 import styles from './styles.module.scss'
 import Profile from './components/profile'
