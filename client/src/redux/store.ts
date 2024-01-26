@@ -32,6 +32,11 @@ const persistedReducer = persistReducer(persistConfig, reducer)
 
 export const store = configureStore({
     reducer: persistedReducer,
+    middleware: getDefaultMiddleware => {
+        return getDefaultMiddleware({
+            serializableCheck: false,
+        })
+    },
 })
 
 export type RootState = ReturnType<typeof store.getState>
