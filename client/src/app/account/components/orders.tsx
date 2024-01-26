@@ -1,9 +1,7 @@
 'use client'
 
-import { Col, Flex, Row, Space } from 'antd'
-import Image from 'next/image'
-import React, { FC } from 'react'
-import styles from './styles.module.scss'
+import { Col, Row } from 'antd'
+import { FC } from 'react'
 type Props = {}
 
 const Orders: FC<Props> = () => {

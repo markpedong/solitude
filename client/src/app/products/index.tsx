@@ -3,10 +3,9 @@
 import { TProduct } from '@/api'
 import { PageHeader, Product } from '@/components/reusable'
 import { PRODUCT_FILTER } from '@/constants'
-import { SearchOutlined } from '@ant-design/icons'
-import { Button, Col, Flex, Input, Row, Select } from 'antd'
+import { Button, Col, Flex, Row, Select } from 'antd'
 import classNames from 'classnames'
-import { FC, memo, useEffect, useState } from 'react'
+import { FC, memo, useState } from 'react'
 import styles from './styles.module.scss'
 import { Jost } from 'next/font/google'
 
@@ -18,13 +17,13 @@ type SearchProps = {
 }
 
 const Products: FC<{ data: TProduct[] }> = ({ data }) => {
-    const [products, setProducts] = useState<TProduct[]>(data)
-    const [filter, setFilter] = useState<SearchProps>()
-    const handleSearch = e => {
-        const value = e.target.value.toLowerCase()
+    const [products, _1] = useState<TProduct[]>(data)
+    const [_, setFilter] = useState<SearchProps>()
+    // const handleSearch = e => {
+    //     const value = e.target.value.toLowerCase()
 
-        setProducts(data.filter(product => product.product_name.toLowerCase().includes(value)))
-    }
+    //     setProducts(data.filter(product => product.product_name.toLowerCase().includes(value)))
+    // }
 
     return (
         <div>
