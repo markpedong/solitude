@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"errors"
-	"fmt"
 	"log"
 	"net/http"
 	"solitude/database"
@@ -30,15 +28,18 @@ func HashPassword(password string) string {
 }
 
 func VerifyPassword(expectedHashedPassword, givenPassword string) (bool, string) {
-	err := bcrypt.CompareHashAndPassword([]byte(expectedHashedPassword), []byte(givenPassword))
+	// err := bcrypt.CompareHashAndPassword([]byte(expectedHashedPassword), []byte(givenPassword))
+	err := expectedHashedPassword == givenPassword
 
 	switch {
-	case err == nil:
+	case err:
 		return true, "Password matched!"
-	case errors.Is(err, bcrypt.ErrMismatchedHashAndPassword):
+	// case errors.Is(_, bcrypt.ErrMismatchedHashAndPassword):
+	// 	return false, "Password is incorrect!"
+	case !err:
 		return false, "Password is incorrect!"
 	default:
-		fmt.Printf("Password verification error: %s\n", err)
+		// fmt.Printf("Password verification error: %s\n", err)
 		return false, "Failed to verify password"
 	}
 }
@@ -63,7 +64,7 @@ func Signup(ctx *gin.Context) {
 		return
 	}
 
-	body.Password = HashPassword(body.Password)
+	// body.Password = HashPassword(body.Password)
 	body.ID = Guid.String()
 	token, refreshToken, _ := tokens.TokenGenerator(body.Email, body.FirstName, body.LastName, body.ID)
 
@@ -125,6 +126,7 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
+	existingUser.Password = HashPassword(existingUser.Password)
 	res := map[string]interface{}{
 		"data":          existingUser,
 		"token":         token,

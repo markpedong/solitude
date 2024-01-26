@@ -1,4 +1,3 @@
-import { getLocalStorage } from '@/utils/xLocalStorage'
 import { message } from 'antd'
 import { MutableRefObject } from 'react'
 
@@ -26,5 +25,3 @@ export const afterModalformFinish = (actionRef: MutableRefObject<any>, msg: stri
 
     return success
 }
-
-export const isLoggedIn = () => !!getLocalStorage('token')

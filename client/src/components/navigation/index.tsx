@@ -2,13 +2,13 @@
 
 import { TProduct, getProducts, userLogin, userSignup } from '@/api'
 import { MODAL_FORM_PROPS } from '@/constants'
-import { INPUT_NOSPACE, REQUIRED, afterModalformFinish, isLoggedIn } from '@/constants/helper'
+import { INPUT_NOSPACE, REQUIRED, afterModalformFinish } from '@/constants/helper'
 import forgotModalCover from '@/public/assets/forgotModalCover.webp'
 import loginModalCover from '@/public/assets/loginModalCover.webp'
 import logo from '@/public/assets/logo.webp'
 import signUpModalCover from '@/public/assets/signUpModalCover.webp'
 import { setActiveLoginForm } from '@/redux/features/booleanSlice'
-import { setUserData } from '@/redux/features/userSlice'
+import { resetUserData, setToken, setUserData } from '@/redux/features/userSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { setLocalStorage } from '@/utils/xLocalStorage'
 import {
@@ -51,6 +51,7 @@ const Navigation: FC = () => {
     const [products, setProducts] = useState<TProduct[]>([])
     const [searchFilter, setSearchFilter] = useState('')
     const { activeLoginForm } = useAppSelector(state => state.boolean)
+    const { isLoggedIn } = useAppSelector(state => state.userData)
     const formRef = useRef<ProFormInstance>()
     const actionRef = useRef<ActionType>()
     const router = useRouter()
@@ -61,6 +62,29 @@ const Navigation: FC = () => {
     const filteredProducts = useMemo(() => {
         return products?.filter(product => product.product_name.toLowerCase().includes(searchFilter))
     }, [products, searchFilter])
+
+    const items: MenuProps['items'] = [
+        {
+            key: 'account',
+            label: (
+                <Link className={classNames(styles.linkItem, jost.className)} href="/account">
+                    ACCOUNT
+                </Link>
+            ),
+        },
+        {
+            key: 'logout',
+            danger: true,
+            label: (
+                <Typography.Link
+                    className={classNames(styles.linkItem, jost.className)}
+                    onClick={() => dispatch(resetUserData())}
+                    type="danger">
+                    LOGOUT
+                </Typography.Link>
+            ),
+        },
+    ]
 
     const handleResize = () => {
         if (window.innerWidth > 768) {
@@ -128,6 +152,7 @@ const Navigation: FC = () => {
 
         if (res?.status === 200) {
             dispatch(setUserData(res?.data))
+            dispatch(setToken(res?.token))
             setLocalStorage('token', res?.token)
             router.push('/account')
         }
@@ -136,10 +161,8 @@ const Navigation: FC = () => {
         return afterModalformFinish(actionRef, res?.message, res?.success)
     }
 
-    const handleLogout = async () => {}
-
     const renderLogin = () =>
-        isLoggedIn() ? (
+        isLoggedIn ? (
             <Dropdown menu={{ items }}>
                 <UserOutlined onClick={e => e.preventDefault()} />
             </Dropdown>
@@ -309,29 +332,6 @@ const Navigation: FC = () => {
                 </Flex>
             </ModalForm>
         )
-
-    const items: MenuProps['items'] = [
-        {
-            key: 'account',
-            label: (
-                <Link className={classNames(styles.linkItem, jost.className)} href="/account">
-                    ACCOUNT
-                </Link>
-            ),
-        },
-        {
-            key: 'logout',
-            danger: true,
-            label: (
-                <Typography.Link
-                    className={classNames(styles.linkItem, jost.className)}
-                    onClick={handleLogout}
-                    type="danger">
-                    LOGOUT
-                </Typography.Link>
-            ),
-        },
-    ]
 
     useEffect(() => {
         handleResize()

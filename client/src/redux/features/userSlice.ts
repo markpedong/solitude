@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 type InitialSlice = {
     userData: {
@@ -12,6 +12,8 @@ type InitialSlice = {
         email: string
         first_name: string
     }
+    token: string
+    isLoggedIn: boolean
 }
 const initialState: InitialSlice = {
     userData: {
@@ -25,17 +27,29 @@ const initialState: InitialSlice = {
         email: '',
         first_name: '',
     },
+    token: '',
+    isLoggedIn: false,
 }
 
 export const UserSlice = createSlice({
     name: 'Boolean',
     initialState,
     reducers: {
+        resetUserData: state => {
+            state = initialState
+            window.location.reload()
+            window.location.replace('/')
+            localStorage.clear()
+        },
         setUserData: (state, action) => {
             state.userData = action.payload
+            state.isLoggedIn = true
+        },
+        setToken: (state, action) => {
+            state.token = action.payload
         },
     },
 })
 
-export const { setUserData } = UserSlice.actions
+export const { setUserData, resetUserData, setToken } = UserSlice.actions
 export default UserSlice.reducer
