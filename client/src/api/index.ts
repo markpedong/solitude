@@ -2,7 +2,7 @@ import { get, post } from './http'
 
 export type UserData = {
     id: string
-    created_at:string
+    created_at: string
     updated_at: string
     user_cart: []
     address_details: []
@@ -50,5 +50,5 @@ export const getCollections = () => get<TCollection[]>('/api/collections')
 // /api/getProductData
 export const getProductData = ({ id }) => get<TProduct>(`/api/product/${id}`)
 
-// /api/updateUser 
-export const updateUserData = (params) => post('/api/updateUser', params)
+// /api/updateUser
+export const updateUserData = params => post('/api/updateUser', params)

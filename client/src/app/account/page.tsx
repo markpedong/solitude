@@ -1,14 +1,6 @@
 import React from 'react'
 import Account from './components/account'
-
-async function getProducts(params) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`, {
-        body: params,
-        method: 'POST',
-    })
-    const data = await res.json()
-    return data
-}
+import { getProducts } from '@/api'
 
 const Page = async () => {
     const products = await getProducts({})
