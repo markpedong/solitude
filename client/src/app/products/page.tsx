@@ -1,5 +1,5 @@
 import { TProduct, getProducts } from '@/api'
-import Products from './index'
+import Products from './products'
 
 const Page = async () => {
     const products = await getProducts({})
