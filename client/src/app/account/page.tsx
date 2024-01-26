@@ -1,5 +1,5 @@
 import React from 'react'
-import Account from './account'
+import Account from './components/account'
 import { getProducts } from '@/api'
 
 const Page = async () => {

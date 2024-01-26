@@ -3,11 +3,11 @@
 import { Col, Flex, Row, Tabs } from 'antd'
 import React, { FC, useEffect } from 'react'
 import styles from './styles.module.scss'
-import Profile from './components/profile'
-import Orders from './components/orders'
-import AddProduct from './components/addProduct'
+import Profile from './profile'
+import Orders from './orders'
+import AddProduct from './addProduct'
 import { TProduct } from '@/api'
-import Address from './components/address'
+import Address from './address'
 import { Cormorant, Jost } from 'next/font/google'
 import { useRouter } from 'next/navigation'
 import { useAppSelector } from '@/redux/store'
@@ -28,8 +28,7 @@ const Account: FC<Props> = ({ products }) => {
     }
 
     useEffect(() => {
-       !!!userData?.id && router.push('/')
-
+        !!!userData?.id && router.push('/')
     }, [userData?.id])
 
     return (
