@@ -14,7 +14,7 @@
         },
         "jsx": "preserve",
         "alwaysStrict": true,
-        "noUnusedLocals": true,
+        "noUnusedLocals": false,
         "importHelpers": true,
         "lib": ["dom", "dom.iterable", "esnext"],
         "skipLibCheck": true,

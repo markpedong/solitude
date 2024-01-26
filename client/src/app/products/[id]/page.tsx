@@ -1,6 +1,6 @@
 import { getProductData, getProducts } from '@/api'
 import { FC } from 'react'
-import ProductDetails from '.'
+import ProductDetails from '../components/productDetails'
 
 type Params = { params: { id: string } }
 

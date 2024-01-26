@@ -3,7 +3,7 @@
 import { TProduct } from '@/api'
 import { Col, Divider, Flex, Row } from 'antd'
 import React, { FC, memo } from 'react'
-import styles from './styles.module.scss'
+import styles from '../styles.module.scss'
 import Image from 'next/image'
 import { Product } from '@/components/reusable'
 import { Cormorant } from 'next/font/google'
@@ -41,7 +41,7 @@ const ProductDetails: FC<Props> = ({ data, list }) => {
                             <Divider />
                         </Flex>
                         <Flex className={styles.extraProductContainer} wrap="wrap" justify="center">
-                            {list.map(q => (
+                            {list?.map(q => (
                                 <Product
                                     className={styles.itemContainer}
                                     description={q.description}

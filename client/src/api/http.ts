@@ -22,6 +22,7 @@ const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
         },
         body: JSON.stringify(data) || '{}',
     })
+    //prettier-ignore
     const result = await res.json() as ApiResponse<T>
 
     if (result?.status !== 200) {

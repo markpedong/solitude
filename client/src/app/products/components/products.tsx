@@ -6,7 +6,7 @@ import { PRODUCT_FILTER } from '@/constants'
 import { Button, Col, Flex, Row, Select } from 'antd'
 import classNames from 'classnames'
 import { FC, memo, useState } from 'react'
-import styles from './styles.module.scss'
+import styles from '../styles.module.scss'
 import { Jost } from 'next/font/google'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -33,8 +33,8 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
                     <PageHeader title="PRODUCTS" />
                     <Flex className={styles.filterWrapper} justify="center" align="center">
                         <Flex className={styles.filterContainer} justify="space-between">
-                            {PRODUCT_FILTER.map(q => {
-                                const options = Object.entries(q.options ?? {}).map(([label, value]) => ({
+                            {PRODUCT_FILTER?.map(q => {
+                                const options = Object.entries(q.options ?? {})?.map(([label, value]) => ({
                                     label,
                                     value,
                                 }))
@@ -65,7 +65,7 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
                         </Flex>
                     </Flex>
                     <Flex className={styles.productContainer} wrap="wrap" justify="center">
-                        {products.map(q => (
+                        {products?.map(q => (
                             <Product
                                 description={q.description}
                                 id={q.id}

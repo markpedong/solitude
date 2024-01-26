@@ -1,4 +1,3 @@
-import { getBlogs, getCollections, getProducts } from '@/api'
 import img1 from '@/public/assets/forgotModalCover.webp'
 import landing from '@/public/assets/landing.webp'
 import img3 from '@/public/assets/loginModalCover.webp'
@@ -14,6 +13,29 @@ import { Collection, Product } from '@/components/reusable'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
+
+async function getProducts(params) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`, {
+        body: params,
+        method: 'POST',
+    })
+    const data = await res.json()
+    return data
+}
+async function getBlogs() {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blogs`, {
+        method: 'GET',
+    })
+    const data = await res.json()
+    return data
+}
+async function getCollections() {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/collections`, {
+        method: 'GET',
+    })
+    const data = await res.json()
+    return data
+}
 
 const Page: FC = async () => {
     const products = await getProducts({})
@@ -44,7 +66,7 @@ const Page: FC = async () => {
             <div style={{ marginBlockStart: '70dvh' }} />
             <div className={styles.productWrapper}>
                 <div className={styles.carousel}>
-                    {products.data.map(q => (
+                    {products.data?.map(q => (
                         <Product
                             description={q.description}
                             id={q.id}

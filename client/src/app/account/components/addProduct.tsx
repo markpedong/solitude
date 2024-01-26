@@ -45,7 +45,7 @@ const AddProduct: FC<Props> = ({ products }) => {
                         .fill(
                             'https://res.cloudinary.com/dyjxuqnn9/image/upload/v1705887851/products/r8cujachll2hhls6iebd.jpg'
                         )
-                        .map(q => (
+                        ?.map(q => (
                             <Image src={q} alt="product_image" width={1000} height={1000} />
                         ))}
                     <ProFormUploadButton
@@ -84,7 +84,7 @@ const AddProduct: FC<Props> = ({ products }) => {
             <Col span={11}>
                 <Input.Search />
                 <Space className={styles.allProductContainer} direction="vertical" size={10}>
-                    {products?.slice(0, 5).map(q => {
+                    {products?.slice(0, 5)?.map(q => {
                         return (
                             <Flex className={styles.allProducts}>
                                 <Image src={q.image} alt="product_image" width={1000} height={1000} />
