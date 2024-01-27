@@ -81,6 +81,13 @@ func Signup(ctx *gin.Context) {
 		}
 	}
 
+	if body.Username != "" {
+		if err := database.DB.Where("username = ?", body.Username).First(&existingUser).Error; err == nil {
+			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with this username already exists!")
+			return
+		}
+	}
+
 	body.ID = Guid.String()
 	token, refreshToken, err := tokens.TokenGenerator(body.Email, body.FirstName, body.LastName, body.ID)
 	if err != nil {
@@ -124,7 +131,7 @@ func Login(ctx *gin.Context) {
 	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid JSON input")
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid JSON input")
 		return
 	}
 
@@ -134,13 +141,13 @@ func Login(ctx *gin.Context) {
 	}
 
 	if body.Email == "" || body.Password == "" {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Email and password are required")
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "email and password are required")
 		return
 	}
 
 	var existingUser models.User
 	if err := database.DB.Where("email = ?", body.Email).First(&existingUser).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "User not found!")
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user not found!")
 		return
 	}
 

@@ -2,7 +2,14 @@
 
 import { INPUT_NOSPACE, afterModalformFinish } from '@/constants/helper'
 import { useAppSelector } from '@/redux/store'
-import { ActionType, ProForm, ProFormDatePicker, ProFormInstance, ProFormRadio, ProFormText } from '@ant-design/pro-components'
+import {
+    ActionType,
+    ProForm,
+    ProFormDatePicker,
+    ProFormInstance,
+    ProFormRadio,
+    ProFormText,
+} from '@ant-design/pro-components'
 import { Col, Row } from 'antd'
 import classNames from 'classnames'
 import { Jost } from 'next/font/google'
@@ -30,8 +37,7 @@ const Profile: FC = () => {
                         resetButtonProps: false,
                     }}
                     onFinish={async params => {
-                        console.log(params)
-                        const res = await updateUserData({...params, id: userData?.id})
+                        const res = await updateUserData({ ...params, id: userData?.id })
 
                         formRef?.current.resetFields()
                         return afterModalformFinish(actionRef, res.message, res.success)
@@ -66,7 +72,7 @@ const Profile: FC = () => {
                         colProps={{ span: 12 }}
                         rules={[...INPUT_NOSPACE, { min: 6 }]}
                     />
-                
+
                     <ProFormText.Password
                         label="Confirm Password"
                         name="confirm_password"
@@ -87,33 +93,33 @@ const Profile: FC = () => {
                         ]}
                     />
                     <ProForm.Group>
-                    <ProFormRadio.Group
-                        label="Gender"
-                        name="gender"
-                        options={[
-                            {
-                                label: 'Male',
-                                value: 'male',
-                            },
-                            {
-                                label: 'Female',
-                                value: 'female',
-                            },
-                            {
-                                label: `I'd rather not say`,
-                                value: 'n/a',
-                            },
-                        ]}
-                        colProps={{span: 12}}
-                    />
-                    <ProFormDatePicker
-                        label="Birthday"
-                        name="birthday"
-                        placeholder="MONTH"
-                        width="xl"
-                        fieldProps={{ variant: 'outlined' }}
-                        colProps={{span: 12}}
-                    />
+                        <ProFormRadio.Group
+                            label="Gender"
+                            name="gender"
+                            options={[
+                                {
+                                    label: 'Male',
+                                    value: 'male',
+                                },
+                                {
+                                    label: 'Female',
+                                    value: 'female',
+                                },
+                                {
+                                    label: `I'd rather not say`,
+                                    value: 'n/a',
+                                },
+                            ]}
+                            colProps={{ span: 12 }}
+                        />
+                        <ProFormDatePicker
+                            label="Birthday"
+                            name="birthday"
+                            placeholder="MONTH"
+                            width="xl"
+                            fieldProps={{ variant: 'outlined' }}
+                            colProps={{ span: 12 }}
+                        />
                     </ProForm.Group>
                 </ProForm>
             </Col>
