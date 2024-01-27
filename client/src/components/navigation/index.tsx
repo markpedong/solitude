@@ -10,7 +10,7 @@ import signUpModalCover from '@/public/assets/signUpModalCover.webp'
 import { setActiveLoginForm } from '@/redux/features/booleanSlice'
 import { resetUserData, setToken, setUserData } from '@/redux/features/userSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
-import { setLocalStorage } from '@/utils/xLocalStorage'
+import { getLocalStorage, setLocalStorage } from '@/utils/xLocalStorage'
 import {
     LockOutlined,
     MenuOutlined,
@@ -150,7 +150,7 @@ const Navigation: FC = () => {
             res = await userLogin(params)
         }
 
-        if (res?.status === 200) {
+        if (res?.success) {
             dispatch(setUserData(res?.data))
             dispatch(setToken(res?.token))
             setLocalStorage('token', res?.token)
@@ -162,7 +162,7 @@ const Navigation: FC = () => {
     }
 
     const renderLogin = () =>
-        isLoggedIn ? (
+        isLoggedIn && !!getLocalStorage('token') ? (
             <Dropdown menu={{ items }}>
                 <UserOutlined onClick={e => e.preventDefault()} />
             </Dropdown>
