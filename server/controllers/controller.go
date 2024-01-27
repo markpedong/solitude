@@ -47,8 +47,8 @@ func VerifyPassword(expectedHashedPassword, givenPassword string) (bool, string)
 func Signup(ctx *gin.Context) {
 	var body struct {
 		ID             string           `json:"id" gorm:"primaryKey"`
-		FirstName      string           `json:"first_name" validate:"max=10"`
-		LastName       string           `json:"last_name" validate:"max=10"`
+		FirstName      string           `json:"first_name" validate:"required,max=10"`
+		LastName       string           `json:"last_name" validate:"required,max=10"`
 		Password       string           `json:"password" validate:"required,min=6"`
 		Email          string           `json:"email" validate:"required"`
 		Phone          string           `json:"phone"`
@@ -80,6 +80,7 @@ func Signup(ctx *gin.Context) {
 		return
 	}
 
+	body.ID = Guid.String()
 	token, refreshToken, err := tokens.TokenGenerator(body.Email, body.FirstName, body.LastName, body.ID)
 	if err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())

@@ -224,6 +224,7 @@ const Navigation: FC = () => {
                                             maxLength: 10,
                                         }}
                                         colProps={{ span: 8 }}
+                                        rules={[...REQUIRED]}
                                     />
                                     <ProFormText
                                         name="last_name"
@@ -231,6 +232,7 @@ const Navigation: FC = () => {
                                         label="Last Name"
                                         colProps={{ span: 8 }}
                                         fieldProps={{ maxLength: 10 }}
+                                        rules={[...REQUIRED]}
                                     />
                                     <ProFormText
                                         name="phone"
