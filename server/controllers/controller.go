@@ -48,8 +48,8 @@ func Signup(ctx *gin.Context) {
 		FirstName      string           `json:"first_name" validate:"required,max=10"`
 		LastName       string           `json:"last_name" validate:"required,max=10"`
 		Password       string           `json:"password" validate:"required,min=6"`
-		Email          string           `json:"email" validate:"required"`
-		Phone          string           `json:"phone"`
+		Email          *string          `json:"email" validate:"required"`
+		Phone          *string          `json:"phone"`
 		Username       string           `json:"username"`
 		UserCart       []models.Product `json:"user_cart"`
 		AddressDetails []models.Address `json:"address_details"`
@@ -66,14 +66,14 @@ func Signup(ctx *gin.Context) {
 		return
 	}
 
-	result := database.DB.Where("email = ? OR phone = ?", body.Email, body.Phone).First(&models.User{})
-	if result.RowsAffected > 0 {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user already exist")
+	var existingUser models.User
+	if err := database.DB.Where("email = ?", body.Email).Or("phone = ?", body.Phone).First(&existingUser).Error; err == nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "email or phone number already exists")
 		return
 	}
 
 	body.ID = Guid.String()
-	token, refreshToken, err := tokens.TokenGenerator(body.Email, body.FirstName, body.LastName, body.ID)
+	token, refreshToken, err := tokens.TokenGenerator(*body.Email, body.FirstName, body.LastName, body.ID)
 	if err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
@@ -88,8 +88,8 @@ func Signup(ctx *gin.Context) {
 		FirstName:      body.FirstName,
 		LastName:       body.LastName,
 		Password:       body.Password,
-		Email:          body.Email,
-		Phone:          body.Phone,
+		Email:          *body.Email,
+		Phone:          *body.Phone,
 		Username:       body.Username,
 		UserCart:       body.UserCart,
 		AddressDetails: body.AddressDetails,
