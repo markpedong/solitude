@@ -70,11 +70,6 @@ func Signup(ctx *gin.Context) {
 
 	var existingUser models.User
 	result := database.DB.Where("email = ? OR phone = ?", body.Email, body.Phone).First(&existingUser)
-	// if result.Error != nil {
-	// 	helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, result.Error.Error())
-	// 	return
-	// }
-
 	if result.RowsAffected > 0 {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with the provided email or phone already exists")
 		return
