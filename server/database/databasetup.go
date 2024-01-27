@@ -22,9 +22,11 @@ func DBSet() {
 	_, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 
-	DB, err = gorm.Open(postgres.Open(os.Getenv("DB_DSN")), &gorm.Config{
-		NamingStrategy: schema.NamingStrategy{SingularTable: true},
-	})
+	DB, err = gorm.Open(postgres.Open(os.Getenv("DB_DSN_LOCAL")),
+		&gorm.Config{
+			NamingStrategy: schema.NamingStrategy{SingularTable: true},
+		})
+
 	if err != nil {
 		log.Fatal("Failed to Connect to a Database")
 		return
@@ -34,7 +36,6 @@ func DBSet() {
 		&models.Address{},
 		&models.Order{},
 		&models.Payment{},
-		&models.ProductUser{},
 		&models.Blogs{},
 		&models.Product{},
 	)

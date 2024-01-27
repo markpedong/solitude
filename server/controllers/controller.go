@@ -45,43 +45,75 @@ func VerifyPassword(expectedHashedPassword, givenPassword string) (bool, string)
 }
 
 func Signup(ctx *gin.Context) {
-	var body models.User
+	var body struct {
+		ID             string           `json:"id" gorm:"primaryKey"`
+		FirstName      string           `json:"first_name" validate:"max=10"`
+		LastName       string           `json:"last_name" validate:"max=10"`
+		Password       string           `json:"password" validate:"required,min=6"`
+		Email          string           `json:"email" validate:"required"`
+		Phone          string           `json:"phone"`
+		Username       string           `json:"username"`
+		UserCart       []models.Product `json:"user_cart"`
+		AddressDetails []models.Address `json:"address_details"`
+		Orders         []models.Order   `json:"orders"`
+	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid JSON input")
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid JSON input")
 		return
 	}
 
 	if err := Validate.Struct(body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid inputs! Check your form.")
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid inputs! Check your form.")
 		return
 	}
 
 	var existingUser models.User
 	result := database.DB.Where("email = ? OR phone = ?", body.Email, body.Phone).First(&existingUser)
-	if result.RowsAffected > 0 {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "User already exists!")
+	if result.Error != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, result.Error.Error())
 		return
 	}
 
-	// body.Password = HashPassword(body.Password)
-	body.ID = Guid.String()
-	token, refreshToken, _ := tokens.TokenGenerator(body.Email, body.FirstName, body.LastName, body.ID)
+	if result.RowsAffected > 0 {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with the provided email or phone already exists")
+		return
+	}
 
-	body.UserCart = make([]models.ProductUser, 0)
+	token, refreshToken, err := tokens.TokenGenerator(body.Email, body.FirstName, body.LastName, body.ID)
+	if err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	body.UserCart = make([]models.Product, 0)
 	body.AddressDetails = make([]models.Address, 0)
 	body.Orders = make([]models.Order, 0)
 
-	if err := database.DB.Create(&body).Error; err != nil {
+	newUser := models.User{
+		ID:             body.ID,
+		FirstName:      body.FirstName,
+		LastName:       body.LastName,
+		Password:       body.Password,
+		Email:          body.Email,
+		Phone:          body.Phone,
+		Username:       body.Username,
+		UserCart:       body.UserCart,
+		AddressDetails: body.AddressDetails,
+		Orders:         body.Orders,
+	}
+
+	if err := database.DB.Create(&newUser).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Failed to create user")
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, gin.H{
+	newUser.Password = HashPassword(body.Password)
+	ctx.JSON(http.StatusOK, gin.H{
 		"message":       "User has been created!",
 		"success":       true,
 		"status":        http.StatusOK,
-		"data":          body,
+		"data":          newUser,
 		"token":         token,
 		"refresh_token": refreshToken,
 	})
@@ -98,7 +130,7 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	if err := Validate.Struct(body); err != nil {
+	if err := Validate.Struct(&body); err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}

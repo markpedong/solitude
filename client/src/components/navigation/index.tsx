@@ -221,6 +221,7 @@ const Navigation: FC = () => {
                                         label="First Name"
                                         fieldProps={{
                                             prefix: <UserOutlined />,
+                                            maxLength: 10,
                                         }}
                                         colProps={{ span: 8 }}
                                     />
@@ -229,6 +230,7 @@ const Navigation: FC = () => {
                                         placeholder="eg: Smith"
                                         label="Last Name"
                                         colProps={{ span: 8 }}
+                                        fieldProps={{ maxLength: 10 }}
                                     />
                                     <ProFormText
                                         name="phone"

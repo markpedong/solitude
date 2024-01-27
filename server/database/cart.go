@@ -6,7 +6,7 @@ import (
 	"solitude/models"
 	"time"
 
-	"github.com/google/uuid"
+	"github.com/rs/xid"
 )
 
 var (
@@ -17,6 +17,8 @@ var (
 	ErrCantGetItem        = errors.New("cannot remove this item from cart")
 	ErrCantBuyCartItem    = errors.New("cannot update the purchase")
 )
+
+var Guid = xid.New()
 
 func AddProductToCart(productID uint, userID uint) error {
 	var product models.Product
@@ -33,7 +35,7 @@ func AddProductToCart(productID uint, userID uint) error {
 		return ErrUserIDIsNotValid
 	}
 
-	userCart := models.ProductUser{
+	userCart := models.Product{
 		ProductID: product.ProductID,
 	}
 	user.UserCart = append(user.UserCart, userCart)
@@ -85,8 +87,8 @@ func BuyItemsFromCart(userID uint) error {
 
 	// Create a new order
 	order := models.Order{
-		OrderID:       uuid.New(),
-		OrderCart:     make([]models.ProductUser, 0),
+		OrderID:       Guid.String(),
+		OrderCart:     make([]models.Product, 0),
 		OrderedAt:     time.Now(),
 		Price:         totalPrice,
 		PaymentMethod: models.Payment{COD: true},
@@ -108,7 +110,7 @@ func BuyItemsFromCart(userID uint) error {
 }
 
 func InstantBuyer(productID uint, userID uint) error {
-	var productDetails models.ProductUser
+	var productDetails models.Product
 	var user models.User
 	var order models.Order
 
@@ -126,9 +128,9 @@ func InstantBuyer(productID uint, userID uint) error {
 
 	// Create a new order
 	order = models.Order{
-		OrderID:       uuid.New(),
+		OrderID:       Guid.String(),
 		OrderedAt:     time.Now(),
-		OrderCart:     []models.ProductUser{productDetails},
+		OrderCart:     []models.Product{productDetails},
 		Price:         productDetails.Price,
 		PaymentMethod: models.Payment{COD: true},
 	}
