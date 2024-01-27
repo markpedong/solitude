@@ -1,16 +1,14 @@
 'use client'
 
-import { Col, Flex, Row, Space } from 'antd'
-import Image from 'next/image'
-import React, { FC } from 'react'
-import styles from './styles.module.scss'
+import { Col, Row } from 'antd'
+import { FC } from 'react'
 type Props = {}
 
 const Orders: FC<Props> = () => {
     return (
         <Row>
             <Col span={24}>
-                {new Array(5).fill('').map(() => (
+                {/* {new Array(5).fill('').map(() => (
                     <Flex className={styles.orderContainer}>
                         <Image
                             src="https://random.imagecdn.app/150/150?random=965622"
@@ -28,7 +26,7 @@ const Orders: FC<Props> = () => {
                             <span>₱156</span>
                         </div>
                     </Flex>
-                ))}
+                ))} */}
             </Col>
         </Row>
     )

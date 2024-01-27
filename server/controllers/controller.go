@@ -4,12 +4,12 @@ import (
 	"log"
 	"net/http"
 	"solitude/database"
+	"solitude/helpers"
 	"solitude/models"
 	"solitude/tokens"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"github.com/google/uuid"
 	"github.com/rs/xid"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -27,202 +27,148 @@ func HashPassword(password string) string {
 	return string(hash)
 }
 
-func VerifyPassword(userPassword string, givenPassword string) (bool, string) {
-	err := bcrypt.CompareHashAndPassword([]byte(givenPassword), []byte(userPassword))
-	valid := true
-	msg := ""
+func VerifyPassword(expectedHashedPassword, givenPassword string) (bool, string) {
+	// err := bcrypt.CompareHashAndPassword([]byte(expectedHashedPassword), []byte(givenPassword))
+	err := expectedHashedPassword == givenPassword
 
-	if err != nil {
-		valid = false
-		msg = "Password is incorrect!"
+	switch {
+	case err:
+		return true, "Password matched!"
+	// case errors.Is(_, bcrypt.ErrMismatchedHashAndPassword):
+	// 	return false, "Password is incorrect!"
+	case !err:
+		return false, "Password is incorrect!"
+	default:
+		// fmt.Printf("Password verification error: %s\n", err)
+		return false, "Failed to verify password"
 	}
-
-	return valid, msg
 }
 
 func Signup(ctx *gin.Context) {
-	var body models.User
+	var body struct {
+		ID             string           `json:"id" gorm:"primaryKey"`
+		FirstName      string           `json:"first_name" validate:"max=10"`
+		LastName       string           `json:"last_name" validate:"max=10"`
+		Password       string           `json:"password" validate:"required,min=6"`
+		Email          string           `json:"email" validate:"required"`
+		Phone          string           `json:"phone"`
+		Username       string           `json:"username"`
+		UserCart       []models.Product `json:"user_cart"`
+		AddressDetails []models.Address `json:"address_details"`
+		Orders         []models.Order   `json:"orders"`
+	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid JSON input",
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid JSON input")
 		return
 	}
 
 	if err := Validate.Struct(body); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid inputs! Check your form.")
 		return
 	}
 
 	var existingUser models.User
 	result := database.DB.Where("email = ? OR phone = ?", body.Email, body.Phone).First(&existingUser)
-	if result.RowsAffected > 0 {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "User already exists!",
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+	if result.Error != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, result.Error.Error())
 		return
 	}
 
-	password := HashPassword(*body.Password)
-	body.Password = &password
+	if result.RowsAffected > 0 {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with the provided email or phone already exists")
+		return
+	}
 
-	body.ID = uuid.New()
-	body.UserID = []byte(body.ID.String())
-	token, refreshToken, _ := tokens.TokenGenerator(body.Email, body.FirstName, body.LastName, body.ID)
-	body.Token = &token
-	body.RefreshToken = &refreshToken
+	token, refreshToken, err := tokens.TokenGenerator(body.Email, body.FirstName, body.LastName, body.ID)
+	if err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
 
-	body.UserCart = make([]models.ProductUser, 0)
+	body.UserCart = make([]models.Product, 0)
 	body.AddressDetails = make([]models.Address, 0)
 	body.Orders = make([]models.Order, 0)
 
-	// Save the new user to the database
-	// if err := database.DB.Create(&body).Error; err != nil {
-	// 	ctx.JSON(http.StatusInternalServerError, gin.H{
-	// 		"message": "Failed to create user",
-	// 		"success": false,
-	// 		"status":  http.StatusInternalServerError,
-	// 	})
-	// 	return
-	// }
+	newUser := models.User{
+		ID:             body.ID,
+		FirstName:      body.FirstName,
+		LastName:       body.LastName,
+		Password:       body.Password,
+		Email:          body.Email,
+		Phone:          body.Phone,
+		Username:       body.Username,
+		UserCart:       body.UserCart,
+		AddressDetails: body.AddressDetails,
+		Orders:         body.Orders,
+	}
 
-	ctx.JSON(http.StatusCreated, gin.H{
-		"message": "User has been created!",
-		"success": true,
-		"status":  http.StatusOK,
-		"body":    body,
+	if err := database.DB.Create(&newUser).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Failed to create user")
+		return
+	}
+
+	newUser.Password = HashPassword(body.Password)
+	ctx.JSON(http.StatusOK, gin.H{
+		"message":       "User has been created!",
+		"success":       true,
+		"status":        http.StatusOK,
+		"data":          newUser,
+		"token":         token,
+		"refresh_token": refreshToken,
 	})
 }
 
 func Login(ctx *gin.Context) {
 	var body struct {
-		Email    *string `json:"email"`
-		Password *string `json:"password"`
+		Email    string `json:"email" validate:"required"`
+		Password string `json:"password" validate:"required,min=6"`
 	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid JSON input",
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid JSON input")
 		return
 	}
 
-	if err := Validate.Struct(body); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+	if err := Validate.Struct(&body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	if body.Email == "" || body.Password == "" {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Email and password are required")
 		return
 	}
 
 	var existingUser models.User
 	if err := database.DB.Where("email = ?", body.Email).First(&existingUser).Error; err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "User not found!",
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "User not found!")
 		return
 	}
 
-	validPass, msg := VerifyPassword(*body.Password, *existingUser.Password)
+	validPass, msg := VerifyPassword(existingUser.Password, body.Password)
 	if !validPass {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"message": msg,
-			"success": false,
-			"status":  http.StatusInternalServerError,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusUnauthorized, msg)
 		return
 	}
 
-	token, refreshToken, _ := tokens.TokenGenerator(existingUser.Email, existingUser.FirstName, existingUser.LastName, uuid.UUID(existingUser.UserID))
+	token, refreshToken, err := tokens.TokenGenerator(existingUser.Email, existingUser.FirstName, existingUser.LastName, existingUser.ID)
+	if err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Error generating tokens")
+		return
+	}
 
-	tokens.UpdateToken(token, refreshToken, string(existingUser.UserID))
-
-	ctx.JSON(http.StatusFound, gin.H{
-		"message": "Logged in successfully!",
-		"success": true,
-		"status":  http.StatusOK,
-		"body":    body,
-	})
+	existingUser.Password = HashPassword(existingUser.Password)
+	res := map[string]interface{}{
+		"data":          existingUser,
+		"token":         token,
+		"refresh_token": refreshToken,
+	}
+	helpers.JSONResponse(ctx, "Logged in successfully", res)
 }
 
-func SearchProductByQuery(ctx *gin.Context) {
-	var body struct {
-		ProductID string `json:"product_id"`
-	}
+func CheckToken(ctx *gin.Context) {
+	token := ctx.GetHeader("token")
 
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": "check the JSON format!",
-			"success": false,
-		})
-		return
-	}
-
-	if body.ProductID == "" {
-		ctx.Header("Content-Type", "application/json")
-		ctx.JSON(http.StatusNotFound, gin.H{
-			"message": "invalid product_id",
-			"success": false,
-			"status":  http.StatusNotFound,
-		})
-		return
-	}
-
-	var product models.Product
-	if err := database.DB.First(&product, "id = ?", body.ProductID).Error; err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"message": "something went wrong when fetching data",
-			"success": false,
-			"status":  http.StatusInternalServerError,
-		})
-	}
-
-	ctx.JSON(http.StatusOK, gin.H{
-		"data":    product,
-		"success": true,
-		"status":  http.StatusOK,
-	})
-
+	helpers.JSONResponse(ctx, "token verified!!", helpers.DataHelper(token))
 }
-
-func ProductViewAdmin(ctx *gin.Context) {
-	var product models.Product
-
-	if err := ctx.BindJSON(&product); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	product.ProductID = Guid.String()
-
-	if err := database.DB.Create(&product).Error; err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Not Created"})
-		return
-	}
-
-	ctx.JSON(http.StatusOK, "Successfully added our Product Admin!!")
-}
-
-// func GetImage(ctx *gin.Context) {
-// 	var image Image
-// 	if err := db.First(&image, ctx.Param("id")).Error; err != nil {
-// 		ctx.JSON(http.StatusNotFound, gin.H{"error": "Image not found"})
-// 		return
-// 	}
-
-// 	ctx.File(image.Path)
-// }

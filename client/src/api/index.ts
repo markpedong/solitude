@@ -1,10 +1,21 @@
 import { get, post } from './http'
 
-export const signUp = params => post('/users/signup', params)
+export type UserData = {
+    id: string
+    created_at: string
+    updated_at: string
+    user_cart: []
+    address_details: []
+    orders: []
+    password: string
+    email: string
+}
 
-export const login = params => post('/users/login', params)
+export const userSignup = params => post('/users/signup', params)
 
-// /api/products
+export const userLogin = params => post<UserData>('/users/login', params)
+
+// /public/products
 export type TProduct = {
     id: string
     product_name: string
@@ -14,7 +25,7 @@ export type TProduct = {
     description: string
 }
 
-export const getProducts = params => post<TProduct[]>('/api/products', params)
+export const getProducts = params => post<TProduct[]>('/users/products', params)
 
 // /api/blogs
 export type TBlog = {
@@ -38,3 +49,6 @@ export const getCollections = () => get<TCollection[]>('/api/collections')
 
 // /api/getProductData
 export const getProductData = ({ id }) => get<TProduct>(`/api/product/${id}`)
+
+// /api/updateUser
+export const updateUserData = params => post('/api/updateUser', params)

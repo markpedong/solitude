@@ -22,10 +22,11 @@
     z-index: -10;
 
     img {
-        opacity: 0.5;
+        opacity: 0.8;
         width: 100dvw;
         height: 70dvh;
         object-fit: cover;
+        object-position: center center;
     }
 }
 
@@ -42,6 +43,7 @@
     gap: toRem(20);
 
     :nth-child(1) {
+        transition: all 0.1s ease-out;
 
         a {
             background-color: black;
@@ -54,16 +56,14 @@
             transition: all 0.2s ease-out;
 
 
-            &:hover {
-                background-color: #65635F;
-                color: white;
-            }
         }
-    }
 
-    :nth-child(2) {
-        letter-spacing: 0.1rem;
-        font-size: toRem(12);
+
+        &:hover {
+            background-color: white;
+            color: black;
+            transform: scale(1.1);
+        }
     }
 }
 
@@ -229,6 +229,7 @@
         a {
             text-decoration: none;
             color: black;
+            transition: all 0.1s ease-out;
 
             span {
                 padding: toRem(10) toRem(30);
@@ -243,6 +244,10 @@
                     background-color: black;
                     color: white !important;
                 }
+            }
+
+            &:hover {
+                transform: scale(1.1);
             }
         }
     }

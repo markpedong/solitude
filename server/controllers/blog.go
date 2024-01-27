@@ -6,7 +6,6 @@ import (
 	"solitude/models"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 func AddBlog(ctx *gin.Context) {
@@ -38,7 +37,7 @@ func AddBlog(ctx *gin.Context) {
 	}
 
 	blog := &models.Blogs{
-		ID:          uuid.New(),
+		ID:          Guid.String(),
 		Title:       body.Title,
 		Description: body.Description,
 		Image:       body.Image,

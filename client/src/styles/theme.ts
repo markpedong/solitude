@@ -1,4 +1,4 @@
-import { theme as t, type ThemeConfig } from 'antd'
+import type { ThemeConfig } from 'antd'
 
 const theme: ThemeConfig = {
     token: {
@@ -30,10 +30,7 @@ const theme: ThemeConfig = {
         Input: {
             hoverBorderColor: 'black',
             activeBorderColor: 'black',
-            activeShadow: '0px 2px rgba(101, 99, 95, 0.5)',
-        },
-        Button: {
-            controlItemBgHover: 'red',
+            activeShadow: 'none',
         },
     },
 }

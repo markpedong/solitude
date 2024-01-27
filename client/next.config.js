@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        remotePatterns: [{ hostname: 'random.imagecdn.app' }],
+        remotePatterns: [{ hostname: 'res.cloudinary.com' }, { hostname: 'random.imagecdn.app' }],
     },
     reactStrictMode: false,
 }

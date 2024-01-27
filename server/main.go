@@ -18,7 +18,7 @@ func init() {
 
 func CORSMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		allowedOrigins := []string{"https://solitude-ph.vercel.app", "http://localhost:3000"}
+		allowedOrigins := []string{"https://solitude-ph.vercel.app", "https://solitude-git-test-markpedong.vercel.app/", "http://localhost:3000"}
 		origin := c.Request.Header.Get("Origin")
 
 		for _, allowedOrigin := range allowedOrigins {
@@ -29,7 +29,7 @@ func CORSMiddleware() gin.HandlerFunc {
 		}
 
 		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With, Token")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
 
 		if c.Request.Method == "OPTIONS" {
@@ -49,6 +49,5 @@ func main() {
 	r.Use(gin.Logger())
 
 	routes.UserRoutes(r)
-
 	log.Fatal(r.Run(":" + os.Getenv("PORT")))
 }

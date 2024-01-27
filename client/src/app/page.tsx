@@ -1,4 +1,3 @@
-import { getBlogs, getCollections, getProducts } from '@/api'
 import img1 from '@/public/assets/forgotModalCover.webp'
 import landing from '@/public/assets/landing.webp'
 import img3 from '@/public/assets/loginModalCover.webp'
@@ -11,6 +10,7 @@ import Link from 'next/link'
 import { FC } from 'react'
 import styles from './styles.module.scss'
 import { Collection, Product } from '@/components/reusable'
+import { getBlogs, getCollections, getProducts } from '@/api'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -19,7 +19,7 @@ const Page: FC = async () => {
     const products = await getProducts({})
     const blogs = await getBlogs()
     const collections = await getCollections()
-    //
+
     return (
         <div>
             <div>
@@ -35,7 +35,6 @@ const Page: FC = async () => {
                     <span>
                         <Link href="/products">SEARCH PRODUCTS</Link>
                     </span>
-                    <span className={jost.className}>READ OUR CARE GUIDE</span>
                 </div>
                 <div className={styles.featuredContainer}>
                     <span className={cormorant.className}>Featured Products</span>
@@ -45,7 +44,7 @@ const Page: FC = async () => {
             <div style={{ marginBlockStart: '70dvh' }} />
             <div className={styles.productWrapper}>
                 <div className={styles.carousel}>
-                    {products.data.map(q => (
+                    {products.data?.map(q => (
                         <Product
                             description={q.description}
                             id={q.id}
@@ -71,7 +70,7 @@ const Page: FC = async () => {
                 <span className={jost.className}>More Articles</span>
             </div>
             <div className={styles.blogItemsContainer}>
-                {blogs.data.map(q => (
+                {blogs.data?.map(q => (
                     <div className={styles.blogItem} key={q.image}>
                         <Image src={q.image} alt={q.image} width={1000} height={1000} />
                         <div className={styles.featuresTextContainer}>
@@ -88,10 +87,10 @@ const Page: FC = async () => {
             </div>
             <div className={styles.joinWrapper}>
                 <div className={styles.imageContainer}>
-                    <Image src={img1} alt="logo1" />
-                    <Image src={img2} alt="logo1" />
-                    <Image src={img3} alt="logo1" />
-                    <Image src={img4} alt="logo1" />
+                    <Image src={img1} alt="logo1" priority />
+                    <Image src={img2} alt="logo1" priority />
+                    <Image src={img3} alt="logo1" priority />
+                    <Image src={img4} alt="logo1" priority />
                 </div>
                 <div className={styles.middleContainer}>
                     <h1 className={cormorant.className}>Join #solitude</h1>
@@ -100,10 +99,10 @@ const Page: FC = async () => {
                     </Link>
                 </div>
                 <div className={styles.imageContainer}>
-                    <Image src={img1} alt="logo1" />
-                    <Image src={img2} alt="logo1" />
-                    <Image src={img3} alt="logo1" />
-                    <Image src={img4} alt="logo1" />
+                    <Image src={img1} alt="logo1" priority />
+                    <Image src={img2} alt="logo1" priority />
+                    <Image src={img3} alt="logo1" priority />
+                    <Image src={img4} alt="logo1" priority />
                 </div>
             </div>
         </div>

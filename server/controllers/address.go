@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 func AddAddress(ctx *gin.Context) {
@@ -45,7 +44,7 @@ func AddAddress(ctx *gin.Context) {
 
 	if len(existingAddresses) < 2 {
 		newAddress := models.Address{
-			AddressID: uuid.New(),
+			AddressID: Guid.String(),
 			House:     body.House,
 			Street:    body.Street,
 			City:      body.City,

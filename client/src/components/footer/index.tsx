@@ -1,6 +1,6 @@
 'use client'
 
-import { Flex, Space } from 'antd'
+import { Flex } from 'antd'
 import Link from 'next/link'
 import { FC } from 'react'
 import styles from './styles.module.scss'
