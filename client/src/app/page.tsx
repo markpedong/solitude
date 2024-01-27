@@ -10,10 +10,32 @@ import Link from 'next/link'
 import { FC } from 'react'
 import styles from './styles.module.scss'
 import { Collection, Product } from '@/components/reusable'
-import { getBlogs, getCollections, getProducts } from '@/api'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
+
+async function getProducts(params) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`, {
+        body: params,
+        method: 'POST',
+    })
+    const data = await res.json()
+    return data
+}
+async function getBlogs() {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blogs`, {
+        method: 'GET',
+    })
+    const data = await res.json()
+    return data
+}
+async function getCollections() {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/collections`, {
+        method: 'GET',
+    })
+    const data = await res.json()
+    return data
+}
 
 const Page: FC = async () => {
     const products = await getProducts({})
