@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"log"
 	"net/http"
 	"solitude/database"
 	"solitude/helpers"
@@ -20,8 +19,7 @@ var Guid = xid.New()
 func HashPassword(password string) string {
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		log.Panic(err)
-		return ""
+		return err.Error()
 	}
 
 	return string(hash)
@@ -64,14 +62,13 @@ func Signup(ctx *gin.Context) {
 	}
 
 	if err := Validate.Struct(body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid inputs! Check your form.")
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	var existingUser models.User
-	result := database.DB.Where("email = ? OR phone = ?", body.Email, body.Phone).First(&existingUser)
+	result := database.DB.Where("email = ? OR phone = ?", body.Email, body.Phone).First(&models.User{})
 	if result.RowsAffected > 0 {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with the provided email or phone already exists")
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user already exist")
 		return
 	}
 
