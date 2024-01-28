@@ -14,7 +14,7 @@ export const throttleAlert = (msg: string) => throttle(message.error(msg), 1500,
 
 const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
     const token = getLocalStorage('token')
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL_TEST}${url}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
 const get = async <T>(url: string, data = {}): Promise<ApiResponse<T>> =>
     await (
         await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL_TEST}${url}${stringify(data) ? '?' + stringify(data) : ''}`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}${url}${stringify(data) ? '?' + stringify(data) : ''}`,
             {
                 method: 'GET',
                 next: { revalidate: 6000 },
