@@ -78,7 +78,11 @@ const Navigation: FC = () => {
             label: (
                 <Typography.Link
                     className={classNames(styles.linkItem, jost.className)}
-                    onClick={() => dispatch(resetUserData())}
+                    onClick={async () => {
+                        await dispatch(resetUserData())
+                        localStorage.clear()
+                        router.push('/')
+                    }}
                     type="danger">
                     LOGOUT
                 </Typography.Link>
@@ -103,13 +107,13 @@ const Navigation: FC = () => {
         setSearchFilter(value)
     }
 
-    const handleLoginRegister = () => {
+    const handleLoginRegister = async () => {
         formRef?.current.resetFields()
 
         if (login) {
-            dispatch(setActiveLoginForm('create'))
+            await dispatch(setActiveLoginForm('create'))
         } else {
-            dispatch(setActiveLoginForm('login'))
+            await dispatch(setActiveLoginForm('login'))
         }
     }
 
@@ -151,8 +155,8 @@ const Navigation: FC = () => {
         }
 
         if (res?.success) {
-            dispatch(setUserData(res?.data))
-            dispatch(setToken(res?.token))
+            await dispatch(setUserData(res?.data))
+            await dispatch(setToken(res?.token))
             setLocalStorage('token', res?.token)
             router.push('/account')
         }

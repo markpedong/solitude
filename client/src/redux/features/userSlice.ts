@@ -11,6 +11,7 @@ type InitialSlice = {
         password: string
         email: string
         first_name: string
+        birthday: string
     }
     token: string
     isLoggedIn: boolean
@@ -26,6 +27,7 @@ const initialState: InitialSlice = {
         password: '',
         email: '',
         first_name: '',
+        birthday: '',
     },
     token: '',
     isLoggedIn: false,
@@ -35,19 +37,9 @@ export const UserSlice = createSlice({
     name: 'Boolean',
     initialState,
     reducers: {
-        resetUserData: state => {
-            state = initialState
-            window.location.reload()
-            window.location.replace('/')
-            localStorage.clear()
-        },
-        setUserData: (state, action) => {
-            state.userData = action.payload
-            state.isLoggedIn = true
-        },
-        setToken: (state, action) => {
-            state.token = action.payload
-        },
+        resetUserData: () => initialState,
+        setUserData: (state, action) => ({ ...state, isLoggedIn: true, userData: action.payload }),
+        setToken: (state, action) => ({ ...state, token: action.payload }),
     },
 })
 

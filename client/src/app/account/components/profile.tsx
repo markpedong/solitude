@@ -18,6 +18,7 @@ import styles from './styles.module.scss'
 import { updateUserData } from '@/api'
 import { useDispatch } from 'react-redux'
 import { setUserData } from '@/redux/features/userSlice'
+import dayjs from 'dayjs'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -35,7 +36,11 @@ const Profile: FC = () => {
                     grid
                     formRef={formRef}
                     autoFocusFirstInput={false}
-                    initialValues={{ ...userData, password: '' }}
+                    initialValues={{
+                        ...userData,
+                        password: '',
+                        birthday: !!userData.birthday ? userData.birthday : dayjs().format('MM-DD-YYYY'),
+                    }}
                     submitter={{
                         resetButtonProps: false,
                     }}
@@ -43,7 +48,7 @@ const Profile: FC = () => {
                         const res = await updateUserData({ ...params, id: userData?.id })
 
                         if (res?.success) {
-                            dispatch(setUserData(res?.data))
+                            await dispatch(setUserData(res?.data))
                         }
 
                         return afterModalformFinish(actionRef, res.message, res.success, formRef)

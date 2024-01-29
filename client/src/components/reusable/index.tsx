@@ -31,7 +31,7 @@ const style = { color: 'black', textDecoration: 'none' }
 
 const Product: FC<PProps> = ({ id, image, product_name, description, price, className }) => {
     return (
-        <Link href={`/products/${id}`} style={style}>
+        <Link href={`/products/${id}`} style={style} key={id}>
             <div className={className ?? styles.itemContainer} key={id}>
                 <Image src={image} alt={product_name} width={1000} height={1000} priority />
                 <span className={`${styles.cardTitle} ${jost.className}`}>{product_name}</span>

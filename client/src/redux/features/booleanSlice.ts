@@ -15,15 +15,15 @@ export const BooleanSlice = createSlice({
     name: 'Boolean',
     initialState,
     reducers: {
-        setDarkMode: (state, action: PayloadAction<boolean>) => {
-            state.darkMode = action.payload
-        },
-        setActiveLoginForm: (state, action: PayloadAction<'login' | 'create' | 'forgot'>) => {
-            state.activeLoginForm = action.payload
-        },
-        setActiveSearchForm: (state, action: PayloadAction<boolean>) => {
-            state.activeSearchForm = action.payload
-        },
+        setDarkMode: (state, action: PayloadAction<boolean>) => ({ ...state, darkMode: !state.darkMode }),
+        setActiveLoginForm: (state, action: PayloadAction<'login' | 'create' | 'forgot'>) => ({
+            ...state,
+            activeLoginForm: action.payload,
+        }),
+        setActiveSearchForm: (state, action: PayloadAction<boolean>) => ({
+            ...state,
+            activeSearchForm: action.payload,
+        }),
     },
 })
 
