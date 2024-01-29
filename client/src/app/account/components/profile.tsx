@@ -58,40 +58,49 @@ const Profile: FC = () => {
                             rules={[...INPUT_NOSPACE]}
                         />
                     </ProForm.Group>
-                    <ProFormText
-                        label="Email Address"
-                        name="email"
-                        placeholder="your@email.com"
-                        colProps={{ span: 12 }}
-                    />
-                    <ProFormText label="Username" name="username" placeholder="Your Username" colProps={{ span: 12 }} />
-                    <ProFormText.Password
-                        label="Password"
-                        name="password"
-                        placeholder="Enter Password"
-                        colProps={{ span: 12 }}
-                        rules={[...INPUT_NOSPACE, { min: 6 }]}
-                    />
+                    <ProForm.Group>
+                        <ProFormText
+                            label="Email Address"
+                            name="email"
+                            placeholder="your@email.com"
+                            colProps={{ span: 12 }}
+                        />
+                        <ProFormText
+                            label="Username"
+                            name="username"
+                            placeholder="Your Username"
+                            colProps={{ span: 12 }}
+                        />
+                    </ProForm.Group>
+                    <ProForm.Group>
+                        <ProFormText.Password
+                            label="Password"
+                            name="password"
+                            placeholder="Enter Password"
+                            colProps={{ span: 12 }}
+                            rules={[...INPUT_NOSPACE, { min: 6 }]}
+                        />
 
-                    <ProFormText.Password
-                        label="Confirm Password"
-                        name="confirm_password"
-                        placeholder="Enter Password"
-                        colProps={{ span: 12 }}
-                        dependencies={['password']}
-                        rules={[
-                            ...INPUT_NOSPACE,
-                            { min: 6 },
-                            ({ getFieldValue }) => ({
-                                validator(_, value) {
-                                    if (!value || getFieldValue('password') === value) {
-                                        return Promise.resolve()
-                                    }
-                                    return Promise.reject(new Error('The passwords do not match'))
-                                },
-                            }),
-                        ]}
-                    />
+                        <ProFormText.Password
+                            label="Confirm Password"
+                            name="confirm_password"
+                            placeholder="Enter Password"
+                            colProps={{ span: 12 }}
+                            dependencies={['password']}
+                            rules={[
+                                ...INPUT_NOSPACE,
+                                { min: 6 },
+                                ({ getFieldValue }) => ({
+                                    validator(_, value) {
+                                        if (!value || getFieldValue('password') === value) {
+                                            return Promise.resolve()
+                                        }
+                                        return Promise.reject(new Error('The passwords do not match'))
+                                    },
+                                }),
+                            ]}
+                        />
+                    </ProForm.Group>
                     <ProForm.Group>
                         <ProFormRadio.Group
                             label="Gender"
@@ -99,15 +108,15 @@ const Profile: FC = () => {
                             options={[
                                 {
                                     label: 'Male',
-                                    value: 'male',
+                                    value: 1,
                                 },
                                 {
                                     label: 'Female',
-                                    value: 'female',
+                                    value: 2,
                                 },
                                 {
                                     label: `I'd rather not say`,
-                                    value: 'n/a',
+                                    value: 3,
                                 },
                             ]}
                             colProps={{ span: 12 }}
