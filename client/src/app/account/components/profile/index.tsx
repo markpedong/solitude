@@ -31,7 +31,7 @@ const Profile: FC = () => {
     return (
         <Row className={styles.profileWrapper}>
             <Col span={24}>
-                <span className={classNames(jost.className, styles.profileHeader)}>Your Information</span>
+                <span className={classNames(jost.className, styles.profileTitle)}>Your Information</span>
                 <ProForm
                     grid
                     formRef={formRef}

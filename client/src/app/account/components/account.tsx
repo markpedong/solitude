@@ -5,12 +5,12 @@ import React, { FC, useEffect } from 'react'
 import styles from './styles.module.scss'
 import Profile from './profile'
 import Orders from './orders'
-import AddProduct from './addProduct'
 import { TProduct } from '@/api'
 import Address from './address'
 import { Cormorant, Jost } from 'next/font/google'
 import { useRouter } from 'next/navigation'
 import { useAppSelector } from '@/redux/store'
+import AddProduct from './product'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
