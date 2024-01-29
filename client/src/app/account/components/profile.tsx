@@ -16,6 +16,8 @@ import { Jost } from 'next/font/google'
 import { FC, useRef } from 'react'
 import styles from './styles.module.scss'
 import { updateUserData } from '@/api'
+import { useDispatch } from 'react-redux'
+import { setUserData } from '@/redux/features/userSlice'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -23,6 +25,7 @@ const Profile: FC = () => {
     const { userData } = useAppSelector(state => state.userData)
     const actionRef = useRef<ActionType>()
     const formRef = useRef<ProFormInstance>()
+    const dispatch = useDispatch()
 
     return (
         <Row className={styles.profileWrapper}>
@@ -39,8 +42,11 @@ const Profile: FC = () => {
                     onFinish={async params => {
                         const res = await updateUserData({ ...params, id: userData?.id })
 
-                        formRef?.current.resetFields()
-                        return afterModalformFinish(actionRef, res.message, res.success)
+                        if (res?.success) {
+                            dispatch(setUserData(res?.data))
+                        }
+
+                        return afterModalformFinish(actionRef, res.message, res.success, formRef)
                     }}>
                     <ProForm.Group>
                         <ProFormText

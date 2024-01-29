@@ -17,6 +17,8 @@ type User struct {
 	Email          string    `json:"email" validate:"required"`
 	Phone          string    `json:"phone"`
 	Username       string    `json:"username"`
+	Gender         int       `json:"gender"`
+	Birthday       string    `json:"birthday"`
 }
 
 type Product struct {

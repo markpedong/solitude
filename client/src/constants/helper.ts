@@ -1,3 +1,4 @@
+import type { ProFormInstance, ActionType } from '@ant-design/pro-components'
 import { message } from 'antd'
 import { MutableRefObject } from 'react'
 
@@ -14,9 +15,18 @@ export const INPUT_NOSPACE = [
     },
 ]
 
-export const afterModalformFinish = (actionRef: MutableRefObject<any>, msg: string, success: boolean) => {
+export const afterModalformFinish = (
+    actionRef: MutableRefObject<ActionType>,
+    msg: string,
+    success: boolean,
+    formRef?: MutableRefObject<ProFormInstance>
+) => {
     if (actionRef) {
         actionRef?.current?.reload()
+    }
+
+    if (formRef) {
+        formRef?.current?.resetFields()
     }
 
     if (success && msg) {
