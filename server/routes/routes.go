@@ -8,7 +8,6 @@ import (
 )
 
 func UserRoutes(r *gin.Engine) {
-
 	users := r.Group("/users")
 	{
 		users.POST("/signup", controllers.Signup)

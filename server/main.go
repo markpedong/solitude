@@ -48,6 +48,7 @@ func main() {
 	r.Use(CORSMiddleware())
 	r.Use(gin.Logger())
 
+	r.MaxMultipartMemory = 20 << 20
 	routes.UserRoutes(r)
 	log.Fatal(r.Run(":" + os.Getenv("PORT")))
 }

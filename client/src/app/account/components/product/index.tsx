@@ -1,4 +1,4 @@
-import { TProduct } from '@/api'
+import { TProduct, uploadImages } from '@/api'
 import {
     ProForm,
     ProFormDigit,
@@ -8,7 +8,7 @@ import {
     ProFormTextArea,
     ProFormUploadButton,
 } from '@ant-design/pro-components'
-import { Button, Col, Flex, Row } from 'antd'
+import { Button, Col, Flex, Row, Upload, message } from 'antd'
 import classNames from 'classnames'
 import { Jost } from 'next/font/google'
 import Image from 'next/image'
@@ -23,7 +23,7 @@ type Props = {
 }
 
 const AddProduct: FC<Props> = ({ products }) => {
-    const [uploadedImages, setUploadedImages] = useState<string[]>([])
+    const [uploadedImages, setUploadedImages] = useState<{ url: string; fileName: string; size: number }[]>([])
     const formRef = useRef<ProFormInstance>()
 
     return (
@@ -41,7 +41,7 @@ const AddProduct: FC<Props> = ({ products }) => {
                         <Flex className={styles.productFront} vertical align="center">
                             {uploadedImages?.[0] && (
                                 <Image
-                                    src={uploadedImages?.[0]}
+                                    src={uploadedImages?.[0].url}
                                     alt="product_image"
                                     width={200}
                                     height={200}
@@ -54,17 +54,34 @@ const AddProduct: FC<Props> = ({ products }) => {
                             justify="center"
                             align="center"
                             wrap="wrap"
-                            data-length={0}>
+                            data-length={uploadedImages?.length}>
                             {uploadedImages?.map((q, i) => (
-                                <Image src={q} alt="product_image" width={1000} height={1000} key={i} priority />
+                                <Image src={q.url} alt="product_image" width={1000} height={1000} key={i} priority />
                             ))}
                             <ProFormUploadButton
                                 name="upload"
                                 fieldProps={{
-                                    name: 'file',
+                                    name: 'files',
                                     listType: 'picture-card',
+                                    showUploadList: false,
+                                    beforeUpload: file => {
+                                        const isPNG = file.type === 'image/*'
+                                        if (!isPNG) {
+                                            message.error(`${file.name} is not an image file`)
+                                        }
+                                        return isPNG || Upload.LIST_IGNORE
+                                    },
                                 }}
                                 title="UPLOAD YOUR IMAGE"
+                                onChange={async e => {
+                                    const form = new FormData()
+                                    e.fileList.forEach(file => {
+                                        form.append('files', file.originFileObj)
+                                    })
+                                    const res = await uploadImages(form)
+
+                                    setUploadedImages(res?.data)
+                                }}
                             />
                         </Flex>
                     </ProFormText>

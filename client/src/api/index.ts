@@ -1,4 +1,4 @@
-import { get, post } from './http'
+import { get, post, upload } from './http'
 
 export type UserData = {
     id: string
@@ -55,3 +55,6 @@ export const updateUserData = params => post('/api/updateUser', params)
 
 // /api/getUserData
 export const getUserData = params => post('/users/getUserData', params)
+
+// /api/uploadImage
+export const uploadImages = params => upload("/api/uploadImage", params, true)
