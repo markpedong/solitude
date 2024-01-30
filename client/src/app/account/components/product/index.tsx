@@ -46,25 +46,17 @@ const AddProduct: FC<Props> = ({ products }) => {
                             data-length={uploadedImages?.length}>
                             <ProFormUploadButton
                                 name="images"
+                                title="UPLOAD YOUR IMAGE"
                                 fieldProps={{
                                     name: 'files',
                                     listType: 'picture-card',
-                                    multiple: true,
                                     accept: 'image/*',
-                                    beforeUpload: () => false,
-                                    // beforeUpload: file => {
-                                    //     const isPNG = file.type === 'image/*'
-                                    //     if (!isPNG) {
-                                    //         message.error(`${file.name} is not an image file`)
-                                    //     }
-                                    //     return isPNG || Upload.LIST_IGNORE
-                                    // },
-                                }}
-                                title="UPLOAD YOUR IMAGE"
-                                onChange={async e => {
-                                    const res = await uploadImages(e.file)
-
-                                    return res
+                                    multiple: true,
+                                    action: async e => {
+                                        const res = await uploadImages(e)
+                                        console.log('RES', res)
+                                        return ''
+                                    },
                                 }}
                             />
                         </Flex>

@@ -92,31 +92,26 @@ func GetProductsByID(ctx *gin.Context) {
 }
 
 func UploadImage(ctx *gin.Context) {
-	form, err := ctx.MultipartForm()
-	files := form.File["files"]
+	form, err := ctx.FormFile("file")
 
 	if err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	var images []interface{}
-	for _, file := range files {
-		uploadResult, err := cloudinary.CloudinaryService.Upload.Upload(ctx, file, uploader.UploadParams{Folder: "products"})
-		if err != nil {
-			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-			return
-		}
-
-		imageRes := map[string]interface{}{
-			"url":      uploadResult.URL,
-			"fileName": uploadResult.OriginalFilename,
-			"size":     uploadResult.Bytes,
-		}
-		images = append(images, imageRes)
+	uploadResult, err := cloudinary.CloudinaryService.Upload.Upload(ctx, form, uploader.UploadParams{Folder: "products"})
+	if err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
 	}
 
-	helpers.JSONResponse(ctx, "upload successful!", helpers.DataHelper(images))
+	imageRes := map[string]interface{}{
+		"url":      uploadResult.URL,
+		"fileName": uploadResult.OriginalFilename,
+		"size":     uploadResult.Bytes,
+	}
+
+	helpers.JSONResponse(ctx, "upload successful!", helpers.DataHelper(imageRes))
 }
 
 func SearchProductByQuery(ctx *gin.Context) {
