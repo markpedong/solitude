@@ -12,14 +12,18 @@ type ApiResponse<T> = {
 
 export const throttleAlert = (msg: string) => throttle(message.error(msg), 1500, { trailing: false, leading: true })
 
-const upload = async <T>(url: string, data, multiple: boolean): Promise<ApiResponse<T>> => {
+const upload = async <T>(url: string, data): Promise<ApiResponse<T>> => {
     const token = getLocalStorage('token')
+    const form = new FormData()
+
+    form.append('file', data)
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`, {
         method: 'POST',
         headers: {
             ...(token ? { token: String(token)?.replaceAll(`"`, '') } : {}),
         },
-        body: data,
+        body: form,
     })
     //prettier-ignore
     const result = await res.json() as ApiResponse<T>

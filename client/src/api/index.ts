@@ -57,4 +57,4 @@ export const updateUserData = params => post('/api/updateUser', params)
 export const getUserData = params => post('/users/getUserData', params)
 
 // /api/uploadImage
-export const uploadImages = params => upload("/api/uploadImage", params, true)
+export const uploadImages = params => upload('/api/uploadImage', params)

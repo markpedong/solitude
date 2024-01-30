@@ -70,11 +70,6 @@
     }
 }
 
-
-.addProductHeader {
-    font-size: toRem(21);
-}
-
 .addProductInformation {
     gap: toRem(20);
 
@@ -128,30 +123,6 @@
 
         :nth-child(3) {
             font-size: toRem(15);
-        }
-    }
-}
-
-.galleryContainer {
-    gap: toRem(2);
-    padding-block-end: toRem(5);
-
-    img {
-        width: toRem(100);
-        height: toRem(100);
-        border-radius: toRem(2);
-    }
-
-    :global {
-
-        .ant-upload {
-            span {
-                display: flex !important;
-                flex-direction: column !important;
-                font-weight: 300 !important;
-                letter-spacing: toRem(1);
-                font-size: toRem(10);
-            }
         }
     }
 }

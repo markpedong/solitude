@@ -28,6 +28,7 @@ const AddProduct: FC<Props> = ({ products }) => {
 
     return (
         <div className={styles.addProductWrapper}>
+            <span className={classNames(jost.className, styles.addProductHeader)}>ADD PRODUCT</span>
             <ProForm
                 grid
                 autoFocusFirstInput={false}
@@ -38,49 +39,32 @@ const AddProduct: FC<Props> = ({ products }) => {
                 }}>
                 <ProForm.Group>
                     <ProFormText colProps={{ span: 12 }}>
-                        <Flex className={styles.productFront} vertical align="center">
-                            {uploadedImages?.[0] && (
-                                <Image
-                                    src={uploadedImages?.[0].url}
-                                    alt="product_image"
-                                    width={200}
-                                    height={200}
-                                    priority
-                                />
-                            )}
-                        </Flex>
                         <Flex
                             className={styles.galleryContainer}
                             justify="center"
                             align="center"
-                            wrap="wrap"
                             data-length={uploadedImages?.length}>
-                            {uploadedImages?.slice(1).map((q, i) => (
-                                <Image src={q.url} alt="product_image" width={1000} height={1000} key={i} priority />
-                            ))}
                             <ProFormUploadButton
-                                name="upload"
+                                name="images"
                                 fieldProps={{
                                     name: 'files',
                                     listType: 'picture-card',
-                                    showUploadList: false,
-                                    beforeUpload: file => {
-                                        const isPNG = file.type === 'image/*'
-                                        if (!isPNG) {
-                                            message.error(`${file.name} is not an image file`)
-                                        }
-                                        return isPNG || Upload.LIST_IGNORE
-                                    },
+                                    multiple: true,
+                                    accept: 'image/*',
+                                    beforeUpload: () => false,
+                                    // beforeUpload: file => {
+                                    //     const isPNG = file.type === 'image/*'
+                                    //     if (!isPNG) {
+                                    //         message.error(`${file.name} is not an image file`)
+                                    //     }
+                                    //     return isPNG || Upload.LIST_IGNORE
+                                    // },
                                 }}
                                 title="UPLOAD YOUR IMAGE"
                                 onChange={async e => {
-                                    const form = new FormData()
-                                    e.fileList.forEach(file => {
-                                        form.append('files', file.originFileObj)
-                                    })
-                                    const res = await uploadImages(form)
+                                    const res = await uploadImages(e.file)
 
-                                    setUploadedImages(res?.data)
+                                    return res
                                 }}
                             />
                         </Flex>
