@@ -55,7 +55,7 @@ const AddProduct: FC<Props> = ({ products }) => {
                             align="center"
                             wrap="wrap"
                             data-length={uploadedImages?.length}>
-                            {uploadedImages?.map((q, i) => (
+                            {uploadedImages?.slice(1).map((q, i) => (
                                 <Image src={q.url} alt="product_image" width={1000} height={1000} key={i} priority />
                             ))}
                             <ProFormUploadButton
