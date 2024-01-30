@@ -52,3 +52,6 @@ export const getProductData = ({ id }) => get<TProduct>(`/api/product/${id}`)
 
 // /api/updateUser
 export const updateUserData = params => post('/api/updateUser', params)
+
+// /api/getUserData
+export const getUserData = params => post('/users/getUserData', params)

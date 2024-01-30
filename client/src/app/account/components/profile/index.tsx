@@ -1,6 +1,6 @@
 'use client'
 
-import { INPUT_NOSPACE, afterModalformFinish } from '@/constants/helper'
+import { INPUT_NOSPACE, afterModalformFinish, compareObjects } from '@/constants/helper'
 import { useAppSelector } from '@/redux/store'
 import {
     ActionType,
@@ -15,10 +15,11 @@ import classNames from 'classnames'
 import { Jost } from 'next/font/google'
 import { FC, useRef } from 'react'
 import styles from './styles.module.scss'
-import { updateUserData } from '@/api'
+import { getUserData, updateUserData } from '@/api'
 import { useDispatch } from 'react-redux'
 import { setUserData } from '@/redux/features/userSlice'
 import dayjs from 'dayjs'
+import { omit, omitBy } from 'lodash'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -45,13 +46,14 @@ const Profile: FC = () => {
                         resetButtonProps: false,
                     }}
                     onFinish={async params => {
-                        const res = await updateUserData({ ...params, id: userData?.id })
+                        const update = await updateUserData({ ...params, id: userData?.id })
 
-                        if (res?.success) {
-                            await dispatch(setUserData(res?.data))
+                        if (update?.success) {
+                            const user = await getUserData({ id: userData?.id })
+                            await dispatch(setUserData(user?.data))
                         }
 
-                        return afterModalformFinish(actionRef, res.message, res.success, formRef)
+                        return afterModalformFinish(actionRef, update.message, update.success, formRef)
                     }}>
                     <ProForm.Group>
                         <ProFormText
@@ -119,15 +121,15 @@ const Profile: FC = () => {
                             options={[
                                 {
                                     label: 'Male',
-                                    value: 1,
+                                    value: 'male',
                                 },
                                 {
                                     label: 'Female',
-                                    value: 2,
+                                    value: 'female',
                                 },
                                 {
                                     label: `I'd rather not say`,
-                                    value: 3,
+                                    value: 'undefined',
                                 },
                             ]}
                             colProps={{ span: 12 }}

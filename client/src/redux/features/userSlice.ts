@@ -12,6 +12,7 @@ type InitialSlice = {
         email: string
         first_name: string
         birthday: string
+        username: string
     }
     token: string
     isLoggedIn: boolean
@@ -28,6 +29,7 @@ const initialState: InitialSlice = {
         email: '',
         first_name: '',
         birthday: '',
+        username: '',
     },
     token: '',
     isLoggedIn: false,
