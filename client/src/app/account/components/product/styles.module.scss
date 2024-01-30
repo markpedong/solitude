@@ -4,3 +4,31 @@
 .addProductWrapper {
     padding-block: toRem(5);
 }
+
+.addProductHeader{
+    font-size: toRem(20);
+    letter-spacing: toRem(0.5);
+}
+
+.productContainer{
+    padding-block-start: toRem(10);
+    padding-inline-end: toRem(10);
+
+    .productFront{
+        margin-block-end: toRem(3);
+        img {
+            height: toRem(200);
+            width: toRem(200);
+        }
+    }
+  
+}
+
+.galleryContainer{
+    img {
+        height: toRem(100);
+        width: toRem(100);
+        margin-inline-end: toRem(3);
+        margin-block-end: toRem(3);
+    }
+}

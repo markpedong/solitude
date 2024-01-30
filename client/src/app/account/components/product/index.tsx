@@ -1,12 +1,11 @@
-import { Col, Flex, Input, Row, Space } from 'antd'
-import React, { FC } from 'react'
-import styles from './styles.module.scss'
-import classNames from 'classnames'
-import Image from 'next/image'
-import { ProForm, ProFormSelect, ProFormText, ProFormTextArea, ProFormUploadButton } from '@ant-design/pro-components'
-import { DeleteOutlined } from '@ant-design/icons'
 import { TProduct } from '@/api'
+import { ProForm, ProFormDigit, ProFormSelect, ProFormText, ProFormTextArea, ProFormUploadButton } from '@ant-design/pro-components'
+import { Col, Flex, Row } from 'antd'
+import classNames from 'classnames'
 import { Jost } from 'next/font/google'
+import Image from 'next/image'
+import { FC } from 'react'
+import styles from './styles.module.scss'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -17,15 +16,16 @@ type Props = {
 const AddProduct: FC<Props> = ({ products }) => {
     return (
         <Row className={styles.addProductWrapper}>
-            <Col span={12}>
-                <span className={classNames(styles.addProductHeader, jost.className)}>Main Information</span>
-                <Image
-                    src="https://res.cloudinary.com/dyjxuqnn9/image/upload/v1705887851/products/r8cujachll2hhls6iebd.jpg"
-                    alt="product_image"
-                    width={100}
-                    height={100}
-                />
+            <Col span={13} className={styles.productContainer}>
                 <span className={classNames(styles.addProductHeader, jost.className)}>Gallery</span>
+                <Flex className={styles.productFront} vertical align="center">
+                    <Image
+                        src="https://res.cloudinary.com/dyjxuqnn9/image/upload/v1705887851/products/r8cujachll2hhls6iebd.jpg"
+                        alt="product_image"
+                        width={100}
+                        height={100}
+                    />
+                </Flex>
                 <Flex className={styles.galleryContainer} justify="start" wrap="wrap">
                     {new Array(4)
                         .fill(
@@ -43,42 +43,33 @@ const AddProduct: FC<Props> = ({ products }) => {
                         title="UPLOAD YOUR IMAGE"
                     />
                 </Flex>
-                <span className={classNames(jost.className, styles.profileHeader)}>Details</span>
-                <ProForm
-                    grid
-                    autoFocusFirstInput={false}
-                    submitter={{
-                        resetButtonProps: false,
-                    }}
-                    onFinish={async params => {
-                        console.log(params)
-                    }}>
-                    <ProFormText label="ID" name="id" placeholder="Product id" colProps={{ span: 12 }} />
-                    <ProFormSelect
-                        label="Amount in Stock"
-                        name="stock"
-                        placeholder="in Stock"
-                        colProps={{ span: 12 }}
-                    />
-                    <ProFormSelect label="Body Part" name="part" placeholder="Part" colProps={{ span: 12 }} />
-                    <ProFormSelect label="Material" name="material" placeholder="Material" colProps={{ span: 12 }} />
-                    <ProFormSelect label="Gender" name="gender" placeholder="Gender" colProps={{ span: 12 }} />
-                    <ProFormSelect label="Type" name="type" placeholder="Type" colProps={{ span: 12 }} />
-                </ProForm>
             </Col>
-            <Col span={1} />
             <Col span={11}>
                 <Flex className={styles.addProductInformation} align="center" vertical>
                     <span className={classNames(styles.addProductHeader, jost.className)}>Product Details</span>
                     <div>
-                        <ProForm grid autoFocusFirstInput={false} submitter={false} requiredMark={true}>
-                            <ProFormText label="Name" name="name" placeholder="Product Name" colProps={{ span: 12 }} />
-                            <ProFormText label="Price" name="price" placeholder="Price" colProps={{ span: 12 }} />
+                        <ProForm
+                            grid
+                            autoFocusFirstInput={false}
+                            submitter={{
+                                resetButtonProps: false,
+                            }}
+                            onFinish={async params => {
+                                console.log('params: ', params)
+                            }}>
+                            <ProFormText label="Name" name="name" placeholder="Product Name" colProps={{ span: 24 }} />
                             <ProFormTextArea
                                 label="Description"
                                 name="description"
                                 placeholder="Description"
                                 colProps={{ span: 24 }}
+                            />
+                            <ProFormText label="Price" name="price" placeholder="Price" colProps={{ span: 12 }} />
+                            <ProFormDigit
+                                label="Amount in Stock"
+                                name="stock"
+                                placeholder="in Stock"
+                                colProps={{ span: 12 }}
                             />
                         </ProForm>
                     </div>
