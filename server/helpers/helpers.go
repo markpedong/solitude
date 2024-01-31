@@ -15,7 +15,7 @@ func ErrJSONResponse(ctx *gin.Context, status int, message string) {
 }
 
 func JSONResponse(ctx *gin.Context, optionalMessage string, jsonData ...map[string]interface{}) {
-	message := "Success"
+	message := "success"
 
 	if optionalMessage != "" {
 		message = optionalMessage

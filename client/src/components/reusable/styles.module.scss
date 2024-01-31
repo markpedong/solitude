@@ -57,13 +57,14 @@
     }
 
     .cardTitle {
-        letter-spacing: toRem(1);
+        letter-spacing: toRem(0.3);
         font-weight: 900;
-        font-size: toRem(13);
+        font-size: toRem(15);
+        text-transform: capitalize;
     }
 
     .cardDescription {
-        font-size: toRem(11);
+        font-size: toRem(13);
         white-space: break-spaces;
     }
 

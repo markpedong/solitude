@@ -10,6 +10,7 @@ import { Cormorant, Jost } from 'next/font/google'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
+const jostHeavy = Jost({ weight: '700', subsets: ['latin'] })
 
 type CProps = {
     image: string
@@ -34,9 +35,9 @@ const Product: FC<PProps> = ({ id, image, product_name, description, price, clas
         <Link href={`/products/${id}`} style={style} key={id}>
             <div className={className ?? styles.itemContainer} key={id}>
                 <Image src={image} alt={product_name} width={1000} height={1000} priority />
-                <span className={`${styles.cardTitle} ${jost.className}`}>{product_name}</span>
+                <span className={classNames(jostHeavy.className, styles.cardTitle)}>{product_name}</span>
                 <span className={styles.cardDescription}>{description}</span>
-                <span className={styles.cardFooter}>$ {price.toFixed(2)}</span>
+                <span className={classNames(jost.className, styles.cardFooter)}>$ {price.toFixed(2)}</span>
             </div>
         </Link>
     )

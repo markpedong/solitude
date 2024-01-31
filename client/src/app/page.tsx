@@ -7,7 +7,6 @@ import classNames from 'classnames'
 import { Cormorant, Jost } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FC } from 'react'
 import styles from './styles.module.scss'
 import { Collection, Product } from '@/components/reusable'
 import { getBlogs, getCollections, getProducts } from '@/api'
@@ -15,32 +14,8 @@ import { getBlogs, getCollections, getProducts } from '@/api'
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
-// async function getProducts(params) {
-//     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`, {
-//         body: params,
-//         method: 'POST',
-//     })
-//     const data = await res.json()
-//     return data
-// }
-// async function getBlogs() {
-//     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blogs`, {
-//         method: 'GET',
-//     })
-//     const data = await res.json()
-//     return data
-// }
-// async function getCollections() {
-//     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/collections`, {
-//         method: 'GET',
-//     })
-//     const data = await res.json()
-//     return data
-// }
-
 const Page = async () => {
     const products = await getProducts({})
-    const blogs = await getBlogs()
     const collections = await getCollections()
 
     return (
@@ -71,7 +46,7 @@ const Page = async () => {
                         <Product
                             description={q.description}
                             id={q.id}
-                            image={q.image}
+                            image={q.image?.[0]}
                             price={q.price}
                             product_name={q.product_name}
                             key={q.id}
@@ -85,14 +60,14 @@ const Page = async () => {
             </div>
             <div className={styles.featuresItemContainer}>
                 {collections?.data?.map(q => (
-                    <Collection description={q.description} image={q.image} title={q.title} key={q.title} />
+                    <Collection description={q.description} image={q.image} title={q.title} key={q.id} />
                 ))}
             </div>
-            <div className={styles.titleContainer}>
+            {/* <div className={styles.titleContainer}>
                 <span className={cormorant.className}>Our Blog</span>
                 <span className={jost.className}>More Articles</span>
-            </div>
-            <div className={styles.blogItemsContainer}>
+            </div> */}
+            {/* <div className={styles.blogItemsContainer}>
                 {blogs.data?.map(q => (
                     <div className={styles.blogItem} key={q.image}>
                         <Image src={q.image} alt={q.image} width={1000} height={1000} />
@@ -107,7 +82,7 @@ const Page = async () => {
                         </div>
                     </div>
                 ))}
-            </div>
+            </div> */}
             <div className={styles.joinWrapper}>
                 <div className={styles.imageContainer}>
                     <Image src={img1} alt="logo1" priority />
@@ -116,9 +91,9 @@ const Page = async () => {
                     <Image src={img4} alt="logo1" priority />
                 </div>
                 <div className={styles.middleContainer}>
-                    <h1 className={cormorant.className}>Join #solitude</h1>
+                    <h1 className={cormorant.className}>#SOLITUDE</h1>
                     <Link href="/">
-                        <span className={jost.className}>FOLLOW US ON INSTAGRAM</span>
+                        <span className={jost.className}>FOLLOW US ON SOCIAL MEDIA</span>
                     </Link>
                 </div>
                 <div className={styles.imageContainer}>

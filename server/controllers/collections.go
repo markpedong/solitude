@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 	"solitude/database"
+	"solitude/helpers"
 	"solitude/models"
 
 	"github.com/gin-gonic/gin"
@@ -12,13 +13,11 @@ func GetAllCollections(ctx *gin.Context) {
 	var products []models.Product
 
 	if database.DB.
+		Find(&products).
 		Order("created_at DESC").
 		Select("description, image, product_name, id, created_at").
-		Find(&products).Error != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"message": "There's a problem getting the blog data",
-			"success": false,
-		})
+		Error != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "There's a problem getting the collections data")
 		return
 	}
 
@@ -34,12 +33,7 @@ func GetAllCollections(ctx *gin.Context) {
 		responseProducts = append(responseProducts, responseProduct)
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"message": "success",
-		"data":    responseProducts,
-		"success": true,
-		"status":  http.StatusOK,
-	})
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(responseProducts))
 }
 
 func AddCollection(ctx *gin.Context) {
