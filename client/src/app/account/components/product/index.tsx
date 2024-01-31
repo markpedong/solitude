@@ -1,5 +1,6 @@
-import { TProduct, uploadImages } from '@/api'
+import { TProduct, addProduct, uploadImages } from '@/api'
 import {
+    ActionType,
     ProForm,
     ProFormDigit,
     ProFormInstance,
@@ -15,6 +16,7 @@ import Image from 'next/image'
 import { FC, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import { motion } from 'framer-motion'
+import { afterModalformFinish } from '@/constants/helper'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -25,6 +27,7 @@ type Props = {
 const AddProduct: FC<Props> = ({ products }) => {
     const [uploadedImages, setUploadedImages] = useState<{ url: string; fileName: string; size: number }[]>([])
     const formRef = useRef<ProFormInstance>()
+    const actionRef = useRef<ActionType>()
 
     return (
         <div className={styles.addProductWrapper}>
@@ -35,7 +38,14 @@ const AddProduct: FC<Props> = ({ products }) => {
                 submitter={false}
                 formRef={formRef}
                 onFinish={async params => {
-                    console.log('params: ', params)
+                    console.log('PARAMS', params)
+                    const res = await addProduct({
+                        ...params,
+                        price: +params.price,
+                        image: uploadedImages?.map(q => q.url),
+                    })
+
+                    return afterModalformFinish(actionRef, res.message, res.success, formRef)
                 }}>
                 <ProForm.Group>
                     <ProFormText colProps={{ span: 12 }}>
@@ -45,7 +55,6 @@ const AddProduct: FC<Props> = ({ products }) => {
                             align="center"
                             data-length={uploadedImages?.length}>
                             <ProFormUploadButton
-                                name="images"
                                 title="UPLOAD YOUR IMAGE"
                                 fieldProps={{
                                     name: 'files',
@@ -53,8 +62,11 @@ const AddProduct: FC<Props> = ({ products }) => {
                                     accept: 'image/*',
                                     multiple: true,
                                     action: async e => {
+                                        setUploadedImages([])
+
                                         const res = await uploadImages(e)
-                                        console.log('RES', res)
+                                        setUploadedImages(state => [...state, res.data])
+
                                         return ''
                                     },
                                 }}
@@ -62,7 +74,12 @@ const AddProduct: FC<Props> = ({ products }) => {
                         </Flex>
                     </ProFormText>
                     <ProFormText colProps={{ span: 12 }}>
-                        <ProFormText label="Name" name="name" placeholder="Product Name" colProps={{ span: 24 }} />
+                        <ProFormText
+                            label="Name"
+                            name="product_name"
+                            placeholder="Product Name"
+                            colProps={{ span: 24 }}
+                        />
                         <ProFormTextArea
                             label="Description"
                             name="description"

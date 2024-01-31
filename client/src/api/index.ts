@@ -58,3 +58,6 @@ export const getUserData = params => post('/users/getUserData', params)
 
 // /api/uploadImage
 export const uploadImages = params => upload('/api/uploadImage', params)
+
+// /api/addProduct
+export const addProduct = params => post('/api/add-product', params)
