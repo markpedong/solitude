@@ -15,7 +15,7 @@ func UserRoutes(r *gin.Engine) {
 		users.POST("/products", controllers.GetAllProducts)
 		users.GET("/collections", controllers.GetAllCollections)
 		users.POST("/getUserData", controllers.GetUserData)
-		users.GET("/product/:id", controllers.GetProductsByID)
+		users.POST("/getProductData", controllers.GetProductsByID)
 	}
 
 	api := r.Group("/api")

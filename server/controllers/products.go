@@ -78,15 +78,17 @@ func GetAllProducts(ctx *gin.Context) {
 }
 
 func GetProductsByID(ctx *gin.Context) {
-	id := ctx.Param("id")
+	var body struct {
+		ID string `json:"id"`
+	}
 
 	var product models.Product
-	if err := database.DB.Where("ID = ?", id).First(&product).Error; err != nil {
+	if err := database.DB.Where("ID = ?", body.ID).First(&product).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	helpers.JSONResponse(ctx, "successfully got the product details!")
+	helpers.JSONResponse(ctx, "successfully got the product details!", helpers.DataHelper(product))
 }
 
 func UploadImage(ctx *gin.Context) {

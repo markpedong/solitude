@@ -48,7 +48,7 @@ export type TCollection = {
 export const getCollections = () => get<TCollection[]>('/users/collections')
 
 // /api/getProductData
-export const getProductData = ({ id }) => get<TProduct>(`/api/product/${id}`)
+export const getProductData = (params) => post<TProduct>(`/api/product`, params)
 
 // /api/updateUser
 export const updateUserData = params => post('/api/updateUser', params)
