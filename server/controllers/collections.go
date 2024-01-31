@@ -27,7 +27,7 @@ func GetAllCollections(ctx *gin.Context) {
 		responseProduct := models.Collections{
 			ID:          product.ProductID,
 			Title:       *product.ProductName,
-			Image:       *product.Image,
+			Image:       product.Image[0],
 			CreatedAt:   product.CreatedAt,
 			Description: product.Description,
 		}

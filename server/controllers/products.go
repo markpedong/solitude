@@ -26,8 +26,6 @@ func AddProducts(ctx *gin.Context) {
 		Image:       body.Image,
 		Description: body.Description,
 		CreatedAt:   int(time.Now().Unix()),
-		Material:    body.Material,
-		Gender:      body.Gender,
 	}
 
 	if err := database.DB.Create(&product).Error; err != nil {

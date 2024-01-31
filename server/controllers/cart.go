@@ -113,8 +113,8 @@ func GetItemFromCart(ctx *gin.Context) {
 	}
 
 	ctx.IndentedJSON(200, gin.H{
-		"total":    totalSum,
-		"userCart": filledcart.UserCart,
+		"total": totalSum,
+		// "userCart": filledcart.UserCart,
 	})
 
 }
