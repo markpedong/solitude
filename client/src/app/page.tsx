@@ -16,7 +16,7 @@ const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 const Page = async () => {
     const products = await getProducts({})
-    const collections = await getCollections()
+    const collections = await getCollections({})
 
     return (
         <div>
