@@ -36,7 +36,7 @@ const upload = async <T>(url: string, data): Promise<ApiResponse<T>> => {
     return result as ApiResponse<T>
 }
 
-const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
+const post = async <T>(url: string, data = {}, client = true): Promise<ApiResponse<T>> => {
     const token = getLocalStorage('token')
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`, {
         method: 'POST',
@@ -49,7 +49,7 @@ const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
     //prettier-ignore
     const res = await api.json() as ApiResponse<T>
 
-    if (res?.status !== 200) {
+    if (res?.status !== 200 && client) {
         throttleAlert(res?.message)
         return res
     }
@@ -57,7 +57,7 @@ const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
     return res as ApiResponse<T>
 }
 
-const get = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
+const get = async <T>(url: string, data = {}, client = true): Promise<ApiResponse<T>> => {
     const token = getLocalStorage('token')
     const api =  await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}${stringify(data) ? '?' + stringify(data) : ''}`, {
         method: 'GET',
@@ -68,10 +68,11 @@ const get = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
      //prettier-ignore
      const res = await api.json() as ApiResponse<T>
 
-     if (res?.status !== 200) {
-         return res
-     }
- 
+     if (res?.status !== 200 && client) {
+        throttleAlert(res?.message)
+        return res
+    }
+    
      return res as ApiResponse<T>
 }
 

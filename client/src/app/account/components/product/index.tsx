@@ -9,7 +9,7 @@ import {
     ProFormTextArea,
     ProFormUploadButton,
 } from '@ant-design/pro-components'
-import { Button, Col, Flex, Row, Upload, message } from 'antd'
+import { Button, Col, Flex, Row, Spin, Upload, message } from 'antd'
 import classNames from 'classnames'
 import { Jost } from 'next/font/google'
 import Image from 'next/image'
@@ -17,6 +17,7 @@ import { FC, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import { motion } from 'framer-motion'
 import { afterModalformFinish } from '@/constants/helper'
+import { omit } from 'lodash'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -25,6 +26,7 @@ type Props = {
 }
 
 const AddProduct: FC<Props> = ({ products }) => {
+    const [uploading, setUploading] = useState(false)
     const [uploadedImages, setUploadedImages] = useState<{ url: string; fileName: string; size: number }[]>([])
     const formRef = useRef<ProFormInstance>()
     const actionRef = useRef<ActionType>()
@@ -38,14 +40,17 @@ const AddProduct: FC<Props> = ({ products }) => {
                 submitter={false}
                 formRef={formRef}
                 onFinish={async params => {
-                    console.log('PARAMS', params)
                     const res = await addProduct({
                         ...params,
                         price: +params.price,
                         image: uploadedImages?.map(q => q.url),
                     })
 
-                    return afterModalformFinish(actionRef, res.message, res.success, formRef)
+                    if (res.success){
+                        setUploadedImages([])
+                    }
+
+                    return afterModalformFinish(actionRef, 'res.message', true, formRef)
                 }}>
                 <ProForm.Group>
                     <ProFormText colProps={{ span: 12 }}>
@@ -54,23 +59,33 @@ const AddProduct: FC<Props> = ({ products }) => {
                             justify="center"
                             align="center"
                             data-length={uploadedImages?.length}>
-                            <ProFormUploadButton
-                                title="UPLOAD YOUR IMAGE"
-                                fieldProps={{
-                                    name: 'files',
-                                    listType: 'picture-card',
-                                    accept: 'image/*',
-                                    multiple: true,
-                                    action: async e => {
-                                        setUploadedImages([])
+                            {uploading ? (
+                                <Spin />
+                            ) : (
+                                <ProFormUploadButton
+                                    name="upload"
+                                    title="UPLOAD YOUR IMAGE"
+                                    fieldProps={{
+                                        name: 'files',
+                                        listType: 'picture-card',
+                                        accept: 'image/*',
+                                        multiple: true,
+                                        action: async e => {
+                                            setUploading(true)
+                                            setUploadedImages([])
 
-                                        const res = await uploadImages(e)
-                                        setUploadedImages(state => [...state, res.data])
+                                            try {
+                                                const res = await uploadImages(e)
+                                                setUploadedImages(state => [...state, res.data])
 
-                                        return ''
-                                    },
-                                }}
-                            />
+                                                return ''
+                                            } finally {
+                                                setUploading(false)
+                                            }
+                                        },
+                                    }}
+                                />
+                            )}
                         </Flex>
                     </ProFormText>
                     <ProFormText colProps={{ span: 12 }}>

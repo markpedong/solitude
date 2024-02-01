@@ -79,11 +79,16 @@ func GetAllProducts(ctx *gin.Context) {
 
 func GetProductsByID(ctx *gin.Context) {
 	var body struct {
-		ID string `json:"id"`
+		ID string `json:"product_id"`
+	}
+
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
 	}
 
 	var product models.Product
-	if err := database.DB.Where("ID = ?", body.ID).First(&product).Error; err != nil {
+	if err := database.DB.Where("product_id = ?", body.ID).First(&product).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}

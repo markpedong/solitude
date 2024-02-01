@@ -139,7 +139,6 @@ const Profile: FC = () => {
                             name="birthday"
                             placeholder="MONTH"
                             width="xl"
-                            fieldProps={{ variant: 'outlined' }}
                             colProps={{ span: 12 }}
                         />
                     </ProForm.Group>
