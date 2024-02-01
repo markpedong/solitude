@@ -128,6 +128,7 @@ func Login(ctx *gin.Context) {
 	var body struct {
 		Email    string `json:"email" validate:"required"`
 		Password string `json:"password" validate:"required,min=6"`
+		Type     int    `json:"type" validate:"required"`
 	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
@@ -140,32 +141,62 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	if body.Email == "" || body.Password == "" {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "email and password are required")
+	baseQuery := database.DB.Where("email = ?", body.Email)
+
+	switch body.Type {
+	case 1:
+		var existingUser models.User
+		if err := baseQuery.First(&existingUser).Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user not found!")
+			return
+		}
+		handleLogin(ctx, existingUser, body.Password, existingUser.FirstName, existingUser.LastName, existingUser.ID)
+
+	case 2:
+		var existingSeller models.Seller
+		if err := baseQuery.First(&existingSeller).Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "seller not found!")
+			return
+		}
+		handleLogin(ctx, existingSeller, body.Password, existingSeller.SellerName, "", existingSeller.SellerID)
+
+	default:
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid user type")
+	}
+}
+
+func handleLogin(ctx *gin.Context, user interface{}, password, firstName, lastName, id string) {
+	var validPass bool
+	var msg string
+	var email string
+
+	switch v := user.(type) {
+	case models.User:
+		validPass, msg = VerifyPassword(v.Password, password)
+		v.Password = ""
+		email = v.Email
+	case models.Seller:
+		validPass, msg = VerifyPassword(v.Password, password)
+		v.Password = ""
+		email = v.Email
+	default:
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Invalid user type")
 		return
 	}
 
-	var existingUser models.User
-	if err := database.DB.Where("email = ?", body.Email).First(&existingUser).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user not found!")
-		return
-	}
-
-	validPass, msg := VerifyPassword(existingUser.Password, body.Password)
 	if !validPass {
 		helpers.ErrJSONResponse(ctx, http.StatusUnauthorized, msg)
 		return
 	}
 
-	token, refreshToken, err := tokens.TokenGenerator(existingUser.Email, existingUser.FirstName, existingUser.LastName, existingUser.ID)
+	token, refreshToken, err := tokens.TokenGenerator(email, firstName, lastName, id)
 	if err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Error generating tokens")
 		return
 	}
 
-	existingUser.Password = HashPassword(existingUser.Password)
 	res := map[string]interface{}{
-		"data":          existingUser,
+		"data":          user,
 		"token":         token,
 		"refresh_token": refreshToken,
 	}

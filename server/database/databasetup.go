@@ -22,7 +22,7 @@ func DBSet() {
 	_, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 
-	DB, err = gorm.Open(postgres.Open(os.Getenv("DB_DSN")),
+	DB, err = gorm.Open(postgres.Open(os.Getenv("DB_DSN_LOCAL")),
 		&gorm.Config{
 			NamingStrategy: schema.NamingStrategy{SingularTable: true},
 		})
@@ -32,14 +32,9 @@ func DBSet() {
 		return
 	}
 
-	DB.AutoMigrate(
-		// &models.Address{},
-		// &models.Order{},
-		// &models.Payment{},
-		// &models.Blogs{},
-		&models.Product{},
-	)
-	DB.AutoMigrate(&models.User{})
+	DB.AutoMigrate(&models.Product{})
+	DB.AutoMigrate(&models.User{}, &models.Seller{})
+	DB.AutoMigrate(&models.Brands{})
 	if err != nil {
 		log.Fatal("There seems to be a problem when migrating")
 		return

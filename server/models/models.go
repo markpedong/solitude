@@ -23,7 +23,7 @@ type User struct {
 	Birthday  string `json:"birthday"`
 }
 type Seller struct {
-	ID         string    `json:"id" gorm:"primaryKey"`
+	SellerID   string    `json:"seller_id" gorm:"primaryKey"`
 	CreatedAt  time.Time `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt  time.Time `json:"updated_at" gorm:"autoCreateTime"`
 	SellerName string    `json:"seller_name" validate:"max=10"`
@@ -32,12 +32,12 @@ type Seller struct {
 	Phone      string    `json:"phone"`
 	Username   string    `json:"username"`
 	Location   string    `json:"location"`
-	Brands     []Brands  `json:"brands"`
+	Brands     []Brands  `json:"brands" gorm:"foreignKey:BrandID"`
 	Products   []Product `json:"products" gorm:"foreignKey:ProductID"`
 }
 
 type Brands struct {
-	ID       string    `json:"id" gorm:"primaryKey"`
+	BrandID  string    `json:"id" gorm:"primaryKey"`
 	Name     string    `json:"brand_name"`
 	Products []Product `json:"products" gorm:"foreignKey:ProductID"`
 }
@@ -51,7 +51,7 @@ type Product struct {
 	CreatedAt   int            `json:"created_at" gorm:"autoCreateTime"`
 	Description string         `json:"description" validate:"required"`
 	Stock       int            `json:"stock" validate:"required"`
-	CreatorID   string         `json:"creator_id" validate:"required"`
+	SellerID    string         `json:"seller_id" validate:"required"`
 	BrandID     string         `json:"brand_id" validate:"required"`
 }
 

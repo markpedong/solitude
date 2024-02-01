@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 type InitialSlice = {
     darkMode: boolean
-    activeLoginForm: 'login' | 'create' | 'forgot'
+    activeLoginForm: 'login' | 'create' | 'forgot' | 'seller'
     activeSearchForm: boolean
 }
 const initialState: InitialSlice = {

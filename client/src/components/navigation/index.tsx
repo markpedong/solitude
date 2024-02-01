@@ -7,8 +7,10 @@ import forgotModalCover from '@/public/assets/forgotModalCover.webp'
 import loginModalCover from '@/public/assets/loginModalCover.webp'
 import logo from '@/public/assets/logo.webp'
 import signUpModalCover from '@/public/assets/signUpModalCover.webp'
+import sellerModalCover from '@/public/assets/sellerLoginModal.webp'
 import { setActiveLoginForm } from '@/redux/features/booleanSlice'
-import { resetUserData, setToken, setUserData } from '@/redux/features/userSlice'
+import { resetUserData, setUserToken, setUserData } from '@/redux/features/userSlice'
+import { resetSellerData, setSellerData, setSellerToken } from '@/redux/features/sellerSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { getLocalStorage, setLocalStorage } from '@/utils/xLocalStorage'
 import {
@@ -52,6 +54,7 @@ const Navigation: FC = () => {
     const create = activeLoginForm === 'create'
     const forgot = activeLoginForm === 'forgot'
     const login = activeLoginForm === 'login'
+    const seller = activeLoginForm === 'seller'
 
     const filteredProducts = useMemo(() => {
         return products?.filter(product => product.product_name.toLowerCase().includes(searchFilter))
@@ -150,7 +153,7 @@ const Navigation: FC = () => {
 
         if (res?.success) {
             await dispatch(setUserData(res?.data))
-            await dispatch(setToken(res?.token))
+            await dispatch(setUserToken(res?.token))
             setLocalStorage('token', res?.token)
             router.push('/account')
         }
@@ -161,7 +164,7 @@ const Navigation: FC = () => {
 
     const renderLogin = () =>
         isLoggedIn && !!getLocalStorage('token') ? (
-            <Dropdown menu={{ items }} placement='bottomCenter'>
+            <Dropdown menu={{ items }} placement="bottomCenter">
                 <UserOutlined onClick={e => e.preventDefault()} />
             </Dropdown>
         ) : (
@@ -182,7 +185,15 @@ const Navigation: FC = () => {
                     <div className={styles.loginImage}>
                         <Image
                             alt="loginCover"
-                            src={create ? signUpModalCover : forgot ? forgotModalCover : loginModalCover}
+                            src={
+                                create
+                                    ? signUpModalCover
+                                    : forgot
+                                    ? forgotModalCover
+                                    : seller
+                                    ? sellerModalCover
+                                    : loginModalCover
+                            }
                         />
                     </div>
                     <Flex className={styles.loginForm} vertical>
