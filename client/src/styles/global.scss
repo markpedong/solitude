@@ -29,9 +29,21 @@ body {
     letter-spacing: toRem(1);
     inline-size: auto !important;
 
+
+    .ant-select-item-option-selected {
+        gap: toRem(10);
+
+        .ant-select-item-option-state {
+            color: white !important;
+            font-size: toRem(14) !important;
+            font-weight: 800 !important;
+        }
+    }
+
     .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
         background-color: rgba(0, 0, 0, 0.5) !important;
         color: white !important;
+        margin-block: toRem(1) !important;
     }
 }
 
@@ -45,5 +57,9 @@ label.ant-form-item-required::before {
 }
 
 .ant-btn-primary {
+    box-shadow: none !important;
+}
+
+.ant-select-selector {
     box-shadow: none !important;
 }

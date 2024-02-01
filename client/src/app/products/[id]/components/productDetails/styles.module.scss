@@ -1,37 +1,105 @@
 @import '@/styles/_helpers.scss';
 
-.productImageContainer{
+.productImageContainer {
     display: flex !important;
     justify-content: center;
     flex-direction: column;
     align-items: center !important;
     margin-inline: toRem(10);
 
+    .category {
+        text-transform: capitalize;
+        text-align: left;
+        width: 100%;
+    }
+
     .firstImageContainer {
         background-color: #f8f8f8;
-        border-radius: toRem(4);
+        border-radius: toRem(5);
         width: 80%;
         padding: toRem(15);
+        margin-block-start: toRem(10);
         display: grid;
         place-content: center;
 
         img {
             width: toRem(230);
             height: toRem(230);
+            object-fit: cover;
+            object-position: center center;
+            border-radius: toRem(5);
         }
 
         :global {
-            .ant-image{
-                    width: 100% !important;
+            .ant-image {
+                width: 100% !important;
             }
         }
     }
 
-    .extraImagesContainer{
+    .extraImagesContainer {
         padding-block-start: toRem(20);
+
         img {
             width: toRem(60);
             height: toRem(60);
+        }
+    }
+}
+
+.productTitlePriceContainer {
+    .productTitle {
+        font-size: toRem(20);
+        text-transform: capitalize;
+        letter-spacing: toRem(1);
+        padding-block-start: toRem(20);
+        height: toRem(100);
+    }
+
+    .productPrice {
+        font-size: toRem(25);
+    }
+
+    .productStock {
+        padding-block-start: toRem(15);
+    }
+}
+
+.productDescriptionContainer{
+    padding-block-start: toRem(30);
+    .productDescription {
+        font-size: toRem(14);
+        height: toRem(140);
+    }
+}
+
+.addingStockContainer{
+    padding-block-start: toRem(30);
+    width: toRem(150);
+    gap: toRem(5);
+
+    div {
+        svg {
+            width: toRem(20) !important;
+            height: toRem(20) !important;
+        }
+    }
+
+    input {
+        font-size: toRem(20);
+        padding: 0 toRem(10);
+        font-family: 'Jost';
+    }
+}
+
+.addToCartBuyNowContainer{
+    padding-block-start: toRem(30);
+    gap: toRem(10);
+
+    :global {
+        .ant-btn {
+            font-family: 'Jost';
+            letter-spacing: toRem(1);
         }
     }
 }

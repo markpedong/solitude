@@ -23,6 +23,7 @@ export type TProduct = {
     image: string[];
     created_at: number
     description: string
+    stock: number
 }
 
 export const getProducts = params => post<TProduct[]>('/users/products', params)

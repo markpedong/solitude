@@ -161,7 +161,7 @@ const Navigation: FC = () => {
 
     const renderLogin = () =>
         isLoggedIn && !!getLocalStorage('token') ? (
-            <Dropdown menu={{ items }}>
+            <Dropdown menu={{ items }} placement='bottomCenter'>
                 <UserOutlined onClick={e => e.preventDefault()} />
             </Dropdown>
         ) : (

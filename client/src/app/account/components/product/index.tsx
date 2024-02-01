@@ -18,6 +18,7 @@ import styles from './styles.module.scss'
 import { motion } from 'framer-motion'
 import { afterModalformFinish } from '@/constants/helper'
 import { omit } from 'lodash'
+import { useAppSelector } from '@/redux/store'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -27,6 +28,7 @@ type Props = {
 
 const AddProduct: FC<Props> = ({ products }) => {
     const [uploading, setUploading] = useState(false)
+    const { userData } = useAppSelector(state => state.userData)
     const [uploadedImages, setUploadedImages] = useState<{ url: string; fileName: string; size: number }[]>([])
     const formRef = useRef<ProFormInstance>()
     const actionRef = useRef<ActionType>()
@@ -100,6 +102,16 @@ const AddProduct: FC<Props> = ({ products }) => {
                             colProps={{ span: 12 }}
                         />
                     </ProForm.Group>
+                    <ProFormSelect
+                        name="categories"
+                        placeholder="Please enter Category for Products eg: Clothing, Shoes, Accessories"
+                        fieldProps={{
+                            maxTagCount: 10,
+                            mode: 'tags',
+                            allowClear: false,
+                            variant: 'outlined'
+                        }}
+                    />
                     <Flex justify="center" gap={20}>
                         <motion.div whileTap={{ scale: 0.9 }}>
                             <Button onClick={() => formRef?.current.resetFields()}>Reset</Button>

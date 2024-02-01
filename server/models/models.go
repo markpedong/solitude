@@ -26,12 +26,13 @@ type User struct {
 type Product struct {
 	ProductID   string         `json:"id" gorm:"primaryKey"`
 	ProductName *string        `json:"product_name" validate:"required"`
-	Price       int            `json:"price" validate:"required"`
+	Price       float64        `json:"price" validate:"required"`
 	Rating      int            `json:"rating"`
 	Image       pq.StringArray `json:"image" gorm:"type:text[]"`
 	CreatedAt   int            `json:"created_at" gorm:"autoCreateTime"`
 	Description string         `json:"description" validate:"required"`
 	Stock       int            `json:"stock" validate:"required"`
+	CreatorID   string         `json:"creator_id" validate:"required"`
 }
 
 type Address struct {
