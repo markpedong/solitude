@@ -21,6 +21,7 @@ type User struct {
 	Username  string `json:"username"`
 	Gender    string `json:"gender"`
 	Birthday  string `json:"birthday"`
+	Type      string `json:"type"`
 }
 type Seller struct {
 	SellerID   string    `json:"seller_id" gorm:"primaryKey"`

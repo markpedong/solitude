@@ -54,6 +54,7 @@ func Signup(ctx *gin.Context) {
 		UserCart       []models.Product `json:"user_cart"`
 		AddressDetails []models.Address `json:"address_details"`
 		Orders         []models.Order   `json:"orders"`
+		Type           string           `json:"type"`
 	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
@@ -103,6 +104,7 @@ func Signup(ctx *gin.Context) {
 		Email:     body.Email,
 		Phone:     body.Phone,
 		Username:  body.Username,
+		Type:      body.Type,
 		// UserCart:       make([]models.Product, 0),
 		// AddressDetails: make([]models.Address, 0),
 		// Orders:         make([]models.Order, 0),
