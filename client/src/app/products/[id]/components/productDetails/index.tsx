@@ -1,7 +1,7 @@
 'use client'
 
 import { TProduct } from '@/api'
-import { Col, Divider, Flex, Row } from 'antd'
+import { Col, Divider, Flex, Row, Image as IM } from 'antd'
 import React, { FC, memo, useState } from 'react'
 import styles from './styles.module.scss'
 import Image from 'next/image'
@@ -23,7 +23,7 @@ const ProductDetails: FC<Props> = ({ data }) => {
         <Row justify="center">
             <Col span={10} className={styles.productImageContainer}>
                 <div className={styles.firstImageContainer}>
-                    <Image src={firstImage} alt="product_image" width={200} height={200} />
+                    <IM src={firstImage} alt="product_image" width={200} height={200} />
                 </div>
                 <Flex className={styles.extraImagesContainer}>
                     {data?.image?.slice(1)?.map(q => (

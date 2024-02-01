@@ -19,6 +19,12 @@
             width: toRem(230);
             height: toRem(230);
         }
+
+        :global {
+            .ant-image{
+                    width: 100% !important;
+            }
+        }
     }
 
     .extraImagesContainer{
