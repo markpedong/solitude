@@ -32,9 +32,8 @@ const Account: FC<Props> = ({ products }) => {
     }, [userData?.id])
 
     return (
-        <Row>
-            <Col xs={0} lg={4} />
-            <Col lg={16}>
+        <Row justify="center">
+            <Col span={16}>
                 <Flex className={styles.profileHeader} vertical gap={5} justify="center">
                     <span className={cormorant.className}>Welcome back! {userData?.first_name}</span>
                     <span className={jost.className}>Enjoy shopping with ease and happiness.</span>
@@ -53,7 +52,6 @@ const Account: FC<Props> = ({ products }) => {
                     />
                 </div>
             </Col>
-            <Col xs={0} lg={4} />
         </Row>
     )
 }

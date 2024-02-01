@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import React, { FC } from 'react'
-import styles from './styles.module.scss'
+import styles from '../styles.module.scss'
 // import { ModalForm, ProForm, ProFormCheckbox, ProFormSelect, ProFormText } from '@ant-design/pro-components'
 // import { MODAL_FORM_PROPS } from '@/constants'
 import { Jost } from 'next/font/google'

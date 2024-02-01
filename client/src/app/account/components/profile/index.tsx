@@ -30,8 +30,8 @@ const Profile: FC = () => {
     const dispatch = useDispatch()
 
     return (
-        <Row className={styles.profileWrapper}>
-            <Col span={24}>
+        <Row className={styles.profileWrapper} justify='center'>
+            <Col span={20}>
                 <span className={classNames(jost.className, styles.profileTitle)}>Your Information</span>
                 <ProForm
                     grid

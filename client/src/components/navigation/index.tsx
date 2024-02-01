@@ -349,66 +349,62 @@ const Navigation: FC = () => {
     }, [])
 
     return (
-        <>
-            <Row>
-                <Col xs={2} lg={2} />
-                <Col xs={20} lg={20}>
-                    <Flex className={styles.navigationWrapper} justify="space-between" align="center">
-                        <Flex className={styles.headerContainer} justify="center" align="center" gap={10}>
-                            <Image src={logo} alt="loginForm" />
-                            <span>
-                                <Link href="/">SOLITUDE</Link>
-                            </span>
-                        </Flex>
-                        <div className={styles.navigation}>
-                            {renderMenuItem('products')}
-                            {renderMenuItem('brands')}
-                            {renderMenuItem('deals')}
-                            {renderMenuItem('services')}
-                            <Flex className={styles.icons} gap={20}>
-                                {renderSearch()}
-                                {renderLogin()}
-                                {/* <Image
+        <Row>
+            <Col span={20} pull={2} push={2}>
+                <Flex className={styles.navigationWrapper} justify="space-between" align="center">
+                    <Flex className={styles.headerContainer} justify="center" align="center" gap={10}>
+                        <Image src={logo} alt="loginForm" />
+                        <span>
+                            <Link href="/">SOLITUDE</Link>
+                        </span>
+                    </Flex>
+                    <div className={styles.navigation}>
+                        {renderMenuItem('products')}
+                        {renderMenuItem('brands')}
+                        {renderMenuItem('deals')}
+                        {renderMenuItem('services')}
+                        <Flex className={styles.icons} gap={20}>
+                            {renderSearch()}
+                            {renderLogin()}
+                            {/* <Image
                                     src={darkMode ? moon : sun}
                                     alt="darkmode"
                                     onClick={() => dispatch(setDarkMode(!darkMode))}
                                     width={100}
                                     height={100}
                                 /> */}
-                            </Flex>
-                        </div>
-                        <div className={styles.navigationMobile}>
-                            <MenuOutlined
-                                onClick={() => setOpen(true)}
-                                className={styles.navigationIcon}
-                                height={1000}
-                                width={1000}
-                            />
-                            <Drawer
-                                title={
-                                    <Flex justify="center">
-                                        <Flex justify="center" align="center" style={{ flex: 1 }}>
-                                            <Image src={logo} alt="loginForm" width={20} height={20} />
-                                        </Flex>
-                                        {renderSearch()}
+                        </Flex>
+                    </div>
+                    <div className={styles.navigationMobile}>
+                        <MenuOutlined
+                            onClick={() => setOpen(true)}
+                            className={styles.navigationIcon}
+                            height={1000}
+                            width={1000}
+                        />
+                        <Drawer
+                            title={
+                                <Flex justify="center">
+                                    <Flex justify="center" align="center" style={{ flex: 1 }}>
+                                        <Image src={logo} alt="loginForm" width={20} height={20} />
                                     </Flex>
-                                }
-                                placement="right"
-                                onClose={() => setOpen(false)}
-                                open={open}>
-                                <Flex vertical gap={30}>
-                                    {renderMenuItem('products')}
-                                    {renderMenuItem('brands')}
-                                    {renderMenuItem('deals')}
-                                    {renderMenuItem('services')}
+                                    {renderSearch()}
                                 </Flex>
-                            </Drawer>
-                        </div>
-                    </Flex>
-                </Col>
-                <Col xs={2} lg={2} />
-            </Row>
-        </>
+                            }
+                            placement="right"
+                            onClose={() => setOpen(false)}
+                            open={open}>
+                            <Flex vertical gap={30}>
+                                {renderMenuItem('products')}
+                                {renderMenuItem('brands')}
+                                {renderMenuItem('deals')}
+                                {renderMenuItem('services')}
+                            </Flex>
+                        </Drawer>
+                    </div>
+                </Flex>
+            </Col>
+        </Row>
     )
 }
 
