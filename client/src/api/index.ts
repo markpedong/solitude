@@ -28,17 +28,6 @@ export type TProduct = {
 
 export const getProducts = params => post<TProduct[]>('/users/products', params)
 
-// /api/blogs
-export type TBlog = {
-    id: string
-    title: string
-    description: string
-    image: string
-    link: string
-    created_at: number
-}
-export const getBlogs = () => get<TBlog[]>('/api/blogs')
-
 // /api/collections
 export type TCollection = {
     image: string

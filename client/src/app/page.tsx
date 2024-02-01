@@ -9,7 +9,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import styles from './styles.module.scss'
 import { Collection, Product } from '@/components/reusable'
-import { getBlogs, getCollections, getProducts } from '@/api'
+import { getCollections, getProducts } from '@/api'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -63,26 +63,6 @@ const Page = async () => {
                     <Collection description={q.description} image={q.image} title={q.title} key={q.id} />
                 ))}
             </div>
-            {/* <div className={styles.titleContainer}>
-                <span className={cormorant.className}>Our Blog</span>
-                <span className={jost.className}>More Articles</span>
-            </div> */}
-            {/* <div className={styles.blogItemsContainer}>
-                {blogs.data?.map(q => (
-                    <div className={styles.blogItem} key={q.image}>
-                        <Image src={q.image} alt={q.image} width={1000} height={1000} />
-                        <div className={styles.featuresTextContainer}>
-                            <span className={cormorant.className} style={{ fontWeight: '' }}>
-                                {q.title}
-                            </span>
-                            <span className={jost.className}>{q.description}</span>
-                            <Link className={jost.className} href={q.link} target="_blank">
-                                Read More
-                            </Link>
-                        </div>
-                    </div>
-                ))}
-            </div> */}
             <div className={styles.joinWrapper}>
                 <div className={styles.imageContainer}>
                     <Image src={img1} alt="logo1" priority />

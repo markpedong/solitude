@@ -103,6 +103,7 @@ const AddProduct: FC<Props> = ({ products }) => {
                         />
                     </ProForm.Group>
                     <ProFormSelect
+                        label="Category"
                         name="categories"
                         placeholder="Please enter Category for Products eg: Clothing, Shoes, Accessories"
                         fieldProps={{

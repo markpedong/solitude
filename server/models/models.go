@@ -22,10 +22,29 @@ type User struct {
 	Gender    string `json:"gender"`
 	Birthday  string `json:"birthday"`
 }
+type Seller struct {
+	ID         string    `json:"id" gorm:"primaryKey"`
+	CreatedAt  time.Time `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt  time.Time `json:"updated_at" gorm:"autoCreateTime"`
+	SellerName string    `json:"seller_name" validate:"max=10"`
+	Password   string    `json:"password" validate:"required,min=6"`
+	Email      string    `json:"email" validate:"required"`
+	Phone      string    `json:"phone"`
+	Username   string    `json:"username"`
+	Location   string    `json:"location"`
+	Brands     []Brands  `json:"brands"`
+	Products   []Product `json:"products" gorm:"foreignKey:ProductID"`
+}
+
+type Brands struct {
+	ID       string    `json:"id" gorm:"primaryKey"`
+	Name     string    `json:"brand_name"`
+	Products []Product `json:"products" gorm:"foreignKey:ProductID"`
+}
 
 type Product struct {
 	ProductID   string         `json:"id" gorm:"primaryKey"`
-	ProductName *string        `json:"product_name" validate:"required"`
+	ProductName string         `json:"product_name" validate:"required"`
 	Price       float64        `json:"price" validate:"required"`
 	Rating      int            `json:"rating"`
 	Image       pq.StringArray `json:"image" gorm:"type:text[]"`
@@ -33,6 +52,7 @@ type Product struct {
 	Description string         `json:"description" validate:"required"`
 	Stock       int            `json:"stock" validate:"required"`
 	CreatorID   string         `json:"creator_id" validate:"required"`
+	BrandID     string         `json:"brand_id" validate:"required"`
 }
 
 type Address struct {
@@ -57,15 +77,6 @@ type Payment struct {
 	ID      string `json:"id" gorm:"primaryKey"`
 	Digital bool   `json:"digital"`
 	COD     bool   `json:"cod"`
-}
-
-type Blogs struct {
-	ID          string `json:"id" gorm:"primaryKey"`
-	Title       string `json:"title" validate:"required"`
-	Description string `json:"description" validate:"required"`
-	Image       string `json:"image" validate:"required"`
-	Link        string `json:"link" validate:"required"`
-	CreatedAt   int    `json:"created_at" gorm:"autoCreateTime"`
 }
 
 type Collections struct {
