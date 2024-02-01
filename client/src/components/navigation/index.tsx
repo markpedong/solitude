@@ -127,7 +127,7 @@ const Navigation: FC = () => {
                         <Collection
                             key={q.id}
                             description={q.description}
-                            image={q.image as string}
+                            image={q.image as unknown as string}
                             title={q.product_name}
                             className={styles.collectionItem}
                         />
