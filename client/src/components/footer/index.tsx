@@ -7,23 +7,26 @@ import styles from './styles.module.scss'
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
 import { Jost } from 'next/font/google'
+import { useRouter } from 'next/navigation'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
-const MenuItem: FC<{ url: string }> = ({ url }) => (
-    <a className={styles.menuItem} href={url}>
-        {url}
-    </a>
-)
-
 const Footer: FC = () => {
+    const router = useRouter()
+
+    const renderMenuItem = (href: string) => (
+        <span className={styles.menuItem} onClick={() => router.push(`/${href}`)}>
+            {href}
+        </span>
+    )
+
     return (
         <div className={styles.footerWrapper}>
             <Flex className={classNames(jost.className, styles.menuContainer)} justify="center" align="center">
-                <MenuItem url="products" />
-                <MenuItem url="brands" />
-                <MenuItem url="deals" />
-                <MenuItem url="services" />
+                {renderMenuItem('products')}
+                {renderMenuItem('brands')}
+                {renderMenuItem('deals')}
+                {renderMenuItem('services')}
             </Flex>
             <Flex className={classNames(jost.className, styles.socialMediaContainer)} justify="center" align="center">
                 <motion.span whileTap={{ scale: 0.9 }}>

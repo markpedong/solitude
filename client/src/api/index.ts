@@ -20,7 +20,7 @@ export type TProduct = {
     id: string
     product_name: string
     price: number
-    image: string
+    image: string[];
     created_at: number
     description: string
 }

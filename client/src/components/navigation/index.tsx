@@ -34,12 +34,6 @@ import styles from './styles.module.scss'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
-const MenuItem: FC<{ url: string }> = ({ url }) => (
-    <a className={styles.menuItem} href={url}>
-        {url}
-    </a>
-)
-
 const searchStyle: CSSProperties = {
     position: 'sticky',
     top: 0,
@@ -133,7 +127,7 @@ const Navigation: FC = () => {
                         <Collection
                             key={q.id}
                             description={q.description}
-                            image={q.image}
+                            image={q.image as string}
                             title={q.product_name}
                             className={styles.collectionItem}
                         />
@@ -341,6 +335,12 @@ const Navigation: FC = () => {
             </ModalForm>
         )
 
+    const renderMenuItem = (href: string) => (
+        <span className={styles.menuItem} onClick={() => router.push(`/${href}`)}>
+            {href}
+        </span>
+    )
+
     useEffect(() => {
         handleResize()
         handleGetFeatures()
@@ -361,10 +361,10 @@ const Navigation: FC = () => {
                             </span>
                         </Flex>
                         <div className={styles.navigation}>
-                            <MenuItem url="products" />
-                            <MenuItem url="brands" />
-                            <MenuItem url="deals" />
-                            <MenuItem url="services" />
+                            {renderMenuItem('products')}
+                            {renderMenuItem('brands')}
+                            {renderMenuItem('deals')}
+                            {renderMenuItem('services')}
                             <Flex className={styles.icons} gap={20}>
                                 {renderSearch()}
                                 {renderLogin()}
@@ -397,11 +397,10 @@ const Navigation: FC = () => {
                                 onClose={() => setOpen(false)}
                                 open={open}>
                                 <Flex vertical gap={30}>
-                                    <MenuItem url="products" />
-                                    <MenuItem url="brands" />
-                                    <MenuItem url="deals" />
-                                    <MenuItem url="services" />
-                                    <MenuItem url="account" />
+                                    {renderMenuItem('products')}
+                                    {renderMenuItem('brands')}
+                                    {renderMenuItem('deals')}
+                                    {renderMenuItem('services')}
                                 </Flex>
                             </Drawer>
                         </div>

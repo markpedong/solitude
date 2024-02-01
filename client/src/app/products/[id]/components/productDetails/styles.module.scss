@@ -1,0 +1,31 @@
+@import '@/styles/_helpers.scss';
+
+.productImageContainer{
+    display: flex !important;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center !important;
+    margin-inline: toRem(10);
+
+    .firstImageContainer {
+        background-color: #f8f8f8;
+        border-radius: toRem(4);
+        width: 80%;
+        padding: toRem(15);
+        display: grid;
+        place-content: center;
+
+        img {
+            width: toRem(230);
+            height: toRem(230);
+        }
+    }
+
+    .extraImagesContainer{
+        padding-block-start: toRem(20);
+        img {
+            width: toRem(60);
+            height: toRem(60);
+        }
+    }
+}
