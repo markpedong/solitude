@@ -33,7 +33,6 @@ const AddProduct: FC<Props> = ({ products }) => {
 
     return (
         <div className={styles.addProductWrapper}>
-            <span className={classNames(jost.className, styles.addProductHeader)}>ADD PRODUCT</span>
             <ProForm
                 grid
                 autoFocusFirstInput={false}
@@ -46,83 +45,73 @@ const AddProduct: FC<Props> = ({ products }) => {
                         image: uploadedImages?.map(q => q.url),
                     })
 
-                    if (res.success){
+                    if (res.success) {
                         setUploadedImages([])
                     }
 
                     return afterModalformFinish(actionRef, 'res.message', true, formRef)
                 }}>
-                <ProForm.Group>
-                    <ProFormText colProps={{ span: 12 }}>
-                        <Flex
-                            className={styles.galleryContainer}
-                            justify="center"
-                            align="center"
-                            data-length={uploadedImages?.length}>
-                            {uploading ? (
-                                <Spin />
-                            ) : (
-                                <ProFormUploadButton
-                                    name="upload"
-                                    title="UPLOAD YOUR IMAGE"
-                                    fieldProps={{
-                                        name: 'files',
-                                        listType: 'picture-card',
-                                        accept: 'image/*',
-                                        multiple: true,
-                                        action: async e => {
-                                            setUploading(true)
-                                            setUploadedImages([])
+                <ProFormText colProps={{ span: 10 }}>
+                    <Flex className={styles.galleryContainer} justify="center" align="center">
+                        {uploading ? (
+                            <Spin />
+                        ) : (
+                            <ProFormUploadButton
+                                name="upload"
+                                title="UPLOAD YOUR IMAGE"
+                                fieldProps={{
+                                    name: 'files',
+                                    listType: 'picture-card',
+                                    accept: 'image/*',
+                                    multiple: true,
+                                    action: async e => {
+                                        setUploading(true)
+                                        setUploadedImages([])
 
-                                            try {
-                                                const res = await uploadImages(e)
-                                                setUploadedImages(state => [...state, res.data])
+                                        try {
+                                            const res = await uploadImages(e)
+                                            setUploadedImages(state => [...state, res.data])
 
-                                                return ''
-                                            } finally {
-                                                setUploading(false)
-                                            }
-                                        },
-                                    }}
-                                />
-                            )}
-                        </Flex>
-                    </ProFormText>
-                    <ProFormText colProps={{ span: 12 }}>
-                        <ProFormText
-                            label="Name"
-                            name="product_name"
-                            placeholder="Product Name"
-                            colProps={{ span: 24 }}
-                        />
-                        <ProFormTextArea
-                            label="Description"
-                            name="description"
-                            placeholder="Description"
-                            colProps={{ span: 24 }}
-                        />
-                        <ProForm.Group>
-                            <ProFormText label="Price" name="price" placeholder="Price" colProps={{ span: 12 }} />
-                            <ProFormDigit
-                                label="Amount in Stock"
-                                name="stock"
-                                placeholder="in Stock"
-                                colProps={{ span: 12 }}
+                                            return ''
+                                        } finally {
+                                            setUploading(false)
+                                        }
+                                    },
+                                }}
                             />
-                        </ProForm.Group>
-                    </ProFormText>
-                </ProForm.Group>
+                        )}
+                    </Flex>
+                </ProFormText>
+                <ProFormText colProps={{ span: 14 }}>
+                    <span className={classNames(jost.className, styles.addProductHeader)}>ADD PRODUCT</span>
+                    <ProFormText label="Name" name="product_name" placeholder="Product Name" colProps={{ span: 24 }} />
+                    <ProFormTextArea
+                        label="Description"
+                        name="description"
+                        placeholder="Description"
+                        colProps={{ span: 24 }}
+                    />
+                    <ProForm.Group>
+                        <ProFormText label="Price" name="price" placeholder="Price" colProps={{ span: 12 }} />
+                        <ProFormDigit
+                            label="Amount in Stock"
+                            name="stock"
+                            placeholder="in Stock"
+                            colProps={{ span: 12 }}
+                        />
+                    </ProForm.Group>
+                    <Flex justify="center" gap={20}>
+                        <motion.div whileTap={{ scale: 0.9 }}>
+                            <Button onClick={() => formRef?.current.resetFields()}>Reset</Button>
+                        </motion.div>
+                        <motion.div whileTap={{ scale: 0.9 }}>
+                            <Button type="primary" onClick={() => formRef?.current.submit()}>
+                                Submit
+                            </Button>
+                        </motion.div>
+                    </Flex>
+                </ProFormText>
             </ProForm>
-            <Flex justify="center" gap={20}>
-                <motion.div whileTap={{ scale: 0.9 }}>
-                    <Button onClick={() => formRef?.current.resetFields()}>Reset</Button>
-                </motion.div>
-                <motion.div whileTap={{ scale: 0.9 }}>
-                    <Button type="primary" onClick={() => formRef?.current.submit()}>
-                        Submit
-                    </Button>
-                </motion.div>
-            </Flex>
         </div>
     )
 }
