@@ -7,7 +7,6 @@ import forgotModalCover from '@/public/assets/forgotModalCover.webp'
 import loginModalCover from '@/public/assets/loginModalCover.webp'
 import logo from '@/public/assets/logo.webp'
 import signUpModalCover from '@/public/assets/signUpModalCover.webp'
-import sellerModalCover from '@/public/assets/sellerLoginModal.webp'
 import { setActiveLoginForm } from '@/redux/features/booleanSlice'
 import { resetUserData, setUserToken, setUserData } from '@/redux/features/userSlice'
 import { resetSellerData, setSellerData, setSellerToken } from '@/redux/features/sellerSlice'
@@ -21,7 +20,7 @@ import {
     SearchOutlined,
     UserOutlined,
 } from '@ant-design/icons'
-import { ActionType, ModalForm, ProForm, ProFormInstance, ProFormText } from '@ant-design/pro-components'
+import { ActionType, ModalForm, ProForm, ProFormInstance, ProFormSelect, ProFormText } from '@ant-design/pro-components'
 import type { MenuProps } from 'antd'
 import { Button, Col, Drawer, Dropdown, Flex, Input, Row, Typography } from 'antd'
 import classNames from 'classnames'
@@ -181,19 +180,11 @@ const Navigation: FC = () => {
                     className={styles.loginContainer}
                     justify="space-between"
                     gap={20}
-                    style={{ blockSize: create ? '29rem' : forgot ? '22rem' : '26rem' }}>
+                    style={{ blockSize: create ? '34rem' : forgot ? '22rem' : '26rem' }}>
                     <div className={styles.loginImage}>
                         <Image
                             alt="loginCover"
-                            src={
-                                create
-                                    ? signUpModalCover
-                                    : forgot
-                                    ? forgotModalCover
-                                    : seller
-                                    ? sellerModalCover
-                                    : loginModalCover
-                            }
+                            src={create ? signUpModalCover : forgot ? forgotModalCover : loginModalCover}
                         />
                     </div>
                     <Flex className={styles.loginForm} vertical>
@@ -222,6 +213,40 @@ const Navigation: FC = () => {
                             style={{
                                 margin: `${forgot ? '2.5rem' : '3.5rem'} 0 0.5rem 0`,
                             }}>
+                            {create && (
+                                <ProFormSelect
+                                    label="Type"
+                                    name="type"
+                                    options={['SELLER', 'USER']}
+                                    rules={[...REQUIRED]}
+                                    colProps={{ span: 7 }}
+                                    placeholder=""
+                                />
+                            )}
+                            <ProForm.Group>
+                                <ProFormText
+                                    name="email"
+                                    placeholder="your@email.com"
+                                    label="Email Address"
+                                    fieldProps={{ prefix: <UserOutlined /> }}
+                                    colProps={create ? { span: 12 } : {}}
+                                    rules={[
+                                        ...REQUIRED,
+                                        {
+                                            type: 'email',
+                                            message: 'input is not email format!',
+                                        },
+                                    ]}
+                                />
+                                {create && (
+                                    <ProFormText
+                                        name="username"
+                                        placeholder="eg: johnsmith"
+                                        label="Username"
+                                        colProps={{ span: 12 }}
+                                    />
+                                )}
+                            </ProForm.Group>
                             {create && (
                                 <ProForm.Group>
                                     <ProFormText
@@ -252,30 +277,7 @@ const Navigation: FC = () => {
                                     />
                                 </ProForm.Group>
                             )}
-                            <ProForm.Group>
-                                <ProFormText
-                                    name="email"
-                                    placeholder="your@email.com"
-                                    label="Email Address"
-                                    fieldProps={{ prefix: <UserOutlined /> }}
-                                    colProps={create ? { span: 12 } : {}}
-                                    rules={[
-                                        ...REQUIRED,
-                                        {
-                                            type: 'email',
-                                            message: 'input is not email format!',
-                                        },
-                                    ]}
-                                />
-                                {create && (
-                                    <ProFormText
-                                        name="username"
-                                        placeholder="eg: johnsmith"
-                                        label="Username"
-                                        colProps={{ span: 12 }}
-                                    />
-                                )}
-                            </ProForm.Group>
+
                             {!forgot && (
                                 <ProForm.Group>
                                     <ProFormText.Password

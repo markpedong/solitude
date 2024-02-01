@@ -16,7 +16,7 @@ export const BooleanSlice = createSlice({
     initialState,
     reducers: {
         setDarkMode: (state, action: PayloadAction<boolean>) => ({ ...state, darkMode: !state.darkMode }),
-        setActiveLoginForm: (state, action: PayloadAction<'login' | 'create' | 'forgot'>) => ({
+        setActiveLoginForm: (state, action: PayloadAction<'login' | 'create' | 'forgot' | 'seller'>) => ({
             ...state,
             activeLoginForm: action.payload,
         }),
