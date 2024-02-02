@@ -23,6 +23,7 @@ type InitialSlice = {
         username: string
         location: string
     }
+    type: string
     token: string
     isLoggedIn: boolean
 }
@@ -49,6 +50,7 @@ const initialState: InitialSlice = {
         seller_name: '',
         username: '',
     },
+    type: '',
     token: '',
     isLoggedIn: false,
 }

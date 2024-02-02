@@ -35,6 +35,7 @@ type Seller struct {
 	Location   string    `json:"location"`
 	Brands     []Brands  `json:"brands" gorm:"foreignKey:BrandID"`
 	Products   []Product `json:"products" gorm:"foreignKey:ProductID"`
+	Type       string    `json:"type"`
 }
 
 type Brands struct {

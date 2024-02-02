@@ -123,6 +123,7 @@ func Signup(ctx *gin.Context) {
 		"data":          newUser,
 		"token":         token,
 		"refresh_token": refreshToken,
+		"type":          newUser.Type,
 	})
 }
 
@@ -171,16 +172,19 @@ func handleLogin(ctx *gin.Context, user interface{}, password, firstName, lastNa
 	var validPass bool
 	var msg string
 	var email string
+	var Type string
 
 	switch v := user.(type) {
 	case models.User:
 		validPass, msg = VerifyPassword(v.Password, password)
 		v.Password = ""
 		email = v.Email
+		Type = v.Type
 	case models.Seller:
 		validPass, msg = VerifyPassword(v.Password, password)
 		v.Password = ""
 		email = v.Email
+		Type = v.Type
 	default:
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Invalid user type")
 		return
@@ -201,6 +205,7 @@ func handleLogin(ctx *gin.Context, user interface{}, password, firstName, lastNa
 		"data":          user,
 		"token":         token,
 		"refresh_token": refreshToken,
+		"type":          Type,
 	}
 	helpers.JSONResponse(ctx, "Logged in successfully", res)
 }
