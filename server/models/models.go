@@ -21,7 +21,6 @@ type User struct {
 	Username  string `json:"username"`
 	Gender    string `json:"gender"`
 	Birthday  string `json:"birthday"`
-	Type      string `json:"type"`
 }
 type Seller struct {
 	SellerID   string    `json:"seller_id" gorm:"primaryKey"`
@@ -35,7 +34,6 @@ type Seller struct {
 	Location   string    `json:"location"`
 	Brands     []Brands  `json:"brands" gorm:"foreignKey:BrandID"`
 	Products   []Product `json:"products" gorm:"foreignKey:ProductID"`
-	Type       string    `json:"type"`
 }
 
 type Brands struct {
