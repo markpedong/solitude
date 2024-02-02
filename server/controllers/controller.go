@@ -54,7 +54,6 @@ func Signup(ctx *gin.Context) {
 		UserCart       []models.Product `json:"user_cart"`
 		AddressDetails []models.Address `json:"address_details"`
 		Orders         []models.Order   `json:"orders"`
-		Type           string           `json:"type"`
 	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
@@ -104,7 +103,6 @@ func Signup(ctx *gin.Context) {
 		Email:     body.Email,
 		Phone:     body.Phone,
 		Username:  body.Username,
-		Type:      body.Type,
 		// UserCart:       make([]models.Product, 0),
 		// AddressDetails: make([]models.Address, 0),
 		// Orders:         make([]models.Order, 0),
@@ -123,7 +121,6 @@ func Signup(ctx *gin.Context) {
 		"data":          newUser,
 		"token":         token,
 		"refresh_token": refreshToken,
-		"type":          newUser.Type,
 	})
 }
 
@@ -131,7 +128,6 @@ func Login(ctx *gin.Context) {
 	var body struct {
 		Email    string `json:"email" validate:"required"`
 		Password string `json:"password" validate:"required,min=6"`
-		Type     int    `json:"type" validate:"required"`
 	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
@@ -144,68 +140,34 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	baseQuery := database.DB.Where("email = ?", body.Email)
-
-	switch body.Type {
-	case 1:
-		var existingUser models.User
-		if err := baseQuery.First(&existingUser).Error; err != nil {
-			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user not found!")
-			return
-		}
-		handleLogin(ctx, existingUser, body.Password, existingUser.FirstName, existingUser.LastName, existingUser.ID)
-
-	case 2:
-		var existingSeller models.Seller
-		if err := baseQuery.First(&existingSeller).Error; err != nil {
-			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "seller not found!")
-			return
-		}
-		handleLogin(ctx, existingSeller, body.Password, existingSeller.SellerName, "", existingSeller.SellerID)
-
-	default:
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid user type")
-	}
-}
-
-func handleLogin(ctx *gin.Context, user interface{}, password, firstName, lastName, id string) {
-	var validPass bool
-	var msg string
-	var email string
-	var Type string
-
-	switch v := user.(type) {
-	case models.User:
-		validPass, msg = VerifyPassword(v.Password, password)
-		v.Password = ""
-		email = v.Email
-		Type = v.Type
-	case models.Seller:
-		validPass, msg = VerifyPassword(v.Password, password)
-		v.Password = ""
-		email = v.Email
-		Type = v.Type
-	default:
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Invalid user type")
+	if body.Email == "" || body.Password == "" {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "email and password are required")
 		return
 	}
 
+	var existingUser models.User
+	if err := database.DB.Where("email = ?", body.Email).First(&existingUser).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user not found!")
+		return
+	}
+
+	validPass, msg := VerifyPassword(existingUser.Password, body.Password)
 	if !validPass {
 		helpers.ErrJSONResponse(ctx, http.StatusUnauthorized, msg)
 		return
 	}
 
-	token, refreshToken, err := tokens.TokenGenerator(email, firstName, lastName, id)
+	token, refreshToken, err := tokens.TokenGenerator(existingUser.Email, existingUser.FirstName, existingUser.LastName, existingUser.ID)
 	if err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Error generating tokens")
 		return
 	}
 
+	existingUser.Password = HashPassword(body.Password)
 	res := map[string]interface{}{
-		"data":          user,
+		"data":          existingUser,
 		"token":         token,
 		"refresh_token": refreshToken,
-		"type":          Type,
 	}
 	helpers.JSONResponse(ctx, "Logged in successfully", res)
 }
