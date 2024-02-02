@@ -14,6 +14,15 @@ type InitialSlice = {
         birthday: string
         username: string
     }
+    sellerData: {
+        seller_id: string
+        created_at: string
+        seller_name: string
+        password: string
+        email: string
+        username: string
+        location: string
+    }
     token: string
     isLoggedIn: boolean
 }
@@ -31,6 +40,15 @@ const initialState: InitialSlice = {
         birthday: '',
         username: '',
     },
+    sellerData: {
+        created_at: '',
+        email: '',
+        location: '',
+        password: '',
+        seller_id: '',
+        seller_name: '',
+        username: '',
+    },
     token: '',
     isLoggedIn: false,
 }
@@ -41,9 +59,10 @@ export const UserSlice = createSlice({
     reducers: {
         resetUserData: () => initialState,
         setUserData: (state, action) => ({ ...state, isLoggedIn: true, userData: action.payload }),
+        setSellerData: (state, action) => ({ ...state, isLoggedIn: true, sellerData: action.payload }),
         setUserToken: (state, action) => ({ ...state, token: action.payload }),
     },
 })
 
-export const { setUserData, resetUserData, setUserToken } = UserSlice.actions
+export const { setUserData, resetUserData, setUserToken, setSellerData } = UserSlice.actions
 export default UserSlice.reducer
