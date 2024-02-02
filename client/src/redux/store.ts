@@ -2,7 +2,6 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import booleanReducer from './features/booleanSlice'
 import userReducer from './features/userSlice'
-import sellerReducer from './features/sellerSlice'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer, createTransform } from 'redux-persist'
 import { compress, decompress } from 'lz-string'
@@ -10,7 +9,6 @@ import { compress, decompress } from 'lz-string'
 type RootType = {
     boolean: ReturnType<typeof booleanReducer>
     userData: ReturnType<typeof userReducer>
-    sellerData: ReturnType<typeof sellerReducer>
 }
 
 const persistConfig = {
@@ -28,7 +26,6 @@ const persistConfig = {
 const reducer = combineReducers({
     boolean: booleanReducer,
     userData: userReducer,
-    sellerData: sellerReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)

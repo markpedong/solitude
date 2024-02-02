@@ -9,7 +9,6 @@ import logo from '@/public/assets/logo.webp'
 import signUpModalCover from '@/public/assets/signUpModalCover.webp'
 import { setActiveLoginForm } from '@/redux/features/booleanSlice'
 import { resetUserData, setUserToken, setUserData } from '@/redux/features/userSlice'
-import { resetSellerData, setSellerData, setSellerToken } from '@/redux/features/sellerSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { getLocalStorage, setLocalStorage } from '@/utils/xLocalStorage'
 import {
