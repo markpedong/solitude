@@ -29,7 +29,7 @@ func GetUserData(ctx *gin.Context) {
 	helpers.JSONResponse(ctx, "user found!", helpers.DataHelper(foundUser))
 }
 
-func UpdateUser(ctx *gin.Context) {
+func UserUpdate(ctx *gin.Context) {
 	var body struct {
 		ID        string `json:"id"`
 		FirstName string `json:"first_name"`
@@ -77,7 +77,7 @@ func UpdateUser(ctx *gin.Context) {
 	helpers.JSONResponse(ctx, "successfully updated user!")
 }
 
-func Signup(ctx *gin.Context) {
+func UserSignup(ctx *gin.Context) {
 	var body struct {
 		ID             string           `json:"id" gorm:"primaryKey"`
 		FirstName      string           `json:"first_name" validate:"required,max=10"`
@@ -159,7 +159,7 @@ func Signup(ctx *gin.Context) {
 	})
 }
 
-func Login(ctx *gin.Context) {
+func UserLogin(ctx *gin.Context) {
 	var body struct {
 		Email    string `json:"email" validate:"required"`
 		Password string `json:"password" validate:"required,min=6"`

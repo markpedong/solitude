@@ -7,20 +7,20 @@ import (
 )
 
 type User struct {
-	ID             string    `json:"id" gorm:"primaryKey"`
-	CreatedAt      time.Time `json:"created_at" gorm:"autoCreateTime"`
-	UpdatedAt      time.Time `json:"updated_at" gorm:"autoUpdateTime"`
-	UserCart       []Product `json:"user_cart" gorm:"foreignKey:UserID"`
-	AddressDetails []Address `json:"address_details" gorm:"foreignKey:UserID"`
-	Orders         []Order   `json:"orders" gorm:"foreignKey:UserID"`
-	FirstName      string    `json:"first_name" validate:"max=10"`
-	LastName       string    `json:"last_name" validate:"max=10"`
-	Password       string    `json:"password" validate:"required,min=6"`
-	Email          string    `json:"email" validate:"required"`
-	Phone          string    `json:"phone"`
-	Username       string    `json:"username"`
-	Gender         string    `json:"gender"`
-	Birthday       string    `json:"birthday"`
+	ID             string     `json:"id" gorm:"primaryKey"`
+	CreatedAt      time.Time  `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt      time.Time  `json:"updated_at" gorm:"autoUpdateTime"`
+	UserCart       *[]Product `json:"user_cart" gorm:"foreignKey:UserID"`
+	AddressDetails *[]Address `json:"address_details" gorm:"foreignKey:UserID"`
+	Orders         *[]Order   `json:"orders" gorm:"foreignKey:UserID"`
+	FirstName      string     `json:"first_name" validate:"max=10"`
+	LastName       string     `json:"last_name" validate:"max=10"`
+	Password       string     `json:"password" validate:"required,min=6"`
+	Email          string     `json:"email" validate:"required"`
+	Phone          string     `json:"phone"`
+	Username       string     `json:"username"`
+	Gender         string     `json:"gender"`
+	Birthday       string     `json:"birthday"`
 }
 
 type Product struct {

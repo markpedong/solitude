@@ -10,8 +10,8 @@ import (
 func UserRoutes(r *gin.Engine) {
 	users := r.Group("/users")
 	{
-		users.POST("/signup", controllers.Signup)
-		users.POST("/login", controllers.Login)
+		users.POST("/signup", controllers.UserSignup)
+		users.POST("/login", controllers.UserLogin)
 		users.POST("/products", controllers.GetAllProducts)
 		users.GET("/collections", controllers.GetAllCollections)
 		users.POST("/getUserData", controllers.GetUserData)
@@ -31,7 +31,7 @@ func UserRoutes(r *gin.Engine) {
 		// api.GET("/blogs", controllers.GetAllBlog)
 		api.POST("/uploadImage", controllers.UploadImage)
 		api.POST("/checkToken", controllers.CheckToken)
-		api.POST("/updateUser", controllers.UpdateUser)
+		api.POST("/updateUser", controllers.UserUpdate)
 		// api.GET("/image/:id", controllers.GetImage)
 	}
 }
