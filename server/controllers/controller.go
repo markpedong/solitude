@@ -96,16 +96,16 @@ func Signup(ctx *gin.Context) {
 	}
 
 	newUser := models.User{
-		ID:        body.ID,
-		FirstName: body.FirstName,
-		LastName:  body.LastName,
-		Password:  body.Password,
-		Email:     body.Email,
-		Phone:     body.Phone,
-		Username:  body.Username,
-		// UserCart:       make([]models.Product, 0),
-		// AddressDetails: make([]models.Address, 0),
-		// Orders:         make([]models.Order, 0),
+		ID:             body.ID,
+		FirstName:      body.FirstName,
+		LastName:       body.LastName,
+		Password:       body.Password,
+		Email:          body.Email,
+		Phone:          body.Phone,
+		Username:       body.Username,
+		UserCart:       make([]models.Product, 0),
+		AddressDetails: make([]models.Address, 0),
+		Orders:         make([]models.Order, 0),
 	}
 
 	if err := database.DB.Create(&newUser).Error; err != nil {
