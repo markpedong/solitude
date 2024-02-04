@@ -12,6 +12,8 @@ func UserRoutes(r *gin.Engine) {
 	{
 		users.POST("/signup", controllers.UserSignup)
 		users.POST("/login", controllers.UserLogin)
+		users.POST("/loginSeller", controllers.SellerLogin)
+		users.POST("/signupSeller", controllers.SellerSignup)
 		users.POST("/products", controllers.GetAllProducts)
 		users.GET("/collections", controllers.GetAllCollections)
 		users.POST("/getUserData", controllers.GetUserData)

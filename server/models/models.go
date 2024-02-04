@@ -57,17 +57,17 @@ type Order struct {
 }
 
 type Seller struct {
-	SellerID   string    `json:"seller_id" gorm:"primaryKey"`
-	CreatedAt  time.Time `json:"created_at" gorm:"autoCreateTime"`
-	UpdatedAt  time.Time `json:"updated_at" gorm:"autoCreateTime"`
-	SellerName string    `json:"seller_name" validate:"max=10"`
-	Password   string    `json:"password" validate:"required,min=6"`
-	Email      string    `json:"email" validate:"required"`
-	Phone      string    `json:"phone"`
-	Username   string    `json:"username"`
-	Location   string    `json:"location"`
-	Brands     []Brands  `json:"brands" gorm:"foreignKey:BrandID"`
-	Products   []Product `json:"products" gorm:"foreignKey:ProductID"`
+	SellerID   string     `json:"seller_id" gorm:"primaryKey"`
+	CreatedAt  time.Time  `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt  time.Time  `json:"updated_at" gorm:"autoCreateTime"`
+	SellerName string     `json:"seller_name" validate:"max=10"`
+	Password   string     `json:"password" validate:"required,min=6"`
+	Email      string     `json:"email" validate:"required"`
+	Phone      string     `json:"phone"`
+	Username   string     `json:"username"`
+	Location   string     `json:"location"`
+	Brands     *[]Brands  `json:"brands" gorm:"foreignKey:BrandID"`
+	Products   *[]Product `json:"products" gorm:"foreignKey:ProductID"`
 }
 
 type Brands struct {

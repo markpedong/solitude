@@ -11,40 +11,20 @@ import (
 )
 
 func SellerSignup(ctx *gin.Context) {
-	var body struct {
-		SellerID   string `json:"seller_id" gorm:"primaryKey"`
-		SellerName string `json:"seller_name" validate:"max=10"`
-		Password   string `json:"password" validate:"required,min=6"`
-		Email      string `json:"email" validate:"required"`
-		Username   string `json:"username"`
+	var body models.Seller
+	if body.Email != "" && helpers.ExistingFields("email", body.Email) {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, emailExist)
+		return
 	}
-
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid JSON input")
+	if body.Phone != "" && helpers.ExistingFields("phone", body.Phone) {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, phoneExist)
+		return
+	}
+	if body.Username != "" && helpers.ExistingFields("username", body.Username) {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, usernameExist)
 		return
 	}
 
-	if err := Validate.Struct(body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
-		return
-	}
-
-	var existingUser models.Seller
-	if body.Email != "" {
-		if err := database.DB.Where("email = ?", body.Email).First(&existingUser).Error; err == nil {
-			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with this email already exists!")
-			return
-		}
-	}
-
-	if body.Username != "" {
-		if err := database.DB.Where("username = ?", body.Username).First(&existingUser).Error; err == nil {
-			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with this username already exists!")
-			return
-		}
-	}
-
-	body.SellerID = Guid.String()
 	token, refreshToken, err := tokens.TokenGenerator(body.Email, body.SellerName, "", body.SellerID)
 	if err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
@@ -52,10 +32,15 @@ func SellerSignup(ctx *gin.Context) {
 	}
 
 	newSeller := models.Seller{
-		SellerID: body.SellerID,
-		Password: body.Password,
-		Email:    body.Email,
-		Username: body.Username,
+		SellerID:   Guid.String(),
+		SellerName: body.SellerName,
+		Password:   body.Password,
+		Email:      body.Email,
+		Phone:      body.Phone,
+		Username:   body.Username,
+		Location:   body.Location,
+		Brands:     &[]models.Brands{},
+		Products:   &[]models.Product{},
 	}
 
 	if err := database.DB.Create(&newSeller).Error; err != nil {
@@ -64,14 +49,12 @@ func SellerSignup(ctx *gin.Context) {
 	}
 
 	newSeller.Password = HashPassword(body.Password)
-	ctx.JSON(http.StatusOK, gin.H{
-		"message":       "Seller has been created!",
-		"success":       true,
-		"status":        http.StatusOK,
+	sellerRes := map[string]interface{}{
 		"data":          newSeller,
 		"token":         token,
 		"refresh_token": refreshToken,
-	})
+	}
+	helpers.JSONResponse(ctx, "seller successfully created!", sellerRes)
 }
 
 func SellerLogin(ctx *gin.Context) {
@@ -90,34 +73,23 @@ func SellerLogin(ctx *gin.Context) {
 		return
 	}
 
-	if body.Email == "" || body.Password == "" {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "email and password are required")
-		return
-	}
-
 	var existingSeller models.Seller
-	if err := database.DB.Where("email = ?", body.Email).First(&existingSeller).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user not found!")
-		return
-	}
-
-	validPass, msg := VerifyPassword(existingSeller.Password, body.Password)
-	if !validPass {
-		helpers.ErrJSONResponse(ctx, http.StatusUnauthorized, msg)
+	if err := database.DB.First(&existingSeller, "email = ?", body.Email).Error; err != nil {
+		helpers.JSONResponse(ctx, "user doesn't exist")
 		return
 	}
 
 	token, refreshToken, err := tokens.TokenGenerator(existingSeller.Email, existingSeller.SellerName, "", existingSeller.SellerID)
 	if err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Error generating tokens")
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	existingSeller.Password = HashPassword(body.Password)
-	res := map[string]interface{}{
+	userRes := map[string]interface{}{
 		"data":          existingSeller,
 		"token":         token,
 		"refresh_token": refreshToken,
 	}
-	helpers.JSONResponse(ctx, "Logged in successfully", res)
+
+	helpers.JSONResponse(ctx, "user found!", userRes)
 }

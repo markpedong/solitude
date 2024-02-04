@@ -78,52 +78,20 @@ func UserUpdate(ctx *gin.Context) {
 }
 
 func UserSignup(ctx *gin.Context) {
-	var body struct {
-		ID             string           `json:"id" gorm:"primaryKey"`
-		FirstName      string           `json:"first_name" validate:"required,max=10"`
-		LastName       string           `json:"last_name" validate:"required,max=10"`
-		Password       string           `json:"password" validate:"required,min=6"`
-		Email          string           `json:"email" validate:"required"`
-		Phone          string           `json:"phone"`
-		Username       string           `json:"username"`
-		UserCart       []models.Product `json:"user_cart"`
-		AddressDetails []models.Address `json:"address_details"`
-		Orders         []models.Order   `json:"orders"`
-	}
+	var body models.User
 
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid JSON input")
+	if body.Email != "" && helpers.ExistingFields("email", body.Email) {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, emailExist)
 		return
 	}
-
-	if err := Validate.Struct(body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if body.Phone != "" && helpers.ExistingFields("phone", body.Phone) {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, phoneExist)
 		return
 	}
-
-	var existingUser models.User
-	if body.Phone != "" {
-		if err := database.DB.Where("phone = ?", body.Phone).First(&existingUser).Error; err == nil {
-			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with this phone number already exists!")
-			return
-		}
+	if body.Username != "" && helpers.ExistingFields("username", body.Username) {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, usernameExist)
+		return
 	}
-
-	if body.Email != "" {
-		if err := database.DB.Where("email = ?", body.Email).First(&existingUser).Error; err == nil {
-			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with this email already exists!")
-			return
-		}
-	}
-
-	if body.Username != "" {
-		if err := database.DB.Where("username = ?", body.Username).First(&existingUser).Error; err == nil {
-			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with this username already exists!")
-			return
-		}
-	}
-
-	body.ID = Guid.String()
 	token, refreshToken, err := tokens.TokenGenerator(body.Email, body.FirstName, body.LastName, body.ID)
 	if err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
@@ -131,7 +99,7 @@ func UserSignup(ctx *gin.Context) {
 	}
 
 	newUser := models.User{
-		ID:             body.ID,
+		ID:             Guid.String(),
 		FirstName:      body.FirstName,
 		LastName:       body.LastName,
 		Password:       body.Password,
@@ -141,6 +109,8 @@ func UserSignup(ctx *gin.Context) {
 		UserCart:       &[]models.Product{},
 		AddressDetails: &[]models.Address{},
 		Orders:         &[]models.Order{},
+		Gender:         body.Gender,
+		Birthday:       body.Birthday,
 	}
 
 	if err := database.DB.Create(&newUser).Error; err != nil {
@@ -149,14 +119,13 @@ func UserSignup(ctx *gin.Context) {
 	}
 
 	newUser.Password = HashPassword(body.Password)
-	ctx.JSON(http.StatusOK, gin.H{
-		"message":       "User has been created!",
-		"success":       true,
-		"status":        http.StatusOK,
+	userRes := map[string]interface{}{
 		"data":          newUser,
 		"token":         token,
 		"refresh_token": refreshToken,
-	})
+	}
+
+	helpers.JSONResponse(ctx, "user successfully created!", userRes)
 }
 
 func UserLogin(ctx *gin.Context) {
@@ -175,34 +144,23 @@ func UserLogin(ctx *gin.Context) {
 		return
 	}
 
-	if body.Email == "" || body.Password == "" {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "email and password are required")
-		return
-	}
-
 	var existingUser models.User
-	if err := database.DB.Where("email = ?", body.Email).First(&existingUser).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user not found!")
-		return
-	}
-
-	validPass, msg := VerifyPassword(existingUser.Password, body.Password)
-	if !validPass {
-		helpers.ErrJSONResponse(ctx, http.StatusUnauthorized, msg)
+	if err := database.DB.First(&existingUser, "email = ?", body.Email).Error; err != nil {
+		helpers.JSONResponse(ctx, "user doesn't exist")
 		return
 	}
 
 	token, refreshToken, err := tokens.TokenGenerator(existingUser.Email, existingUser.FirstName, existingUser.LastName, existingUser.ID)
 	if err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Error generating tokens")
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	existingUser.Password = HashPassword(body.Password)
-	res := map[string]interface{}{
+	userRes := map[string]interface{}{
 		"data":          existingUser,
 		"token":         token,
 		"refresh_token": refreshToken,
 	}
-	helpers.JSONResponse(ctx, "Logged in successfully", res)
+
+	helpers.JSONResponse(ctx, "user found!", userRes)
 }

@@ -2,6 +2,8 @@ package helpers
 
 import (
 	"net/http"
+	"solitude/database"
+	"solitude/models"
 
 	"github.com/gin-gonic/gin"
 )
@@ -43,4 +45,18 @@ func DataHelper(data interface{}) map[string]interface{} {
 
 	return q
 
+}
+
+func ExistingFields(field string, value interface{}) bool {
+	var user models.User
+	if err := database.DB.Where(field+" = ?", value).First(&user).Error; err == nil {
+		return true
+	}
+
+	var seller models.Seller
+	if err := database.DB.Where(field+" = ?", value).First(&seller).Error; err == nil {
+		return true
+	}
+
+	return false
 }
