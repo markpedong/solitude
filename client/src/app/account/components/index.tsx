@@ -21,14 +21,14 @@ type Props = {
 
 const Account: FC<Props> = ({ products }) => {
     const router = useRouter()
-    const { userData } = useAppSelector(state => state.userData)
+    const { userData, sellerData, isLoggedIn } = useAppSelector(state => state.userData)
 
     const onChange = (key: string) => {
         console.log(key)
     }
 
     useEffect(() => {
-        !!!userData?.id && router.push('/')
+        // !!!userData?.id &&  router.push('/')
     }, [userData?.id])
 
     return (

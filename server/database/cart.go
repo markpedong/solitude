@@ -2,8 +2,6 @@ package database
 
 import (
 	"errors"
-
-	"github.com/rs/xid"
 )
 
 var (
@@ -14,8 +12,6 @@ var (
 	ErrCantGetItem        = errors.New("cannot remove this item from cart")
 	ErrCantBuyCartItem    = errors.New("cannot update the purchase")
 )
-
-var Guid = xid.New()
 
 // func AddProductToCart(productID uint, userID uint) error {
 // 	var product models.Product

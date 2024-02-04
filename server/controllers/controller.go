@@ -5,12 +5,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"github.com/rs/xid"
 	"golang.org/x/crypto/bcrypt"
 )
 
 var Validate = validator.New()
-var Guid = xid.New()
 var (
 	emailExist    = "user with this email already exists!"
 	usernameExist = "user with this username already exists!"

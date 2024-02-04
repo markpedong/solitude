@@ -11,16 +11,24 @@ export type UserData = {
     email: string
 }
 
+// /users/signup
 export const userSignup = params => post('/users/signup', params)
 
+// /users/login
 export const userLogin = params => post<UserData>('/users/login', params)
+
+// /users/loginSeller
+export const sellerLogin = params => post('/users/loginSeller', params)
+
+// /users/signupSeller
+export const sellerSignup = params => post('/users/signupSeller', params)
 
 // /public/products
 export type TProduct = {
     id: string
     product_name: string
     price: number
-    image: string[];
+    image: string[]
     created_at: number
     description: string
     stock: number

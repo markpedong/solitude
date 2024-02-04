@@ -7,6 +7,7 @@ import (
 	"solitude/models"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func GetAllCollections(ctx *gin.Context) {
@@ -64,7 +65,7 @@ func AddCollection(ctx *gin.Context) {
 	}
 
 	blog := &models.Collections{
-		ID:          Guid.String(),
+		ID:          uuid.Must(uuid.NewRandom()).String(),
 		Title:       body.Title,
 		Description: body.Description,
 		Image:       body.Image,

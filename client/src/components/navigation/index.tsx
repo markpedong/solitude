@@ -1,14 +1,15 @@
 'use client'
 
-import { TProduct, getProducts, userLogin, userSignup } from '@/api'
-import { MODAL_FORM_PROPS } from '@/constants'
+import { TProduct, getProducts, sellerLogin, sellerSignup, userLogin, userSignup } from '@/api'
+import { MODAL_FORM_PROPS, USER_TYPES } from '@/constants'
 import { INPUT_NOSPACE, REQUIRED, afterModalformFinish } from '@/constants/helper'
 import forgotModalCover from '@/public/assets/forgotModalCover.webp'
 import loginModalCover from '@/public/assets/loginModalCover.webp'
 import logo from '@/public/assets/logo.webp'
 import signUpModalCover from '@/public/assets/signUpModalCover.webp'
+import sellerModalCover from '@/public/assets/sellerModalCover.webp'
 import { setActiveLoginForm } from '@/redux/features/booleanSlice'
-import { resetUserData, setUserToken, setUserData } from '@/redux/features/userSlice'
+import { resetUserData, setUserToken, setUserData, setSellerData, setType } from '@/redux/features/userSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { getLocalStorage, setLocalStorage } from '@/utils/xLocalStorage'
 import {
@@ -45,7 +46,7 @@ const Navigation: FC = () => {
     const [products, setProducts] = useState<TProduct[]>([])
     const [searchFilter, setSearchFilter] = useState('')
     const { activeLoginForm } = useAppSelector(state => state.boolean)
-    const { isLoggedIn } = useAppSelector(state => state.userData)
+    const { isLoggedIn, type } = useAppSelector(state => state.userData)
     const formRef = useRef<ProFormInstance>()
     const actionRef = useRef<ActionType>()
     const router = useRouter()
@@ -105,8 +106,9 @@ const Navigation: FC = () => {
     const handleLoginRegister = async () => {
         formRef?.current.resetFields()
 
-        if (login) {
+        if (login || forgot) {
             await dispatch(setActiveLoginForm('create'))
+            await dispatch(setType(1))
         } else {
             await dispatch(setActiveLoginForm('login'))
         }
@@ -141,16 +143,31 @@ const Navigation: FC = () => {
     const handleFinish = async params => {
         let res
 
-        if (create) {
+        if (create && type === USER_TYPES.USER) {
             res = await userSignup(params)
+            await dispatch(setUserData(res?.data))
+            dispatch(setType(USER_TYPES.USER))
+        }
+
+        if (create && type === USER_TYPES.SELLER) {
+            res = await sellerSignup(params)
+            await dispatch(setSellerData(res?.data))
+            dispatch(setType(USER_TYPES.SELLER))
         }
 
         if (login) {
             res = await userLogin(params)
+            await dispatch(setUserData(res?.data))
+            dispatch(setType(USER_TYPES.USER))
+        }
+
+        if (seller) {
+            res = await sellerLogin(params)
+            await dispatch(setSellerData(res?.data))
+            dispatch(setType(USER_TYPES.SELLER))
         }
 
         if (res?.success) {
-            await dispatch(setUserData(res?.data))
             await dispatch(setUserToken(res?.token))
             setLocalStorage('token', res?.token)
             router.push('/account')
@@ -174,6 +191,12 @@ const Navigation: FC = () => {
                 grid={true}
                 formRef={formRef}
                 preserve={false}
+                onOpenChange={visible => {
+                    if (!visible) {
+                        formRef?.current.resetFields()
+                        dispatch(setActiveLoginForm('login'))
+                    }
+                }}
                 onFinish={handleFinish}>
                 <Flex
                     className={styles.loginContainer}
@@ -183,7 +206,15 @@ const Navigation: FC = () => {
                     <div className={styles.loginImage}>
                         <Image
                             alt="loginCover"
-                            src={create ? signUpModalCover : forgot ? forgotModalCover : loginModalCover}
+                            src={
+                                create
+                                    ? signUpModalCover
+                                    : forgot
+                                    ? forgotModalCover
+                                    : seller
+                                    ? sellerModalCover
+                                    : loginModalCover
+                            }
                         />
                     </div>
                     <Flex className={styles.loginForm} vertical>
@@ -197,6 +228,8 @@ const Navigation: FC = () => {
                                     ? 'Create an Account'
                                     : forgot
                                     ? 'Forgotten your Password?'
+                                    : seller
+                                    ? 'Got any products? Post it Here!'
                                     : `Hello, Let's Sign In`}
                             </h1>
                             <span>
@@ -215,11 +248,25 @@ const Navigation: FC = () => {
                             {create && (
                                 <ProFormSelect
                                     label="Type"
-                                    name="type"
-                                    options={['SELLER', 'USER']}
-                                    rules={[...REQUIRED]}
+                                    fieldProps={{ defaultValue: 1, allowClear: false }}
+                                    options={[
+                                        { label: 'SELLER', value: 2 },
+                                        { label: 'USER', value: 1 },
+                                    ]}
                                     colProps={{ span: 7 }}
                                     placeholder=""
+                                    onChange={e => {
+                                        dispatch(setType(e))
+                                        formRef?.current.resetFields([
+                                            'email',
+                                            'username',
+                                            'first_name',
+                                            'last_name',
+                                            'password',
+                                            'phone',
+                                            'confirm_password',
+                                        ])
+                                    }}
                                 />
                             )}
                             <ProForm.Group>
@@ -248,25 +295,38 @@ const Navigation: FC = () => {
                             </ProForm.Group>
                             {create && (
                                 <ProForm.Group>
-                                    <ProFormText
-                                        name="first_name"
-                                        placeholder="eg: John"
-                                        label="First Name"
-                                        fieldProps={{
-                                            prefix: <UserOutlined />,
-                                            maxLength: 10,
-                                        }}
-                                        colProps={{ span: 8 }}
-                                        rules={[...REQUIRED]}
-                                    />
-                                    <ProFormText
-                                        name="last_name"
-                                        placeholder="eg: Smith"
-                                        label="Last Name"
-                                        colProps={{ span: 8 }}
-                                        fieldProps={{ maxLength: 10 }}
-                                        rules={[...REQUIRED]}
-                                    />
+                                    {type === USER_TYPES.USER ? (
+                                        <>
+                                            <ProFormText
+                                                name="first_name"
+                                                placeholder="eg: John"
+                                                label="First Name"
+                                                fieldProps={{
+                                                    prefix: <UserOutlined />,
+                                                    maxLength: 10,
+                                                }}
+                                                colProps={{ span: 8 }}
+                                                rules={[...REQUIRED]}
+                                            />
+                                            <ProFormText
+                                                name="last_name"
+                                                placeholder="eg: Smith"
+                                                label="Last Name"
+                                                colProps={{ span: 8 }}
+                                                fieldProps={{ maxLength: 10 }}
+                                                rules={[...REQUIRED]}
+                                            />
+                                        </>
+                                    ) : (
+                                        <ProFormText
+                                            name="seller_name"
+                                            placeholder="YOUR STORE NAME"
+                                            label="Store Name"
+                                            colProps={{ span: 8 }}
+                                            fieldProps={{ maxLength: 10 }}
+                                            rules={[...REQUIRED]}
+                                        />
+                                    )}
                                     <ProFormText
                                         name="phone"
                                         placeholder="+63 9*********"
@@ -312,15 +372,24 @@ const Navigation: FC = () => {
                                 </ProForm.Group>
                             )}
                             {!forgot && !create && (
-                                <div style={{ display: 'flex', justifyContent: 'end', width: '100%' }}>
+                                <Flex justify="space-between">
+                                    <Typography.Link
+                                        type="secondary"
+                                        onClick={() => {
+                                            dispatch(setActiveLoginForm('seller'))
+                                            formRef?.current.resetFields()
+                                        }}>
+                                        Seller? Click here
+                                    </Typography.Link>
                                     <Typography.Link
                                         type="secondary"
                                         onClick={() => {
                                             dispatch(setActiveLoginForm('forgot'))
+                                            formRef?.current.resetFields()
                                         }}>
                                         Forgot Password?
                                     </Typography.Link>
-                                </div>
+                                </Flex>
                             )}
                         </div>
                         <Flex style={{ height: '100%' }} justify="end" vertical>

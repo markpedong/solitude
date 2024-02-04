@@ -8,10 +8,22 @@ import (
 	"solitude/tokens"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func SellerSignup(ctx *gin.Context) {
 	var body models.Seller
+
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid JSON input")
+		return
+	}
+
+	if err := Validate.Struct(&body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
 	if body.Email != "" && helpers.ExistingFields("email", body.Email) {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, emailExist)
 		return
@@ -32,7 +44,7 @@ func SellerSignup(ctx *gin.Context) {
 	}
 
 	newSeller := models.Seller{
-		SellerID:   Guid.String(),
+		SellerID:   uuid.Must(uuid.NewRandom()).String(),
 		SellerName: body.SellerName,
 		Password:   body.Password,
 		Email:      body.Email,
@@ -43,8 +55,8 @@ func SellerSignup(ctx *gin.Context) {
 		Products:   &[]models.Product{},
 	}
 
-	if err := database.DB.Create(&newSeller).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Failed to create user")
+	if err := database.DB.Model(&models.Seller{}).Create(&newSeller).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 

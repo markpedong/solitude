@@ -8,6 +8,7 @@ import (
 	"solitude/tokens"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func GetUserData(ctx *gin.Context) {
@@ -80,6 +81,16 @@ func UserUpdate(ctx *gin.Context) {
 func UserSignup(ctx *gin.Context) {
 	var body models.User
 
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid JSON input")
+		return
+	}
+
+	if err := Validate.Struct(&body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
 	if body.Email != "" && helpers.ExistingFields("email", body.Email) {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, emailExist)
 		return
@@ -99,7 +110,7 @@ func UserSignup(ctx *gin.Context) {
 	}
 
 	newUser := models.User{
-		ID:             Guid.String(),
+		ID:             uuid.Must(uuid.NewRandom()).String(),
 		FirstName:      body.FirstName,
 		LastName:       body.LastName,
 		Password:       body.Password,

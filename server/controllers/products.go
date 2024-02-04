@@ -10,6 +10,7 @@ import (
 
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func AddProducts(ctx *gin.Context) {
@@ -20,7 +21,7 @@ func AddProducts(ctx *gin.Context) {
 	}
 
 	product := &models.Product{
-		ProductID:   Guid.String(),
+		ProductID:   uuid.Must(uuid.NewRandom()).String(),
 		ProductName: body.ProductName,
 		Price:       body.Price,
 		Image:       body.Image,
