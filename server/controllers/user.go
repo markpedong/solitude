@@ -26,7 +26,7 @@ func GetUserData(ctx *gin.Context) {
 		return
 	}
 
-	helpers.JSONResponse(ctx, "user found!", helpers.DataHelper(foundUser))
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(foundUser))
 }
 
 func UserUpdate(ctx *gin.Context) {
@@ -156,11 +156,12 @@ func UserLogin(ctx *gin.Context) {
 		return
 	}
 
+	ctx.Header("token", token)
 	userRes := map[string]interface{}{
 		"data":          existingUser,
 		"token":         token,
 		"refresh_token": refreshToken,
 	}
 
-	helpers.JSONResponse(ctx, "user found!", userRes)
+	helpers.JSONResponse(ctx, "", userRes)
 }

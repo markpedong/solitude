@@ -91,5 +91,6 @@ func SellerLogin(ctx *gin.Context) {
 		"refresh_token": refreshToken,
 	}
 
-	helpers.JSONResponse(ctx, "user found!", userRes)
+	ctx.Header("token", token)
+	helpers.JSONResponse(ctx, "", userRes)
 }
