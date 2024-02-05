@@ -1,4 +1,4 @@
-import { addProduct, uploadImages } from '@/api'
+import { TProduct, addProduct, uploadImages } from '@/api'
 import { REQUIRED, afterModalformFinish } from '@/constants/helper'
 import { useAppSelector } from '@/redux/store'
 import {
@@ -10,14 +10,16 @@ import {
     ProFormTextArea,
     ProFormUploadButton,
 } from '@ant-design/pro-components'
-import { Button, Flex, Spin, UploadFile } from 'antd'
+import { Button, Col, Flex, Spin, UploadFile } from 'antd'
 import { motion } from 'framer-motion'
 import { FC, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 
-type Props = {}
+type Props = {
+    product?: TProduct
+}
 
-const AddProduct: FC<Props> = () => {
+const AddProduct: FC<Props> = ({ product }) => {
     const [uploading, setUploading] = useState(false)
     const { sellerData } = useAppSelector(state => state.userData)
     const [uploadedImages, setUploadedImages] = useState<UploadFile<any>[]>([])
@@ -28,6 +30,7 @@ const AddProduct: FC<Props> = () => {
         <div className={styles.addProductWrapper}>
             <ProForm
                 grid
+                initialValues={product}
                 autoFocusFirstInput={false}
                 submitter={false}
                 formRef={formRef}
@@ -58,7 +61,9 @@ const AddProduct: FC<Props> = () => {
                                     listType: 'picture-card',
                                     accept: 'image/*',
                                     multiple: true,
-                                    fileList: uploadedImages,
+                                    fileList: !!product?.image.length
+                                        ? (product?.image.map(q => ({ url: q })) as UploadFile<any>[])
+                                        : uploadedImages,
                                     action: async e => {
                                         setUploading(true)
                                         setUploadedImages([])
@@ -77,7 +82,8 @@ const AddProduct: FC<Props> = () => {
                         )}
                     </Flex>
                 </ProFormText>
-                <ProFormText colProps={{ span: 14 }}>
+                <Col span={1} />
+                <ProFormText colProps={{ span: 13 }}>
                     <ProFormText
                         label="Name"
                         name="product_name"

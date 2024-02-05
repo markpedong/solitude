@@ -8,7 +8,9 @@ import Image from 'next/image'
 import { Flex, Popconfirm } from 'antd'
 import { Cormorant, Jost } from 'next/font/google'
 import { useRouter } from 'next/navigation'
-import { ModalForm } from '@ant-design/pro-components'
+import { ModalForm, ProForm, ProFormDigit, ProFormText, ProFormTextArea } from '@ant-design/pro-components'
+import { REQUIRED } from '@/constants/helper'
+import AddProduct from '../addProduct'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -21,15 +23,19 @@ const ProductsAdded: FC<Props> = () => {
     const [products, setProducts] = useState<TProduct[]>([])
     const router = useRouter()
 
-    const renderEditProduct = () => {
+    const renderEditProduct = (product: TProduct) => {
         return (
             <ModalForm
                 title="Product Details:"
+                initialValues={product}
+                submitter={false}
                 trigger={
                     <motion.div whileTap={{ scale: 0.9 }}>
-                        <EditOutlined />
+                        <EditOutlined style={{ cursor: 'pointer' }} />
                     </motion.div>
-                }></ModalForm>
+                }>
+                   <AddProduct product={product}/>
+                </ModalForm>
         )
     }
 
@@ -60,7 +66,7 @@ const ProductsAdded: FC<Props> = () => {
                         <span>₱ {q.price?.toFixed(2)}</span>
                     </Flex>
                     <div>
-                        {renderEditProduct()}
+                        {renderEditProduct(q)}
                         <motion.div whileTap={{ scale: 0.9 }}>
                             <Popconfirm title={`Delete this product?`}>
                                 <DeleteOutlined />
