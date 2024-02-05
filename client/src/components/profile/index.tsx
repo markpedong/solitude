@@ -68,7 +68,7 @@ const Profile: FC = () => {
                 }
 
                 if (res?.success && type === USER_TYPES.SELLER) {
-                    const user = await getSellerData({ seller_id: userData?.id })
+                    const user = await getSellerData({ seller_id: sellerData?.seller_id })
                     await dispatch(setSellerData(user?.data))
                 }
 
