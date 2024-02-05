@@ -62,7 +62,7 @@ func GetAllProductsByID(ctx *gin.Context) {
 		return
 	}
 
-	helpers.JSONResponse(ctx, "", helpers.DataHelper(existingSeller))
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(existingSeller.Products))
 }
 
 func GetAllProducts(ctx *gin.Context) {
