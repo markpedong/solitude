@@ -87,7 +87,7 @@ func SellerLogin(ctx *gin.Context) {
 
 	var existingSeller models.Seller
 	if err := database.DB.First(&existingSeller, "email = ?", body.Email).Error; err != nil {
-		helpers.JSONResponse(ctx, "user doesn't exist")
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user doesn't exist")
 		return
 	}
 
