@@ -1,5 +1,11 @@
 @import '@/styles/_helpers.scss';
 
-.addedProductsContainer{
+.addedProductsWrapper {
     min-height: toRem(300);
+    display: flex;
+    justify-content: center;
+}
+
+.addedProduct{
+    width: toRem(280);
 }
