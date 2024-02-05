@@ -5,8 +5,10 @@ import styles from './styles.module.scss'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { Flex } from 'antd'
+import { Flex, Popconfirm } from 'antd'
 import { Cormorant, Jost } from 'next/font/google'
+import { useRouter } from 'next/navigation'
+import { ModalForm } from '@ant-design/pro-components'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -17,6 +19,19 @@ type Props = {}
 const ProductsAdded: FC<Props> = () => {
     const { sellerData } = useAppSelector(state => state.userData)
     const [products, setProducts] = useState<TProduct[]>([])
+    const router = useRouter()
+
+    const renderEditProduct = () => {
+        return (
+            <ModalForm
+                title="Product Details:"
+                trigger={
+                    <motion.div whileTap={{ scale: 0.9 }}>
+                        <EditOutlined />
+                    </motion.div>
+                }></ModalForm>
+        )
+    }
 
     const fetchProducts = async () => {
         const data = await getAllProducts({ seller_id: sellerData?.seller_id })
@@ -36,18 +51,20 @@ const ProductsAdded: FC<Props> = () => {
                         <Image src={q?.image?.[0]} alt="product" width={100} height={100} />
                     </Flex>
                     <div className={jostHeavy.className}>
-                        <span>{q.product_name}</span>
+                        <span onClick={() => router.push(`/products/${q.product_id}`)} style={{ cursor: 'pointer' }}>
+                            {q.product_name}
+                        </span>
                     </div>
                     <Flex className={jost.className} vertical>
                         <span>{q.description}</span>
                         <span>₱ {q.price?.toFixed(2)}</span>
                     </Flex>
                     <div>
+                        {renderEditProduct()}
                         <motion.div whileTap={{ scale: 0.9 }}>
-                            <EditOutlined />
-                        </motion.div>
-                        <motion.div whileTap={{ scale: 0.9 }}>
-                            <DeleteOutlined />
+                            <Popconfirm title={`Delete this product?`}>
+                                <DeleteOutlined />
+                            </Popconfirm>
                         </motion.div>
                     </div>
                 </div>
