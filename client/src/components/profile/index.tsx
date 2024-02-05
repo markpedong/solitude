@@ -1,7 +1,7 @@
 'use client'
 
 import { getUserData, updateUserData } from '@/api'
-import { INPUT_NOSPACE, afterModalformFinish } from '@/constants/helper'
+import { INPUT_NOSPACE, REQUIRED, afterModalformFinish } from '@/constants/helper'
 import { setUserData } from '@/redux/features/userSlice'
 import { useAppSelector } from '@/redux/store'
 import {
@@ -24,7 +24,7 @@ import { Button } from 'antd'
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 const Profile: FC = () => {
-    const { userData } = useAppSelector(state => state.userData)
+    const { userData, sellerData, type } = useAppSelector(state => state.userData)
     const actionRef = useRef<ActionType>()
     const formRef = useRef<ProFormInstance>()
     const dispatch = useDispatch()
@@ -34,11 +34,15 @@ const Profile: FC = () => {
             grid
             formRef={formRef}
             autoFocusFirstInput={false}
-            initialValues={{
-                ...userData,
-                password: '',
-                birthday: !!userData.birthday ? userData.birthday : dayjs().format('MM-DD-YYYY'),
-            }}
+            initialValues={
+                type === 1
+                    ? {
+                          ...userData,
+                          password: '',
+                          birthday: !!userData?.birthday ? userData?.birthday : dayjs().format('MM-DD-YYYY'),
+                      }
+                    : { ...sellerData }
+            }
             trigger={<a className={classNames(styles.linkItem, jost.className)}>ACCOUNT</a>}
             title={<span className={classNames(jost.className, styles.profileTitle)}>Your Information</span>}
             submitter={{
@@ -59,22 +63,33 @@ const Profile: FC = () => {
 
                 return afterModalformFinish(actionRef, update.message, update.success, formRef)
             }}>
-            <ProForm.Group>
+            {type === 1 ? (
+                <ProForm.Group>
+                    <ProFormText
+                        label="First Name"
+                        name="first_name"
+                        placeholder="eg: John"
+                        colProps={{ span: 12 }}
+                        rules={[...INPUT_NOSPACE]}
+                    />
+                    <ProFormText
+                        label="Last Name"
+                        name="last_name"
+                        placeholder="eg: Smith"
+                        colProps={{ span: 12 }}
+                        rules={[...INPUT_NOSPACE]}
+                    />
+                </ProForm.Group>
+            ) : (
                 <ProFormText
-                    label="First Name"
-                    name="first_name"
-                    placeholder="eg: John"
-                    colProps={{ span: 12 }}
-                    rules={[...INPUT_NOSPACE]}
+                    name="seller_name"
+                    placeholder="YOUR STORE NAME"
+                    label="Store Name"
+                    colProps={{ span: 8 }}
+                    fieldProps={{ maxLength: 10 }}
+                    rules={[...REQUIRED]}
                 />
-                <ProFormText
-                    label="Last Name"
-                    name="last_name"
-                    placeholder="eg: Smith"
-                    colProps={{ span: 12 }}
-                    rules={[...INPUT_NOSPACE]}
-                />
-            </ProForm.Group>
+            )}
             <ProForm.Group>
                 <ProFormText label="Email Address" name="email" placeholder="your@email.com" colProps={{ span: 12 }} />
                 <ProFormText label="Username" name="username" placeholder="Your Username" colProps={{ span: 12 }} />
