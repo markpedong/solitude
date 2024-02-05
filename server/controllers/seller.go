@@ -41,19 +41,18 @@ func SellerUpdate(ctx *gin.Context) {
 		return
 	}
 
-	// if body.Email != "" {
-	// 	if err := database.DB.Where("email = ?", body.Email).First(&models.Seller{}).Error; err == nil {
-	// 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with this email already exists!")
-	// 		return
-	// 	}
-	// }
-
-	// if body.Username != "" {
-	// 	if err := database.DB.Where("username = ?", body.Username).First(&models.Seller{}).Error; err == nil {
-	// 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with this username already exists!")
-	// 		return
-	// 	}
-	// }
+	if body.Email != "" && helpers.ExistingFields("email", body.Email) {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, emailExist)
+		return
+	}
+	if body.Phone != "" && helpers.ExistingFields("phone", body.Phone) {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, phoneExist)
+		return
+	}
+	if body.Username != "" && helpers.ExistingFields("username", body.Username) {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, usernameExist)
+		return
+	}
 
 	if err := database.DB.Model(&models.Seller{}).Where("seller_id = ?", body.SellerID).Updates(map[string]interface{}{
 		"seller_name": body.SellerName,
