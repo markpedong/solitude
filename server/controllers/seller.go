@@ -36,6 +36,8 @@ func SellerUpdate(ctx *gin.Context) {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
+
+	var existingSeller models.Seller
 	if body.SellerID == "" {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid ID")
 		return
@@ -54,7 +56,7 @@ func SellerUpdate(ctx *gin.Context) {
 		return
 	}
 
-	if err := database.DB.Model(&models.Seller{}).Where("seller_id = ?", body.SellerID).Updates(map[string]interface{}{
+	if err := database.DB.Model(&existingSeller).Where("seller_id = ?", body.SellerID).Updates(map[string]interface{}{
 		"seller_name": body.SellerName,
 		"username":    body.Username,
 		"email":       body.Email,
