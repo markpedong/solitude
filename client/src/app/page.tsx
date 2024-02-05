@@ -19,7 +19,7 @@ const Page = async () => {
     const collections = await getCollections()
 
     return (
-        <div>
+        <>
             <div>
                 <div className={styles.headerContainerText}>
                     <span className={cormorant.className}>
@@ -83,7 +83,7 @@ const Page = async () => {
                     <Image src={img4} alt="logo1" priority />
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

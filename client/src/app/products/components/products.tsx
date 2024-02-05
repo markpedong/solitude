@@ -26,7 +26,7 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
     // }
 
     return (
-        <div>
+        <div className={styles.mainWrapper}>
             <Row justify="center">
                 <Col md={2}></Col>
                 <Col span={24} md={20} className={styles.productWrapper}>

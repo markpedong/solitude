@@ -1,5 +1,9 @@
 @import '@/styles/_helpers.scss';
 
+.mainWrapper{
+    min-height: 75dvh !important;
+}
+
 .productHeaderContainer {
     span {
         font-weight: 300;

@@ -10,7 +10,7 @@ type User struct {
 	ID             string     `json:"id" gorm:"primaryKey"`
 	CreatedAt      time.Time  `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt      time.Time  `json:"updated_at" gorm:"autoUpdateTime"`
-	UserCart       *[]Product `json:"user_cart" gorm:"foreignKey:UserID"`
+	UserCart       *[]Product `json:"user_cart" gorm:"foreignKey:SellerID"`
 	AddressDetails *[]Address `json:"address_details" gorm:"foreignKey:UserID"`
 	Orders         *[]Order   `json:"orders" gorm:"foreignKey:UserID"`
 	FirstName      string     `json:"first_name" validate:"max=10"`
@@ -25,6 +25,7 @@ type User struct {
 
 type Product struct {
 	ProductID   string         `json:"product_id" gorm:"primaryKey"`
+	SellerID    string         `json:"seller_id" validate:"required"`
 	ProductName string         `json:"product_name" validate:"required"`
 	Price       float64        `json:"price" validate:"required"`
 	Rating      int            `json:"rating"`
@@ -32,7 +33,6 @@ type Product struct {
 	CreatedAt   int            `json:"created_at" gorm:"autoCreateTime"`
 	Description string         `json:"description" validate:"required"`
 	Stock       int            `json:"stock" validate:"required"`
-	BrandID     string         `json:"brand_id" validate:"required"`
 }
 
 type Address struct {
@@ -65,7 +65,7 @@ type Seller struct {
 	Username   string     `json:"username"`
 	Location   string     `json:"location"`
 	Brands     *[]Brands  `json:"brands" gorm:"foreignKey:BrandID"`
-	Products   *[]Product `json:"products" gorm:"foreignKey:ProductID"`
+	Products   *[]Product `json:"products" gorm:"foreignKey:SellerID"`
 }
 
 type Brands struct {

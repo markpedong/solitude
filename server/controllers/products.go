@@ -9,6 +9,7 @@ import (
 
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
@@ -31,7 +32,8 @@ func AddProducts(ctx *gin.Context) {
 	}
 
 	product := &models.Product{
-		ProductID:   body.SellerID,
+		ProductID:   uuid.Must(uuid.NewRandom()).String(),
+		SellerID:    body.SellerID,
 		ProductName: body.ProductName,
 		Price:       body.Price,
 		Image:       body.Image,
@@ -158,7 +160,7 @@ func SearchProductByQuery(ctx *gin.Context) {
 	}
 
 	var product models.Product
-	if err := database.DB.First(&product, "id = ?", body.ProductID).Error; err != nil {
+	if err := database.DB.First(&product, "product_id = ?", body.ProductID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "something went wrong when fetching data")
 	}
 

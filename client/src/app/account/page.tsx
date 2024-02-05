@@ -1,9 +1,10 @@
 import React from 'react'
 import Account from './components'
+import styles from './styles.module.scss';
 
 const Page = () => {
     return (
-        <div>
+        <div className={styles.mainWrapper}>
             <Account />
         </div>
     )
