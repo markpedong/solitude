@@ -35,17 +35,23 @@ const AddProduct: FC<Props> = ({ product }) => {
                 submitter={false}
                 formRef={formRef}
                 onFinish={async params => {
-                    const res = await addProduct({
-                        ...params,
-                        product_id: sellerData.seller_id,
-                        price: +params.price,
-                        image: uploadedImages?.map(q => q.url),
-                    })
+                    let res
 
-                    if (res.success) {
-                        setUploadedImages([])
+                    if (!!product?.product_id) {
+                    } else {
+                        const res = await addProduct({
+                            ...params,
+                            product_id: sellerData.seller_id,
+                            price: +params.price,
+                            image: uploadedImages?.map(q => q.url),
+                        })
+
+                        if (res.success) {
+                            setUploadedImages([])
+                        }
                     }
 
+                    formRef?.current?.resetFields()
                     return afterModalformFinish(actionRef, res.message, res.success, formRef)
                 }}>
                 <ProFormText colProps={{ span: 10 }}>
