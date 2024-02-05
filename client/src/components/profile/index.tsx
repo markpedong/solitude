@@ -1,8 +1,8 @@
 'use client'
 
-import { getUserData, updateUserData } from '@/api'
+import { getSellerData, getUserData, updateSellerData, updateUserData } from '@/api'
 import { INPUT_NOSPACE, REQUIRED, afterModalformFinish } from '@/constants/helper'
-import { setUserData } from '@/redux/features/userSlice'
+import { setSellerData, setUserData } from '@/redux/features/userSlice'
 import { useAppSelector } from '@/redux/store'
 import {
     ActionType,
@@ -20,6 +20,7 @@ import { FC, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import styles from './styles.module.scss'
 import { Button } from 'antd'
+import { USER_TYPES } from '@/constants'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -35,7 +36,7 @@ const Profile: FC = () => {
             formRef={formRef}
             autoFocusFirstInput={false}
             initialValues={
-                type === 1
+                type === USER_TYPES.USER
                     ? {
                           ...userData,
                           password: '',
@@ -54,42 +55,65 @@ const Profile: FC = () => {
                 ],
             }}
             onFinish={async params => {
-                const update = await updateUserData({ ...params, id: userData?.id })
+                let res
+                if (type === USER_TYPES.USER) {
+                    res = await updateUserData({ ...params, id: userData?.id })
+                } else {
+                    res = await updateSellerData({ ...params, seller_id: userData?.id })
+                }
 
-                if (update?.success) {
+                if (res?.success && type === USER_TYPES.USER) {
                     const user = await getUserData({ id: userData?.id })
                     await dispatch(setUserData(user?.data))
                 }
 
-                return afterModalformFinish(actionRef, update.message, update.success, formRef)
+                if (res?.success && type === USER_TYPES.SELLER) {
+                    const user = await getSellerData({ seller_id: userData?.id })
+                    await dispatch(setSellerData(user?.data))
+                }
+
+                return afterModalformFinish(actionRef, res.message, res.success, formRef)
             }}>
-            {type === 1 ? (
-                <ProForm.Group>
-                    <ProFormText
-                        label="First Name"
-                        name="first_name"
-                        placeholder="eg: John"
-                        colProps={{ span: 12 }}
-                        rules={[...INPUT_NOSPACE]}
-                    />
-                    <ProFormText
-                        label="Last Name"
-                        name="last_name"
-                        placeholder="eg: Smith"
-                        colProps={{ span: 12 }}
-                        rules={[...INPUT_NOSPACE]}
-                    />
-                </ProForm.Group>
-            ) : (
-                <ProFormText
-                    name="seller_name"
-                    placeholder="YOUR STORE NAME"
-                    label="Store Name"
-                    colProps={{ span: 8 }}
-                    fieldProps={{ maxLength: 10 }}
-                    rules={[...REQUIRED]}
-                />
-            )}
+            <ProForm.Group>
+                {type === USER_TYPES.USER ? (
+                    <>
+                        <ProFormText
+                            label="First Name"
+                            name="first_name"
+                            placeholder="eg: John"
+                            colProps={{ span: 12 }}
+                            rules={[...INPUT_NOSPACE]}
+                        />
+                        <ProFormText
+                            label="Last Name"
+                            name="last_name"
+                            placeholder="eg: Smith"
+                            colProps={{ span: 12 }}
+                            rules={[...INPUT_NOSPACE]}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <ProFormText
+                            name="seller_name"
+                            placeholder="YOUR STORE NAME"
+                            label="Store Name"
+                            colProps={{ span: 8 }}
+                            fieldProps={{ maxLength: 10 }}
+                            rules={[...REQUIRED]}
+                        />
+                        <ProFormText
+                            name="location"
+                            placeholder="eg: Cavite, Laguna"
+                            label="Store Location"
+                            colProps={{ span: 8 }}
+                            fieldProps={{ maxLength: 10 }}
+                            rules={[...REQUIRED]}
+                        />
+                    </>
+                )}
+            </ProForm.Group>
+
             <ProForm.Group>
                 <ProFormText label="Email Address" name="email" placeholder="your@email.com" colProps={{ span: 12 }} />
                 <ProFormText label="Username" name="username" placeholder="Your Username" colProps={{ span: 12 }} />
@@ -123,34 +147,36 @@ const Profile: FC = () => {
                     ]}
                 />
             </ProForm.Group>
-            <ProForm.Group>
-                <ProFormRadio.Group
-                    label="Gender"
-                    name="gender"
-                    options={[
-                        {
-                            label: 'Male',
-                            value: 'male',
-                        },
-                        {
-                            label: 'Female',
-                            value: 'female',
-                        },
-                        {
-                            label: `I'd rather not say`,
-                            value: 'undefined',
-                        },
-                    ]}
-                    colProps={{ span: 12 }}
-                />
-                <ProFormDatePicker
-                    label="Birthday"
-                    name="birthday"
-                    placeholder="MONTH"
-                    width="xl"
-                    colProps={{ span: 12 }}
-                />
-            </ProForm.Group>
+            {type === USER_TYPES.USER && (
+                <ProForm.Group>
+                    <ProFormRadio.Group
+                        label="Gender"
+                        name="gender"
+                        options={[
+                            {
+                                label: 'Male',
+                                value: 'male',
+                            },
+                            {
+                                label: 'Female',
+                                value: 'female',
+                            },
+                            {
+                                label: `I'd rather not say`,
+                                value: 'undefined',
+                            },
+                        ]}
+                        colProps={{ span: 12 }}
+                    />
+                    <ProFormDatePicker
+                        label="Birthday"
+                        name="birthday"
+                        placeholder="MONTH"
+                        width="xl"
+                        colProps={{ span: 12 }}
+                    />
+                </ProForm.Group>
+            )}
         </ModalForm>
     )
 }

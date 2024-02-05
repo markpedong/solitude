@@ -11,6 +11,7 @@ import { Cormorant, Jost } from 'next/font/google'
 import { useAppSelector } from '@/redux/store'
 import AddProduct from './product'
 import isAuth from '@/components/isAuth'
+import { USER_TYPES } from '@/constants'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -43,7 +44,7 @@ const Account: FC<Props> = ({ products }) => {
                             { key: 'favourites', label: 'ORDERS', children: <Orders /> },
                             { key: 'products', label: 'PRODUCTS', children: <AddProduct products={products} /> },
                             { key: 'address', label: 'ADDRESS', children: <Address /> },
-                        ].filter(item => !(item.key === 'products' && type === 1))}
+                        ].filter(item => !(item.key === 'products' && type === USER_TYPES.USER))}
                     />
                 </div>
             </Col>

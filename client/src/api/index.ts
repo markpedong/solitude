@@ -51,8 +51,14 @@ export const getProductData = (params, client = true) => post<TProduct>(`/users/
 // /api/updateUser
 export const updateUserData = params => post('/api/updateUser', params)
 
+// /api/updateSeller
+export const updateSellerData = params => post('/api/updateSeller', params)
+
 // /api/getUserData
 export const getUserData = params => post('/users/getUserData', params)
+
+// /api/getSellerData
+export const getSellerData = params => post('/users/getSellerData', params)
 
 // /api/uploadImage
 export const uploadImages = params => upload('/api/uploadImage', params)

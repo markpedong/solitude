@@ -11,6 +11,64 @@ import (
 	"github.com/google/uuid"
 )
 
+func GetSellerData(ctx *gin.Context) {
+	var body struct {
+		SellerID string `json:"seller_id"`
+	}
+
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	var foundSeller models.Seller
+	if err := database.DB.Where("id = ?", body.SellerID).First(&foundSeller).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "user not found")
+		return
+	}
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(foundSeller))
+}
+
+func SellerUpdate(ctx *gin.Context) {
+	var body models.Seller
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+	if body.SellerID == "" {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid ID")
+		return
+	}
+
+	if body.Email != "" {
+		if err := database.DB.Where("email = ?", body.Email).First(&models.Seller{}).Error; err == nil {
+			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with this email already exists!")
+			return
+		}
+	}
+
+	if body.Username != "" {
+		if err := database.DB.Where("username = ?", body.Username).First(&models.Seller{}).Error; err == nil {
+			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with this username already exists!")
+			return
+		}
+	}
+
+	if err := database.DB.Model(&models.Seller{}).Where("id = ?", body.SellerID).Updates(map[string]interface{}{
+		"seller_name": body.SellerName,
+		"username":    body.Username,
+		"email":       body.Email,
+		"phone":       body.Phone,
+		"location":    body.Location,
+	}).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	helpers.JSONResponse(ctx, "successfully updated user!")
+}
+
 func SellerSignup(ctx *gin.Context) {
 	var body models.Seller
 
