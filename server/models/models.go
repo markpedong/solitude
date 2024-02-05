@@ -24,8 +24,7 @@ type User struct {
 }
 
 type Product struct {
-	ProductID   string         `json:"id" gorm:"primaryKey"`
-	UserID      string         `json:"-"`
+	ProductID   string         `json:"product_id" gorm:"primaryKey"`
 	ProductName string         `json:"product_name" validate:"required"`
 	Price       float64        `json:"price" validate:"required"`
 	Rating      int            `json:"rating"`
@@ -33,7 +32,6 @@ type Product struct {
 	CreatedAt   int            `json:"created_at" gorm:"autoCreateTime"`
 	Description string         `json:"description" validate:"required"`
 	Stock       int            `json:"stock" validate:"required"`
-	SellerID    string         `json:"seller_id" validate:"required"`
 	BrandID     string         `json:"brand_id" validate:"required"`
 }
 

@@ -9,7 +9,7 @@ import {
     ProFormTextArea,
     ProFormUploadButton,
 } from '@ant-design/pro-components'
-import { Button, Col, Flex, Row, Spin, Upload, message } from 'antd'
+import { Button, Col, Flex, Row, Spin, Upload, UploadFile, message } from 'antd'
 import classNames from 'classnames'
 import { Jost } from 'next/font/google'
 import Image from 'next/image'
@@ -28,8 +28,8 @@ type Props = {
 
 const AddProduct: FC<Props> = ({ products }) => {
     const [uploading, setUploading] = useState(false)
-    const { userData } = useAppSelector(state => state.userData)
-    const [uploadedImages, setUploadedImages] = useState<{ url: string; fileName: string; size: number }[]>([])
+    const { userData , sellerData} = useAppSelector(state => state.userData)
+    const [uploadedImages, setUploadedImages] = useState<UploadFile<any>[]>([])
     const formRef = useRef<ProFormInstance>()
     const actionRef = useRef<ActionType>()
 
@@ -43,6 +43,7 @@ const AddProduct: FC<Props> = ({ products }) => {
                 onFinish={async params => {
                     const res = await addProduct({
                         ...params,
+                        product_id: sellerData.seller_id,
                         price: +params.price,
                         image: uploadedImages?.map(q => q.url),
                     })
@@ -51,7 +52,7 @@ const AddProduct: FC<Props> = ({ products }) => {
                         setUploadedImages([])
                     }
 
-                    return afterModalformFinish(actionRef, 'res.message', true, formRef)
+                    return afterModalformFinish(actionRef, res.message, res.success, formRef)
                 }}>
                 <ProFormText colProps={{ span: 10 }}>
                     <Flex className={styles.galleryContainer} justify="center" align="center">
@@ -66,6 +67,7 @@ const AddProduct: FC<Props> = ({ products }) => {
                                     listType: 'picture-card',
                                     accept: 'image/*',
                                     multiple: true,
+                                    fileList: uploadedImages,
                                     action: async e => {
                                         setUploading(true)
                                         setUploadedImages([])

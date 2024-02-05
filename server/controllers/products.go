@@ -6,27 +6,36 @@ import (
 	"solitude/database"
 	"solitude/helpers"
 	"solitude/models"
-	"time"
 
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
+	"github.com/lib/pq"
 )
 
 func AddProducts(ctx *gin.Context) {
-	var body models.Product
+	var body struct {
+		ProductName string         `json:"product_name" validate:"required"`
+		Price       float64        `json:"price" validate:"required"`
+		Image       pq.StringArray `json:"image" gorm:"type:text[]"`
+		Description string         `json:"description" validate:"required"`
+		SellerID    string         `json:"product_id" validate:"required"`
+	}
 	if err := ctx.ShouldBindJSON(&body); err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
+	if err := Validate.Struct(&body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
 	product := &models.Product{
-		ProductID:   uuid.Must(uuid.NewRandom()).String(),
+		ProductID:   body.SellerID,
 		ProductName: body.ProductName,
 		Price:       body.Price,
 		Image:       body.Image,
 		Description: body.Description,
-		CreatedAt:   int(time.Now().Unix()),
 	}
 
 	if err := database.DB.Create(&product).Error; err != nil {
@@ -35,6 +44,25 @@ func AddProducts(ctx *gin.Context) {
 	}
 
 	helpers.JSONResponse(ctx, "successfully added product", helpers.DataHelper(product))
+}
+
+func GetAllProductsByID(ctx *gin.Context) {
+	var body struct {
+		SellerID string `json:"seller_id"`
+	}
+
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	var existingSeller models.Seller
+	if err := database.DB.Preload("Products").Where("seller_id = ?", body.SellerID).First(&existingSeller).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(existingSeller))
 }
 
 func GetAllProducts(ctx *gin.Context) {
