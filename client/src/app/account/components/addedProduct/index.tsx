@@ -38,7 +38,10 @@ const ProductsAdded: FC<Props> = () => {
                     <div className={jostHeavy.className}>
                         <span>{q.product_name}</span>
                     </div>
-                    <div>{q.description}</div>
+                    <Flex className={jost.className} vertical>
+                        <span>{q.description}</span>
+                        <span>₱ {q.price?.toFixed(2)}</span>
+                    </Flex>
                     <div>
                         <motion.div whileTap={{ scale: 0.9 }}>
                             <EditOutlined />
