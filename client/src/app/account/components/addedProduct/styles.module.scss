@@ -1,11 +1,43 @@
 @import '@/styles/_helpers.scss';
 
-.addedProductsWrapper {
-    min-height: toRem(300);
-    display: flex;
-    justify-content: center;
-}
+.addProductContainer {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+    
+    div:nth-of-type(1) {
+        grid-area: 1 / 1 / 3 / 2;
+    }
 
-.addedProduct{
-    width: toRem(280);
+    div:nth-of-type(2) {
+        grid-area: 1 / 2 / 2 / 5;
+
+        span {
+            font-size: toRem(20);
+        }
+    }
+
+    div:nth-of-type(3) {
+        grid-area: 2 / 2 / 3 / 5;
+        align-self: flex-start;
+    }
+
+    div:nth-of-type(4) {
+        grid-area: 1 / 5 / 3 / 6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: toRem(15);
+
+        svg {
+            width: toRem(15);
+            height: toRem(15);
+        }
+        :nth-child(2) {
+            color: red;
+        }
+    }
+
 }

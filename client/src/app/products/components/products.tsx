@@ -68,11 +68,11 @@ const Products: FC<{ data: TProduct[] }> = ({ data }) => {
                         {products?.map(q => (
                             <Product
                                 description={q.description}
-                                id={q.id}
+                                id={q.product_id}
                                 image={q.image?.[0]}
                                 price={q.price}
                                 product_name={q.product_name}
-                                key={q.id}
+                                key={q.product_id}
                             />
                         ))}
                     </Flex>

@@ -1,5 +1,9 @@
 @import '@/styles/_helpers.scss';
 
+.mainWrapper {
+    min-height: 75dvh !important;
+}
+
 .profileHeader {
     span:nth-child(1) {
         font-size: toRem(40);
