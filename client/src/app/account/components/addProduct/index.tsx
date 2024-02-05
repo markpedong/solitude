@@ -121,7 +121,7 @@ const AddProduct: FC<Props> = () => {
                     /> */}
                     <Flex justify="center" gap={20}>
                         <motion.div whileTap={{ scale: 0.9 }}>
-                            <Button onClick={() => formRef?.current.resetFields()}>Reset</Button>
+                            <Button onClick={() => formRef?.current?.resetFields()}>Reset</Button>
                         </motion.div>
                         <motion.div whileTap={{ scale: 0.9 }}>
                             <Button type="primary" onClick={() => formRef?.current.submit()}>

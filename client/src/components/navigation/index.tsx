@@ -78,7 +78,7 @@ const Navigation: FC = () => {
     }
 
     const handleLoginRegister = async () => {
-        formRef?.current.resetFields()
+        formRef?.current?.resetFields()
 
         if (login || forgot) {
             await dispatch(setActiveLoginForm('create'))
@@ -144,7 +144,7 @@ const Navigation: FC = () => {
         if (res?.success) {
             await dispatch(setUserToken(res?.token))
             setLocalStorage('token', res?.token)
-            formRef?.current.resetFields()
+            formRef?.current?.resetFields()
             router.push('/account')
         }
 
@@ -167,7 +167,7 @@ const Navigation: FC = () => {
                 preserve={false}
                 onOpenChange={visible => {
                     if (!visible) {
-                        formRef?.current.resetFields()
+                        formRef?.current?.resetFields()
                         dispatch(setActiveLoginForm('login'))
                     }
                 }}
@@ -231,7 +231,7 @@ const Navigation: FC = () => {
                                     placeholder=""
                                     onChange={e => {
                                         dispatch(setType(e))
-                                        formRef?.current.resetFields([
+                                        formRef?.current?.resetFields([
                                             'email',
                                             'username',
                                             'first_name',
@@ -351,7 +351,7 @@ const Navigation: FC = () => {
                                         type="secondary"
                                         onClick={() => {
                                             dispatch(setActiveLoginForm('seller'))
-                                            formRef?.current.resetFields()
+                                            formRef?.current?.resetFields()
                                         }}>
                                         Seller? Click here
                                     </Typography.Link>
@@ -359,7 +359,7 @@ const Navigation: FC = () => {
                                         type="secondary"
                                         onClick={() => {
                                             dispatch(setActiveLoginForm('forgot'))
-                                            formRef?.current.resetFields()
+                                            formRef?.current?.resetFields()
                                         }}>
                                         Forgot Password?
                                     </Typography.Link>
