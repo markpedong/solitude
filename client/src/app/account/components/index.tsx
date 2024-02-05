@@ -3,7 +3,7 @@
 import { Col, Flex, Row, Tabs } from 'antd'
 import React, { FC, useEffect } from 'react'
 import styles from './styles.module.scss'
-import Profile from './profile'
+import Profile from '../../../components/profile'
 import Orders from './orders'
 import { TProduct } from '@/api'
 import Address from './address'
@@ -20,7 +20,7 @@ type Props = {
 }
 
 const Account: FC<Props> = ({ products }) => {
-    const { userData, sellerData, isLoggedIn } = useAppSelector(state => state.userData)
+    const { userData, type } = useAppSelector(state => state.userData)
 
     const onChange = (key: string) => {
         console.log(key)
@@ -39,11 +39,11 @@ const Account: FC<Props> = ({ products }) => {
                         type="card"
                         defaultActiveKey="profile"
                         items={[
-                            { key: 'profile', label: 'PROFILE', children: <Profile /> },
+                            // { key: 'profile', label: 'PROFILE', children: <Profile /> },
                             { key: 'favourites', label: 'ORDERS', children: <Orders /> },
                             { key: 'products', label: 'PRODUCTS', children: <AddProduct products={products} /> },
                             { key: 'address', label: 'ADDRESS', children: <Address /> },
-                        ]}
+                        ].filter(item => !(item.key === 'products' && type === 1))}
                     />
                 </div>
             </Col>

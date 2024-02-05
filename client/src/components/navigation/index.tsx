@@ -32,6 +32,7 @@ import { CSSProperties, FC, useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Collection } from '../reusable'
 import styles from './styles.module.scss'
+import Profile from '@/components/profile'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -58,33 +59,6 @@ const Navigation: FC = () => {
     const filteredProducts = useMemo(() => {
         return products?.filter(product => product.product_name.toLowerCase().includes(searchFilter))
     }, [products, searchFilter])
-
-    const items: MenuProps['items'] = [
-        {
-            key: 'account',
-            label: (
-                <Link className={classNames(styles.linkItem, jost.className)} href="/account">
-                    ACCOUNT
-                </Link>
-            ),
-        },
-        {
-            key: 'logout',
-            danger: true,
-            label: (
-                <Typography.Link
-                    className={classNames(styles.linkItem, jost.className)}
-                    onClick={async () => {
-                        await dispatch(resetUserData())
-                        localStorage.clear()
-                        router.push('/')
-                    }}
-                    type="danger">
-                    LOGOUT
-                </Typography.Link>
-            ),
-        },
-    ]
 
     const handleResize = () => {
         if (window.innerWidth > 768) {
@@ -421,6 +395,29 @@ const Navigation: FC = () => {
             {href}
         </span>
     )
+
+    const items: MenuProps['items'] = [
+        {
+            key: 'account',
+            label: <Profile />,
+        },
+        {
+            key: 'logout',
+            danger: true,
+            label: (
+                <Typography.Link
+                    className={classNames(styles.linkItem, jost.className)}
+                    onClick={async () => {
+                        await dispatch(resetUserData())
+                        localStorage.clear()
+                        router.push('/')
+                    }}
+                    type="danger">
+                    LOGOUT
+                </Typography.Link>
+            ),
+        },
+    ]
 
     useEffect(() => {
         handleResize()
