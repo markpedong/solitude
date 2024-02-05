@@ -49,9 +49,8 @@ func UserUpdate(ctx *gin.Context) {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid ID")
 		return
 	}
-
 	if body.Email != "" && helpers.ExistingFields("email", body.Email) {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, phoneExist)
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, emailExist)
 		return
 	}
 	if body.Username != "" && helpers.ExistingFields("username", body.Username) {
@@ -59,7 +58,7 @@ func UserUpdate(ctx *gin.Context) {
 		return
 	}
 	if body.Phone != "" && helpers.ExistingFields("phone", body.Phone) {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, usernameExist)
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, phoneExist)
 		return
 	}
 
