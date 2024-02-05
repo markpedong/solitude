@@ -22,7 +22,7 @@ func GetSellerData(ctx *gin.Context) {
 	}
 
 	var foundSeller models.Seller
-	if err := database.DB.Where("id = ?", body.SellerID).First(&foundSeller).Error; err != nil {
+	if err := database.DB.Where("seller_id = ?", body.SellerID).First(&foundSeller).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "user not found")
 		return
 	}
@@ -55,7 +55,7 @@ func SellerUpdate(ctx *gin.Context) {
 	// 	}
 	// }
 
-	if err := database.DB.Model(&models.Seller{}).Where("id = ?", body.SellerID).Updates(map[string]interface{}{
+	if err := database.DB.Model(&models.Seller{}).Where("seller_id = ?", body.SellerID).Updates(map[string]interface{}{
 		"seller_name": body.SellerName,
 		"username":    body.Username,
 		"email":       body.Email,
