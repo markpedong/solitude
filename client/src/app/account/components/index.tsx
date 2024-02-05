@@ -8,9 +8,9 @@ import Orders from './orders'
 import { TProduct } from '@/api'
 import Address from './address'
 import { Cormorant, Jost } from 'next/font/google'
-import { useRouter } from 'next/navigation'
 import { useAppSelector } from '@/redux/store'
 import AddProduct from './product'
+import isAuth from '@/components/isAuth'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -20,16 +20,11 @@ type Props = {
 }
 
 const Account: FC<Props> = ({ products }) => {
-    const router = useRouter()
     const { userData, sellerData, isLoggedIn } = useAppSelector(state => state.userData)
 
     const onChange = (key: string) => {
         console.log(key)
     }
-
-    useEffect(() => {
-        // !!!userData?.id &&  router.push('/')
-    }, [userData?.id])
 
     return (
         <Row justify="center">
@@ -56,4 +51,4 @@ const Account: FC<Props> = ({ products }) => {
     )
 }
 
-export default Account
+export default isAuth(Account)

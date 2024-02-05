@@ -170,10 +170,10 @@ const Navigation: FC = () => {
         if (res?.success) {
             await dispatch(setUserToken(res?.token))
             setLocalStorage('token', res?.token)
+            formRef?.current.resetFields()
             router.push('/account')
         }
 
-        formRef?.current.resetFields()
         return afterModalformFinish(actionRef, res?.message, res?.success)
     }
 
