@@ -49,16 +49,22 @@ func UserUpdate(ctx *gin.Context) {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid ID")
 		return
 	}
-	if body.Email != "" && helpers.ExistingFields("email", body.Email) {
+	var existingUser models.User
+	if err := database.DB.Model(&existingUser).Where("id = ?", body.ID).First(&existingUser).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	if body.Email != existingUser.Email && body.Email != "" && helpers.ExistingFields("email", body.Email) {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, emailExist)
 		return
 	}
-	if body.Username != "" && helpers.ExistingFields("username", body.Username) {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, usernameExist)
+	if body.Phone != existingUser.Phone && body.Phone != "" && helpers.ExistingFields("phone", body.Phone) {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, phoneExist)
 		return
 	}
-	if body.Phone != "" && helpers.ExistingFields("phone", body.Phone) {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, phoneExist)
+	if body.Username != existingUser.Username && body.Username != "" && helpers.ExistingFields("username", body.Username) {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, usernameExist)
 		return
 	}
 

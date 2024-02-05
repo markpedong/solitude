@@ -37,21 +37,26 @@ func SellerUpdate(ctx *gin.Context) {
 		return
 	}
 
-	var existingSeller models.Seller
 	if body.SellerID == "" {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid ID")
 		return
 	}
 
-	if body.Email != "" && helpers.ExistingFields("email", body.Email) {
+	var existingSeller models.Seller
+	if err := database.DB.Model(&existingSeller).Where("seller_id = ?", body.SellerID).First(&existingSeller).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	if body.Email != existingSeller.Email && body.Email != "" && helpers.ExistingFields("email", body.Email) {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, emailExist)
 		return
 	}
-	if body.Phone != "" && helpers.ExistingFields("phone", body.Phone) {
+	if body.Phone != existingSeller.Phone && body.Phone != "" && helpers.ExistingFields("phone", body.Phone) {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, phoneExist)
 		return
 	}
-	if body.Username != "" && helpers.ExistingFields("username", body.Username) {
+	if body.Username != existingSeller.Username && body.Username != "" && helpers.ExistingFields("username", body.Username) {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, usernameExist)
 		return
 	}
