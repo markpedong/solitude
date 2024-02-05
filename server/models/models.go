@@ -24,16 +24,16 @@ type User struct {
 }
 
 type Product struct {
-	ProductID   string             `json:"product_id" gorm:"primaryKey"`
-	SellerID    string             `json:"seller_id" validate:"required"`
-	ProductName string             `json:"product_name" validate:"required"`
-	Price       float64            `json:"price" validate:"required"`
-	Rating      int                `json:"rating"`
-	Image       pq.StringArray     `json:"image" gorm:"type:text[]"`
-	CreatedAt   int                `json:"created_at" gorm:"autoCreateTime"`
-	Description string             `json:"description" validate:"required"`
-	Stock       int                `json:"stock" validate:"required"`
-	Category    *[]ProductCategory `json:"category" gorm:"foreignKey:ProductID"`
+	ProductID   string            `json:"product_id" gorm:"primaryKey"`
+	SellerID    string            `json:"seller_id" validate:"required"`
+	ProductName string            `json:"product_name" validate:"required"`
+	Price       float64           `json:"price" validate:"required"`
+	Rating      int               `json:"rating"`
+	Image       pq.StringArray    `json:"image" gorm:"type:text[]"`
+	CreatedAt   int               `json:"created_at" gorm:"autoCreateTime"`
+	Description string            `json:"description" validate:"required"`
+	Stock       int               `json:"stock" validate:"required"`
+	Category    []ProductCategory `json:"category" gorm:"foreignkey:ProductID"`
 }
 
 type Address struct {

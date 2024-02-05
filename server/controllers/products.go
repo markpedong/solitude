@@ -38,16 +38,13 @@ func AddProducts(ctx *gin.Context) {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
-
-	categories := []models.ProductCategory{}
-	if body.Category != nil {
-		for _, v := range *body.Category {
-			v.ProductID = product.ProductID
-			categories = append(categories, v)
-		}
+	for i := range body.Category {
+		body.Category[i].ID = uuid.Must(uuid.NewRandom()).String()
+		body.Category[i].ProductID = product.ProductID
 	}
 
-	if err := database.DB.Model(&product).Association("Category").Append(&categories); err != nil {
+	product.Category = body.Category
+	if err := database.DB.Save(&product).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
