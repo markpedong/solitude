@@ -37,7 +37,7 @@ const Product: FC<PProps> = ({ id, image, product_name, description, price, clas
                 <Image src={image} alt={product_name} width={1000} height={1000} priority />
                 <span className={classNames(jostHeavy.className, styles.cardTitle)}>{product_name}</span>
                 <span className={styles.cardDescription}>{description}</span>
-                <span className={classNames(jost.className, styles.cardFooter)}>$ {price.toFixed(2)}</span>
+                <span className={classNames(jost.className, styles.cardFooter)}>$ {price?.toFixed(2)}</span>
             </div>
         </Link>
     )

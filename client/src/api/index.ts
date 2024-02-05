@@ -65,3 +65,6 @@ export const uploadImages = params => upload('/api/uploadImage', params)
 
 // /api/addProduct
 export const addProduct = params => post('/api/add-product', params)
+
+// /api/getProductsByID
+export const getAllProducts = params => post("/users/getProductsByID", params)

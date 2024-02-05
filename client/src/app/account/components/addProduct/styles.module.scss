@@ -3,15 +3,7 @@
 
 .addProductWrapper {
     padding-block: toRem(5);
-}
-
-.addProductHeader {
-    font-size: toRem(21);
-    letter-spacing: toRem(1);
-    text-align: center;
-    width: auto;
-    display: block;
-    padding-block-end: toRem(10);
+    min-height: toRem(300);
 }
 
 .productContainer {

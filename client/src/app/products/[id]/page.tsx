@@ -1,6 +1,7 @@
-import { getProductData, getProducts } from '@/api'
+import { getProductData } from '@/api'
 import { FC } from 'react'
 import ProductDetails from './components/productDetails'
+
 type Params = { params: { id: string } }
 
 const ProductItem: FC<Params> = async ({ params }) => {
