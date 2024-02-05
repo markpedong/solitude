@@ -102,7 +102,7 @@ const Navigation: FC = () => {
                 <Flex className={styles.collectionsContainer} justify="center" vertical gap={10}>
                     {filteredProducts?.map(q => (
                         <Collection
-                            key={q.id}
+                            key={q.product_id}
                             description={q.description}
                             image={q.image as unknown as string}
                             title={q.product_name}
@@ -440,7 +440,7 @@ const Navigation: FC = () => {
                         {renderMenuItem('products')}
                         {renderMenuItem('brands')}
                         {renderMenuItem('deals')}
-                        {renderMenuItem('services')}
+                        {isLoggedIn && renderMenuItem('account')}
                         <Flex className={styles.icons} gap={20}>
                             {renderSearch()}
                             {renderLogin()}
@@ -476,7 +476,7 @@ const Navigation: FC = () => {
                                 {renderMenuItem('products')}
                                 {renderMenuItem('brands')}
                                 {renderMenuItem('deals')}
-                                {renderMenuItem('services')}
+                                {isLoggedIn && renderMenuItem('account')}
                             </Flex>
                         </Drawer>
                     </div>
