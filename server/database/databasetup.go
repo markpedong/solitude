@@ -32,7 +32,7 @@ func DBSet() {
 		return
 	}
 
-	DB.AutoMigrate(&models.Product{}, &models.Address{}, &models.Order{})
+	DB.AutoMigrate(&models.Product{}, &models.Address{}, &models.Order{}, &models.ProductCategory{})
 	DB.AutoMigrate(&models.User{}, &models.Seller{})
 	// DB.AutoMigrate(&models.Brands{})
 	if err != nil {

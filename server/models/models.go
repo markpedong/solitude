@@ -24,15 +24,16 @@ type User struct {
 }
 
 type Product struct {
-	ProductID   string         `json:"product_id" gorm:"primaryKey"`
-	SellerID    string         `json:"seller_id" validate:"required"`
-	ProductName string         `json:"product_name" validate:"required"`
-	Price       float64        `json:"price" validate:"required"`
-	Rating      int            `json:"rating"`
-	Image       pq.StringArray `json:"image" gorm:"type:text[]"`
-	CreatedAt   int            `json:"created_at" gorm:"autoCreateTime"`
-	Description string         `json:"description" validate:"required"`
-	Stock       int            `json:"stock" validate:"required"`
+	ProductID   string             `json:"product_id" gorm:"primaryKey"`
+	SellerID    string             `json:"seller_id" validate:"required"`
+	ProductName string             `json:"product_name" validate:"required"`
+	Price       float64            `json:"price" validate:"required"`
+	Rating      int                `json:"rating"`
+	Image       pq.StringArray     `json:"image" gorm:"type:text[]"`
+	CreatedAt   int                `json:"created_at" gorm:"autoCreateTime"`
+	Description string             `json:"description" validate:"required"`
+	Stock       int                `json:"stock" validate:"required"`
+	Category    *[]ProductCategory `json:"category" gorm:"foreignKey:ProductID"`
 }
 
 type Address struct {
@@ -64,20 +65,19 @@ type Seller struct {
 	Phone      string     `json:"phone"`
 	Username   string     `json:"username"`
 	Location   string     `json:"location"`
-	Brands     *[]Brands  `json:"brands" gorm:"foreignKey:BrandID"`
 	Products   *[]Product `json:"products" gorm:"foreignKey:SellerID"`
 }
-
-type Brands struct {
-	BrandID  string    `json:"id" gorm:"primaryKey"`
-	Name     string    `json:"brand_name"`
-	Products []Product `json:"products" gorm:"foreignKey:ProductID"`
-}
-
 type Payment struct {
 	ID      string `json:"id" gorm:"primaryKey"`
 	Digital bool   `json:"digital"`
 	COD     bool   `json:"cod"`
+}
+
+type ProductCategory struct {
+	ID        string `json:"id" gorm:"primaryKey"`
+	ProductID string `json:"product_id" validate:"required"`
+	Label     string `json:"label" validate:"required"`
+	Value     string `json:"value" validate:"required"`
 }
 
 type Collections struct {

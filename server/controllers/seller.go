@@ -115,7 +115,6 @@ func SellerSignup(ctx *gin.Context) {
 		Phone:      body.Phone,
 		Username:   body.Username,
 		Location:   body.Location,
-		Brands:     &[]models.Brands{},
 		Products:   &[]models.Product{},
 	}
 

@@ -15,11 +15,12 @@ import (
 
 func AddProducts(ctx *gin.Context) {
 	var body struct {
-		ProductName string         `json:"product_name" validate:"required"`
-		Price       float64        `json:"price" validate:"required"`
-		Image       pq.StringArray `json:"image" gorm:"type:text[]"`
-		Description string         `json:"description" validate:"required"`
-		SellerID    string         `json:"product_id" validate:"required"`
+		ProductName string                    `json:"product_name" validate:"required"`
+		Price       float64                   `json:"price" validate:"required"`
+		Image       pq.StringArray            `json:"image" gorm:"type:text[]"`
+		Description string                    `json:"description" validate:"required"`
+		SellerID    string                    `json:"product_id" validate:"required"`
+		Category    *[]models.ProductCategory `json:"category"`
 	}
 	if err := ctx.ShouldBindJSON(&body); err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
