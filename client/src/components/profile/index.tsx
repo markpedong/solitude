@@ -59,7 +59,7 @@ const Profile: FC = () => {
                 if (type === USER_TYPES.USER) {
                     res = await updateUserData({ ...params, id: userData?.id })
                 } else {
-                    res = await updateSellerData({ ...params, seller_id: userData?.id })
+                    res = await updateSellerData({ ...params, seller_id: sellerData?.seller_id })
                 }
 
                 if (res?.success && type === USER_TYPES.USER) {

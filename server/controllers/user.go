@@ -49,19 +49,19 @@ func UserUpdate(ctx *gin.Context) {
 		return
 	}
 
-	if body.Email != "" {
-		if err := database.DB.Where("email = ?", body.Email).First(&models.User{}).Error; err == nil {
-			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with this email already exists!")
-			return
-		}
-	}
+	// if body.Email != "" {
+	// 	if err := database.DB.Where("email = ?", body.Email).First(&models.User{}).Error; err == nil {
+	// 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with this email already exists!")
+	// 		return
+	// 	}
+	// }
 
-	if body.Username != "" {
-		if err := database.DB.Where("username = ?", body.Username).First(&models.User{}).Error; err == nil {
-			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with this username already exists!")
-			return
-		}
-	}
+	// if body.Username != "" {
+	// 	if err := database.DB.Where("username = ?", body.Username).First(&models.User{}).Error; err == nil {
+	// 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user with this username already exists!")
+	// 		return
+	// 	}
+	// }
 
 	if err := database.DB.Model(&models.User{}).Where("id = ?", body.ID).Updates(map[string]interface{}{
 		"first_name": body.FirstName,
