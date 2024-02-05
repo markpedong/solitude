@@ -10,18 +10,11 @@ import (
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"github.com/lib/pq"
 )
 
 func AddProducts(ctx *gin.Context) {
-	var body struct {
-		ProductName string                    `json:"product_name" validate:"required"`
-		Price       float64                   `json:"price" validate:"required"`
-		Image       pq.StringArray            `json:"image" gorm:"type:text[]"`
-		Description string                    `json:"description" validate:"required"`
-		SellerID    string                    `json:"product_id" validate:"required"`
-		Category    *[]models.ProductCategory `json:"category"`
-	}
+	var body models.Product
+
 	if err := ctx.ShouldBindJSON(&body); err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
@@ -42,6 +35,19 @@ func AddProducts(ctx *gin.Context) {
 	}
 
 	if err := database.DB.Create(&product).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	categories := []models.ProductCategory{}
+	if body.Category != nil {
+		for _, v := range *body.Category {
+			v.ProductID = product.ProductID
+			categories = append(categories, v)
+		}
+	}
+
+	if err := database.DB.Model(&product).Association("Category").Append(&categories); err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}

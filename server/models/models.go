@@ -75,7 +75,7 @@ type Payment struct {
 
 type ProductCategory struct {
 	ID        string `json:"id" gorm:"primaryKey"`
-	ProductID string `json:"product_id" validate:"required"`
+	ProductID string `json:"product_id"`
 	Label     string `json:"label" validate:"required"`
 	Value     string `json:"value" validate:"required"`
 }
