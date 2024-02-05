@@ -1,6 +1,7 @@
 import { getProductData } from '@/api'
 import { FC } from 'react'
 import ProductDetails from './components/productDetails'
+import styles  from './components/productDetails/styles.module.scss'
 
 type Params = { params: { id: string } }
 
@@ -10,7 +11,7 @@ const ProductItem: FC<Params> = async ({ params }) => {
     // const filtered = products.data.filter(q => q.id !== params.id)
 
     return (
-        <div>
+        <div className={styles.mainWrapper}>
             <ProductDetails data={data.data} />
         </div>
     )

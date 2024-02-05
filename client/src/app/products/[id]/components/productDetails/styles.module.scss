@@ -1,5 +1,8 @@
 @import '@/styles/_helpers.scss';
 
+.mainWrapper{
+    min-height: 75dvh;
+}
 .productImageContainer {
     display: flex !important;
     justify-content: center;
