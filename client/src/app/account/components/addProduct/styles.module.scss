@@ -28,11 +28,12 @@
             .ant-upload-list-item-container:nth-of-type(1) {
                 display: flex !important;
                 height: toRem(300) !important;
-                width: toRem(300) !important;
+                width: 100% !important;
+                justify-content: center !important;
 
                 .ant-upload-list-item-thumbnail {
-                    height: toRem(300) !important;
-                    width: toRem(300) !important;
+                    height: toRem(270) !important;
+                    width: toRem(270) !important;
                 }
             }
         }
