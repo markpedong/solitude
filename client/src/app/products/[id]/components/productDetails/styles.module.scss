@@ -10,7 +10,7 @@
     align-items: center !important;
     margin-inline: toRem(10);
 
-    .category {
+    .variant {
         text-transform: capitalize;
         text-align: left;
         width: 100%;
@@ -71,8 +71,10 @@
 .productDescriptionContainer{
     padding-block-start: toRem(30);
     .productDescription {
+        width: 100%;
         font-size: toRem(14);
         height: toRem(140);
+        word-break: break-all;
     }
 }
 

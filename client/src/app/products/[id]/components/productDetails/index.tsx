@@ -1,6 +1,6 @@
 'use client'
 
-import { TProduct } from '@/api'
+import { TVariations, TProduct } from '@/api'
 import { Col, Divider, Flex, Row, Image as IM, Input, Button } from 'antd'
 import React, { FC, memo, useMemo, useState } from 'react'
 import styles from './styles.module.scss'
@@ -16,10 +16,11 @@ const jostHeavy = Jost({ weight: '500', subsets: ['latin'] })
 
 type Props = {
     data: TProduct
+    variants: TVariations[]
     // list: TProduct[]
 }
 
-const ProductDetails: FC<Props> = ({ data }) => {
+const ProductDetails: FC<Props> = ({ data, variants }) => {
     const [firstImage, setFirstImage] = useState(data?.image?.[0])
     const [stock, setStock] = useState(1)
 
@@ -27,7 +28,7 @@ const ProductDetails: FC<Props> = ({ data }) => {
         return (
             <Row justify="center">
                 <Col span={10} className={styles.productImageContainer}>
-                    <span className={classNames(styles.category, jostHeavy.className)}>/ Sample Category / Sub Category</span>
+                    <span className={classNames(styles.variant, jostHeavy.className)}>/ Sample Category / Sub Category</span>
                     <div className={styles.firstImageContainer}>
                         <IM src={firstImage} alt="product_image" width={200} height={200} />
                     </div>

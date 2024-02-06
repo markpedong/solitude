@@ -64,7 +64,7 @@ const ProductsAdded: FC<Props> = () => {
                         </span>
                     </div>
                     <Flex className={jost.className} vertical>
-                        <span>{q.description}</span>
+                        <span className={styles.description}>{q.description}</span>
                         <span>₱ {q.price?.toFixed(2)}</span>
                     </Flex>
                     <div>

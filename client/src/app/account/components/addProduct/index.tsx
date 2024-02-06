@@ -17,6 +17,7 @@ import { Button, Col, Flex, Spin, UploadFile } from 'antd'
 import { motion } from 'framer-motion'
 import { FC, useRef, useState } from 'react'
 import styles from './styles.module.scss'
+import { omit } from 'lodash'
 
 type Props = {
     product?: TProduct
@@ -42,19 +43,18 @@ const AddProduct: FC<Props> = ({ product }) => {
 
                     if (!!product?.product_id) {
                     } else {
-                        const res = await addProduct({
+                        const res = await addProduct(omit({
                             ...params,
-                            product_id: sellerData.seller_id,
+                            seller_id: sellerData.seller_id,
                             price: +params.price,
                             image: uploadedImages?.map(q => q.url),
-                        })
+                        },'upload'))
 
                         if (res.success) {
                             setUploadedImages([])
+                            formRef?.current?.resetFields()
                         }
                     }
-
-                    formRef?.current?.resetFields()
                     return afterModalformFinish(actionRef, res.message, res.success, formRef)
                 }}>
                 <ProFormText colProps={{ span: 10 }}>
@@ -124,8 +124,8 @@ const AddProduct: FC<Props> = ({ product }) => {
                         />
                     </ProForm.Group>
                     <ProFormList
-                        name="category"
-                        label="Add a category: "
+                        name="variants"
+                        label="Add a variant: "
                         copyIconProps={false}
                         required
                         className={styles.prolistContainer}>

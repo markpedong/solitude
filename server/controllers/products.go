@@ -10,6 +10,7 @@ import (
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 )
 
 func AddProducts(ctx *gin.Context) {
@@ -30,7 +31,7 @@ func AddProducts(ctx *gin.Context) {
 		SellerID:    body.SellerID,
 		ProductName: body.ProductName,
 		Price:       body.Price,
-		Image:       body.Image,
+		Image:       pq.StringArray(body.Image),
 		Description: body.Description,
 	}
 
@@ -38,15 +39,20 @@ func AddProducts(ctx *gin.Context) {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
-	for i := range body.Category {
-		body.Category[i].ID = uuid.Must(uuid.NewRandom()).String()
-		body.Category[i].ProductID = product.ProductID
-	}
+	for i := range body.Variants {
+		variant := &models.ProductVariations{
+			ID:        uuid.Must(uuid.NewRandom()).String(),
+			ProductID: product.ProductID,
+			Label:     body.Variants[i].Label,
+			Value:     body.Variants[i].Value,
+		}
 
-	product.Category = body.Category
-	if err := database.DB.Save(&product).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-		return
+		if err := database.DB.Create(variant).Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		product.Variants = append(product.Variants, *variant)
 	}
 
 	helpers.JSONResponse(ctx, "successfully added product", helpers.DataHelper(product))
@@ -171,7 +177,7 @@ func SearchProductByQuery(ctx *gin.Context) {
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(product))
 }
 
-func GetCategoryByID(ctx *gin.Context) {
+func GetVariationsByID(ctx *gin.Context) {
 	var body struct {
 		ProductID string `json:"product_id" validate:"required"`
 	}
@@ -186,7 +192,7 @@ func GetCategoryByID(ctx *gin.Context) {
 		return
 	}
 
-	var existingCategories models.ProductCategory
+	var existingCategories []models.ProductVariations
 	if err := database.DB.Find(&existingCategories, "product_id = ?", body.ProductID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return

@@ -162,7 +162,7 @@ func UserLogin(ctx *gin.Context) {
 
 	var existingUser models.User
 	if err := database.DB.First(&existingUser, "email = ?", body.Email).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "user doesn't exist")
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 

@@ -20,7 +20,7 @@ func UserRoutes(r *gin.Engine) {
 		users.POST("/getSellerData", controllers.GetSellerData)
 		users.POST("/getProductData", controllers.GetProductsByID)
 		users.POST("/getProductsByID", controllers.GetAllProductsByID)
-		users.POST("/getCategoryByID", controllers.GetCategoryByID)
+		users.POST("/getVariationsByID", controllers.GetVariationsByID)
 	}
 
 	api := r.Group("/api")

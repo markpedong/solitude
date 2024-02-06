@@ -24,16 +24,16 @@ type User struct {
 }
 
 type Product struct {
-	ProductID   string            `json:"product_id" gorm:"primaryKey"`
-	SellerID    string            `json:"seller_id" validate:"required"`
-	ProductName string            `json:"product_name" validate:"required"`
-	Price       float64           `json:"price" validate:"required"`
-	Rating      int               `json:"rating"`
-	Image       pq.StringArray    `json:"image" gorm:"type:text[]"`
-	CreatedAt   int               `json:"created_at" gorm:"autoCreateTime"`
-	Description string            `json:"description" validate:"required"`
-	Stock       int               `json:"stock" validate:"required"`
-	Category    []ProductCategory `json:"category" gorm:"foreignkey:ProductID"`
+	ProductID   string              `json:"product_id" gorm:"primaryKey"`
+	SellerID    string              `json:"seller_id" validate:"required"`
+	ProductName string              `json:"product_name" validate:"required"`
+	Price       float64             `json:"price" validate:"required"`
+	Rating      int                 `json:"rating"`
+	Image       pq.StringArray      `json:"image" gorm:"type:text[]"`
+	CreatedAt   int                 `json:"created_at" gorm:"autoCreateTime"`
+	Description string              `json:"description" validate:"required"`
+	Stock       int                 `json:"stock" validate:"required"`
+	Variants    []ProductVariations `json:"variants" gorm:"type:text[] foreignkey:ProductID"`
 }
 
 type Address struct {
@@ -73,11 +73,11 @@ type Payment struct {
 	COD     bool   `json:"cod"`
 }
 
-type ProductCategory struct {
-	ID        string `json:"id" gorm:"primaryKey"`
-	ProductID string `json:"product_id"`
-	Label     string `json:"label" validate:"required"`
-	Value     string `json:"value" validate:"required"`
+type ProductVariations struct {
+	ID        string         `json:"id" gorm:"primaryKey"`
+	ProductID string         `json:"product_id"`
+	Label     string         `json:"label" validate:"required"`
+	Value     pq.StringArray `json:"value" validate:"required" gorm:"type:text[]"`
 }
 
 type Collections struct {
