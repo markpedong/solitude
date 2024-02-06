@@ -1,11 +1,14 @@
 import { TProduct, addProduct, uploadImages } from '@/api'
-import { REQUIRED, afterModalformFinish } from '@/constants/helper'
+import { INPUT_NOSPACE, REQUIRED, afterModalformFinish } from '@/constants/helper'
 import { useAppSelector } from '@/redux/store'
 import {
     ActionType,
+    ProCard,
     ProForm,
     ProFormDigit,
     ProFormInstance,
+    ProFormList,
+    ProFormSelect,
     ProFormText,
     ProFormTextArea,
     ProFormUploadButton,
@@ -30,7 +33,7 @@ const AddProduct: FC<Props> = ({ product }) => {
         <div className={styles.addProductWrapper}>
             <ProForm
                 grid
-                initialValues={product}
+                initialValues={product || {}}
                 autoFocusFirstInput={false}
                 submitter={false}
                 formRef={formRef}
@@ -120,17 +123,31 @@ const AddProduct: FC<Props> = ({ product }) => {
                             rules={[...REQUIRED]}
                         />
                     </ProForm.Group>
-                    {/* <ProFormSelect
-                        label="Category"
-                        name="categories"
-                        placeholder="Please enter Category for Products eg: Clothing, Shoes, Accessories"
-                        fieldProps={{
-                            maxTagCount: 10,
-                            mode: 'tags',
-                            allowClear: false,
-                            variant: 'outlined',
-                        }}
-                    /> */}
+                    <ProFormList
+                        name="category"
+                        label="Add a category: "
+                        copyIconProps={false}
+                        required
+                        className={styles.prolistContainer}>
+                        <ProForm.Group key="group">
+                            <ProFormText
+                                name="label"
+                                colProps={{ span: 8 }}
+                                rules={[...REQUIRED, ...INPUT_NOSPACE]}
+                                placeholder="eg: color"
+                            />
+                            <ProFormSelect
+                                name="value"
+                                mode="tags"
+                                placeholder="black, red, blue"
+                                allowClear={false}
+                                showSearch={false}
+                                colProps={{ span: 16 }}
+                                rules={[...REQUIRED, ...INPUT_NOSPACE]}
+                                getValueFromEvent={(e: string[]) => e?.map(q => q?.replaceAll(/\s/g, ''))}
+                            />
+                        </ProForm.Group>
+                    </ProFormList>
                     <Flex justify="center" gap={20}>
                         <motion.div whileTap={{ scale: 0.9 }}>
                             <Button type="primary" onClick={() => formRef?.current.submit()}>

@@ -22,7 +22,7 @@ type Props = {
 
 const Account: FC<Props> = () => {
     const { userData, type, sellerData } = useAppSelector(state => state.userData)
-
+    const seller = type === USER_TYPES.SELLER
     const onChange = (key: string) => {
         console.log(key)
     }
@@ -38,7 +38,7 @@ const Account: FC<Props> = () => {
                     <Tabs
                         onChange={onChange}
                         type="card"
-                        defaultActiveKey="profile"
+                        defaultActiveKey={seller ? 'products': "orders"}
                         items={[
                             { key: 'orders', label: 'ORDERS', children: <Orders /> },
                             { key: 'products', label: 'ADD PRODUCT', children: <AddProduct /> },
@@ -46,10 +46,10 @@ const Account: FC<Props> = () => {
                             { key: 'address', label: 'ADDRESS', children: <Address /> },
                         ].filter(
                             item =>
-                                !(item.key === 'products' && type === USER_TYPES.USER) &&
-                                !(item.key === 'orders' && type === USER_TYPES.SELLER) &&
-                                !(item.key === 'address' && type === USER_TYPES.SELLER) && 
-                                !(item.key === 'listed_products' && type === USER_TYPES.USER)
+                                !(item.key === 'products' && !seller) &&
+                                !(item.key === 'orders' && seller) &&
+                                !(item.key === 'address' && seller) && 
+                                !(item.key === 'listed_products' && !seller)
                         )}
                     />
                 </div>

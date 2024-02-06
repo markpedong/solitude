@@ -39,3 +39,11 @@
         }
     }
 }
+
+.prolistContainer {
+    :global {
+        .ant-pro-form-list-action {
+            margin-block-end: toRem(12) !important;
+        }
+    }
+}

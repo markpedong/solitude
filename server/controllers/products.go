@@ -170,3 +170,28 @@ func SearchProductByQuery(ctx *gin.Context) {
 
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(product))
 }
+
+func GetCategoryByID(ctx *gin.Context) {
+	var body struct {
+		ProductID string `json:"product_id" validate:"required"`
+	}
+
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid payload")
+		return
+	}
+
+	if err := Validate.Struct(body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	var existingCategories models.ProductCategory
+	if err := database.DB.Find(&existingCategories, "product_id = ?", body.ProductID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(existingCategories))
+
+}
