@@ -110,23 +110,28 @@ func GetAllProducts(ctx *gin.Context) {
 		}
 	}
 
-	var products []models.Product
-	if err := query.
+	type returnedProduct struct {
+		ProductID   string `json:"product_id"`
+		ProductName string `json:"product_name"`
+	}
+
+	var products []returnedProduct
+	if err := query.Model(&models.Product{}).
 		Find(&products).
 		Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	for i := range products {
-		var variations []models.ProductVariations
-		if err := database.DB.Where("product_id = ?", products[i].ProductID).Find(&variations).Error; err != nil {
-			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-			return
-		}
+	// for i := range products {
+	// 	var variations []models.ProductVariations
+	// 	if err := database.DB.Where("product_id = ?", products[i].ProductID).Find(&variations).Error; err != nil {
+	// 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+	// 		return
+	// 	}
 
-		products[i].Variants = variations
-	}
+	// 	products[i].Variants = variations
+	// }
 
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(products))
 }
