@@ -118,6 +118,16 @@ func GetAllProducts(ctx *gin.Context) {
 		return
 	}
 
+	for i := range products {
+		var variations []models.ProductVariations
+		if err := database.DB.Where("product_id = ?", products[i].ProductID).Find(&variations).Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		products[i].Variants = variations
+	}
+
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(products))
 }
 
