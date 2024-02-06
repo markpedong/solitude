@@ -26,7 +26,7 @@ const Footer: FC = () => {
                 {renderMenuItem('products')}
                 {renderMenuItem('brands')}
                 {renderMenuItem('deals')}
-                {renderMenuItem('services')}
+                {renderMenuItem('account')}
             </Flex>
             <Flex className={classNames(jost.className, styles.socialMediaContainer)} justify="center" align="center">
                 <motion.span whileTap={{ scale: 0.9 }}>

@@ -12,13 +12,13 @@ import (
 func Authentication(ctx *gin.Context) {
 	clientToken := ctx.Request.Header.Get("token")
 	if clientToken == "" {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "No Authorization")
+		helpers.ErrJSONResponse(ctx, http.StatusUnauthorized, "No Authorization")
 		return
 	}
 
 	claims, err := token.ValidateToken(clientToken)
 	if err != "" {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err)
+		helpers.ErrJSONResponse(ctx, http.StatusUnauthorized, err)
 		return
 	}
 

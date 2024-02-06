@@ -2,6 +2,7 @@ import { stringify } from 'qs'
 import { throttle } from 'lodash'
 import { message } from 'antd'
 import { getLocalStorage } from '@/utils/xLocalStorage'
+import { clearUserData } from '@/constants/helper'
 
 type ApiResponse<T> = {
     data?: T | any
@@ -29,6 +30,10 @@ const upload = async <T>(url: string, data): Promise<ApiResponse<T>> => {
     const result = await response.json() as ApiResponse<T>
 
     if (result?.status !== 200) {
+        if (response?.status === 401) {
+            clearUserData()
+        }
+
         throttleAlert(result?.message)
         return result
     }
@@ -50,6 +55,10 @@ const post = async <T>(url: string, data = {}, client = true): Promise<ApiRespon
     const response = await apiResponse.json() as ApiResponse<T>
 
     if (response?.status !== 200 && client) {
+        if (response?.status === 401) {
+            clearUserData()
+        }
+
         throttleAlert(response?.message)
         return response
     }
@@ -67,12 +76,15 @@ const get = async <T>(url: string, data = {}, client = true): Promise<ApiRespons
     })
     //prettier-ignore
     const response = await apiResponse.json() as ApiResponse<T>
-
     if (response?.status !== 200 && client) {
+        if (response?.status === 401) {
+            clearUserData()
+        }
+
         throttleAlert(response?.message)
         return response
     }
-    
+
     return response as ApiResponse<T>
 }
 

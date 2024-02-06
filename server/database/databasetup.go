@@ -34,7 +34,6 @@ func DBSet() {
 
 	DB.AutoMigrate(&models.Product{}, &models.Address{}, &models.Order{}, &models.ProductCategory{})
 	DB.AutoMigrate(&models.User{}, &models.Seller{})
-	// DB.AutoMigrate(&models.Brands{})
 	if err != nil {
 		log.Fatal("There seems to be a problem when migrating")
 		return

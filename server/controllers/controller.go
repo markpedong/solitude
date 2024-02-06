@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"net/http"
 	"solitude/helpers"
+	"solitude/tokens"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -44,5 +46,11 @@ func VerifyPassword(expectedHashedPassword, givenPassword string) (bool, string)
 func CheckToken(ctx *gin.Context) {
 	token := ctx.GetHeader("token")
 
-	helpers.JSONResponse(ctx, "token verified!!", helpers.DataHelper(token))
+	claims, err := tokens.ValidateToken(token)
+	if err != "" {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err)
+		return
+	}
+
+	helpers.JSONResponse(ctx, "token verified!!", helpers.DataHelper(claims))
 }
