@@ -43,7 +43,7 @@ const AddProduct: FC<Props> = ({ product }) => {
 
                     if (!!product?.product_id) {
                     } else {
-                        const res = await addProduct(
+                        res = await addProduct(
                             omit(
                                 {
                                     ...params,
@@ -55,12 +55,15 @@ const AddProduct: FC<Props> = ({ product }) => {
                             )
                         )
 
-                        if (res.success) {
-                            setUploadedImages([])
-                            formRef?.current?.resetFields()
-                        }
+                        setUploadedImages([])
+                        
                     }
-                    return afterModalformFinish(actionRef, res.message, res.success, formRef)
+
+                    if (res.success) {
+                        formRef?.current?.resetFields()
+                    }
+                    
+                    return afterModalformFinish(actionRef, res?.message, res?.success, formRef)
                 }}>
                 <ProFormText colProps={{ span: 10 }}>
                     <Flex className={styles.galleryContainer} justify="center" align="center">
