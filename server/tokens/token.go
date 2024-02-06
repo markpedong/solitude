@@ -19,8 +19,8 @@ type SignedDetails struct {
 var SECRET_KEY = os.Getenv("SECRET_KEY")
 
 const (
-	tokenDuration        = 24 * time.Hour
-	refreshTokenDuration = 168 * time.Hour
+	tokenDuration        = 1 * time.Hour
+	refreshTokenDuration = 3 * time.Hour
 )
 
 func TokenGenerator(email, firstName, lastName, uid string) (signedToken, signedRefreshToken string, err error) {
@@ -75,4 +75,4 @@ func ValidateToken(signedToken string) (claims *SignedDetails, msg string) {
 	}
 
 	return claims, msg
-}}
+}
