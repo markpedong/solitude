@@ -137,6 +137,13 @@ func GetProductsByID(ctx *gin.Context) {
 		return
 	}
 
+	var variations []models.ProductVariations
+	if err := database.DB.Where("product_id = ?", body.ID).Find(&variations).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+	product.Variants = variations
+
 	helpers.JSONResponse(ctx, "successfully got the product details!", helpers.DataHelper(product))
 }
 
