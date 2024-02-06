@@ -78,7 +78,7 @@ const ProductDetails: FC<Props> = ({ data }) => {
                 </Col>
             </Row>
         )
-    }, [data, stock])
+    }, [data, stock, firstImage])
 
     return memoizedElement
 }
