@@ -52,8 +52,11 @@ const ProductsAdded: FC<Props> = () => {
     return (
         <div>
             {products?.map((q, i) => (
-                <div className={styles.addProductContainer} style={{ background: i % 2 !== 0 ? '#F4F4F2' : '' }}>
-                    <Flex justify="center" align="center" style={{paddingRight: '1rem'}}>
+                <div
+                    className={styles.addProductContainer}
+                    style={{ background: i % 2 !== 0 ? '#F4F4F2' : '' }}
+                    key={q.product_id}>
+                    <Flex justify="center" align="center" style={{ paddingRight: '1rem' }}>
                         <Image src={q?.image?.[0]} alt="product" width={100} height={100} />
                     </Flex>
                     <div className={jostHeavy.className}>

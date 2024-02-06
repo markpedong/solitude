@@ -9,11 +9,10 @@ const ProductItem: FC<Params> = async ({ params }) => {
     const data = await getProductData({ product_id: params.id })
     // const products = await getProducts({})
     // const filtered = products.data.filter(q => q.id !== params.id)
-    const variants = await getVariations({ product_id: params.id })
 
     return (
         <div className={styles.mainWrapper}>
-            <ProductDetails data={data.data} variants={variants.data} />
+            <ProductDetails data={data.data} />
         </div>
     )
 }

@@ -16,11 +16,9 @@ const jostHeavy = Jost({ weight: '500', subsets: ['latin'] })
 
 type Props = {
     data: TProduct
-    variants: TVariations[]
-    // list: TProduct[]
 }
 
-const ProductDetails: FC<Props> = ({ data, variants }) => {
+const ProductDetails: FC<Props> = ({ data }) => {
     const [firstImage, setFirstImage] = useState(data?.image?.[0])
     const [stock, setStock] = useState(1)
 

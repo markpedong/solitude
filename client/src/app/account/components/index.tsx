@@ -23,9 +23,6 @@ type Props = {
 const Account: FC<Props> = () => {
     const { userData, type, sellerData } = useAppSelector(state => state.userData)
     const seller = type === USER_TYPES.SELLER
-    const onChange = (key: string) => {
-        console.log(key)
-    }
 
     return (
         <Row justify="center">
@@ -36,7 +33,6 @@ const Account: FC<Props> = () => {
                 </Flex>
                 <div className={styles.tabsContainer}>
                     <Tabs
-                        onChange={onChange}
                         type="card"
                         defaultActiveKey={seller ? 'products': "orders"}
                         items={[

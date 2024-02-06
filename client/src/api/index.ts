@@ -23,7 +23,7 @@ export const sellerLogin = params => post('/users/loginSeller', params)
 // /users/signupSeller
 export const sellerSignup = params => post('/users/signupSeller', params)
 
-// /public/products
+// /users/products
 export type TProduct = {
     product_id: string
     product_name: string
@@ -32,6 +32,7 @@ export type TProduct = {
     created_at: number
     description: string
     stock: number
+    variants: TVariations[]
 }
 
 export const getProducts = params => post<TProduct[]>('/users/products', params)
