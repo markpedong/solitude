@@ -33,6 +33,9 @@ func AddProducts(ctx *gin.Context) {
 		Price:       body.Price,
 		Image:       pq.StringArray(body.Image),
 		Description: body.Description,
+		Stock:       body.Stock,
+		Rating:      body.Rating,
+		Category:    pq.StringArray(body.Category),
 	}
 
 	if err := database.DB.Create(&product).Error; err != nil {

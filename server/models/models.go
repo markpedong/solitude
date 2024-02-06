@@ -31,9 +31,11 @@ type Product struct {
 	Rating      int                 `json:"rating"`
 	Image       pq.StringArray      `json:"image" gorm:"type:text[]"`
 	CreatedAt   int                 `json:"created_at" gorm:"autoCreateTime"`
+	UpdatedAt   int                 `json:"updated_at" gorm:"autoUpdateTime"`
 	Description string              `json:"description" validate:"required"`
 	Stock       int                 `json:"stock" validate:"required"`
-	Variants    []ProductVariations `json:"variants" gorm:"type:text[] foreignkey:ProductID"`
+	Variants    []ProductVariations `json:"variants" gorm:"foreignkey:ProductID"`
+	Category    pq.StringArray      `json:"categories" gorm:"type:text[]"`
 }
 
 type Address struct {

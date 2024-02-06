@@ -123,6 +123,13 @@ const AddProduct: FC<Props> = ({ product }) => {
                             rules={[...REQUIRED]}
                         />
                     </ProForm.Group>
+                    <ProFormText
+                        label="Category"
+                        name="categories"
+                        placeholder="eg: clothing, accessories"
+                        colProps={{ span: 24 }}
+                        rules={[...REQUIRED]}
+                    />
                     <ProFormList
                         name="variants"
                         label="Add a variant: "
