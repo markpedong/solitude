@@ -26,12 +26,12 @@ const ProductDetails: FC<Props> = ({ data }) => {
         return (
             <Row justify="center">
                 <Col span={10} className={styles.productImageContainer}>
-                    <span className={classNames(styles.variant, jostHeavy.className)}>/{data?.categories?.[0]} /{data?.categories?.[1]}</span>
+                    <span className={classNames(styles.variant, jostHeavy.className)}>{`/${data?.categories?.[0]}`} {data?.categories?.[1] && `/${data?.categories?.[1]}`}</span>
                     <div className={styles.firstImageContainer}>
                         <IM src={firstImage} alt="product_image" width={200} height={200} />
                     </div>
                     <Flex className={styles.extraImagesContainer}>
-                        {data?.image?.slice(1)?.map((q, i) => (
+                        {data?.image?.map((q, i) => (
                             <motion.div whileHover={{ scale: 1.2 }} onHoverStart={() => setFirstImage(q)} key={i}>
                                 <Image src={q} alt="extra_images" width={70} height={70} />
                             </motion.div>
