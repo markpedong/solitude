@@ -43,12 +43,17 @@ const AddProduct: FC<Props> = ({ product }) => {
 
                     if (!!product?.product_id) {
                     } else {
-                        const res = await addProduct(omit({
-                            ...params,
-                            seller_id: sellerData.seller_id,
-                            price: +params.price,
-                            image: uploadedImages?.map(q => q.url),
-                        },'upload'))
+                        const res = await addProduct(
+                            omit(
+                                {
+                                    ...params,
+                                    seller_id: sellerData.seller_id,
+                                    price: +params.price,
+                                    image: uploadedImages?.map(q => q.url),
+                                },
+                                'upload'
+                            )
+                        )
 
                         if (res.success) {
                             setUploadedImages([])
@@ -123,12 +128,16 @@ const AddProduct: FC<Props> = ({ product }) => {
                             rules={[...REQUIRED]}
                         />
                     </ProForm.Group>
-                    <ProFormText
+                    <ProFormSelect
                         label="Category"
                         name="categories"
+                        mode="tags"
                         placeholder="eg: clothing, accessories"
                         colProps={{ span: 24 }}
-                        rules={[...REQUIRED]}
+                        allowClear={false}
+                        showSearch={false}
+                        rules={[...REQUIRED, ...INPUT_NOSPACE]}
+                        getValueFromEvent={(e: string[]) => e?.map(q => q?.replaceAll(/\s/g, ''))}
                     />
                     <ProFormList
                         name="variants"
