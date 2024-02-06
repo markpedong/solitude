@@ -26,7 +26,7 @@ const ProductDetails: FC<Props> = ({ data }) => {
         return (
             <Row justify="center">
                 <Col span={10} className={styles.productImageContainer}>
-                    <span className={classNames(styles.variant, jostHeavy.className)}>/ Sample Category / Sub Category</span>
+                    <span className={classNames(styles.variant, jostHeavy.className)}>/{data?.categories?.[0]} /{data?.categories?.[1]}</span>
                     <div className={styles.firstImageContainer}>
                         <IM src={firstImage} alt="product_image" width={200} height={200} />
                     </div>

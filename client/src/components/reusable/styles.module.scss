@@ -20,7 +20,7 @@
     .featuresTextContainer {
         padding: toRem(16);
         background-color: #fff;
-        width: 100%;
+        width: 80%;
 
         :nth-child(1) {
             font-size: toRem(16);
@@ -33,6 +33,9 @@
         :nth-child(2) {
             font-size: toRem(14);
             color: #666;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: auto;
         }
     }
 }

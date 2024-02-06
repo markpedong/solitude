@@ -215,6 +215,7 @@
         gap: toRem(30);
         height: 100%;
         padding-block: toRem(50);
+        padding-inline: toRem(10);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -253,7 +254,7 @@
     }
 }
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 768px) {
     .joinWrapper {
         grid-template-columns: 1fr;
 
