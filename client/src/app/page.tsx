@@ -8,83 +8,13 @@ import { Cormorant, Jost } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './styles.module.scss'
-import { Collection, Product } from '@/components/reusable'
 import { getCollections, getProducts } from '@/api'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 const Page = async () => {
-    const products = await getProducts({})
-    const collections = await getCollections()
-
-    return (
-        <>
-            <div>
-                <div className={styles.headerContainerText}>
-                    <span className={cormorant.className}>
-                        Find products for your friends, family, and special occasions.
-                    </span>
-                </div>
-                <div className={styles.landingImageContainer}>
-                    <Image src={landing} alt="landing" priority />
-                </div>
-                <div className={classNames(styles.landingButtonContainer, jost.className)}>
-                    <span>
-                        <Link href="/products">SEARCH PRODUCTS</Link>
-                    </span>
-                </div>
-                <div className={styles.featuredContainer}>
-                    <span className={cormorant.className}>Featured Products</span>
-                    <span>Essential products, best values, lower prices</span>
-                </div>
-            </div>
-            <div style={{ marginBlockStart: '70dvh' }} />
-            <div className={styles.productWrapper}>
-                <div className={styles.carousel}>
-                    {products.data?.map(q => (
-                        <Product
-                            description={q.description}
-                            id={q.product_id}
-                            image={q.image?.[0]}
-                            price={q.price}
-                            product_name={q.product_name}
-                            key={q.product_id}
-                        />
-                    ))}
-                </div>
-            </div>
-            <div className={styles.headerText}>
-                <span className={cormorant.className}>Featured Collections</span>
-                <span className={jost.className}>SEE ALL COLLECTIONS</span>
-            </div>
-            <div className={styles.featuresItemContainer}>
-                {collections?.data?.map(q => (
-                    <Collection description={q.description} image={q.image} title={q.title} key={q.id} />
-                ))}
-            </div>
-            <div className={styles.joinWrapper}>
-                <div className={styles.imageContainer}>
-                    <Image src={img1} alt="logo1" priority />
-                    <Image src={img2} alt="logo1" priority />
-                    <Image src={img3} alt="logo1" priority />
-                    <Image src={img4} alt="logo1" priority />
-                </div>
-                <div className={styles.middleContainer}>
-                    <h1 className={cormorant.className}>#SOLITUDE</h1>
-                    <Link href="/">
-                        <span className={jost.className}>FOLLOW US ON SOCIAL MEDIA</span>
-                    </Link>
-                </div>
-                <div className={styles.imageContainer}>
-                    <Image src={img1} alt="logo1" priority />
-                    <Image src={img2} alt="logo1" priority />
-                    <Image src={img3} alt="logo1" priority />
-                    <Image src={img4} alt="logo1" priority />
-                </div>
-            </div>
-        </>
-    )
+    return <>hello world</>
 }
 
 export default Page
