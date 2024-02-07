@@ -73,11 +73,11 @@ const ProductDetails: FC<Props> = memo(({ data }) => {
             <>
                 <p className={classNames(jost.className, styles.productStock)}>Stocks Available: {data?.stock}</p>
                 {data?.variations?.map(q => (
-                    <div className={styles.tagContainer}>
+                    <div className={styles.tagContainer} key={q.id}>
                         <span className={styles.tagLabel}>{q?.label}:</span>
                         <Flex key={q.id} align="center">
                             {q?.value?.map(tag => (
-                                <motion.div whileTap={{ scale: 0.9 }}>
+                                <motion.div whileTap={{ scale: 0.9 }} key={tag}>
                                     <CheckableTag
                                         key={tag}
                                         checked={selectedTags.includes(tag)}

@@ -116,6 +116,7 @@ func SellerSignup(ctx *gin.Context) {
 		Username:   body.Username,
 		Location:   body.Location,
 		Products:   &[]models.Product{},
+		Avatar:     body.Avatar,
 	}
 
 	if err := database.DB.Model(&models.Seller{}).Create(&newSeller).Error; err != nil {

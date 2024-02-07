@@ -21,6 +21,7 @@ type User struct {
 	Username       string     `json:"username"`
 	Gender         string     `json:"gender"`
 	Birthday       string     `json:"birthday"`
+	Avatar         string     `json:"avatar"`
 }
 
 type Product struct {
@@ -68,6 +69,7 @@ type Seller struct {
 	Username   string     `json:"username"`
 	Location   string     `json:"location"`
 	Products   *[]Product `json:"products" gorm:"foreignKey:SellerID"`
+	Avatar     string     `json:"avatar"`
 }
 type Payment struct {
 	ID      string `json:"id" gorm:"primaryKey"`

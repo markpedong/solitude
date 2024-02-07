@@ -5,3 +5,10 @@
     padding-block: toRem(10);
     font-size: toRem(20);
 }
+
+.profileImage {
+    border-radius: 50%;
+    object-fit: contain;
+    object-position: center center;
+    background-color: #f8f8f8;
+}

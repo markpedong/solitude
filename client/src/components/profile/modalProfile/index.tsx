@@ -7,12 +7,14 @@ import type { GetProp, UploadProps } from 'antd'
 import { Flex, Upload, message } from 'antd'
 import Image from 'next/image'
 import { useState } from 'react'
+import styles from '../styles.module.scss'
+import { uploadImages } from '@/api'
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
 
 const ModalProfile = () => {
     const { type } = useAppSelector(state => state.userData)
-    const [loading, setLoading] = useState(false)
+    const [loading, setUploading] = useState(false)
     const [imageUrl, setImageUrl] = useState<string>()
 
     const beforeUpload = (file: FileType) => {
@@ -34,26 +36,6 @@ const ModalProfile = () => {
         </button>
     )
 
-    const getBase64 = (img: FileType, callback: (url: string) => void) => {
-        const reader = new FileReader()
-        reader.addEventListener('load', () => callback(reader.result as string))
-        reader.readAsDataURL(img)
-    }
-
-    const handleChange: UploadProps['onChange'] = info => {
-        if (info.file.status === 'uploading') {
-            setLoading(true)
-            return
-        }
-        if (info.file.status === 'done') {
-            // Get this url from response in real world.
-            getBase64(info.file.originFileObj as FileType, url => {
-                setLoading(false)
-                setImageUrl(url)
-            })
-        }
-    }
-
     return (
         <>
             <Flex gap={20} align="center" style={{ margin: '0 auto' }}>
@@ -62,8 +44,20 @@ const ModalProfile = () => {
                     name="avatar"
                     showUploadList={false}
                     beforeUpload={beforeUpload}
-                    onChange={handleChange}>
-                    {imageUrl ? <Image src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                    action={async e => {
+                      setUploading(true)
+                      setImageUrl('')
+
+                      try {
+                          const res = await uploadImages(e)
+                          setImageUrl(res?.data?.url)
+
+                          return ''
+                      } finally {
+                          setUploading(false)
+                      }
+                  }}>
+                    {imageUrl ? <Image className={styles.profileImage} src={imageUrl} alt="avatar" style={{ width: '100%' }}  width={100} height={100} /> : uploadButton}
                 </Upload>
                 <ProForm.Group>
                     {type === USER_TYPES.USER ? (
