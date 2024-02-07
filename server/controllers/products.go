@@ -42,12 +42,12 @@ func AddProducts(ctx *gin.Context) {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
-	for i := range body.Variants {
+	for i := range body.Variations {
 		variant := &models.ProductVariations{
 			ID:        uuid.Must(uuid.NewRandom()).String(),
 			ProductID: product.ProductID,
-			Label:     body.Variants[i].Label,
-			Value:     body.Variants[i].Value,
+			Label:     body.Variations[i].Label,
+			Value:     body.Variations[i].Value,
 		}
 
 		if err := database.DB.Create(variant).Error; err != nil {
@@ -55,7 +55,7 @@ func AddProducts(ctx *gin.Context) {
 			return
 		}
 
-		product.Variants = append(product.Variants, *variant)
+		product.Variations = append(product.Variations, *variant)
 	}
 
 	helpers.JSONResponse(ctx, "successfully added product", helpers.DataHelper(product))
@@ -160,7 +160,7 @@ func GetProductsByID(ctx *gin.Context) {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
-	product.Variants = variations
+	product.Variations = variations
 
 	helpers.JSONResponse(ctx, "successfully got the product details!", helpers.DataHelper(product))
 }

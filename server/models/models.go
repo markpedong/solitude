@@ -34,7 +34,7 @@ type Product struct {
 	UpdatedAt   int                 `json:"updated_at" gorm:"autoUpdateTime"`
 	Description string              `json:"description" validate:"required"`
 	Stock       int                 `json:"stock" validate:"required"`
-	Variants    []ProductVariations `json:"variants" gorm:"foreignkey:ProductID"`
+	Variations  []ProductVariations `json:"variations" gorm:"foreignkey:ProductID"`
 	Category    pq.StringArray      `json:"categories" gorm:"type:text[]"`
 }
 

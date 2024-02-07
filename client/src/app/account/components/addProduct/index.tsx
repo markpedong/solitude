@@ -143,7 +143,7 @@ const AddProduct: FC<Props> = ({ product }) => {
                         getValueFromEvent={(e: string[]) => e?.map(q => q?.replaceAll(/\s/g, ''))}
                     />
                     <ProFormList
-                        name="variants"
+                        name="variations"
                         label="Add a variant: "
                         copyIconProps={false}
                         required
