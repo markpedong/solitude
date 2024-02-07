@@ -68,32 +68,30 @@ label.ant-form-item-required::before {
     text-align: left;
 }
 
-
-
 @font-face {
     font-family: 'Satoshi';
-    src: url('/fonts/satoshi/Satoshi-Black.ttf');
-    font-weight: 700;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Satoshi';
-    src: url('/fonts/satoshi/Satoshi-Light.ttf');
+    src: url('/fonts/satoshi/light.ttf');
     font-weight: 300;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Satoshi';
-    src: url('/fonts/satoshi/Satoshi-Regular.ttf');
+    src: url('/fonts/satoshi/medium.ttf');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Integral';
+    src: url('/fonts/integral/regular.otf');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Satoshi';
-    src: url('/fonts/satoshi/Satoshi-Medium.ttf');
-    font-weight: 500;
+    font-family: 'Integral';
+    src: url('/fonts/integral/heavy.otf');
+    font-weight: 600;
     font-style: normal;
 }

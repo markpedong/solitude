@@ -9,6 +9,7 @@
     background-color: black;
     color: white;
     font-weight: 300;
+    font-size: toRem(14);
 
     span {
         @apply flex flex-row items-center;
