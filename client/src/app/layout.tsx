@@ -1,7 +1,7 @@
 import React from 'react'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import ReduxProvider from '@/redux/provider'
-import '../styles/global.scss'
+import '@/styles/global.scss'
 import AntdProvider from './antdProvider'
 import NavBanner from '@/components/navbanner'
 
