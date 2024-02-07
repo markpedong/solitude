@@ -16,16 +16,18 @@ import { FC, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import ModalProfile from './modalProfile'
 import styles from './styles.module.scss'
+import { getSellerData, getUserData, updateSellerData, updateUserData } from '@/api'
+import { setSellerData, setUserData } from '@/redux/features/userSlice'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 
 const Profile: FC = () => {
     const { userData, sellerData, type } = useAppSelector(state => state.userData)
+    const [imageUrl, setImageUrl] = useState<string>()
     const actionRef = useRef<ActionType>()
     const formRef = useRef<ProFormInstance>()
     const dispatch = useDispatch()
-
 
     return (
         <ModalForm
@@ -55,25 +57,25 @@ const Profile: FC = () => {
                 let res
 
                 console.log("params: ",params)
-                // if (type === USER_TYPES.USER) {
-                //     res = await updateUserData({ ...params, id: userData?.id })
-                // } else {
-                //     res = await updateSellerData({ ...params, seller_id: sellerData?.seller_id })
-                // }
+                if (type === USER_TYPES.USER) {
+                    res = await updateUserData({ ...params, id: userData?.id })
+                } else {
+                    res = await updateSellerData({ ...params, avatar: imageUrl, seller_id: sellerData?.seller_id })
+                }
 
-                // if (res?.success && type === USER_TYPES.USER) {
-                //     const user = await getUserData({ id: userData?.id })
-                //     await dispatch(setUserData(user?.data))
-                // }
+                if (res?.success && type === USER_TYPES.USER) {
+                    const user = await getUserData({ id: userData?.id })
+                    await dispatch(setUserData(user?.data))
+                }
 
-                // if (res?.success && type === USER_TYPES.SELLER) {
-                //     const user = await getSellerData({ seller_id: sellerData?.seller_id })
-                //     await dispatch(setSellerData(user?.data))
-                // }
+                if (res?.success && type === USER_TYPES.SELLER) {
+                    const user = await getSellerData({ seller_id: sellerData?.seller_id })
+                    await dispatch(setSellerData(user?.data))
+                }
 
                 return afterModalformFinish(actionRef, res.message, res.success)
             }}>
-            <ModalProfile/>
+            <ModalProfile imageUrl={imageUrl} setImageUrl={setImageUrl}/>
         </ModalForm>
     )
 }

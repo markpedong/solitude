@@ -1,21 +1,25 @@
 import { USER_TYPES } from '@/constants'
 import { INPUT_NOSPACE, REQUIRED } from '@/constants/helper'
 import { useAppSelector } from '@/redux/store'
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
+import { LoadingOutlined, LockOutlined, PlusOutlined } from '@ant-design/icons'
 import { ProForm, ProFormDatePicker, ProFormRadio, ProFormText } from '@ant-design/pro-components'
 import type { GetProp, UploadProps } from 'antd'
 import { Flex, Upload, message } from 'antd'
 import Image from 'next/image'
-import { useState } from 'react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import styles from '../styles.module.scss'
 import { uploadImages } from '@/api'
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
 
-const ModalProfile = () => {
+type Props = {
+    imageUrl: string
+    setImageUrl: Dispatch<SetStateAction<string>>
+}
+
+const ModalProfile: FC<Props> = ({ imageUrl, setImageUrl }) => {
     const { type } = useAppSelector(state => state.userData)
     const [loading, setUploading] = useState(false)
-    const [imageUrl, setImageUrl] = useState<string>()
 
     const beforeUpload = (file: FileType) => {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
@@ -45,19 +49,30 @@ const ModalProfile = () => {
                     showUploadList={false}
                     beforeUpload={beforeUpload}
                     action={async e => {
-                      setUploading(true)
-                      setImageUrl('')
+                        setUploading(true)
+                        setImageUrl('')
 
-                      try {
-                          const res = await uploadImages(e)
-                          setImageUrl(res?.data?.url)
+                        try {
+                            const res = await uploadImages(e)
+                            setImageUrl(res?.data?.url)
 
-                          return ''
-                      } finally {
-                          setUploading(false)
-                      }
-                  }}>
-                    {imageUrl ? <Image className={styles.profileImage} src={imageUrl} alt="avatar" style={{ width: '100%' }}  width={100} height={100} /> : uploadButton}
+                            return res?.data?.url
+                        } finally {
+                            setUploading(false)
+                        }
+                    }}>
+                    {imageUrl ? (
+                        <Image
+                            className={styles.profileImage}
+                            src={imageUrl}
+                            alt="avatar"
+                            style={{ width: '100%' }}
+                            width={100}
+                            height={100}
+                        />
+                    ) : (
+                        uploadButton
+                    )}
                 </Upload>
                 <ProForm.Group>
                     {type === USER_TYPES.USER ? (
@@ -67,12 +82,14 @@ const ModalProfile = () => {
                                 name="first_name"
                                 placeholder="eg: John"
                                 rules={[...INPUT_NOSPACE]}
+                                colProps={{ span: 21 }}
                             />
                             <ProFormText
                                 label="Last Name"
                                 name="last_name"
                                 placeholder="eg: Smith"
                                 rules={[...INPUT_NOSPACE]}
+                                colProps={{ span: 21 }}
                             />
                         </>
                     ) : (
@@ -82,6 +99,7 @@ const ModalProfile = () => {
                                 placeholder="YOUR STORE NAME"
                                 label="Store Name"
                                 fieldProps={{ maxLength: 10 }}
+                                colProps={{ span: 21 }}
                                 rules={[...REQUIRED]}
                             />
                             <ProFormText
@@ -89,10 +107,12 @@ const ModalProfile = () => {
                                 placeholder="eg: Cavite, Laguna"
                                 label="Store Location"
                                 fieldProps={{ maxLength: 10 }}
+                                colProps={{ span: 21 }}
                                 rules={[...REQUIRED]}
                             />
                         </>
                     )}
+                    <ProFormText label="Phone Number" required name="phone" colProps={{ span: 21 }} />
                 </ProForm.Group>
             </Flex>
 
@@ -102,20 +122,21 @@ const ModalProfile = () => {
             </ProForm.Group>
             <ProForm.Group>
                 <ProFormText.Password
-                    label="Password"
                     name="password"
                     placeholder="Enter Password"
+                    label="Password"
+                    fieldProps={{ prefix: <LockOutlined /> }}
                     colProps={{ span: 12 }}
-                    rules={[...INPUT_NOSPACE, { min: 6 }]}
+                    rules={[...REQUIRED, ...INPUT_NOSPACE, { min: 6 }]}
                 />
-
                 <ProFormText.Password
-                    label="Confirm Password"
                     name="confirm_password"
-                    placeholder="Enter Password"
+                    placeholder="Re-enter Password"
+                    label="Confirm Password"
                     colProps={{ span: 12 }}
                     dependencies={['password']}
                     rules={[
+                        ...REQUIRED,
                         ...INPUT_NOSPACE,
                         { min: 6 },
                         ({ getFieldValue }) => ({

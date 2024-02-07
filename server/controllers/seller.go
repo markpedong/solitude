@@ -67,6 +67,7 @@ func SellerUpdate(ctx *gin.Context) {
 		"email":       body.Email,
 		"phone":       body.Phone,
 		"location":    body.Location,
+		"avatar":      body.Avatar,
 	}).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
