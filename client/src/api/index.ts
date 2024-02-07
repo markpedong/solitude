@@ -33,7 +33,7 @@ export type TProduct = {
     created_at: number
     description: string
     stock: number
-    variants: TVariations[]
+    variations: TVariations[]
 }
 
 export const getProducts = params => post<TProduct[]>('/users/products', params)
