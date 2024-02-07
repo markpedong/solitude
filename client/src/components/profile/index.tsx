@@ -56,7 +56,6 @@ const Profile: FC = () => {
             onFinish={async params => {
                 let res
 
-                console.log("params: ",params)
                 if (type === USER_TYPES.USER) {
                     res = await updateUserData({ ...params, id: userData?.id })
                 } else {

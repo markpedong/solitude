@@ -6,6 +6,7 @@ import (
 	"solitude/helpers"
 	"solitude/models"
 	"solitude/tokens"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -21,12 +22,29 @@ func GetSellerData(ctx *gin.Context) {
 		return
 	}
 
-	var foundSeller models.Seller
-	if err := database.DB.Where("seller_id = ?", body.SellerID).First(&foundSeller).Error; err != nil {
+	type returnedSeller struct {
+		SellerID   string    `json:"seller_id" gorm:"primaryKey"`
+		CreatedAt  time.Time `json:"created_at" gorm:"autoCreateTime"`
+		UpdatedAt  time.Time `json:"updated_at" gorm:"autoCreateTime"`
+		SellerName string    `json:"seller_name" validate:"max=10"`
+		Phone      string    `json:"phone"`
+		Location   string    `json:"location"`
+		Avatar     string    `json:"avatar"`
+		Products   int64     `json:"products"`
+	}
+	var foundSeller returnedSeller
+	var productCount int64
+
+	if err := database.DB.Table("seller").Where("seller_id = ?", body.SellerID).First(&foundSeller).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "user not found")
 		return
 	}
+	if err := database.DB.Model(&models.Product{}).Where("seller_id = ?", foundSeller.SellerID).Count(&productCount).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
 
+	foundSeller.Products = productCount
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(foundSeller))
 }
 

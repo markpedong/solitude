@@ -43,7 +43,7 @@ const ProductDetails: FC<Props> = memo(({ data }) => {
         () => (
             <Col span={10} className={styles.productImageContainer}>
                 <span className={classNames(styles.category, jostHeavy.className)}>
-                    Categories: {data?.categories.slice(0, 2).map(q => !!q && <Tag>{q}</Tag>)}
+                    Categories: {data?.categories.slice(0, 2).map(q => !!q && <Tag key={q}>{q}</Tag>)}
                 </span>
                 <div className={styles.firstImageContainer}>
                     <IM src={firstImage} alt="product_image" width={200} height={200} />

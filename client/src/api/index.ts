@@ -59,8 +59,18 @@ export const updateSellerData = params => post('/api/updateSeller', params)
 // /api/getUserData
 export const getUserData = params => post('/users/getUserData', params)
 
-// /api/getSellerData
-export const getSellerData = params => post('/users/getSellerData', params)
+// /users/getSellerData
+export type SellerData = {
+    seller_id: string
+    created_at: string
+    updated_at: string
+    seller_name: string
+    phone: string
+    location: string
+    avatar: string
+    products: number
+}
+export const getSellerData = params => post<SellerData>('/users/getSellerData', params)
 
 // /api/uploadImage
 export const uploadImages = params => upload('/api/uploadImage', params)
