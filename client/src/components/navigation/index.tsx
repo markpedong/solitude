@@ -442,7 +442,7 @@ const Navigation: FC = () => {
                         {renderMenuItem('deals')}
                         {isLoggedIn && renderMenuItem('account')}
                         <Flex className={styles.icons} gap={20}>
-                            {renderSearch()}
+                            {/* {renderSearch()} */}
                             {renderLogin()}
                             {/* <Image
                                     src={darkMode ? moon : sun}

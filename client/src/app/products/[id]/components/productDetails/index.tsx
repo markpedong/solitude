@@ -21,8 +21,6 @@ type Props = {
 const { CheckableTag } = Tag
 
 const ProductDetails: FC<Props> = memo(({ data }) => {
-    const variations = data?.variations?.flatMap(q => q.value?.map(q => q))
-    console.log("data", data?.variations)
     const [firstImage, setFirstImage] = useState(data?.image?.[0])
     const [stock, setStock] = useState(1)
     const [selectedTags, setSelectedTags] = useState<string[]>([])
@@ -36,17 +34,16 @@ const ProductDetails: FC<Props> = memo(({ data }) => {
             }
         })
 
-    const handleChange = (tag: string, checked: boolean) => {
+    const handleChange = useCallback((tag: string, checked: boolean) => {
         const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag)
-        console.log('You are interested in: ', nextSelectedTags)
         setSelectedTags(nextSelectedTags)
-    }
+    }, [])
 
     const memoizedFirstImage = useMemo(
         () => (
             <Col span={10} className={styles.productImageContainer}>
                 <span className={classNames(styles.category, jostHeavy.className)}>
-                  Categories: <Tag>{data?.categories?.[0] && data?.categories?.[0]}</Tag> <Tag>{data?.categories?.[1] && data?.categories?.[1]}</Tag>
+                    Categories: {data?.categories.slice(0, 2).map(q => !!q && <Tag>{q}</Tag>)}
                 </span>
                 <div className={styles.firstImageContainer}>
                     <IM src={firstImage} alt="product_image" width={200} height={200} />
@@ -71,7 +68,32 @@ const ProductDetails: FC<Props> = memo(({ data }) => {
         )
     }, [])
 
-    console.log('DATA', data)
+    const memoizedTags = useMemo(() => {
+        return (
+            <>
+                <p className={classNames(jost.className, styles.productStock)}>Stocks Available: {data?.stock}</p>
+                {data?.variations?.map(q => (
+                    <div className={styles.tagContainer}>
+                        <span className={styles.tagLabel}>{q?.label}:</span>
+                        <Flex key={q.id} align="center">
+                            {q?.value?.map(tag => (
+                                <motion.div whileTap={{ scale: 0.9 }}>
+                                    <CheckableTag
+                                        key={tag}
+                                        checked={selectedTags.includes(tag)}
+                                        onChange={checked => handleChange(tag, checked)}
+                                        className={styles.tag}>
+                                        {tag}
+                                    </CheckableTag>
+                                </motion.div>
+                            ))}
+                        </Flex>
+                    </div>
+                ))}
+            </>
+        )
+    }, [selectedTags])
+
     return (
         <Row justify="center">
             {memoizedFirstImage}
@@ -87,26 +109,7 @@ const ProductDetails: FC<Props> = memo(({ data }) => {
                         <PlusCircleOutlined />
                     </motion.div>
                 </Flex>
-                <p className={classNames(jost.className, styles.productStock)}>Stocks Available: {data?.stock}</p>
-                {data?.variations?.map(q => (
-                    <div className={styles.tagContainer}>
-                        <span className={styles.tagLabel}>{q?.label}:</span>
-                        <Flex key={q.id} align='center'>
-                            {q?.value?.map(tag => (
-                               <motion.div whileTap={{scale: 0.9}} >
-                                 <CheckableTag
-                                    key={tag}
-                                    checked={selectedTags.includes(tag)}
-                                    onChange={checked => handleChange(tag, checked)}
-                                    className={styles.tag}
-                                    >
-                                    {tag}
-                                </CheckableTag>
-                               </motion.div>
-                            ))}
-                        </Flex>
-                    </div>
-                ))}
+                {memoizedTags}
                 <Flex className={styles.addToCartBuyNowContainer} align="center">
                     <Button>ADD TO CART</Button>
                     <Button type="primary">BUY NOW</Button>

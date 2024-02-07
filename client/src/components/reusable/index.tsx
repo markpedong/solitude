@@ -47,7 +47,7 @@ const Collection: FC<CProps> = ({ image, description, title, className }) => {
     return (
         <div className={classNames(className, styles.featuresItem)} key={image}>
             <Flex className={styles.image} justify="center">
-                <img src={image} alt="features" />
+            <Image src={image} alt={title} width={1000} height={1000} priority />
             </Flex>
             <Flex className={`${styles.featuresTextContainer} ${jost.className}`} justify="center" vertical={true}>
                 <span>{title}</span>

@@ -1,0 +1,7 @@
+@import '@/styles/_helpers.scss';
+
+.sellerContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: toRem(10);
+}

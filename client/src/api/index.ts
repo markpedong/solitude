@@ -25,7 +25,7 @@ export const sellerSignup = params => post('/users/signupSeller', params)
 
 // /users/products
 export type TProduct = {
-    categories: string
+    categories: string[]
     product_id: string
     product_name: string
     price: number
