@@ -13,8 +13,8 @@ type User struct {
 	UserCart       *[]Product `json:"user_cart" gorm:"foreignKey:SellerID"`
 	AddressDetails *[]Address `json:"address_details" gorm:"foreignKey:UserID"`
 	Orders         *[]Order   `json:"orders" gorm:"foreignKey:UserID"`
-	FirstName      string     `json:"first_name" validate:"max=10"`
-	LastName       string     `json:"last_name" validate:"max=10"`
+	FirstName      string     `json:"first_name" validate:"max=30"`
+	LastName       string     `json:"last_name" validate:"max=30"`
 	Password       string     `json:"password" validate:"required,min=6"`
 	Email          string     `json:"email" validate:"required"`
 	Phone          string     `json:"phone"`
@@ -62,7 +62,7 @@ type Seller struct {
 	SellerID   string     `json:"seller_id" gorm:"primaryKey"`
 	CreatedAt  time.Time  `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt  time.Time  `json:"updated_at" gorm:"autoCreateTime"`
-	SellerName string     `json:"seller_name" validate:"max=10"`
+	SellerName string     `json:"seller_name" validate:"max=30"`
 	Password   string     `json:"password" validate:"required,min=6"`
 	Email      string     `json:"email" validate:"required"`
 	Phone      string     `json:"phone"`

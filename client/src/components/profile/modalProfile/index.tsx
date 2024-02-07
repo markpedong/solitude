@@ -98,7 +98,7 @@ const ModalProfile: FC<Props> = ({ imageUrl, setImageUrl }) => {
                                 name="seller_name"
                                 placeholder="YOUR STORE NAME"
                                 label="Store Name"
-                                fieldProps={{ maxLength: 10 }}
+                                fieldProps={{ maxLength: 30 }}
                                 colProps={{ span: 21 }}
                                 rules={[...REQUIRED]}
                             />
@@ -106,7 +106,7 @@ const ModalProfile: FC<Props> = ({ imageUrl, setImageUrl }) => {
                                 name="location"
                                 placeholder="eg: Cavite, Laguna"
                                 label="Store Location"
-                                fieldProps={{ maxLength: 10 }}
+                                fieldProps={{ maxLength: 30 }}
                                 colProps={{ span: 21 }}
                                 rules={[...REQUIRED]}
                             />

@@ -23,10 +23,10 @@ func GetSellerData(ctx *gin.Context) {
 	}
 
 	type returnedSeller struct {
-		SellerID   string    `json:"seller_id" gorm:"primaryKey"`
-		CreatedAt  time.Time `json:"created_at" gorm:"autoCreateTime"`
-		UpdatedAt  time.Time `json:"updated_at" gorm:"autoCreateTime"`
-		SellerName string    `json:"seller_name" validate:"max=10"`
+		SellerID   string    `json:"seller_id"`
+		CreatedAt  time.Time `json:"created_at"`
+		UpdatedAt  time.Time `json:"updated_at"`
+		SellerName string    `json:"seller_name"`
 		Phone      string    `json:"phone"`
 		Location   string    `json:"location"`
 		Avatar     string    `json:"avatar"`
