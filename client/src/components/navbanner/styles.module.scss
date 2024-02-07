@@ -1,6 +1,7 @@
 @import '@/styles/_helpers.scss';
 
 .navWrapper {
+    @apply flex justify-center items-center;
     height: toRem(40);
     font-family: 'satoshi';
     background-color: black;
