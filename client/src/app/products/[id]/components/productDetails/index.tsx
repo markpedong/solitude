@@ -45,8 +45,8 @@ const ProductDetails: FC<Props> = memo(({ data }) => {
     const memoizedFirstImage = useMemo(
         () => (
             <Col span={10} className={styles.productImageContainer}>
-                <span className={classNames(styles.variant, jostHeavy.className)}>
-                    {`/${data?.categories?.[0]}`} {data?.categories?.[1] && `/${data?.categories?.[1]}`}
+                <span className={classNames(styles.category, jostHeavy.className)}>
+                  Categories: <Tag>{data?.categories?.[0] && data?.categories?.[0]}</Tag> <Tag>{data?.categories?.[1] && data?.categories?.[1]}</Tag>
                 </span>
                 <div className={styles.firstImageContainer}>
                     <IM src={firstImage} alt="product_image" width={200} height={200} />
@@ -90,8 +90,8 @@ const ProductDetails: FC<Props> = memo(({ data }) => {
                 <p className={classNames(jost.className, styles.productStock)}>Stocks Available: {data?.stock}</p>
                 {data?.variations?.map(q => (
                     <div className={styles.tagContainer}>
-                        <Flex key={q.id} align='center'>
                         <span className={styles.tagLabel}>{q?.label}:</span>
+                        <Flex key={q.id} align='center'>
                             {q?.value?.map(tag => (
                                <motion.div whileTap={{scale: 0.9}} >
                                  <CheckableTag

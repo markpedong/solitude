@@ -10,8 +10,7 @@
     align-items: center !important;
     margin-inline: toRem(10);
 
-    .variant {
-        text-transform: capitalize;
+    .category {
         text-align: left;
         width: 100%;
     }
@@ -21,13 +20,11 @@
         border-radius: toRem(5);
         width: 80%;
         padding: toRem(15);
-        margin-block-start: toRem(10);
+        margin-block-start: toRem(20);
         display: grid;
         place-content: center;
 
         img {
-            width: toRem(230);
-            height: toRem(230);
             object-fit: cover;
             object-position: center center;
             border-radius: toRem(5);
@@ -46,6 +43,7 @@
         img {
             width: toRem(60);
             height: toRem(60);
+            margin-inline: toRem(5);
         }
     }
 }
@@ -110,16 +108,21 @@
 }
 
 .tagContainer{
+    display: flex;
+    align-items: center;
     padding-block: toRem(10);
 }
 
 .tagLabel{
     text-transform: uppercase;
+    padding-block-end: toRem(2);
+    padding-inline-end: toRem(10);
 }
 
 .tag {
-    width: toRem(50);
+    width: toRem(80);
     text-align: center !important; 
     text-transform: uppercase;
     font-size: toRem(12) !important;
+    font-weight: 400;
 }
