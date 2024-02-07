@@ -3,6 +3,7 @@ import { AntdRegistry } from '@ant-design/nextjs-registry'
 import ReduxProvider from '@/redux/provider'
 import '../styles/global.scss'
 import AntdProvider from './antdProvider'
+import NavBanner from '@/components/navbanner'
 
 const RootLayout = ({ children }: React.PropsWithChildren) => (
     <html lang="en">
@@ -10,6 +11,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => (
             <AntdRegistry>
                 <ReduxProvider>
                     <AntdProvider>
+                        <NavBanner />
                         {children}
                     </AntdProvider>
                 </ReduxProvider>

@@ -1,11 +1,8 @@
 @import '@/styles/_helpers.scss';
 @import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
-
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 html,
 body {
@@ -70,3 +67,12 @@ label.ant-form-item-required::before {
 .ant-select-selection-item {
     text-align: left;
 }
+
+
+
+@font-face {
+    font-family: 'satoshi';
+    src: url('../../public/fonts/satoshi/Satoshi-Black.ttf');
+    font-weight: 400;
+    font-style: normal;
+  }
