@@ -2,7 +2,7 @@
 
 import { ConfigProvider, theme } from 'antd'
 import React, { FC } from 'react'
-import t from '../../styles/theme'
+import t from '@/styles/theme'
 import { useAppSelector } from '@/redux/store'
 
 type Props = {

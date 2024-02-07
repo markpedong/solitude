@@ -1,6 +1,6 @@
 'use client'
 
-import t from '../../styles/theme'
+import t from '@/styles/theme'
 import { getLocalStorage } from '@/utils/xLocalStorage'
 import { ConfigProvider, theme } from 'antd'
 import enUS from 'antd/locale/en_US'
