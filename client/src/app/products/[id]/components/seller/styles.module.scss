@@ -31,6 +31,10 @@
             text-transform: capitalize;
         }
 
+        .title {
+            font-size: toRem(20);
+        }
+        
         div {
             display: flex;
             justify-content: space-between;
