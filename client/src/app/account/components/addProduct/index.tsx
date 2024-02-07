@@ -59,10 +59,6 @@ const AddProduct: FC<Props> = ({ product }) => {
                         
                     }
 
-                    if (res.success) {
-                        formRef?.current?.resetFields()
-                    }
-                    
                     return afterModalformFinish(actionRef, res?.message, res?.success, formRef)
                 }}>
                 <ProFormText colProps={{ span: 10 }}>

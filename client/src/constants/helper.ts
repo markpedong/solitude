@@ -25,7 +25,7 @@ export const afterModalformFinish = (
         actionRef?.current?.reload()
     }
 
-    if (formRef) {
+    if (formRef && success) {
         formRef?.current?.resetFields()
     }
 

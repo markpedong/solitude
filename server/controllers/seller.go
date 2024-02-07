@@ -30,7 +30,9 @@ func GetSellerData(ctx *gin.Context) {
 		Phone      string    `json:"phone"`
 		Location   string    `json:"location"`
 		Avatar     string    `json:"avatar"`
+		Email      string    `json:"email"`
 		Products   int64     `json:"products"`
+		Username   string    `json:"username"`
 	}
 	var foundSeller returnedSeller
 	var productCount int64
