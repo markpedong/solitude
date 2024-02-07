@@ -14,7 +14,7 @@ type Props = {
 }
 
 const Seller: FC<Props> = memo(({ data }) => {
-    console.log('SELLER: ', data)
+
     return (
         <Row justify="center">
             <Col span={20}>

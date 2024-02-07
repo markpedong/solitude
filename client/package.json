@@ -1,6 +1,6 @@
 {
     "name": "client",
-    "version": "2.05.14",
+    "version": "2.07.18",
     "private": true,
     "scripts": {
         "dev": "next dev",
