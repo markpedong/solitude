@@ -1,1 +1,48 @@
 @import '@/styles/_helpers.scss';
+
+.mainWrapper {
+    @apply max-w-7xl ml-auto mr-auto gap-5 pt-10 grid pl-5 pr-5 items-center;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.textContainer {
+    @apply flex flex-col gap-5;
+
+    :nth-child(1) {
+        font-family: 'Integral';
+        font-size: toRem(50);
+        line-height: toRem(50);
+        letter-spacing: toRem(3);
+        font-weight: 600;
+    }
+
+    :nth-child(3) {
+        font-family: 'Satoshi';
+        font-weight: 300;
+        font-size: toRem(16);
+    }
+}
+
+.imageContainer {
+    position: relative !important;
+
+    :nth-child(1) {
+        height: toRem(500);
+        width: 100%;
+        object-fit: contain;
+        object-position: center center;
+    }
+
+    :nth-child(2) {
+        @apply absolute top-8;
+        width: toRem(80);
+        height: toRem(80);
+        right: toRem(80);
+    }
+
+    :nth-child(3) {
+        @apply absolute top-[15rem] left-[4rem];
+        width: toRem(40);
+        height: toRem(40);
+    }
+}

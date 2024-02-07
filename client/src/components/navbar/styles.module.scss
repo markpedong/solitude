@@ -13,6 +13,7 @@
 
     .navbarHeader {
         @apply pl-10 flex items-center justify-center gap-10 capitalize;
+        text-wrap: nowrap;
         font-family: 'Satoshi';
         font-weight: 400;
     }
