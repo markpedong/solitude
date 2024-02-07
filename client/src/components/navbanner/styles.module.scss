@@ -1,9 +1,21 @@
 @import '@/styles/_helpers.scss';
 
 .navWrapper {
-    @apply flex justify-center items-center;
-    height: toRem(40);
+    @apply grid w-full;
+    grid-template-columns: 10fr 1fr;
+    justify-items: center;
+    height: toRem(30);
     font-family: 'satoshi';
     background-color: black;
     color: white;
+    font-weight: 300;
+
+    span {
+        @apply flex flex-row items-center;
+    }
+
+    p {
+        font-weight: 500;
+        padding-inline-start: toRem(10);
+    }
 }
