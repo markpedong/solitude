@@ -29,6 +29,31 @@ const Profile: FC = () => {
     const formRef = useRef<ProFormInstance>()
     const dispatch = useDispatch()
 
+    const handleFinish = async params => {
+        let res
+
+        if (type === USER_TYPES.USER) {
+            res = await updateUserData({ ...params, id: userData?.id })
+        } else {
+            res = await updateSellerData({ ...params, avatar: imageUrl, seller_id: sellerData?.seller_id })
+        }
+
+        if (res?.success && type === USER_TYPES.USER) {
+            const user = await getUserData({ id: userData?.id })
+            await dispatch(setUserData(user?.data))
+        }
+
+        if (res?.success && type === USER_TYPES.SELLER) {
+            const user = await getSellerData({ seller_id: sellerData?.seller_id })
+            await dispatch(setSellerData(user?.data))
+        }
+
+        setTimeout(() => {
+            window.location.reload()
+        }, 1000);
+        return afterModalformFinish(actionRef, res.message, res.success)
+    }
+
     return (
         <ModalForm
             grid
@@ -53,27 +78,16 @@ const Profile: FC = () => {
                     </Button>,
                 ],
             }}
-            onFinish={async params => {
-                let res
+            onOpenChange={async (visible) => {
+                if (visible) {
+                    const seller = await getSellerData({ seller_id: sellerData?.seller_id })
+                    await dispatch(setSellerData(seller?.data))
 
-                if (type === USER_TYPES.USER) {
-                    res = await updateUserData({ ...params, id: userData?.id })
-                } else {
-                    res = await updateSellerData({ ...params, avatar: imageUrl, seller_id: sellerData?.seller_id })
+                    setImageUrl(seller?.data?.avatar)
                 }
-
-                if (res?.success && type === USER_TYPES.USER) {
-                    const user = await getUserData({ id: userData?.id })
-                    await dispatch(setUserData(user?.data))
-                }
-
-                if (res?.success && type === USER_TYPES.SELLER) {
-                    const user = await getSellerData({ seller_id: sellerData?.seller_id })
-                    await dispatch(setSellerData(user?.data))
-                }
-
-                return afterModalformFinish(actionRef, res.message, res.success)
-            }}>
+        
+            }}
+            onFinish={handleFinish}>
             <ModalProfile imageUrl={imageUrl} setImageUrl={setImageUrl}/>
         </ModalForm>
     )

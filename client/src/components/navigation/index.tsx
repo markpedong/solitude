@@ -25,8 +25,8 @@ import { useRouter } from 'next/navigation'
 import { CSSProperties, FC, useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Collection } from '../reusable'
-import ModalProfile from './modalProfile'
 import styles from './styles.module.scss'
+import ModalProfile from './modalProfile'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 const searchStyle: CSSProperties = {
@@ -45,7 +45,6 @@ const Navigation: FC = () => {
     const actionRef = useRef<ActionType>()
     const router = useRouter()
     const create = activeLoginForm === 'create'
-    const forgot = activeLoginForm === 'forgot'
     const login = activeLoginForm === 'login'
     const seller = activeLoginForm === 'seller'
 
@@ -154,7 +153,7 @@ const Navigation: FC = () => {
                     }
                 }}
                 onFinish={handleFinish}>
-                <ModalProfile />
+                <ModalProfile formRef={formRef} />
             </ModalForm>
         )
 

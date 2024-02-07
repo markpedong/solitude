@@ -13,22 +13,24 @@ import { ProForm, ProFormInstance, ProFormSelect, ProFormText } from '@ant-desig
 import { Button, Flex, Typography } from 'antd'
 import { Jost } from 'next/font/google'
 import Image from 'next/image'
-import { useRef } from 'react'
+import { FC, MutableRefObject } from 'react'
 import { useDispatch } from 'react-redux'
 import styles from '../styles.module.scss'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
-const ModalProfile = () => {
+type Props = {
+    formRef: MutableRefObject<ProFormInstance>
+}
+
+const ModalProfile: FC<Props> = ({formRef}) => {
     const dispatch = useDispatch<AppDispatch>()
     const { activeLoginForm } = useAppSelector(state => state.boolean)
     const { type } = useAppSelector(state => state.userData)
-
     const create = activeLoginForm === 'create'
     const forgot = activeLoginForm === 'forgot'
     const login = activeLoginForm === 'login'
     const seller = activeLoginForm === 'seller'
-    const formRef = useRef<ProFormInstance>()
 
     const handleLoginRegister = async () => {
         formRef?.current?.resetFields()

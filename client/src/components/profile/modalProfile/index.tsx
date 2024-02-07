@@ -117,7 +117,7 @@ const ModalProfile: FC<Props> = ({ imageUrl, setImageUrl }) => {
             </Flex>
 
             <ProForm.Group>
-                <ProFormText label="Email Address" name="email" placeholder="your@email.com" colProps={{ span: 12 }} />
+                <ProFormText label="Email Address" name="email" placeholder="your@email.com" colProps={{ span: 12 }} rules={[...REQUIRED, ...INPUT_NOSPACE]} />
                 <ProFormText label="Username" name="username" placeholder="Your Username" colProps={{ span: 12 }} />
             </ProForm.Group>
             <ProForm.Group>
