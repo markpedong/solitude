@@ -3,7 +3,11 @@ import styles from './styles.module.scss'
 import { Button, Col, Divider, Flex, Row } from 'antd'
 import { SellerData } from '@/api'
 import Image from 'next/image'
-import { ShopOutlined } from '@ant-design/icons'
+import { ShopOutlined, WechatOutlined } from '@ant-design/icons'
+import dayjs from 'dayjs'
+import isLeapYear from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(isLeapYear)
 
 type Props = {
     data: SellerData
@@ -26,12 +30,13 @@ const Seller: FC<Props> = memo(({ data }) => {
                             </div>
                         </Flex>
                     </div>
-                    <div>
-                        1 <Divider type="vertical" />
+                    <div className={styles.extraContainer}>
+                        <span>Joined <p>{dayjs(data.created_at).fromNow()}</p></span>
+                        <span>Products <p>{data.products}</p></span>
                     </div>
-                    <div>
+                    {/* <div>
                         1 <Divider type="vertical" />
-                    </div>
+                    </div> */}
                 </div>
             </Col>
         </Row>
