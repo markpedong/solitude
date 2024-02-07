@@ -86,7 +86,6 @@ func GetAllProducts(ctx *gin.Context) {
 		Price    int    `json:"price"`
 		Gender   string `json:"gender"`
 	}
-
 	if err := ctx.ShouldBindJSON(&body); err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
@@ -110,28 +109,32 @@ func GetAllProducts(ctx *gin.Context) {
 		}
 	}
 
-	type returnedProduct struct {
-		ProductID   string `json:"product_id"`
-		ProductName string `json:"product_name"`
-	}
-
-	var products []returnedProduct
-	if err := query.Model(&models.Product{}).
-		Find(&products).
-		Error; err != nil {
+	var productModels []models.Product
+	if err := query.Model(&models.Product{}).Find(&productModels).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	// for i := range products {
-	// 	var variations []models.ProductVariations
-	// 	if err := database.DB.Where("product_id = ?", products[i].ProductID).Find(&variations).Error; err != nil {
-	// 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-	// 		return
-	// 	}
-
-	// 	products[i].Variants = variations
-	// }
+	type returnedProduct struct {
+		ProductID   string   `json:"product_id"`
+		ProductName string   `json:"product_name"`
+		Price       float64  `json:"price"`
+		Image       []string `json:"image"`
+		Description string   `json:"description"`
+	}
+	products := make([]returnedProduct, len(productModels))
+	for i, productModel := range productModels {
+		products[i] = returnedProduct{
+			ProductID:   productModel.ProductID,
+			ProductName: productModel.ProductName,
+			Price:       productModel.Price,
+			Description: productModel.Description,
+			Image:       []string(productModel.Image),
+		}
+		if len(products[i].Image) > 1 {
+			products[i].Image = []string{products[i].Image[0]}
+		}
+	}
 
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(products))
 }
