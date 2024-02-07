@@ -206,7 +206,6 @@ const Navigation: FC = () => {
                     <div className={styles.navigation}>
                         {renderMenuItem('products')}
                         {renderMenuItem('brands')}
-                        {renderMenuItem('deals')}
                         {isLoggedIn && renderMenuItem('account')}
                         <Flex className={styles.icons} gap={20}>
                             {/* {renderSearch()} */}
@@ -242,7 +241,6 @@ const Navigation: FC = () => {
                             <Flex vertical gap={30}>
                                 {renderMenuItem('products')}
                                 {renderMenuItem('brands')}
-                                {renderMenuItem('deals')}
                                 {isLoggedIn && renderMenuItem('account')}
                             </Flex>
                         </Drawer>

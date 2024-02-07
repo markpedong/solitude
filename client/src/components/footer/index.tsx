@@ -25,7 +25,6 @@ const Footer: FC = () => {
             <Flex className={classNames(jost.className, styles.menuContainer)} justify="center" align="center">
                 {renderMenuItem('products')}
                 {renderMenuItem('brands')}
-                {renderMenuItem('deals')}
                 {renderMenuItem('account')}
             </Flex>
             <Flex className={classNames(jost.className, styles.socialMediaContainer)} justify="center" align="center">
