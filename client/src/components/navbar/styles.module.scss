@@ -1,7 +1,7 @@
 @import '@/styles/_helpers.scss';
 
 .navbarWrapper {
-    @apply max-w-7xl flex ml-auto mr-auto h-10 mt-4;
+    @apply max-w-7xl flex ml-auto mr-auto h-10 mt-4 pl-5 pr-5;
 
     .navbarLogo {
         font-family: 'Integral';
@@ -14,6 +14,20 @@
     .navbarHeader {
         @apply pl-10 flex items-center justify-center gap-10 capitalize;
         font-family: 'Satoshi';
-        font-weight: 500;
+        font-weight: 400;
+    }
+
+    .input {
+        @apply ml-10;
+        width: toRem(400);
+    }
+
+    .userContainer {
+        @apply ml-10 flex justify-center gap-5;
+
+        svg {
+            width: toRem(22);
+            height: toRem(22);
+        }
     }
 }
