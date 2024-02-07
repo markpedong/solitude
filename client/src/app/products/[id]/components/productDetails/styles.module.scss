@@ -56,7 +56,7 @@
         text-transform: capitalize;
         letter-spacing: toRem(1);
         padding-block-start: toRem(20);
-        height: toRem(100);
+        height: toRem(70);
     }
 
     .productPrice {
@@ -64,7 +64,7 @@
     }
 
     .productStock {
-        padding-block-start: toRem(15);
+        padding-block: toRem(15);
     }
 }
 
@@ -107,4 +107,19 @@
             letter-spacing: toRem(1);
         }
     }
+}
+
+.tagContainer{
+    padding-block: toRem(10);
+}
+
+.tagLabel{
+    text-transform: uppercase;
+}
+
+.tag {
+    width: toRem(50);
+    text-align: center !important; 
+    text-transform: uppercase;
+    font-size: toRem(12) !important;
 }
