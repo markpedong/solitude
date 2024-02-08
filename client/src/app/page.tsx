@@ -1,4 +1,4 @@
-import { LandingContent } from '@/components/reusable'
+import { LandingContent, PageHeader } from '@/components/reusable'
 import Image from 'next/image'
 import styles from './styles.module.scss'
 
@@ -42,6 +42,27 @@ const Page = async () => {
 			</div>
 			<LandingContent title="new arrival" />
 			<LandingContent title="top selling" />
+			<div className={styles.categoryWrapper}>
+				<PageHeader title="browse by dress style" />
+				<div className={styles.categoryContainer}>
+					<div className={styles.div1}>
+						<span>casual</span>
+						<Image src={'/assets/landing/casual.png'} alt="casual" height={100} width={100} />
+					</div>
+					<div className={styles.div2}>
+						<span>formal</span>
+						<Image src={'/assets/landing/formal.png'} alt="formal" height={100} width={100} />
+					</div>
+					<div className={styles.div3}>
+						<span>formal</span>
+						<Image src={'/assets/landing/party.png'} alt="party" height={100} width={100} />
+					</div>
+					<div className={styles.div4}>
+					<span>gym</span>
+						<Image src={'/assets/landing/gym.png'} alt="gym" height={100} width={100} />
+					</div>
+				</div>
+			</div>
 		</>
 	)
 }
