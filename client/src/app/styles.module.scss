@@ -2,7 +2,7 @@
 
 .mainWrapper {
     @apply max-w-7xl ml-auto mr-auto gap-5 pt-10 grid pl-5 pr-5 items-center;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: minmax(toRem(300), 1fr) 1fr;
 }
 
 .textContainer {
@@ -55,7 +55,7 @@
 
 .footerTextContainer {
     @apply grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(toRem(100), 1fr));
 
     div {
         @apply flex flex-col;
@@ -93,5 +93,18 @@
         height: toRem(33.16);
         object-fit: contain;
         object-position: center center;
+    }
+}
+
+@media (max-width: 992px) {
+    .textContainer {
+        .mainText {
+            font-size: toRem(30);
+            line-height: toRem(30);
+        }
+
+        .extraText {
+            font-size: toRem(12);
+        }
     }
 }
