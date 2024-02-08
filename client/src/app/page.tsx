@@ -1,6 +1,7 @@
-import { LandingContent, PageHeader } from '@/components/reusable'
+import { LandingContent, PageHeader, ReviewComp,  } from '@/components/reusable'
 import Image from 'next/image'
 import styles from './styles.module.scss'
+import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'
 
 const Page = async () => {
 	return (
@@ -58,9 +59,25 @@ const Page = async () => {
 						<Image src={'/assets/landing/party.png'} alt="party" height={100} width={100} />
 					</div>
 					<div className={styles.div4}>
-					<span>gym</span>
+						<span>gym</span>
 						<Image src={'/assets/landing/gym.png'} alt="gym" height={100} width={100} />
 					</div>
+				</div>
+			</div>
+			<div className={styles.reviewWrapper}>
+				<div className={styles.reviewContainer}>
+					<span className={styles.header}>our happy customers</span>
+					<div className={styles.arrowContainer}>
+						<ArrowLeftOutlined />
+						<ArrowRightOutlined />
+					</div>
+				</div>
+				<div className={styles.reviewsContainer}>
+					<ReviewComp />
+					<ReviewComp />
+					<ReviewComp />
+					<ReviewComp />
+					<ReviewComp />
 				</div>
 			</div>
 		</>

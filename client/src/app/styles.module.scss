@@ -106,20 +106,20 @@
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(2, 1fr);
 
-        > div {
-            @apply relative bg-white rounded-3xl flex justify-between overflow-hidden; 
+        >div {
+            @apply relative bg-white rounded-3xl flex justify-between overflow-hidden;
             height: toRem(289);
             font-family: 'Satoshi';
             font-weight: 700;
             text-transform: capitalize;
 
             img {
-                @apply rounded-3xl object-contain ;
+                @apply rounded-3xl object-contain;
                 height: toRem(289);
                 width: auto
             }
-        
-            span{
+
+            span {
                 @apply relative top-5 left-10;
                 font-size: toRem(36);
 
@@ -142,10 +142,37 @@
             grid-area: 2 / 3 / 3 / 4;
         }
     }
-
-
-
 }
+
+.reviewWrapper {
+    @apply max-w-7xl ml-auto mr-auto mt-20 mb-20;
+
+    .reviewContainer {
+        @apply flex justify-between items-center mb-10;
+
+        .header {
+            font-family: 'Integral';
+            font-size: toRem(48);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .arrowContainer {
+            @apply flex gap-10 items-center;
+
+            svg {
+                width: toRem(24);
+                height: toRem(24);
+            }
+        }
+    }
+
+
+    .reviewsContainer {
+        @apply grid grid-flow-col overflow-scroll gap-5;
+    }
+}
+
 
 @media (max-width: 992px) {
     .textContainer {
