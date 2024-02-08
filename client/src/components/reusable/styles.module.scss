@@ -1,7 +1,27 @@
 @import '@/styles/_helpers.scss';
 
 .header {
-    @apply w-full flex justify-center items-center  ;
+    @apply w-full flex justify-center items-center;
     font-family: 'Integral';
     font-size: toRem(48);
+}
+
+.newArrivalWrapper {
+    @apply max-w-7xl ml-auto mr-auto pt-10;
+
+    .viewButtonContainer {
+        @apply flex justify-center items-center pb-10;
+
+        .button {
+            @apply bg-white text-black flex justify-center items-center rounded-full;
+            width: toRem(218);
+            height: toRem(52);
+            border: toRem(1) solid rgb(200, 200, 200);
+        }
+    }
+
+}
+
+.productContainer {
+    @apply pt-10 pb-10 flex gap-5 overflow-scroll;
 }

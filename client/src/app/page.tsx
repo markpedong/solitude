@@ -1,7 +1,6 @@
+import { LandingContent } from '@/components/reusable'
 import Image from 'next/image'
 import styles from './styles.module.scss'
-import PageHeader from '@/components/reusable'
-import Product from '@/components/product'
 
 const Page = async () => {
 	return (
@@ -41,16 +40,8 @@ const Page = async () => {
 					<Image src="/assets/footer/ck.png" alt="ck" width={100} height={100} />
 				</div>
 			</div>
-			<div className={styles.newArrivalWrapper}>
-				<PageHeader title="new arrival" />
-				<div className={styles.productContainer}>
-					<Product />
-					<Product />
-					<Product />
-					<Product />
-					<Product />
-				</div>
-			</div>
+			<LandingContent title="new arrival" />
+			<LandingContent title="top selling" />
 		</>
 	)
 }
