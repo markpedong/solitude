@@ -139,7 +139,10 @@
             }
 
             @media screen and (max-width: 400px) {
-                @apply flex-col;
+                img {
+                    width: toRem(35);
+                    height: toRem(35);
+                }
             }
         }
 
