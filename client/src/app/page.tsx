@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import styles from './styles.module.scss'
+import PageHeader from '@/components/reusable'
+import Product from '@/components/product'
 
 const Page = async () => {
 	return (
@@ -25,9 +27,9 @@ const Page = async () => {
 					</div>
 				</div>
 				<div className={styles.imageContainer}>
-					<Image src="/assets/landingCover.png" alt="landing_cover" width={300} height={500} />
-					<Image src="/assets/star1.png" alt="landing_cover" width={100} height={100} />
-					<Image src="/assets/star2.png" alt="landing_cover" width={100} height={100} />
+					<Image src="/assets/landing/landingCover.png" alt="landing_cover" width={300} height={500} />
+					<Image src="/assets/landing/star1.png" alt="landing_cover" width={100} height={100} />
+					<Image src="/assets/landing/star2.png" alt="landing_cover" width={100} height={100} />
 				</div>
 			</div>
 			<div className={styles.footerWrapper}>
@@ -37,6 +39,16 @@ const Page = async () => {
 					<Image src="/assets/footer/gucci.png" alt="gucci" width={100} height={100} />
 					<Image src="/assets/footer/prada.png" alt="prada" width={100} height={100} />
 					<Image src="/assets/footer/ck.png" alt="ck" width={100} height={100} />
+				</div>
+			</div>
+			<div className={styles.newArrivalWrapper}>
+				<PageHeader title="new arrival" />
+				<div className={styles.productContainer}>
+					<Product />
+					<Product />
+					<Product />
+					<Product />
+					<Product />
 				</div>
 			</div>
 		</>
