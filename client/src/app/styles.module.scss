@@ -54,8 +54,8 @@
 }
 
 .footerTextContainer {
-    @apply grid;
-    grid-template-columns: repeat(3, minmax(toRem(100), 1fr));
+    @apply grid pb-20;
+    grid-template-columns:repeat(auto-fit, toRem(200));
 
     div {
         @apply flex flex-col;

@@ -6,19 +6,19 @@
     font-family: 'Satoshi';
 
     .imageContainer{
-        @apply rounded-3xl flex items-center justify-center object-cover object-center;
+        @apply rounded-3xl flex items-center justify-center object-cover object-center mb-5;
         background-color: #F0EEED;
-        height: toRem(298);
-        width: toRem(295);
+        height: toRem(300);
+        width: toRem(250);
         
         img {
-            height: toRem(250);
-            width: toRem(250);
+            height: toRem(150);
+            width: toRem(150);
         }
     }
     
     .productHeader {
-        font-size: toRem(20);
+        font-size: toRem(16);
         font-weight: 600;
 
     }
@@ -34,7 +34,7 @@
     .priceContainer {
         @apply flex items-center gap-2 pt-2;
 
-        font-size: toRem(24);
+        font-size: toRem(20);
 
        :nth-child(1){
             font-weight: 700;
@@ -44,7 +44,8 @@
             font-weight: 700;
         }
         :nth-child(3){
-            @apply bg-red-300 text-red-600 flex justify-center items-center rounded-full;
+            @apply text-red-600 flex justify-center items-center rounded-full;
+            background-color: #ff33333d;
             width: toRem(58);
             height: toRem(28);
             font-size: toRem(12);
