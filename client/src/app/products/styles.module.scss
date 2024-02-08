@@ -1,0 +1,14 @@
+
+@import '@/styles/_helpers.scss';
+
+.productWrapper {
+    @apply max-w-7xl mx-auto mt-10;
+
+    .productCategory {
+        @apply flex items-center gap-2 text-gray-500;
+
+        span:last-child{
+            color: black;
+        }
+    }
+}
