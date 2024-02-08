@@ -9,7 +9,7 @@ const Footer = () => {
 		<div className={styles.footerWrapper}>
 			<div className={styles.newsLetterContainer}>
 				<span className={styles.title}>
-					STAY UPTO DATE ABOUT <br /> OUR LATEST OFFERS
+					STAY UPTO DATE ABOUT OUR LATEST OFFERS
 				</span>
 				<div className={styles.inputContainer}>
 					<Input className={styles.input} prefix={<MailOutlined />} placeholder="Enter your email address" variant="filled" />

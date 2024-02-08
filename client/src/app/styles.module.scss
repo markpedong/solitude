@@ -3,6 +3,11 @@
 .mainWrapper {
     @apply max-w-7xl ml-auto mr-auto gap-5 pt-10 grid pl-5 pr-5 items-center;
     grid-template-columns: minmax(toRem(300), 1fr) 1fr;
+
+    @media screen and (max-width: 992px) {
+        @apply grid-flow-row;
+        grid-template-columns: 1fr;
+    }
 }
 
 .textContainer {
@@ -20,6 +25,12 @@
         font-family: 'satoshi' !important;
         font-size: toRem(16);
         font-weight: 300;
+        color: rgba(0, 0, 0, 0.8);
+    }
+
+    @media screen and (max-width: 992px) {
+        align-items: center;
+        text-align: center;
     }
 }
 
@@ -45,17 +56,47 @@
         width: toRem(40);
         height: toRem(40);
     }
+
+    @media screen and (max-width: 576px) {
+        :nth-child(1) {
+            height: toRem(400);
+        }
+    }
+
+    @media screen and (max-width: 450px) {
+        :nth-child(1) {
+            height: toRem(350);
+        }
+
+        :nth-child(2) {
+            width: toRem(60);
+            height: toRem(60);
+        }
+
+        :nth-child(3) {
+            width: toRem(20);
+            height: toRem(20);
+        }
+
+    }
 }
 
 .buttonContainer {
     @apply bg-black text-white flex items-center justify-center rounded-full;
     width: toRem(210);
     height: toRem(52);
+
+    @media screen and (max-width: 992px) {
+        width: toRem(150);
+        height: toRem(40);
+        font-size: toRem(14);
+    }
 }
 
 .footerTextContainer {
     @apply grid pb-20;
-    grid-template-columns:repeat(auto-fit, toRem(200));
+    grid-template-columns: repeat(auto-fit, minmax(toRem(186), 1fr));
+
 
     div {
         @apply flex flex-col;
@@ -77,16 +118,40 @@
     :last-child {
         border-right: none;
     }
+
+    // @media screen and (max-width: 992px) {
+    //     @apply justify-items-center grid-flow-col pb-0;
+    //     grid-template-columns:repeat(auto-fill, toRem(180));
+    // }
+
+    // @media screen and (max-width: 576px) {
+    //     grid-template-columns:repeat(auto-fit, toRem(150));
+
+    //     div {
+    //         :first-child {
+    //             font-size: toRem(30);
+    //         }
+
+    //         :last-child {
+    //             font-size: toRem(12);
+    //         }
+    //     }
+
+    // }
 }
 
 .footerWrapper {
     @apply text-white bg-black w-full;
     height: toRem(122);
+
+    @media screen and (max-width: 420px) {
+        height: toRem(200);
+    }
 }
 
 .footerContainer {
-    @apply max-w-7xl ml-auto mr-auto grid items-center justify-items-center h-full;
-    grid-template-columns: repeat(5, 1fr);
+    @apply max-w-7xl ml-auto mr-auto grid items-center justify-items-center h-full justify-center;
+    grid-template-columns: repeat(auto-fit, toRem(200));
 
     img {
         width: toRem(166.48);
@@ -141,6 +206,28 @@
         .div4 {
             grid-area: 2 / 3 / 3 / 4;
         }
+
+        @media screen and (max-width: 992px) {
+            @apply flex flex-col items-center;
+        }
+
+        @media screen and (max-width: 576px) {
+            >div {
+                @apply flex-col; 
+
+
+                span {
+                    @apply relative top-0 left-0;
+                    font-size: toRem(32);
+    
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        @apply px-10 ; 
+        text-align: center;
     }
 }
 
@@ -168,7 +255,7 @@
     }
 
     .reviewsContainer {
-        @apply grid grid-flow-col overflow-scroll gap-5;
+        @apply grid grid-flow-col overflow-scroll gap-5 px-5;
     }
 }
 

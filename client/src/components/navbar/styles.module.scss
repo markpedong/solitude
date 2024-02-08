@@ -3,12 +3,34 @@
 .navbarWrapper {
     @apply max-w-7xl flex ml-auto mr-auto h-10 mt-4 pl-5 pr-5;
 
+    .navbarMobile {
+        @apply flex items-center pr-4;
+
+        @media screen and (min-width: 993px) {
+            display: none;
+        }
+
+        @media screen and (max-width: 420px) {
+            flex: 1;
+        }
+
+    }
+
     .navbarLogo {
         font-family: 'Integral';
         font-size: toRem(32);
         line-height: toRem(32);
         letter-spacing: toRem(3);
         font-weight: 600;
+
+        @media screen and (max-width: 992px) {
+            flex: 1;
+        }
+
+        @media screen and (max-width: 420px) {
+            display: none;
+        }
+
     }
 
     .navbarHeader {
@@ -16,11 +38,25 @@
         text-wrap: nowrap;
         font-family: 'Satoshi';
         font-weight: 400;
+
+        @media screen and (max-width: 992px) {
+            display: none;
+        }
     }
 
     .input {
         @apply ml-10;
         width: toRem(400);
+
+        @media screen and (max-width: 992px) {
+            display: none;
+        }
+    }
+
+    .smallInput {
+        @media screen and (min-width: 993px) {
+            display: none;
+        }
     }
 
     .userContainer {
@@ -31,4 +67,11 @@
             height: toRem(22);
         }
     }
+}
+
+.mobileMenuItem {
+    @apply uppercase mb-5 text-center;
+    font-size: toRem(16);
+    font-weight: 500;
+    font-family: 'Satoshi';
 }

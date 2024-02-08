@@ -18,5 +18,10 @@
     p {
         font-weight: 500;
         padding-inline-start: toRem(10);
+        text-decoration: underline;
+    }
+
+    @media screen and (max-width: 420px) {
+        font-size: toRem(10);
     }
 }

@@ -1,29 +1,34 @@
 @import '@/styles/_helpers.scss';
 
 .footerWrapper {
-    @apply mt-48;
+    @apply mt-48 px-5;
     background-color: #F0F0F0;
     height: toRem(550);
 }
 
 .newsLetterContainer {
-    @apply px-12 py-10 mr-auto ml-auto max-w-7xl bg-black relative -top-20 flex justify-between;
+    @apply p-12 mr-auto ml-auto max-w-7xl bg-black relative -top-20 flex justify-between gap-10;
     border-radius: toRem(25);
-    height: toRem(190);
+    height: auto;
 
     .title {
         @apply text-white;
         font-family: 'Integral';
         font-size: toRem(40);
         line-height: toRem(40);
+
+        @media screen and (max-width: 576px) {
+            font-size: toRem(30);
+            line-height: toRem(30);
+        }
     }
 
     .inputContainer {
-        width: toRem(350);
+        width: 70%;
 
         .input {
             @apply bg-white rounded-full pl-5;
-            height: toRem(32);
+            height: auto;
 
             svg {
                 height: toRem(20);
@@ -41,9 +46,17 @@
         }
 
         .button {
-            @apply bg-white w-full text-black flex items-center justify-center rounded-full mt-5 capitalize;
-            height: toRem(46);
+            @apply bg-white w-full text-black flex items-center justify-center rounded-full mt-5 capitalize py-3;
+            height: auto;
         }
+
+        @media screen and (max-width: 992px) {
+            @apply w-full;
+        }
+    }
+
+    @media screen and (max-width: 992px) {
+        @apply flex-col;
     }
 }
 
@@ -52,7 +65,7 @@
 
     .titleContainer {
         @apply flex flex-col gap-8;
-        width: toRem(300);
+        width: auto;
 
         .title {
             font-family: 'Integral';
@@ -92,13 +105,24 @@
                 font-weight: 500
             }
         }
+
+        @media screen and (max-width: 768px) {
+            @apply justify-items-center gap-y-10;
+            grid-template-columns: repeat(2, 1fr);
+
+            div {
+                align-items: center;
+            }
+        }
     }
 
-
+    @media screen and (max-width: 992px) {
+        @apply flex-col;
+    }
 }
 
 .extraFooterContainer {
-    @apply max-w-7xl mr-auto ml-auto  px-5;
+    @apply max-w-7xl mr-auto ml-auto px-5;
 
     .reservedContainer {
         @apply flex justify-between items-center;
@@ -106,13 +130,22 @@
         font-size: toRem(14);
         color: rgba(0, 0, 0, 0.8);
 
-        .cardContainer{
+        .cardContainer {
             @apply flex;
 
             img {
                 width: toRem(70);
                 height: toRem(70);
             }
+
+            @media screen and (max-width: 400px) {
+                @apply flex-col;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            @apply flex-col;
         }
     }
+
 }

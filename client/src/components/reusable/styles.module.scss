@@ -56,4 +56,8 @@
         line-height: toRem(16);
         color: rgba(0, 0, 0, 0.5);
     }
+
+    @media screen and (max-width: 576px ) {
+        @apply p-5;
+    }
 }
