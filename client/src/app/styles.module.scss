@@ -8,7 +8,7 @@
 .textContainer {
     @apply flex flex-col gap-5;
 
-    :nth-child(1) {
+    .mainText {
         font-family: 'Integral';
         font-size: toRem(50);
         line-height: toRem(50);
@@ -16,10 +16,10 @@
         font-weight: 600;
     }
 
-    :nth-child(3) {
-        font-family: 'Satoshi';
-        font-weight: 300;
+    .extraText {
+        font-family: 'satoshi' !important;
         font-size: toRem(16);
+        font-weight: 300;
     }
 }
 
@@ -44,5 +44,54 @@
         @apply absolute top-[15rem] left-[4rem];
         width: toRem(40);
         height: toRem(40);
+    }
+}
+
+.buttonContainer {
+    @apply bg-black text-white flex items-center justify-center rounded-full;
+    width: toRem(210);
+    height: toRem(52);
+}
+
+.footerTextContainer {
+    @apply grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    div {
+        @apply flex flex-col;
+        width: toRem(174);
+        border-right: toRem(1) solid rgba(0, 0, 0, 0.5);
+        font-family: 'satoshi';
+
+        :first-child {
+            font-size: toRem(40);
+            font-weight: 700;
+        }
+
+        :last-child {
+            font-size: toRem(16);
+            font-weight: 300;
+        }
+    }
+
+    :last-child {
+        border-right: none;
+    }
+}
+
+.footerWrapper {
+    @apply text-white bg-black w-full;
+    height: toRem(122);
+}
+
+.footerContainer {
+    @apply max-w-7xl ml-auto mr-auto grid items-center justify-items-center h-full;
+    grid-template-columns: repeat(5, 1fr);
+
+    img {
+        width: toRem(166.48);
+        height: toRem(33.16);
+        object-fit: contain;
+        object-position: center center;
     }
 }

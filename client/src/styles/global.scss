@@ -91,6 +91,13 @@ label.ant-form-item-required::before {
 }
 
 @font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/satoshi/bold.ttf');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'Integral';
     src: url('/fonts/integral/regular.otf');
     font-weight: 400;

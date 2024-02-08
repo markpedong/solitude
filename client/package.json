@@ -11,11 +11,14 @@
   "dependencies": {
     "@ant-design/icons": "^5.3.0",
     "@ant-design/nextjs-registry": "^1.0.0",
+    "@ant-design/pro-components": "^2.6.49",
     "@reduxjs/toolkit": "^2.1.0",
+    "@types/qs": "^6.9.11",
     "antd": "^5.14.0",
     "lodash": "^4.17.21",
     "lz-string": "^1.5.0",
     "next": "14.1.0",
+    "qs": "^6.11.2",
     "react": "^18",
     "react-dom": "^18",
     "react-redux": "^9.1.0",
@@ -23,6 +26,7 @@
     "sass": "^1.70.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.202",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

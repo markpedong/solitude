@@ -1,26 +1,38 @@
 {
-  "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "esnext",
+		"moduleResolution": "node",
+		"allowSyntheticDefaultImports": true,
+		"allowJs": true,
+		"esModuleInterop": true,
+		"sourceMap": false,
+		"removeComments": false,
+		// "baseUrl": "./src",
+		"paths": {
+			"@/*": ["./src/*"]
+		},
+		"jsx": "preserve",
+		"alwaysStrict": true,
+		"noUnusedLocals": false,
+		"importHelpers": true,
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"skipLibCheck": true,
+		"typeRoots": ["node_modules/@types"],
+		"isolatedModules": true,
+		"noEmit": true,
+		"noImplicitAny": false,
+		"noUnusedParameters": false,
+		"resolveJsonModule": true,
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"forceConsistentCasingInFileNames": true,
+		"incremental": true,
+		"strict": false
+	},
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+	"exclude": ["node_modules"]
 }
