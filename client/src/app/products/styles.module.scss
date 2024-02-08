@@ -193,4 +193,25 @@
         }
     }
 
+    .tabsContainer {
+        @apply pt-16 text-black;
+
+        :global {
+
+            .ant-tabs-tab-btn {
+                color: rgba(0, 0, 0, 0.5) !important;
+                font-family: 'Satoshi';
+                font-size: toRem(20);
+            }
+
+            .ant-tabs-nav-list {
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .ant-tabs-ink-bar {
+                width: 33.33% !important;
+            }
+        }
+    }
 }

@@ -1,12 +1,37 @@
+'use client'
+
 import React from 'react'
 import styles from './styles.module.scss'
 import { CheckOutlined, MinusOutlined, PlusOutlined, RightOutlined } from '@ant-design/icons'
 import Image from 'next/image'
-import { Divider, Rate } from 'antd'
+import { Rate, Tabs } from 'antd'
+import type { TabsProps } from 'antd'
 
 type Props = {}
 
 const Products = (props: Props) => {
+	const onChange = (key: string) => {
+		console.log(key)
+	}
+
+	const items: TabsProps['items'] = [
+		{
+			key: '1',
+			label: 'Product Details',
+			children: 'Content of Tab Pane 1'
+		},
+		{
+			key: '2',
+			label: 'Rating & Reviews',
+			children: 'Content of Tab Pane 2'
+		},
+		{
+			key: '3',
+			label: 'FAQs',
+			children: 'Content of Tab Pane 3'
+		}
+	]
+
 	return (
 		<div className={styles.productWrapper}>
 			<div className={styles.productCategory}>
@@ -77,6 +102,9 @@ const Products = (props: Props) => {
 						<div className={styles.button}>Add to Cart</div>
 					</div>
 				</div>
+			</div>
+			<div className={styles.tabsContainer}>
+				<Tabs centered defaultActiveKey="1" items={items} onChange={onChange} />
 			</div>
 		</div>
 	)
