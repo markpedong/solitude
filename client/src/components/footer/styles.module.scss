@@ -7,7 +7,7 @@
 }
 
 .newsLetterContainer {
-    @apply px-16 py-10 mr-auto ml-auto max-w-7xl bg-black relative -top-20 flex justify-between;
+    @apply px-12 py-10 mr-auto ml-auto max-w-7xl bg-black relative -top-20 flex justify-between;
     border-radius: toRem(25);
     height: toRem(190);
 
@@ -23,7 +23,7 @@
 
         .input {
             @apply bg-white rounded-full pl-5;
-            height: toRem(48);
+            height: toRem(32);
 
             svg {
                 height: toRem(20);
@@ -48,7 +48,7 @@
 }
 
 .mainFooterContainer {
-    @apply max-w-7xl mr-auto ml-auto flex gap-20;
+    @apply max-w-7xl mr-auto ml-auto flex gap-20 px-5;
 
     .titleContainer {
         @apply flex flex-col gap-8;
@@ -98,7 +98,7 @@
 }
 
 .extraFooterContainer {
-    @apply max-w-7xl mr-auto ml-auto;
+    @apply max-w-7xl mr-auto ml-auto  px-5;
 
     .reservedContainer {
         @apply flex justify-between items-center;

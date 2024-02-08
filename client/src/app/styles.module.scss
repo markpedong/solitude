@@ -121,7 +121,7 @@
 
             span {
                 @apply relative top-5 left-10;
-                font-size: toRem(36);
+                font-size: toRem(32);
 
             }
         }
@@ -148,11 +148,11 @@
     @apply max-w-7xl ml-auto mr-auto mt-20 mb-20;
 
     .reviewContainer {
-        @apply flex justify-between items-center mb-10;
+        @apply flex justify-between items-center mb-10 px-5;
 
         .header {
             font-family: 'Integral';
-            font-size: toRem(48);
+            font-size: toRem(32);
             text-transform: uppercase;
             font-weight: 500;
         }
