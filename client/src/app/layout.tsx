@@ -5,6 +5,7 @@ import '@/styles/global.scss'
 import AntdProvider from './antdProvider'
 import NavBanner from '@/components/navbanner'
 import Navbar from '@/components/navbar'
+import Footer from '@/components/footer'
 
 const RootLayout = ({ children }: React.PropsWithChildren) => (
 	<html lang="en">
@@ -15,6 +16,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => (
 						<NavBanner />
 						<Navbar />
 						{children}
+						<Footer/>
 					</AntdProvider>
 				</ReduxProvider>
 			</AntdRegistry>

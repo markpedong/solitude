@@ -1,0 +1,118 @@
+@import '@/styles/_helpers.scss';
+
+.footerWrapper {
+    @apply mt-48;
+    background-color: #F0F0F0;
+    height: toRem(550);
+}
+
+.newsLetterContainer {
+    @apply px-16 py-10 mr-auto ml-auto max-w-7xl bg-black relative -top-20 flex justify-between;
+    border-radius: toRem(25);
+    height: toRem(190);
+
+    .title {
+        @apply text-white;
+        font-family: 'Integral';
+        font-size: toRem(40);
+        line-height: toRem(40);
+    }
+
+    .inputContainer {
+        width: toRem(350);
+
+        .input {
+            @apply bg-white rounded-full pl-5;
+            height: toRem(48);
+
+            svg {
+                height: toRem(20);
+                width: toRem(20);
+                margin-right: toRem(20);
+            }
+
+            [type=text] {
+                font-size: toRem(16);
+            }
+
+            ::placeholder {
+                font-size: toRem(16);
+            }
+        }
+
+        .button {
+            @apply bg-white w-full text-black flex items-center justify-center rounded-full mt-5 capitalize;
+            height: toRem(46);
+        }
+    }
+}
+
+.mainFooterContainer {
+    @apply max-w-7xl mr-auto ml-auto flex gap-20;
+
+    .titleContainer {
+        @apply flex flex-col gap-8;
+        width: toRem(300);
+
+        .title {
+            font-family: 'Integral';
+            font-size: toRem(40);
+            line-height: toRem(40);
+        }
+
+        .extraText {
+            font-family: 'Satoshi';
+            font-size: toRem(14);
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        .iconContainer {
+            @apply flex gap-5;
+
+            svg {
+                width: toRem(30);
+                height: toRem(30);
+            }
+        }
+    }
+
+    .extraContainer {
+        @apply grid w-full;
+        grid-template-columns: repeat(4, 1fr);
+
+        div {
+            @apply flex flex-col gap-5;
+            color: rgba(0, 0, 0, 0.8);
+            font-family: 'Satoshi';
+            font-size: toRem(16);
+
+            :first-child {
+                color: black;
+                letter-spacing: toRem(1);
+                font-weight: 500
+            }
+        }
+    }
+
+
+}
+
+.extraFooterContainer {
+    @apply max-w-7xl mr-auto ml-auto;
+
+    .reservedContainer {
+        @apply flex justify-between items-center;
+        font-family: 'Satoshi';
+        font-size: toRem(14);
+        color: rgba(0, 0, 0, 0.8);
+
+        .cardContainer{
+            @apply flex;
+
+            img {
+                width: toRem(70);
+                height: toRem(70);
+            }
+        }
+    }
+}
