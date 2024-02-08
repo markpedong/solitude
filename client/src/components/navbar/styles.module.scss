@@ -1,7 +1,11 @@
 @import '@/styles/_helpers.scss';
 
 .navbarWrapper {
-    @apply max-w-7xl flex ml-auto mr-auto h-10 mt-4 pl-5 pr-5;
+    @apply max-w-7xl ml-auto mr-auto h-10 ;
+}
+
+.navbarContainer {
+    @apply flex mt-4 pl-5 pr-5;
 
     .navbarMobile {
         @apply flex items-center pr-4;
