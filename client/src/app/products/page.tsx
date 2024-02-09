@@ -2,7 +2,7 @@
 
 import React from 'react'
 import styles from './styles.module.scss'
-import { ArrowLeftOutlined, ArrowRightOutlined, DownOutlined, FilterOutlined, RightOutlined } from '@ant-design/icons'
+import { ArrowLeftOutlined, ArrowRightOutlined, CheckOutlined, DownOutlined, FilterOutlined, RightOutlined, UpOutlined } from '@ant-design/icons'
 import Product from '@/components/reusable/product'
 import { Divider, Pagination, Slider } from 'antd'
 
@@ -44,7 +44,80 @@ const Products = (props: Props) => {
 						</div>
 					</div>
 					<Divider />
-					<Slider range defaultValue={[20, 50]} />
+					<div className={styles.header}>
+						<span>Price</span>
+						<UpOutlined />
+					</div>
+					<Slider range defaultValue={[0, 999]} />
+					<Divider />
+					<div className={styles.header}>
+						<span>Colors</span>
+						<UpOutlined />
+					</div>
+					<div className={styles.colorContainer}>
+						<span>
+							<CheckOutlined />
+						</span>
+						<span>
+							<CheckOutlined />
+						</span>
+						<span>
+							<CheckOutlined />
+						</span>
+						<span>
+							<CheckOutlined />
+						</span>
+						<span>
+							<CheckOutlined />
+						</span>
+						<span>
+							<CheckOutlined />
+						</span>
+						<span>
+							<CheckOutlined />
+						</span>
+						<span>
+							<CheckOutlined />
+						</span>
+					</div>
+					<Divider />
+					<div className={styles.header}>
+						<span>Size</span>
+						<UpOutlined />
+					</div>
+					<div className={styles.sizeVariationContainer}>
+						<span>small</span>
+						<span>medium</span>
+						<span>large</span>
+						<span>x-large</span>
+						<span>xx-large</span>
+						<span>3x-large</span>
+						<span>4x-large</span>
+					</div>
+					<Divider />
+					<div className={styles.header}>
+						<span>Dress Style</span>
+						<UpOutlined />
+					</div>
+					<div className={styles.firstFilter} style={{ paddingTop: '1rem' }}>
+						<div>
+							<span>Casual</span>
+							<RightOutlined />
+						</div>
+						<div>
+							<span>Formal</span>
+							<RightOutlined />
+						</div>
+						<div>
+							<span>Party</span>
+							<RightOutlined />
+						</div>
+						<div>
+							<span>Gym</span>
+							<RightOutlined />
+						</div>
+					</div>
+					<div className={styles.applyButton}>Apply Filters</div>
 				</div>
 				<div>
 					<div className={styles.productHeader}>

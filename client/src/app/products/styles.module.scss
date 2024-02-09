@@ -62,7 +62,7 @@
 }
 
 .filterContainer {
-    @apply rounded-3xl p-8;
+    @apply rounded-3xl p-8 h-fit;
     border: toRem(1) solid var(--border-color);
 
     .header {
@@ -93,4 +93,35 @@
             color: var(--color-primary);
         }
     }
+}
+
+.colorContainer {
+    @apply grid gap-5 py-5 grid-cols-5;
+
+    span {
+        @apply rounded-full flex items-center justify-center;
+
+        background-color: red;
+        color: white;
+        font-size: toRem(20);
+        font-weight: 500;
+        height: toRem(37);
+        width: toRem(37);
+    }
+}
+
+.sizeVariationContainer {
+    @apply overflow-scroll grid grid-cols-2 justify-items-start gap-4 py-5;
+
+    span {
+        @apply px-5 rounded-full flex items-center capitalize whitespace-nowrap;
+        font-size: toRem(16);
+        color: var(--color-secondary);
+        height: toRem(50);
+        background-color: #F0EEED;
+    }
+}
+
+.applyButton {
+    @apply flex items-center justify-center bg-black text-white w-full mt-20 py-4 rounded-full;
 }
