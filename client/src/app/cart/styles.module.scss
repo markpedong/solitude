@@ -1,0 +1,109 @@
+@import '@/styles/_helpers.scss';
+
+.cartWrapper {
+    @apply max-w-7xl mx-auto my-10 px-5;
+
+    .productCategory {
+        @apply flex items-center gap-2 text-gray-500 mb-10;
+
+        span:last-child {
+            color: black;
+        }
+    }
+
+}
+
+.mainContainer {
+    @apply grid gap-5;
+    grid-template-columns: 1.5fr 1fr;
+
+    @media screen and (max-width: 992px) {
+        @apply grid-cols-1;
+    }
+}
+
+.orderContainer {
+    @apply bg-white text-black p-5 rounded-3xl;
+    border: toRem(1) solid var(--border-color);
+}
+
+.orderSummaryContainer {
+    @apply bg-white text-black p-5 rounded-3xl;
+    border: toRem(1) solid var(--border-color);
+
+    .subContent {
+        @apply flex justify-between pb-5;
+        font-size: toRem(20);
+        font-family: "Satoshi";
+
+        :nth-child(1) {
+            font-weight: 400;
+            color: var(--color-secondary);
+        }
+
+        :nth-child(2) {
+            font-weight: 700;
+        }
+
+        &.total {
+            :nth-child(1) {
+                color: black;
+            }
+        }
+
+        &.discount {
+            :nth-child(2) {
+                color: #FF3333;
+            }
+        }
+
+        &.promoCode {
+            @apply gap-5;
+
+            span {
+                @apply rounded-full;
+                background-color: #F0F0F0;
+
+                input {
+                    &[type="text"] {
+                        font-family: "Satoshi";
+                        font-size: toRem(16)
+                    }
+
+                    ::placeholder {
+                        font-size: toRem(16);
+                    }
+                }
+
+                :global {
+                    .ant-input-prefix {
+                        svg {
+                            width: toRem(20);
+                            height: toRem(20);
+                            margin-right: toRem(10)
+                        }
+                    }
+                }
+            }
+
+            div {
+                @apply bg-black text-white p-3 px-7 rounded-full;
+                font-weight: 400;
+                font-size: toRem(16);
+                font-family: "Satoshi";
+            }
+        }
+    }
+
+    .checkout {
+        @apply flex justify-center items-center bg-black text-white p-3 rounded-full mb-5;
+    }
+}
+
+.header {
+    @apply pb-5 uppercase;
+    font-family: 'Integral';
+    font-size: toRem(40);
+    line-height: toRem(40);
+    font-weight: 700;
+}

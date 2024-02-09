@@ -1,0 +1,94 @@
+@import '@/styles/_helpers.scss';
+
+.orderWrapper {
+    @apply grid gap-5;
+    grid-template-columns: auto 1fr;
+    height: auto;
+
+    .image {
+        @apply rounded-3xl flex items-center justify-center object-cover object-center p-3;
+        height: toRem(124);
+        width: toRem(124);
+        background-color: #F0EEED;
+
+        @media screen and (max-width: 500px) {
+            height: toRem(70);
+            width: toRem(70);
+        }
+    }
+
+    .textContainer {
+
+        .title,
+        .price {
+            @apply flex justify-between;
+        }
+
+        .variant {
+            @apply grid grid-cols-1;
+            font-family: 'Satoshi';
+            font-size: toRem(14);
+
+            span {
+                @apply flex gap-1;
+                color: black;
+                font-weight: 500;
+
+                p {
+                    color: var(--color-secondary);
+                }
+            }
+
+            @media screen and (max-width: 576px) {
+                font-size: toRem(12);
+            }
+
+        }
+
+        .title {
+            span {
+                font-family: 'Satoshi';
+                font-size: toRem(20);
+                font-weight: 700;
+            }
+
+            svg {
+                color: #FF3333;
+                width: toRem(24);
+                height: toRem(24);
+            }
+
+            @media screen and (max-width: 576px) {
+                span {
+                    font-size: toRem(15);
+                }
+
+                svg {
+                    width: toRem(18);
+                    height: toRem(18);
+                }
+            }
+        }
+
+        .price {
+            @apply pt-4;
+            font-family: "Satoshi";
+            font-size: toRem(24);
+            font-weight: 600;
+
+            .addItemContainer {
+                @apply flex justify-center items-center gap-5 text-black py-2 px-4 rounded-full;
+                font-size: toRem(14);
+                background-color: #F0EEED;
+            }
+
+            @media screen and (max-width: 576px) {
+                font-size: toRem(18);
+
+                .addItemContainer {
+                    font-size: toRem(10);
+                }
+            }
+        }
+    }
+}
