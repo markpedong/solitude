@@ -53,14 +53,22 @@
             p {
                 font-weight: 700;
             }
+
+            @media screen and (max-width: 420px) {
+                display: none
+            }
+
+        }
+
+        @media screen and (max-width: 768px) {
+            .showing {
+                display: none
+            }
         }
 
         @media screen and (max-width: 576px) {
             @apply gap-5;
 
-            span:first-child {
-                display: none
-            }
 
         }
 

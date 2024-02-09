@@ -123,7 +123,7 @@ const Products = (props: Props) => {
 					<div className={styles.productHeader}>
 						<span className={styles.header}>Casual</span>
 						<div className={styles.showingContainer}>
-							<span>Showing 1-10 of 100 Products</span>
+							<span className={styles.showing}>Showing 1-10 of 100 Products</span>
 							<div className={styles.sortContainer}>
 								<span>Sort by:</span>
 								<p>Most Popular</p>
