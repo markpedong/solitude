@@ -1,14 +1,139 @@
 'use client'
 
-import React from 'react'
+import React, { CSSProperties, FC } from 'react'
 import styles from './styles.module.scss'
-import { ArrowLeftOutlined, ArrowRightOutlined, CheckOutlined, DownOutlined, FilterOutlined, RightOutlined, UpOutlined } from '@ant-design/icons'
+import { ArrowLeftOutlined, ArrowRightOutlined, CheckOutlined, CloseOutlined, DownOutlined, FilterOutlined, RightOutlined, UpOutlined } from '@ant-design/icons'
 import Product from '@/components/reusable/product'
 import { Divider, Pagination, Slider } from 'antd'
+import { ModalForm } from '@ant-design/pro-components'
 
 type Props = {}
 
+const flexStyle: CSSProperties = {
+	display: 'flex',
+	justifyContent: 'space-between'
+}
+
+const Filter: FC = () => {
+	return (
+		<>
+			<Divider />
+			<div className={styles.firstFilter}>
+				<div>
+					<span>T-shirts</span>
+					<RightOutlined />
+				</div>
+				<div>
+					<span>Shorts</span>
+					<RightOutlined />
+				</div>
+				<div>
+					<span>Hoodie</span>
+					<RightOutlined />
+				</div>
+				<div>
+					<span>Jeans</span>
+					<RightOutlined />
+				</div>
+			</div>
+			<Divider />
+			<div className={styles.header} style={flexStyle}>
+				<span>Price</span>
+				<UpOutlined />
+			</div>
+			<Slider range defaultValue={[0, 999]} />
+			<Divider />
+			<div className={styles.header} style={flexStyle}>
+				<span>Colors</span>
+				<UpOutlined />
+			</div>
+			<div className={styles.colorContainer}>
+				<span>
+					<CheckOutlined />
+				</span>
+				<span>
+					<CheckOutlined />
+				</span>
+				<span>
+					<CheckOutlined />
+				</span>
+				<span>
+					<CheckOutlined />
+				</span>
+				<span>
+					<CheckOutlined />
+				</span>
+				<span>
+					<CheckOutlined />
+				</span>
+				<span>
+					<CheckOutlined />
+				</span>
+				<span>
+					<CheckOutlined />
+				</span>
+			</div>
+			<Divider />
+			<div className={styles.header} style={flexStyle}>
+				<span>Size</span>
+				<UpOutlined />
+			</div>
+			<div className={styles.sizeVariationContainer}>
+				<span>small</span>
+				<span>medium</span>
+				<span>large</span>
+				<span>x-large</span>
+				<span>xx-large</span>
+				<span>3x-large</span>
+				<span>4x-large</span>
+			</div>
+			<Divider />
+			<div className={styles.header} style={flexStyle}>
+				<span>Dress Style</span>
+				<UpOutlined />
+			</div>
+			<div className={styles.firstFilter}>
+				<div>
+					<span>Casual</span>
+					<RightOutlined />
+				</div>
+				<div>
+					<span>Formal</span>
+					<RightOutlined />
+				</div>
+				<div>
+					<span>Party</span>
+					<RightOutlined />
+				</div>
+				<div>
+					<span>Gym</span>
+					<RightOutlined />
+				</div>
+			</div>
+			<div className={styles.applyButton}>Apply Filters</div>
+		</>
+	)
+}
 const Products = (props: Props) => {
+	const renderFilter = () => {
+		return (
+			<ModalForm
+				title={
+					<div className={styles.header}>
+						<span>Filters</span>
+					</div>
+				}
+				submitter={false}
+				trigger={
+					<div className={styles.mobileFilter}>
+						<FilterOutlined />
+					</div>
+				}
+			>
+				<Filter />
+			</ModalForm>
+		)
+	}
 	return (
 		<div className={styles.productWrapper}>
 			<div className={styles.productCategory}>
@@ -24,100 +149,7 @@ const Products = (props: Props) => {
 						<span>Filters</span>
 						<FilterOutlined />
 					</div>
-					<Divider />
-					<div className={styles.firstFilter}>
-						<div>
-							<span>T-shirts</span>
-							<RightOutlined />
-						</div>
-						<div>
-							<span>Shorts</span>
-							<RightOutlined />
-						</div>
-						<div>
-							<span>Hoodie</span>
-							<RightOutlined />
-						</div>
-						<div>
-							<span>Jeans</span>
-							<RightOutlined />
-						</div>
-					</div>
-					<Divider />
-					<div className={styles.header}>
-						<span>Price</span>
-						<UpOutlined />
-					</div>
-					<Slider range defaultValue={[0, 999]} />
-					<Divider />
-					<div className={styles.header}>
-						<span>Colors</span>
-						<UpOutlined />
-					</div>
-					<div className={styles.colorContainer}>
-						<span>
-							<CheckOutlined />
-						</span>
-						<span>
-							<CheckOutlined />
-						</span>
-						<span>
-							<CheckOutlined />
-						</span>
-						<span>
-							<CheckOutlined />
-						</span>
-						<span>
-							<CheckOutlined />
-						</span>
-						<span>
-							<CheckOutlined />
-						</span>
-						<span>
-							<CheckOutlined />
-						</span>
-						<span>
-							<CheckOutlined />
-						</span>
-					</div>
-					<Divider />
-					<div className={styles.header}>
-						<span>Size</span>
-						<UpOutlined />
-					</div>
-					<div className={styles.sizeVariationContainer}>
-						<span>small</span>
-						<span>medium</span>
-						<span>large</span>
-						<span>x-large</span>
-						<span>xx-large</span>
-						<span>3x-large</span>
-						<span>4x-large</span>
-					</div>
-					<Divider />
-					<div className={styles.header}>
-						<span>Dress Style</span>
-						<UpOutlined />
-					</div>
-					<div className={styles.firstFilter} style={{ paddingTop: '1rem' }}>
-						<div>
-							<span>Casual</span>
-							<RightOutlined />
-						</div>
-						<div>
-							<span>Formal</span>
-							<RightOutlined />
-						</div>
-						<div>
-							<span>Party</span>
-							<RightOutlined />
-						</div>
-						<div>
-							<span>Gym</span>
-							<RightOutlined />
-						</div>
-					</div>
-					<div className={styles.applyButton}>Apply Filters</div>
+					<Filter />
 				</div>
 				<div>
 					<div className={styles.productHeader}>
@@ -129,9 +161,7 @@ const Products = (props: Props) => {
 								<p>Most Popular</p>
 								<DownOutlined />
 							</div>
-							<div className={styles.mobileFilter}>
-								<FilterOutlined />
-							</div>
+							{renderFilter()}
 						</div>
 					</div>
 					<div className={styles.productsWrapper}>

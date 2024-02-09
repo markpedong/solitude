@@ -71,6 +71,10 @@ label.ant-form-item-required::before {
     text-align: left;
 }
 
+.ant-modal-content {
+    border-radius: toRem(20) !important;
+}
+
 @font-face {
     font-family: 'Satoshi';
     src: url('/fonts/satoshi/light.ttf');

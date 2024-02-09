@@ -60,6 +60,8 @@
 
         }
 
+
+
         @media screen and (max-width: 768px) {
             .showing {
                 display: none
@@ -103,7 +105,6 @@
     border: toRem(1) solid var(--border-color);
 
     .header {
-        @apply flex justify-between;
         font-family: "Satoshi";
         font-size: toRem(20);
         font-weight: 700;
