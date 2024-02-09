@@ -88,7 +88,7 @@ const Filter: FC = () => {
 				<span>4x-large</span>
 			</div>
 			<Divider />
-			<div className={styles.header} style={flexStyle}>
+			<div className={styles.header} style={{ ...flexStyle, paddingBottom: '1rem' }}>
 				<span>Dress Style</span>
 				<UpOutlined />
 			</div>
