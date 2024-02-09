@@ -2,9 +2,9 @@
 
 import React from 'react'
 import styles from './styles.module.scss'
-import { ArrowLeftOutlined, ArrowRightOutlined, DownOutlined, RightOutlined } from '@ant-design/icons'
+import { ArrowLeftOutlined, ArrowRightOutlined, DownOutlined, FilterOutlined, RightOutlined } from '@ant-design/icons'
 import Product from '@/components/reusable/product'
-import { Divider, Pagination } from 'antd'
+import { Divider, Pagination, Slider } from 'antd'
 
 type Props = {}
 
@@ -19,7 +19,33 @@ const Products = (props: Props) => {
 				<span>T-shirts</span>
 			</div>
 			<div className={styles.mainContainer}>
-				<div className={styles.filterContainer}>1</div>
+				<div className={styles.filterContainer}>
+					<div className={styles.header}>
+						<span>Filters</span>
+						<FilterOutlined />
+					</div>
+					<Divider />
+					<div className={styles.firstFilter}>
+						<div>
+							<span>T-shirts</span>
+							<RightOutlined />
+						</div>
+						<div>
+							<span>Shorts</span>
+							<RightOutlined />
+						</div>
+						<div>
+							<span>Hoodie</span>
+							<RightOutlined />
+						</div>
+						<div>
+							<span>Jeans</span>
+							<RightOutlined />
+						</div>
+					</div>
+					<Divider />
+					<Slider range defaultValue={[20, 50]} />
+				</div>
 				<div>
 					<div className={styles.productHeader}>
 						<span className={styles.header}>Casual</span>

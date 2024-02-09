@@ -14,7 +14,7 @@
 }
 
 .mainContainer {
-    @apply grid;
+    @apply grid gap-5;
     grid-template-columns: 1fr minmax(0, 3fr)
 }
 
@@ -58,5 +58,39 @@
     .arrowContainer {
         @apply flex items-center justify-center gap-3 h-10 bg-white text-black rounded-lg px-3;
         border: toRem(1) solid var(--border-color);
+    }
+}
+
+.filterContainer {
+    @apply rounded-3xl p-8;
+    border: toRem(1) solid var(--border-color);
+
+    .header {
+        @apply flex justify-between;
+        font-family: "Satoshi";
+        font-size: toRem(20);
+        font-weight: 700;
+
+        svg {
+            width: toRem(20);
+            height: toRem(20);
+        }
+    }
+}
+
+.firstFilter {
+    @apply flex flex-col gap-5;
+    font-family: "Satoshi";
+
+    div {
+        @apply flex justify-between;
+
+        span {
+            color: var(--color-secondary);
+        }
+
+        svg {
+            color: var(--color-primary);
+        }
     }
 }
