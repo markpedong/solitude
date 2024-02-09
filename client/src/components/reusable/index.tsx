@@ -13,7 +13,7 @@ type LandingProps = {
 }
 
 type ReviewProps = {
-	title: string
+	product?: boolean
 }
 
 export const PageHeader: FC<Props> = ({ title }) => {
@@ -39,9 +39,9 @@ export const LandingContent: FC<LandingProps> = ({ title }) => {
 	)
 }
 
-export const ReviewComp: FC = ({}) => {
+export const ReviewComp: FC<ReviewProps> = ({ product }) => {
 	return (
-		<div className={styles.reviewContainer}>
+		<div className={styles.reviewContainer} style={{ width: product ? '38.125rem' : '' }}>
 			<Rate value={3} />
 			<div className={styles.nameContainer}>
 				<span>Sarah M.</span>

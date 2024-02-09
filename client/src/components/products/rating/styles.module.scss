@@ -41,7 +41,7 @@
         }
 
         .latest {
-            @apply flex justify-center items-center gap-3 py-3 px-3 rounded-full;
+            @apply flex justify-center items-center gap-3 py-3 px-5 rounded-full;
             background-color: var(--bg-secondary);
         }
 
@@ -50,4 +50,26 @@
         }
     }
 
+}
+
+.reviewWrapper {
+    @apply grid grid-cols-2 justify-items-center gap-5 pt-10;
+
+    .reviewContainer {
+        @apply p-10 rounded-3xl;
+        inline-size: toRem(610) !important;
+        height: toRem(270);
+        font-family: 'Satoshi';
+        border: toRem(1) solid var(--border-color);
+    }
+}
+
+.loadMoreReview {
+    @apply flex items-center justify-center my-10 py-4 bg-white text-black max-w-52 mx-auto rounded-full;
+    border: toRem(1) solid var(--border-color);
+    font-size: toRem(16);
+}
+
+.productWrapper {
+    @apply grid grid-cols-4 py-5 justify-items-center;
 }

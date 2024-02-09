@@ -31,7 +31,7 @@
     height: toRem(270);
     width: toRem(450);
     font-family: 'Satoshi';
-    border: toRem(1) solid rgba(0, 0, 0, 0.2);
+    border: toRem(1) solid var(--border-color);
 
     .nameContainer {
         @apply flex items-center gap-3 pt-5 pb-3;
