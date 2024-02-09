@@ -1,8 +1,8 @@
 import { CheckOutlined } from '@ant-design/icons'
 import { Divider, Rate } from 'antd'
 import { FC } from 'react'
-import Product from '../product'
 import styles from './styles.module.scss'
+import Product from './product'
 
 type Props = {
 	title: string

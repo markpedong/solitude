@@ -104,7 +104,7 @@ const Products = (props: Props) => {
 				</div>
 			</div>
 			<div className={styles.tabsContainer}>
-				<Tabs centered defaultActiveKey="1" items={items} onChange={onChange} />
+				<Tabs centered defaultActiveKey="2" items={items} onChange={onChange} />
 			</div>
 		</div>
 	)
