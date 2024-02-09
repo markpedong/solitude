@@ -1,0 +1,253 @@
+@import '@/styles/_helpers.scss';
+
+.productWrapper {
+    @apply max-w-7xl mx-auto mt-10;
+
+    .mainContainer {
+        @apply grid grid-cols-2 gap-20 px-5;
+
+        @media screen and (max-width:992px) {
+            @apply grid-cols-1;
+        }
+    }
+
+    .productImageContainer {
+        @apply grid grid-cols-3 grid-rows-3 justify-items-center;
+        gap: toRem(15);
+
+        >div {
+            @apply flex justify-center items-center;
+            background-color: #F0EEED;
+            border-radius: toRem(20);
+
+            &:not(:first-child) {
+                width: 100%;
+                height: auto;
+
+                &:hover {
+                    border: toRem(1) solid black;
+                }
+            }
+        }
+
+        .div1 {
+            grid-area: 1 / 2 / 4 / 4;
+            @apply w-full px-5;
+
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .div2 {
+            grid-area: 1 / 1 / 2 / 2;
+        }
+
+        .div3 {
+            grid-area: 2 / 1 / 3 / 2;
+        }
+
+        .div4 {
+            grid-area: 3 / 1 / 4 / 2;
+        }
+
+
+        @media screen and (max-width:992px) {
+            @apply justify-items-center;
+
+            >div {
+                @apply px-5 py-10;
+
+                &:not(:first-child) {
+                    width: auto;
+                    height: auto;
+                }
+            }
+
+
+            .div1 {
+                @apply max-w-2xl p-20;
+                grid-area: 1 / 1 / 4 / 4;
+
+
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+
+            .div2 {
+                grid-area: 4 / 1 / 5 / 2;
+            }
+
+            .div3 {
+                grid-area: 4 / 2 / 5 / 3;
+            }
+
+            .div4 {
+                grid-area: 4 / 3 / 5 / 4;
+            }
+        }
+    }
+
+    .descriptionContainer {
+        @apply flex flex-col gap-3;
+
+        .productTitle {
+            font-family: 'Integral';
+            font-size: toRem(40);
+        }
+
+        .rateContainer {
+            @apply flex gap-5;
+
+            span {
+                @apply flex;
+                font-family: 'Satoshi';
+                font-size: toRem(16);
+
+                p {
+                    color: rgba(0, 0, 0, 0.8);
+                }
+            }
+
+            :global {
+                .ant-rate {
+                    color: #FFC633;
+
+                }
+            }
+        }
+
+        .priceContainer {
+            @apply flex gap-5 items-center;
+
+            font-size: toRem(32);
+            font-family: 'Satoshi';
+            font-weight: 700;
+
+            span:nth-child(2) {
+                color: var(--color-secondary);
+                text-decoration: line-through;
+            }
+
+            span:nth-child(3) {
+                @apply px-3 py-1 rounded-full;
+                color: #FF3333;
+                font-size: toRem(16);
+                font-weight: 500;
+                background-color: #ff33334c;
+
+            }
+        }
+
+        .description {
+            font-family: 'Satoshi';
+            font-size: toRem(16);
+            color: rgba(0, 0, 0, 0.8);
+            font-weight: 500;
+        }
+
+        .variationContainer {
+            @apply w-full flex flex-col justify-center gap-3 py-2 overflow-scroll;
+            border-top: toRem(1) solid var(--color-secondary);
+
+            .label {
+                font-family: 'Satoshi';
+                font-size: toRem(16);
+                color: rgba(0, 0, 0, 0.5)
+            }
+
+            div {
+                @apply flex gap-5;
+
+                span {
+                    @apply rounded-full flex items-center justify-center;
+
+                    background-color: red;
+                    color: white;
+                    font-size: toRem(20);
+                    font-weight: 500;
+                    height: toRem(37);
+                    width: toRem(37);
+                }
+            }
+        }
+
+        .sizeVariationContainer {
+            @apply w-full flex flex-col justify-center gap-3 py-2;
+            border-top: toRem(1) solid var(--color-secondary);
+
+            .label {
+                font-family: 'Satoshi';
+                font-size: toRem(16);
+                color: rgba(0, 0, 0, 0.5)
+            }
+
+            div {
+                @apply flex gap-4 overflow-scroll;
+
+                span {
+                    @apply px-5 rounded-full flex items-center capitalize whitespace-nowrap;
+                    font-size: toRem(16);
+                    color: var(--color-secondary);
+                    height: toRem(50);
+                    background-color: #F0EEED;
+                }
+            }
+        }
+
+        .addToCartContainer {
+            @apply flex gap-5 py-6;
+            border-top: toRem(1) solid var(--color-secondary);
+            font-family: 'Satoshi';
+
+            .addToCart {
+                @apply flex gap-7 rounded-full items-center justify-center p-3;
+                background-color: #F0EEED;
+                width: toRem(170);
+                font-size: toRem(16);
+
+                svg {
+                    width: toRem(20);
+                    height: toRem(20);
+                }
+            }
+
+            .button {
+                @apply text-center bg-black text-white w-full rounded-full flex items-center justify-center;
+            }
+        }
+    }
+
+    .tabsContainer {
+        @apply pt-16 text-black;
+
+        :global {
+            .ant-tabs-tab-btn {
+                color: rgba(0, 0, 0, 0.5) !important;
+                font-family: 'Satoshi';
+                font-size: toRem(20) !important;
+                overflow: scroll;
+                width: 100%;
+
+                @media screen and (max-width: 576px) {
+                    font-size: toRem(15) !important;
+                }
+            }
+
+            .ant-tabs-nav-list {
+                @apply px-5;
+                width: 100%;
+                justify-content: space-around;
+                overflow: scroll !important;
+            }
+
+            .ant-tabs-ink-bar {
+                width: 33.33% !important;
+            }
+        }
+    }
+}
