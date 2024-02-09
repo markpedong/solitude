@@ -12,3 +12,38 @@
         }
     }
 }
+
+.mainContainer {
+    @apply grid;
+    grid-template-columns: 1fr minmax(0, 3fr)
+}
+
+.productHeader {
+    @apply flex justify-between items-center;
+
+    .header {
+        font-family: 'Satoshi';
+        font-size: toRem(32);
+        font-weight: 700;
+    }
+
+    .showingContainer {
+        @apply flex justify-center items-center gap-10;
+        font-size: toRem(16);
+        font-weight: 300;
+
+        .sortContainer {
+            @apply flex items-center justify-center gap-1;
+
+            span {
+                @apply pr-3
+            }
+
+            p {
+                font-weight: 700;
+            }
+        }
+    }
+
+
+}
