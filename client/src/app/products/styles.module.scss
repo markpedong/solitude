@@ -47,3 +47,16 @@
 
 
 }
+
+.productsWrapper {
+    @apply grid grid-cols-3 py-5 gap-5 px-5;
+}
+
+.paginationContainer {
+    @apply flex justify-between items-center;
+
+    .arrowContainer {
+        @apply flex items-center justify-center gap-3 h-10 bg-white text-black rounded-lg px-3;
+        border: toRem(1) solid var(--border-color);
+    }
+}
