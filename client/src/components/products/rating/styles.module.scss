@@ -6,7 +6,7 @@
 }
 
 .headerContainer {
-    @apply flex justify-between items-center;
+    @apply flex justify-between items-center gap-2 px-5;
 
     div:first-child {
         @apply flex gap-5 items-center;
@@ -23,6 +23,18 @@
             font-size: toRem(16);
             line-height: toRem(16);
             color: var(--color-secondary);
+        }
+
+        @media screen and (max-width: 576px) {
+            span:first-child {
+                font-size: toRem(20);
+                line-height: toRem(20);
+            }
+
+            span:last-child {
+                font-size: toRem(12);
+                line-height: toRem(12);
+            }
         }
     }
 
@@ -48,19 +60,37 @@
         .review {
             @apply py-3 px-5 bg-black text-white rounded-full;
         }
+
+        @media screen and (max-width: 576px) {
+            @apply gap-1;
+
+            .filter {
+                @apply rounded-full p-1;
+
+                svg {
+                    height: toRem(20);
+                    width: toRem(20)
+                }
+            }
+
+            .latest {
+                @apply gap-1 py-1 px-3;
+            }
+
+
+            .review {
+                @apply py-1 px-3;
+            }
+        }
     }
 
 }
 
 .reviewWrapper {
-    @apply grid grid-cols-2 justify-items-center gap-5 pt-10;
+    @apply grid grid-cols-2 justify-items-center gap-5 pt-10 px-5;
 
-    .reviewContainer {
-        @apply p-10 rounded-3xl;
-        inline-size: toRem(610) !important;
-        height: toRem(270);
-        font-family: 'Satoshi';
-        border: toRem(1) solid var(--border-color);
+    @media screen and (max-width: 700px) {
+        @apply grid-cols-1;
     }
 }
 
@@ -71,5 +101,5 @@
 }
 
 .productWrapper {
-    @apply grid grid-cols-4 py-5 justify-items-center;
+    @apply flex gap-5 mt-16 overflow-scroll;
 }

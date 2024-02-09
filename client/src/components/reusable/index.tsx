@@ -41,7 +41,7 @@ export const LandingContent: FC<LandingProps> = ({ title }) => {
 
 export const ReviewComp: FC<ReviewProps> = ({ product }) => {
 	return (
-		<div className={styles.reviewContainer} style={{ width: product ? '38.125rem' : '' }}>
+		<div className={styles.reviewContainer} style={product ? { maxWidth: '38.125rem', width: '100%' } : {}}>
 			<Rate value={3} />
 			<div className={styles.nameContainer}>
 				<span>Sarah M.</span>

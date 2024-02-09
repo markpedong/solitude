@@ -4,7 +4,7 @@
     @apply max-w-7xl mx-auto mt-10;
 
     .productCategory {
-        @apply flex items-center gap-2 text-gray-500 mb-10;
+        @apply flex items-center gap-2 text-gray-500 mb-10 pl-5;
 
         span:last-child {
             color: black;
@@ -12,26 +12,25 @@
     }
 
     .mainContainer {
-        @apply grid gap-10;
-        grid-template-columns: repeat(2, 1fr);
-        height: toRem(530);
+        @apply grid grid-cols-2 gap-20 px-5;
+
+        @media screen and (max-width:992px) {
+            @apply grid-cols-1;
+        }
     }
 
     .productImageContainer {
-        @apply grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(3, 1fr);
+        @apply grid grid-cols-3 grid-rows-3 justify-items-center;
         gap: toRem(15);
 
         >div {
             @apply flex justify-center items-center;
             background-color: #F0EEED;
             border-radius: toRem(20);
-            // add a border on hover
 
             &:not(:first-child) {
-                width: toRem(152);
-                height: toRem(167);
+                width: 100%;
+                height: auto;
 
                 &:hover {
                     border: toRem(1) solid black;
@@ -41,10 +40,11 @@
 
         .div1 {
             grid-area: 1 / 2 / 4 / 4;
-            width: toRem(444);
+            @apply w-full px-5;
+
 
             img {
-                width: toRem(370);
+                width: 100%;
                 height: auto;
             }
         }
@@ -61,6 +61,43 @@
             grid-area: 3 / 1 / 4 / 2;
         }
 
+
+        @media screen and (max-width:992px) {
+            @apply justify-items-center;
+
+            >div {
+                @apply px-5 py-10;
+
+                &:not(:first-child) {
+                    width: auto;
+                    height: auto;
+                }
+            }
+
+
+            .div1 {
+                @apply max-w-2xl p-20;
+                grid-area: 1 / 1 / 4 / 4;
+
+
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+
+            .div2 {
+                grid-area: 4 / 1 / 5 / 2;
+            }
+
+            .div3 {
+                grid-area: 4 / 2 / 5 / 3;
+            }
+
+            .div4 {
+                grid-area: 4 / 3 / 5 / 4;
+            }
+        }
     }
 
     .descriptionContainer {
@@ -122,7 +159,7 @@
         }
 
         .variationContainer {
-            @apply w-full flex flex-col justify-center gap-3 py-2;
+            @apply w-full flex flex-col justify-center gap-3 py-2 overflow-scroll;
             border-top: toRem(1) solid var(--color-secondary);
 
             .label {
@@ -158,10 +195,10 @@
             }
 
             div {
-                @apply flex gap-4;
+                @apply flex gap-4 overflow-scroll;
 
                 span {
-                    @apply px-5 rounded-full flex items-center capitalize;
+                    @apply px-5 rounded-full flex items-center capitalize whitespace-nowrap;
                     font-size: toRem(16);
                     color: var(--color-secondary);
                     height: toRem(50);
@@ -176,7 +213,7 @@
             font-family: 'Satoshi';
 
             .addToCart {
-                @apply flex gap-7 rounded-full items-center justify-center py-3;
+                @apply flex gap-7 rounded-full items-center justify-center p-3;
                 background-color: #F0EEED;
                 width: toRem(170);
                 font-size: toRem(16);
@@ -197,16 +234,23 @@
         @apply pt-16 text-black;
 
         :global {
-
             .ant-tabs-tab-btn {
                 color: rgba(0, 0, 0, 0.5) !important;
                 font-family: 'Satoshi';
-                font-size: toRem(20);
+                font-size: toRem(20) !important;
+                overflow: scroll;
+                width: 100%;
+
+                @media screen and (max-width: 576px) {
+                    font-size: toRem(15) !important;
+                }
             }
 
             .ant-tabs-nav-list {
+                @apply px-5;
                 width: 100%;
                 justify-content: space-around;
+                overflow: scroll !important;
             }
 
             .ant-tabs-ink-bar {

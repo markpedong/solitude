@@ -1,7 +1,7 @@
 @import '@/styles/_helpers.scss';
 
 .header {
-    @apply w-full flex justify-center items-center;
+    @apply w-full flex justify-center items-center text-center;
     font-family: 'Integral';
     font-size: toRem(32);
 }

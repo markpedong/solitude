@@ -1,10 +1,8 @@
 @import '@/styles/_helpers.scss';
 
 .footerWrapper {
-    @apply mt-48 px-5;
+    @apply mt-48 px-5 h-auto;
     background-color: var(--bg-secondary);
-    ;
-    height: toRem(550);
 }
 
 .newsLetterContainer {
@@ -81,7 +79,7 @@
         }
 
         .iconContainer {
-            @apply flex gap-5;
+            @apply flex gap-5 justify-start;
 
             svg {
                 width: toRem(30);
@@ -110,6 +108,14 @@
         @media screen and (max-width: 768px) {
             @apply justify-items-center gap-y-10;
             grid-template-columns: repeat(2, 1fr);
+
+            div {
+                align-items: center;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            @apply grid-cols-1;
 
             div {
                 align-items: center;

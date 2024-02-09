@@ -142,7 +142,6 @@
 
 .footerWrapper {
     @apply text-white bg-black w-full;
-    height: toRem(122);
 
     @media screen and (max-width: 420px) {
         height: toRem(200);
