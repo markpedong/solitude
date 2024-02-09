@@ -1,32 +1,33 @@
 @import '@/styles/_helpers.scss';
 
 .productContainer {
-    height: toRem(408);
-    width: toRem(298);
+    height: auto;
+    min-width: toRem(234);
     font-family: 'Satoshi';
 
-    .imageContainer{
+    .imageContainer {
         @apply rounded-3xl flex items-center justify-center object-cover object-center mb-5;
         background-color: #F0EEED;
         height: toRem(300);
-        width: toRem(250);
-        
+        // width: toRem(250);
+
         img {
             height: toRem(150);
             width: toRem(150);
         }
     }
-    
+
     .productHeader {
         font-size: toRem(16);
         font-weight: 600;
 
     }
 
-    .rateContainer{
+    .rateContainer {
         @apply flex items-center;
         gap: toRem(20);
-        span{
+
+        span {
             font-size: toRem(14);
         }
     }
@@ -36,14 +37,16 @@
 
         font-size: toRem(20);
 
-       :nth-child(1){
+        :nth-child(1) {
             font-weight: 700;
         }
-        :nth-child(2){
+
+        :nth-child(2) {
             @apply opacity-50 line-through;
             font-weight: 700;
         }
-        :nth-child(3){
+
+        :nth-child(3) {
             @apply text-red-600 flex justify-center items-center rounded-full;
             background-color: #ff33333d;
             width: toRem(58);
@@ -51,5 +54,4 @@
             font-size: toRem(12);
         }
     }
-   
 }

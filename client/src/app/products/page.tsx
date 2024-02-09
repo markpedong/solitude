@@ -129,6 +129,9 @@ const Products = (props: Props) => {
 								<p>Most Popular</p>
 								<DownOutlined />
 							</div>
+							<div className={styles.mobileFilter}>
+								<FilterOutlined />
+							</div>
 						</div>
 					</div>
 					<div className={styles.productsWrapper}>

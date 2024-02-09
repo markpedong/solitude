@@ -143,13 +143,11 @@
 .footerWrapper {
     @apply text-white bg-black w-full;
 
-    @media screen and (max-width: 420px) {
-        height: toRem(200);
-    }
+    @media screen and (max-width: 420px) {}
 }
 
 .footerContainer {
-    @apply max-w-7xl ml-auto mr-auto grid items-center justify-items-center h-full justify-center;
+    @apply max-w-7xl ml-auto mr-auto grid gap-4 items-center justify-items-center justify-center py-10;
     grid-template-columns: repeat(auto-fit, toRem(200));
 
     img {
@@ -161,10 +159,9 @@
 }
 
 .categoryWrapper {
-    @apply max-w-7xl ml-auto mr-auto pt-20 pr-20 pl-20 pb-24;
+    @apply max-w-7xl ml-auto mr-auto pt-20 px-16 mx-4 pb-24;
     border-radius: toRem(40);
     background-color: var(--bg-secondary);
-    ;
 
     .categoryContainer {
         @apply grid pt-16 gap-5;

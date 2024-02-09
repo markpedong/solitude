@@ -37,6 +37,7 @@ const Rating: FC = (props: Props) => {
 				<Product />
 				<Product />
 				<Product />
+				<Product />
 			</div>
 		</div>
 	)

@@ -2,7 +2,7 @@
 
 
 .productWrapper {
-    @apply max-w-7xl mx-auto mt-10;
+    @apply max-w-7xl mx-auto mt-10 px-5;
 
     .productCategory {
         @apply flex items-center gap-2 text-gray-500 mb-10 pl-5;
@@ -14,8 +14,12 @@
 }
 
 .mainContainer {
-    @apply grid gap-5;
-    grid-template-columns: 1fr minmax(0, 3fr)
+    @apply grid gap-3;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+
+    @media screen and (max-width: 992px) {
+        @apply grid-cols-1
+    }
 }
 
 .productHeader {
@@ -24,6 +28,7 @@
     .header {
         font-family: 'Satoshi';
         font-size: toRem(32);
+        line-height: toRem(32);
         font-weight: 700;
     }
 
@@ -36,20 +41,44 @@
             @apply flex items-center justify-center gap-1;
 
             span {
-                @apply pr-3
+                @apply pr-3;
+
+                @media screen and (max-width: 768px) {
+                    &:first-child {
+                        display: none;
+                    }
+                }
             }
 
             p {
                 font-weight: 700;
             }
         }
-    }
 
+        @media screen and (max-width: 576px) {
+            @apply gap-5;
+
+            span:first-child {
+                display: none
+            }
+
+        }
+
+    }
 
 }
 
 .productsWrapper {
-    @apply grid grid-cols-3 py-5 gap-5 px-5;
+    @apply grid grid-cols-3 py-5 gap-5 gap-y-10;
+
+    @media screen and (max-width: 768px) {
+        @apply grid-cols-2;
+    }
+
+    @media screen and (max-width: 500px) {
+        @apply grid-cols-1;
+    }
+
 }
 
 .paginationContainer {
@@ -75,6 +104,10 @@
             width: toRem(20);
             height: toRem(20);
         }
+    }
+
+    @media screen and (max-width: 992px) {
+        display: none;
     }
 }
 
@@ -124,4 +157,13 @@
 
 .applyButton {
     @apply flex items-center justify-center bg-black text-white w-full mt-20 py-4 rounded-full;
+}
+
+.mobileFilter {
+    @apply p-1 px-2 rounded-full;
+    background-color: #F0EEED;
+
+    @media screen and (min-width: 993px) {
+        display: none;
+    }
 }
