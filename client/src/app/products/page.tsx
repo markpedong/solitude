@@ -6,6 +6,7 @@ import { CheckOutlined, MinusOutlined, PlusOutlined, RightOutlined } from '@ant-
 import Image from 'next/image'
 import { Rate, Tabs } from 'antd'
 import type { TabsProps } from 'antd'
+import Rating from '@/components/products/rating'
 
 type Props = {}
 
@@ -23,7 +24,7 @@ const Products = (props: Props) => {
 		{
 			key: '2',
 			label: 'Rating & Reviews',
-			children: 'Content of Tab Pane 2'
+			children: <Rating />
 		},
 		{
 			key: '3',

@@ -3,9 +3,9 @@ import { AntdRegistry } from '@ant-design/nextjs-registry'
 import ReduxProvider from '@/redux/provider'
 import '@/styles/global.scss'
 import AntdProvider from './antdProvider'
-import NavBanner from '@/components/navbanner'
-import Navbar from '@/components/navbar'
-import Footer from '@/components/footer'
+import NavBanner from '@/components/landing/navbanner'
+import Navbar from '@/components/landing/navbar'
+import Footer from '@/components/landing/footer'
 
 const RootLayout = ({ children }: React.PropsWithChildren) => (
 	<html lang="en">
@@ -16,7 +16,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => (
 						<NavBanner />
 						<Navbar />
 						{children}
-						<Footer/>
+						<Footer />
 					</AntdProvider>
 				</ReduxProvider>
 			</AntdRegistry>

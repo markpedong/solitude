@@ -2,7 +2,8 @@
 
 .footerWrapper {
     @apply mt-48 px-5;
-    background-color: #F0F0F0;
+    background-color: var(--bg-secondary);
+    ;
     height: toRem(550);
 }
 

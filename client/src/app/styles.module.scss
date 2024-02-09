@@ -164,7 +164,8 @@
 .categoryWrapper {
     @apply max-w-7xl ml-auto mr-auto pt-20 pr-20 pl-20 pb-24;
     border-radius: toRem(40);
-    background-color: #F0F0F0;
+    background-color: var(--bg-secondary);
+    ;
 
     .categoryContainer {
         @apply grid pt-16 gap-5;
