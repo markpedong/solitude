@@ -101,7 +101,7 @@
     div {
         @apply flex flex-col;
         width: toRem(174);
-        border-right: toRem(1) solid rgba(0, 0, 0, 0.5);
+        border-right: toRem(1) solid var(--color-secondary);
         font-family: 'satoshi';
 
         :first-child {
@@ -213,20 +213,20 @@
 
         @media screen and (max-width: 576px) {
             >div {
-                @apply flex-col; 
+                @apply flex-col;
 
 
                 span {
                     @apply relative top-0 left-0;
                     font-size: toRem(32);
-    
+
                 }
             }
         }
     }
 
     @media screen and (max-width: 600px) {
-        @apply px-10 ; 
+        @apply px-10;
         text-align: center;
     }
 }

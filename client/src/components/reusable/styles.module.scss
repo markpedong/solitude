@@ -8,7 +8,7 @@
 
 .newArrivalWrapper {
     @apply max-w-7xl ml-auto mr-auto pt-10;
-    
+
     .viewButtonContainer {
         @apply flex justify-center items-center pb-10;
 
@@ -26,14 +26,14 @@
     @apply pt-10 pb-10 flex gap-5 overflow-scroll;
 }
 
-.reviewContainer{
+.reviewContainer {
     @apply p-10 rounded-3xl;
     height: toRem(270);
     width: toRem(450);
     font-family: 'Satoshi';
     border: toRem(1) solid rgba(0, 0, 0, 0.2);
 
-    .nameContainer{
+    .nameContainer {
         @apply flex items-center gap-3 pt-5 pb-3;
 
         span {
@@ -50,14 +50,14 @@
             padding: toRem(2);
         }
     }
-    
+
     .comment {
         font-size: toRem(16);
         line-height: toRem(16);
-        color: rgba(0, 0, 0, 0.5);
+        color: var(--color-secondary);
     }
 
-    @media screen and (max-width: 576px ) {
+    @media screen and (max-width: 576px) {
         @apply p-5;
     }
 }

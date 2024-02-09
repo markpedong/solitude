@@ -100,7 +100,7 @@
             font-weight: 700;
 
             span:nth-child(2) {
-                color: rgba(0, 0, 0, 0.5);
+                color: var(--color-secondary);
                 text-decoration: line-through;
             }
 
@@ -123,7 +123,7 @@
 
         .variationContainer {
             @apply w-full flex flex-col justify-center gap-3 py-2;
-            border-top: toRem(1) solid rgba(0, 0, 0, 0.5);
+            border-top: toRem(1) solid var(--color-secondary);
 
             .label {
                 font-family: 'Satoshi';
@@ -149,7 +149,7 @@
 
         .sizeVariationContainer {
             @apply w-full flex flex-col justify-center gap-3 py-2;
-            border-top: toRem(1) solid rgba(0, 0, 0, 0.5);
+            border-top: toRem(1) solid var(--color-secondary);
 
             .label {
                 font-family: 'Satoshi';
@@ -163,7 +163,7 @@
                 span {
                     @apply px-5 rounded-full flex items-center capitalize;
                     font-size: toRem(16);
-                    color: rgba(0, 0, 0, 0.5);
+                    color: var(--color-secondary);
                     height: toRem(50);
                     background-color: #F0EEED;
                 }
@@ -172,7 +172,7 @@
 
         .addToCartContainer {
             @apply flex gap-5 py-6;
-            border-top: toRem(1) solid rgba(0, 0, 0, 0.5);
+            border-top: toRem(1) solid var(--color-secondary);
             font-family: 'Satoshi';
 
             .addToCart {
