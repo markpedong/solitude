@@ -1,11 +1,12 @@
 'use client'
 
 import { DownOutlined, MenuOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
-import { Divider, Drawer, Input } from 'antd'
+import { Divider, Drawer, Dropdown, Input } from 'antd'
 import { FC, useState } from 'react'
 import styles from './styles.module.scss'
 import { useRouter } from 'next/navigation'
 import classNames from 'classnames'
+import type { MenuProps } from 'antd'
 
 type Props = {
 	title: string
@@ -14,6 +15,17 @@ type Props = {
 const MenuItem: FC<Props> = ({ title }) => {
 	return <div className={styles.mobileMenuItem}>{title}</div>
 }
+
+const items: MenuProps['items'] = [
+	{
+		key: 'account',
+		label: <span>ACCOUNT</span>
+	},
+	{
+		key: 'logout',
+		label: <span>LOGOUT</span>
+	}
+]
 
 const Navbar = () => {
 	const router = useRouter()
@@ -52,8 +64,10 @@ const Navbar = () => {
 					<Input className={styles.input} prefix={<SearchOutlined />} placeholder="Filled" variant="filled" />
 					<div className={styles.userContainer}>
 						<SearchOutlined className={styles.smallInput} />
-						<ShoppingCartOutlined />
-						<UserOutlined />
+						<ShoppingCartOutlined onClick={() => router.push("/cart")} />
+						<Dropdown menu={{ items }} placement='bottomCenter'>
+							<UserOutlined onClick={e => e.preventDefault()} />
+						</Dropdown>
 					</div>
 				</div>
 			</div>
