@@ -1,9 +1,12 @@
+'use client'
+
 import { CheckOutlined } from '@ant-design/icons'
 import { Divider, Rate } from 'antd'
 import { FC } from 'react'
 import styles from './styles.module.scss'
 import Product from './product'
-
+import { useRouter } from 'next/navigation'
+import { motion } from 'framer-motion'
 type Props = {
 	title: string
 }
@@ -21,6 +24,8 @@ export const PageHeader: FC<Props> = ({ title }) => {
 }
 
 export const LandingContent: FC<LandingProps> = ({ title }) => {
+	const router = useRouter()
+
 	return (
 		<div className={styles.newArrivalWrapper}>
 			<PageHeader title={title} />
@@ -32,7 +37,9 @@ export const LandingContent: FC<LandingProps> = ({ title }) => {
 				<Product />
 			</div>
 			<div className={styles.viewButtonContainer}>
-				<span className={styles.button}>View All</span>
+				<motion.span className={styles.button} onClick={() => router.push('/products')} whileHover={{ scale: 1.1 }}>
+					View All
+				</motion.span>
 			</div>
 			<Divider />
 		</div>

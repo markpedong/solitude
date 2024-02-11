@@ -10,9 +10,6 @@ body {
     margin: 0;
     box-sizing: border-box;
     transition: all 0.3s ease-in;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 
     ::-webkit-scrollbar {
         display: none !important;

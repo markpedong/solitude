@@ -1,7 +1,9 @@
-import { LandingContent, PageHeader, ReviewComp,  } from '@/components/reusable'
+import { LandingContent, PageHeader, ReviewComp } from '@/components/reusable'
 import Image from 'next/image'
 import styles from './styles.module.scss'
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'
+import Link from 'next/link'
+import CategoryEl from '@/components/landing/category'
 
 const Page = async () => {
 	return (
@@ -10,7 +12,9 @@ const Page = async () => {
 				<div className={styles.textContainer}>
 					<span className={styles.mainText}>FIND CLOTHES THAT MATCHES YOUR STYLE</span>
 					<span className={styles.extraText}>Browse through our diverse range of meticulously crafted garments, designed to bring out your individuality and cater to your sense of style.</span>
-					<div className={styles.buttonContainer}>Shop Now</div>
+					<Link href={'/products'} className={styles.buttonContainer}>
+						Shop Now
+					</Link>
 					<div className={styles.footerTextContainer}>
 						<div>
 							<span>200+</span>
@@ -45,24 +49,7 @@ const Page = async () => {
 			<LandingContent title="top selling" />
 			<div className={styles.categoryWrapper}>
 				<PageHeader title="browse by dress style" />
-				<div className={styles.categoryContainer}>
-					<div className={styles.div1}>
-						<span>casual</span>
-						<Image src={'/assets/landing/casual.png'} alt="casual" height={100} width={100} />
-					</div>
-					<div className={styles.div2}>
-						<span>formal</span>
-						<Image src={'/assets/landing/formal.png'} alt="formal" height={100} width={100} />
-					</div>
-					<div className={styles.div3}>
-						<span>formal</span>
-						<Image src={'/assets/landing/party.png'} alt="party" height={100} width={100} />
-					</div>
-					<div className={styles.div4}>
-						<span>gym</span>
-						<Image src={'/assets/landing/gym.png'} alt="gym" height={100} width={100} />
-					</div>
-				</div>
+				<CategoryEl />
 			</div>
 			<div className={styles.reviewWrapper}>
 				<div className={styles.reviewContainer}>

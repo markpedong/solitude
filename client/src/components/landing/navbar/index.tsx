@@ -4,6 +4,8 @@ import { DownOutlined, MenuOutlined, SearchOutlined, ShoppingCartOutlined, UserO
 import { Divider, Drawer, Input } from 'antd'
 import { FC, useState } from 'react'
 import styles from './styles.module.scss'
+import { useRouter } from 'next/navigation'
+import classNames from 'classnames'
 
 type Props = {
 	title: string
@@ -14,6 +16,7 @@ const MenuItem: FC<Props> = ({ title }) => {
 }
 
 const Navbar = () => {
+	const router = useRouter()
 	const [open, setOpen] = useState(false)
 
 	const showDrawer = () => {
@@ -35,7 +38,9 @@ const Navbar = () => {
 						<MenuItem title="new arrivals" />
 						<MenuItem title="brands" />
 					</Drawer>
-					<div className={styles.navbarLogo}>SOLITUDE</div>
+					<div className={classNames(styles.navbarLogo, 'cursor-pointer')} onClick={() => router.push('/')}>
+						SOLITUDE
+					</div>
 					<div className={styles.navbarHeader}>
 						<div>
 							shop <DownOutlined />

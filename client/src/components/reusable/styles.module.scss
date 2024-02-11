@@ -13,10 +13,14 @@
         @apply flex justify-center items-center pb-10;
 
         .button {
-            @apply bg-white text-black flex justify-center items-center rounded-full;
+            @apply bg-white text-black flex justify-center items-center rounded-full transition-all cursor-pointer;
             width: toRem(218);
             height: toRem(52);
             border: toRem(1) solid rgb(200, 200, 200);
+
+            &:hover {
+                @apply bg-black text-white;
+            }
         }
     }
 

@@ -1,0 +1,60 @@
+@import '@/styles/_helpers.scss';
+
+.categoryContainer {
+    @apply grid pt-16 gap-5;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+
+    >div {
+        @apply relative bg-white rounded-3xl flex justify-between overflow-hidden;
+        height: toRem(289);
+        font-family: 'Satoshi';
+        font-weight: 700;
+        text-transform: capitalize;
+
+        img {
+            @apply rounded-3xl object-contain;
+            height: toRem(289);
+            width: auto
+        }
+
+        span {
+            @apply relative top-5 left-10;
+            font-size: toRem(32);
+
+        }
+    }
+
+    .div1 {
+        grid-area: 1 / 1 / 2 / 2;
+    }
+
+    .div2 {
+        grid-area: 1 / 2 / 2 / 4;
+    }
+
+    .div3 {
+        grid-area: 2 / 1 / 3 / 3;
+    }
+
+    .div4 {
+        grid-area: 2 / 3 / 3 / 4;
+    }
+
+    @media screen and (max-width: 992px) {
+        @apply flex flex-col items-center;
+    }
+
+    @media screen and (max-width: 576px) {
+        >div {
+            @apply flex-col;
+
+
+            span {
+                @apply relative top-0 left-0;
+                font-size: toRem(32);
+
+            }
+        }
+    }
+}
