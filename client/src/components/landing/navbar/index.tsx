@@ -7,6 +7,8 @@ import styles from './styles.module.scss'
 import { useRouter } from 'next/navigation'
 import classNames from 'classnames'
 import type { MenuProps } from 'antd'
+import { useAppSelector } from '@/redux/store'
+import { ModalForm } from '@ant-design/pro-components'
 
 type Props = {
 	title: string
@@ -30,6 +32,7 @@ const items: MenuProps['items'] = [
 const Navbar = () => {
 	const router = useRouter()
 	const [open, setOpen] = useState(false)
+	const { isLoggedIn } = useAppSelector(state => state.userData)
 
 	const showDrawer = () => {
 		setOpen(true)
@@ -37,6 +40,10 @@ const Navbar = () => {
 
 	const onClose = () => {
 		setOpen(false)
+	}
+
+	const renderLoginModal = () => {
+		return <ModalForm></ModalForm>
 	}
 
 	return (
@@ -64,10 +71,14 @@ const Navbar = () => {
 					<Input className={styles.input} prefix={<SearchOutlined />} placeholder="Filled" variant="filled" />
 					<div className={styles.userContainer}>
 						<SearchOutlined className={styles.smallInput} />
-						<ShoppingCartOutlined onClick={() => router.push("/cart")} />
-						<Dropdown menu={{ items }} placement='bottomCenter'>
-							<UserOutlined onClick={e => e.preventDefault()} />
-						</Dropdown>
+						<ShoppingCartOutlined onClick={() => router.push('/cart')} />
+						{isLoggedIn ? (
+							<Dropdown menu={{ items }} placement="bottomCenter">
+								<UserOutlined onClick={e => e.preventDefault()} />
+							</Dropdown>
+						) : (
+							renderLoginModal()
+						)}
 					</div>
 				</div>
 			</div>
