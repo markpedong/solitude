@@ -14,6 +14,7 @@
         @apply text-white;
         font-family: 'Integral';
         font-size: toRem(30);
+        font-weight: 600;
     }
 
     .inputContainer {
@@ -63,9 +64,11 @@
 
         .title {
             font-family: 'Integral';
-            font-size: toRem(32);
-            line-height: toRem(32);
+            font-size: toRem(30);
+            line-height: toRem(30);
+            font-weight: 600;    
         }
+
 
         .extraText {
             font-family: 'Satoshi';
