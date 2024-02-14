@@ -43,7 +43,7 @@ const Navbar = () => {
 	}
 
 	const renderLoginModal = () => {
-		return <ModalForm></ModalForm>
+		return <ModalForm trigger={<UserOutlined />}></ModalForm>
 	}
 
 	return (
