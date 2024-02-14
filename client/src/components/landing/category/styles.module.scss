@@ -1,26 +1,26 @@
 @import '@/styles/_helpers.scss';
 
 .categoryContainer {
-    @apply grid pt-16 gap-5;
+    @apply grid pt-10 gap-5;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
 
     >div {
         @apply relative bg-white rounded-3xl flex justify-between overflow-hidden;
-        height: toRem(289);
+        height: toRem(180);
         font-family: 'Satoshi';
         font-weight: 700;
         text-transform: capitalize;
 
         img {
             @apply rounded-3xl object-contain;
-            height: toRem(289);
+            height: auto;
             width: auto
         }
 
         span {
             @apply relative top-5 left-10;
-            font-size: toRem(32);
+            font-size: toRem(25);
 
         }
     }

@@ -1,7 +1,7 @@
 @import '@/styles/_helpers.scss';
 
 .mainWrapper {
-    @apply max-w-7xl ml-auto mr-auto gap-5 pt-10 grid pl-5 pr-5 items-center;
+    @apply max-w-7xl ml-auto mr-auto gap-5 pt-10 grid pl-5 pr-5 items-center h-auto;
     grid-template-columns: minmax(toRem(300), 1fr) 1fr;
 
     @media screen and (max-width: 992px) {
@@ -15,8 +15,8 @@
 
     .mainText {
         font-family: 'Integral';
-        font-size: toRem(50);
-        line-height: toRem(50);
+        font-size: toRem(32);
+        line-height: toRem(32);
         letter-spacing: toRem(3);
         font-weight: 600;
     }
@@ -38,29 +38,22 @@
     position: relative !important;
 
     :nth-child(1) {
-        height: toRem(500);
+        height: toRem(400);
         width: 100%;
         object-fit: contain;
         object-position: center center;
     }
 
     :nth-child(2) {
-        @apply absolute top-8;
-        width: toRem(80);
-        height: toRem(80);
-        right: toRem(80);
+        @apply absolute top-8 right-32;
+        width: toRem(50);
+        height: toRem(50);
     }
 
     :nth-child(3) {
-        @apply absolute top-[15rem] left-[4rem];
-        width: toRem(40);
-        height: toRem(40);
-    }
-
-    @media screen and (max-width: 576px) {
-        :nth-child(1) {
-            height: toRem(400);
-        }
+        @apply absolute top-[15rem] left-[8rem];
+        width: toRem(30);
+        height: toRem(30);
     }
 
     @media screen and (max-width: 450px) {
@@ -68,49 +61,44 @@
             height: toRem(350);
         }
 
-        :nth-child(2) {
-            width: toRem(60);
-            height: toRem(60);
-        }
-
         :nth-child(3) {
             width: toRem(20);
             height: toRem(20);
         }
-
     }
 }
 
 .buttonContainer {
     @apply bg-black text-white flex items-center justify-center rounded-full;
-    width: toRem(210);
-    height: toRem(52);
+    width: toRem(140);
+    height: toRem(40);
+    font-size: toRem(14);
 
     @media screen and (max-width: 992px) {
         width: toRem(150);
         height: toRem(40);
-        font-size: toRem(14);
     }
 }
 
 .footerTextContainer {
-    @apply grid pb-20;
-    grid-template-columns: repeat(auto-fit, minmax(toRem(186), 1fr));
+    @apply grid pb-10;
+    grid-template-columns: repeat(3, 1fr);
 
 
     div {
-        @apply flex flex-col;
-        width: toRem(174);
+        @apply flex flex-col px-2; 
+        width:auto;
         border-right: toRem(1) solid var(--color-secondary);
         font-family: 'satoshi';
 
         :first-child {
-            font-size: toRem(40);
+            font-size: toRem(25);
             font-weight: 700;
         }
 
         :last-child {
             font-size: toRem(16);
+            line-height: toRem(16);
             font-weight: 300;
         }
     }
@@ -142,36 +130,29 @@
 
 .footerWrapper {
     @apply text-white bg-black w-full;
-
-    @media screen and (max-width: 420px) {}
 }
 
 .footerContainer {
-    @apply max-w-7xl ml-auto mr-auto grid gap-4 items-center justify-items-center justify-center py-10;
-    grid-template-columns: repeat(auto-fit, toRem(200));
+    @apply max-w-7xl ml-auto mr-auto grid gap-4 items-center justify-items-center justify-center py-6;
+    grid-template-columns: repeat(auto-fit, toRem(180));
 
     img {
-        width: toRem(166.48);
-        height: toRem(33.16);
+        width: toRem(140);
+        height: toRem(25);
         object-fit: contain;
         object-position: center center;
     }
 }
 
 .categoryWrapper {
-    @apply max-w-7xl ml-auto mr-auto pt-20 px-16 mx-4 pb-24;
+    @apply max-w-6xl ml-auto mr-auto pt-16 px-8 mx-4 pb-24;
     border-radius: toRem(40);
     background-color: var(--bg-secondary);
-
-
-    @media screen and (max-width: 600px) {
-        @apply px-10;
-        text-align: center;
-    }
+    text-align: center;
 }
 
 .reviewWrapper {
-    @apply max-w-7xl ml-auto mr-auto mt-20 mb-20;
+    @apply max-w-6xl ml-auto mr-auto mt-20 mb-20;
 
     .reviewContainer {
         @apply flex justify-between items-center mb-10 px-5;
@@ -202,8 +183,8 @@
 @media (max-width: 992px) {
     .textContainer {
         .mainText {
-            font-size: toRem(30);
-            line-height: toRem(30);
+            font-size: toRem(25);
+            line-height: toRem(25);
         }
 
         .extraText {

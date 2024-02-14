@@ -6,47 +6,42 @@
 }
 
 .newsLetterContainer {
-    @apply p-12 mr-auto ml-auto max-w-7xl bg-black relative -top-20 flex justify-between gap-10;
+    @apply p-8 mr-auto ml-auto max-w-7xl bg-black relative -top-20 flex justify-between gap-10;
     border-radius: toRem(25);
     height: auto;
 
     .title {
         @apply text-white;
         font-family: 'Integral';
-        font-size: toRem(40);
-        line-height: toRem(40);
-
-        @media screen and (max-width: 576px) {
-            font-size: toRem(30);
-            line-height: toRem(30);
-        }
+        font-size: toRem(30);
     }
 
     .inputContainer {
         width: 70%;
 
         .input {
-            @apply bg-white rounded-full pl-5;
+            @apply bg-white rounded-full pl-3;
             height: auto;
 
             svg {
-                height: toRem(20);
-                width: toRem(20);
+                height: toRem(15);
+                width: toRem(15);
                 margin-right: toRem(20);
             }
 
             [type=text] {
-                font-size: toRem(16);
+                font-size: toRem(14);
             }
 
             ::placeholder {
-                font-size: toRem(16);
+                font-size: toRem(14);
             }
         }
 
         .button {
             @apply bg-white w-full text-black flex items-center justify-center rounded-full mt-5 capitalize py-3;
             height: auto;
+            font-size: toRem(12);
         }
 
         @media screen and (max-width: 992px) {
@@ -63,18 +58,18 @@
     @apply max-w-7xl mr-auto ml-auto flex gap-20 px-5;
 
     .titleContainer {
-        @apply flex flex-col gap-8;
+        @apply flex flex-col gap-6;
         width: auto;
 
         .title {
             font-family: 'Integral';
-            font-size: toRem(40);
-            line-height: toRem(40);
+            font-size: toRem(32);
+            line-height: toRem(32);
         }
 
         .extraText {
             font-family: 'Satoshi';
-            font-size: toRem(14);
+            font-size: toRem(12);
             color: rgba(0, 0, 0, 0.8);
         }
 
@@ -96,7 +91,7 @@
             @apply flex flex-col gap-5;
             color: rgba(0, 0, 0, 0.8);
             font-family: 'Satoshi';
-            font-size: toRem(16);
+            font-size: toRem(14);
 
             :first-child {
                 color: black;
@@ -141,8 +136,8 @@
             @apply flex;
 
             img {
-                width: toRem(70);
-                height: toRem(70);
+                width: toRem(50);
+                height: toRem(50);
             }
 
             @media screen and (max-width: 400px) {

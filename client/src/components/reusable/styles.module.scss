@@ -14,8 +14,8 @@
 
         .button {
             @apply bg-white text-black flex justify-center items-center rounded-full transition-all cursor-pointer;
-            width: toRem(218);
-            height: toRem(52);
+            width: toRem(150);
+            height: toRem(40);
             border: toRem(1) solid rgb(200, 200, 200);
 
             &:hover {
@@ -31,9 +31,9 @@
 }
 
 .reviewContainer {
-    @apply p-10 rounded-3xl;
-    height: toRem(270);
-    width: toRem(450);
+    @apply p-7 rounded-3xl;
+    height: toRem(230);
+    width: toRem(400);
     font-family: 'Satoshi';
     border: toRem(1) solid var(--border-color);
 
@@ -41,7 +41,7 @@
         @apply flex items-center gap-3 pt-5 pb-3;
 
         span {
-            font-size: toRem(20);
+            font-size: toRem(16);
             font-weight: 600;
         }
 
@@ -56,8 +56,8 @@
     }
 
     .comment {
-        font-size: toRem(16);
-        line-height: toRem(16);
+        font-size: toRem(12);
+        line-height: toRem(12);
         color: var(--color-secondary);
     }
 

@@ -152,7 +152,6 @@ const Navbar = () => {
 					</div>
 				</div>
 			</div>
-			<Divider />
 		</>
 	)
 }

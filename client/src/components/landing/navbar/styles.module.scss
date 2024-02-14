@@ -2,10 +2,11 @@
 
 .navbarWrapper {
     @apply max-w-7xl ml-auto mr-auto h-10;
+    border-bottom: toRem(1) solid var(--border-color)
 }
 
 .navbarContainer {
-    @apply flex mt-4 pl-5 pr-5;
+    @apply flex mt-2 pl-5 pr-5;
 
     .navbarMobile {
         @apply flex items-center pr-4;
@@ -22,8 +23,8 @@
 
     .navbarLogo {
         font-family: 'Integral';
-        font-size: toRem(32);
-        line-height: toRem(32);
+        font-size: toRem(25);
+        line-height: toRem(25);
         letter-spacing: toRem(3);
         font-weight: 600;
 
@@ -42,6 +43,7 @@
         text-wrap: nowrap;
         font-family: 'Satoshi';
         font-weight: 400;
+        font-size: toRem(14);
 
         @media screen and (max-width: 992px) {
             display: none;
@@ -67,8 +69,8 @@
         @apply ml-10 flex justify-center gap-5;
 
         svg {
-            width: toRem(22);
-            height: toRem(22);
+            width: toRem(18);
+            height: toRem(18);
         }
     }
 }

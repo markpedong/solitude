@@ -2,18 +2,18 @@
 
 .productContainer {
     height: auto;
-    min-width: toRem(234);
+    min-width: toRem(200);
     font-family: 'Satoshi';
 
     .imageContainer {
         @apply rounded-3xl flex items-center justify-center object-cover object-center mb-5;
         background-color: #F0EEED;
-        height: toRem(300);
+        height: toRem(250);
         // width: toRem(250);
 
         img {
-            height: toRem(150);
-            width: toRem(150);
+            height: toRem(130);
+            width: toRem(130);
         }
     }
 
@@ -28,14 +28,14 @@
         gap: toRem(20);
 
         span {
-            font-size: toRem(14);
+            font-size: toRem(12);
         }
     }
 
     .priceContainer {
         @apply flex items-center gap-2 pt-2;
 
-        font-size: toRem(20);
+        font-size: toRem(18);
 
         :nth-child(1) {
             font-weight: 700;
@@ -49,8 +49,8 @@
         :nth-child(3) {
             @apply text-red-600 flex justify-center items-center rounded-full;
             background-color: #ff33333d;
-            width: toRem(58);
-            height: toRem(28);
+            width: toRem(45);
+            height: toRem(20);
             font-size: toRem(12);
         }
     }
