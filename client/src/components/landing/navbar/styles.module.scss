@@ -79,3 +79,99 @@
     font-weight: 500;
     font-family: 'Satoshi';
 }
+
+
+.loginContainer {
+    background-color: white;
+    width: 100%;
+}
+
+.loginImage {
+    display: block;
+    inline-size: 30%;
+    block-size: 100%;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: toRem(10);
+    }
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.loginForm {
+    flex: 1;
+
+    .loginHeader {
+        margin-block-start: 1rem;
+
+        img {
+            block-size: 1rem;
+            inline-size: 1rem;
+        }
+    }
+
+    .loginHeaderText {
+        text-align: center;
+        margin-block-start: 1rem;
+
+        span {
+            @apply text-3xl;
+            
+            margin-block-start: 0.5rem;
+
+        }
+    }
+}
+
+.loginButton {
+    box-shadow: none !important;
+
+    span {
+        text-transform: uppercase;
+        font-weight: 200;
+        letter-spacing: 0rem;
+    }
+}
+
+.formContainer {
+    text-align: end;
+}
+
+.rememberPassword {
+    margin-block-end: 2rem;
+}
+
+.createAccountContainer {
+    margin-block-start: 0.5rem;
+    justify-self: flex-end;
+}
+
+.linkItem {
+    letter-spacing: toRem(1);
+}
+
+@media only screen and (max-width: 768px) {
+    .navigation {
+        display: none;
+    }
+}
+
+
+@media only screen and (min-width: 769px) {
+    .navigationMobile {
+        display: none;
+
+        img {
+            height: toRem(10);
+            width: toRem(10);
+        }
+    }
+
+
+}

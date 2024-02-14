@@ -1,14 +1,22 @@
 'use client'
 
+import { sellerLogin, sellerSignup, userLogin, userSignup } from '@/api'
+import { USER_TYPES } from '@/constants'
+import { afterModalformFinish } from '@/constants/helper'
+import { setActiveLoginForm } from '@/redux/features/booleanSlice'
+import { setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
+import { AppDispatch, useAppSelector } from '@/redux/store'
+import { setLocalStorage } from '@/utils/xLocalStorage'
 import { DownOutlined, MenuOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
-import { Divider, Drawer, Dropdown, Input } from 'antd'
-import { FC, useState } from 'react'
-import styles from './styles.module.scss'
-import { useRouter } from 'next/navigation'
-import classNames from 'classnames'
+import { ActionType, ModalForm, ProFormInstance } from '@ant-design/pro-components'
 import type { MenuProps } from 'antd'
-import { useAppSelector } from '@/redux/store'
-import { ModalForm } from '@ant-design/pro-components'
+import { Divider, Drawer, Dropdown, Input } from 'antd'
+import classNames from 'classnames'
+import { useRouter } from 'next/navigation'
+import { FC, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import ModalProfile from './modalProfile'
+import styles from './styles.module.scss'
 
 type Props = {
 	title: string
@@ -32,7 +40,14 @@ const items: MenuProps['items'] = [
 const Navbar = () => {
 	const router = useRouter()
 	const [open, setOpen] = useState(false)
-	const { isLoggedIn } = useAppSelector(state => state.userData)
+	const dispatch = useDispatch<AppDispatch>()
+    const { activeLoginForm } = useAppSelector(state => state.boolean)
+    const { isLoggedIn, type } = useAppSelector(state => state.userData)
+    const formRef = useRef<ProFormInstance>()
+    const actionRef = useRef<ActionType>()
+    const create = activeLoginForm === 'create'
+    const login = activeLoginForm === 'login'
+    const seller = activeLoginForm === 'seller'
 
 	const showDrawer = () => {
 		setOpen(true)
@@ -42,8 +57,63 @@ const Navbar = () => {
 		setOpen(false)
 	}
 
+	const handleFinish = async params => {
+        let res
+
+        if (create && type === USER_TYPES.USER) {
+            res = await userSignup(params)
+            await dispatch(setUserData(res?.data))
+            dispatch(setType(USER_TYPES.USER))
+        }
+
+        if (create && type === USER_TYPES.SELLER) {
+            res = await sellerSignup(params)
+            await dispatch(setSellerData(res?.data))
+            dispatch(setType(USER_TYPES.SELLER))
+        }
+
+        if (login) {
+            res = await userLogin(params)
+            await dispatch(setUserData(res?.data))
+            dispatch(setType(USER_TYPES.USER))
+        }
+
+        if (seller) {
+            res = await sellerLogin(params)
+            await dispatch(setSellerData(res?.data))
+            dispatch(setType(USER_TYPES.SELLER))
+        }
+
+        if (res?.success) {
+            await dispatch(setUserToken(res?.token))
+            setLocalStorage('token', res?.token)
+            formRef?.current?.resetFields()
+            router.push('/account')
+        }
+
+        return afterModalformFinish(actionRef, res?.message, res?.success)
+    }
+
 	const renderLoginModal = () => {
-		return <ModalForm trigger={<UserOutlined />}></ModalForm>
+		return (
+			<ModalForm
+				trigger={<UserOutlined />}
+				submitter={false}
+				width={create ? 1000 : 600}
+				modalProps={{ style: { top: create ? '5%' : '10%' }, destroyOnClose: true, maskClosable: false }}
+				grid={true}
+				formRef={formRef}
+				preserve={false}
+				onOpenChange={visible => {
+					if (!visible) {
+						formRef?.current?.resetFields()
+						dispatch(setActiveLoginForm('login'))
+					}
+				}}
+				onFinish={handleFinish}>
+				<ModalProfile formRef={formRef} />
+			</ModalForm>
+		)
 	}
 
 	return (
