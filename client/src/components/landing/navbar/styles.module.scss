@@ -116,6 +116,7 @@
 
     .loginHeader {
         margin-block-start: 1rem;
+        font-family: "Integral";
 
         img {
             block-size: 1rem;
@@ -127,9 +128,14 @@
         text-align: center;
         margin-block-start: 1rem;
 
+        h1 {
+            font-family: "Satoshi"
+        }
+
         span {
             @apply text-3xl;
-            
+            font-family: 'Integral';
+            font-weight: 700;
             margin-block-start: 0.5rem;
 
         }
@@ -141,6 +147,7 @@
 
     span {
         text-transform: uppercase;
+        font-family: "Satoshi";
         font-weight: 200;
         letter-spacing: 0rem;
     }

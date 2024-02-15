@@ -56,11 +56,15 @@ label.ant-form-item-required::before {
     font-size: toRem(10);
 }
 
-.ant-btn-primary {
-    box-shadow: none !important;
+.ant-btn {
+    letter-spacing: toRem(2);
 }
 
-.ant-select-selector {
+.ant-form-item-required,.ant-typography,.ant-btn, .ant-form-item-explain  {
+    font-family: 'Satoshi' !important;
+}
+
+.ant-select-selector, .ant-btn-primary {
     box-shadow: none !important;
 }
 
@@ -70,6 +74,14 @@ label.ant-form-item-required::before {
 
 .ant-modal-content {
     border-radius: toRem(20) !important;
+}
+
+input.ant-input {
+    // background-color: red !important;
+
+    &::placeholder, &[type="text"] {
+        font-family: 'Satoshi' !important;
+    }
 }
 
 @font-face {

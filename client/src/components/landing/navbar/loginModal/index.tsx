@@ -55,8 +55,8 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 					<span>SOLITUDE</span>
 				</Flex>
 				<Flex className={styles.loginHeaderText} justify="center" vertical>
-					<h1 className={jost.className}>{create ? 'Create an Account' : forgot ? 'Forgotten your Password?' : seller ? 'Got any products? Post it Here!' : `Hello, Let's Sign In`}</h1>
-					<span className={cormorant.className}>
+					<h1>{create ? 'Create an Account' : forgot ? 'Forgotten your Password?' : seller ? 'Got any products? Post it Here!' : `Hello, Let's Sign In`}</h1>
+					<span>
 						{create ? 'Register New Solitude Account' : forgot ? 'Enter your email to recover your Account!' : seller ? 'Login as a Seller' : 'Please register or sign in'}
 					</span>
 				</Flex>
