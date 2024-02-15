@@ -1,18 +1,22 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './styles.module.scss'
 import { CloseOutlined } from '@ant-design/icons'
-import { useAppSelector } from '@/redux/store'
+import { AppDispatch, useAppSelector } from '@/redux/store'
+import { setIsBannerHidden } from '@/redux/features/booleanSlice'
+import { useDispatch } from 'react-redux'
 
 const NavBanner = () => {
-	const { isLoggedIn } = useAppSelector(state => state.userData)
+	const { bannerHidden } = useAppSelector(state => state.boolean)
+	const dispatch = useDispatch<AppDispatch>()
+
 	return (
-		<div className={styles.navWrapper} style={{ display: isLoggedIn ? 'none' : '' }}>
+		<div className={styles.navWrapper} style={{ display: bannerHidden ? 'none' : '' }}>
 			<span>
 				Sign up and get 20% off to your first order. <p>Sign Up Now</p>
 			</span>
-			<CloseOutlined />
+			<CloseOutlined onClick={() => dispatch(setIsBannerHidden(true))} />
 		</div>
 	)
 }

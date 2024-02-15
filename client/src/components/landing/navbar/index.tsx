@@ -3,7 +3,7 @@
 import { sellerLogin, sellerSignup, userLogin, userSignup } from '@/api'
 import { USER_TYPES } from '@/constants'
 import { afterModalformFinish } from '@/constants/helper'
-import { setActiveLoginForm, setDarkMode } from '@/redux/features/booleanSlice'
+import { setActiveLoginForm, setDarkMode, setIsBannerHidden } from '@/redux/features/booleanSlice'
 import { resetUserData, setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { setLocalStorage } from '@/utils/xLocalStorage'
@@ -106,6 +106,8 @@ const Navbar = () => {
 				await dispatch(setSellerData(res?.data))
 			}
 			await dispatch(setUserToken(res?.token))
+			await dispatch(setIsBannerHidden(true))
+			
 			setLocalStorage('token', res?.token)
 			formRef?.current?.resetFields()
 			router.push('/account')

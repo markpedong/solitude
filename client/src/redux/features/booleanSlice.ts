@@ -4,11 +4,13 @@ type InitialSlice = {
     darkMode: boolean
     activeLoginForm: 'seller' | 'create' | 'forgot' | 'user'
     activeSearchForm: boolean
+    bannerHidden: boolean
 }
 const initialState: InitialSlice = {
     darkMode: false,
     activeLoginForm: 'user',
     activeSearchForm: false,
+    bannerHidden: false,
 }
 
 export const BooleanSlice = createSlice({
@@ -24,8 +26,12 @@ export const BooleanSlice = createSlice({
             ...state,
             activeSearchForm: action.payload,
         }),
+        setIsBannerHidden: (state, action: PayloadAction<boolean>) => ({
+            ...state,
+            bannerHidden: action.payload
+        })
     },
 })
 
-export const { setDarkMode, setActiveLoginForm, setActiveSearchForm } = BooleanSlice.actions
+export const { setDarkMode, setActiveLoginForm, setActiveSearchForm, setIsBannerHidden } = BooleanSlice.actions
 export default BooleanSlice.reducer
