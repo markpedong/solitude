@@ -72,21 +72,39 @@ const Navbar = () => {
 	]
 
 	const handleFinish = async params => {
-		console.log(activeLoginForm, type)
 		let res
-		let signupFunction = type === USER_TYPES.USER ? userSignup : sellerSignup
-		let loginFunction = type === USER_TYPES.USER ? userLogin : sellerLogin
-		let setDataFunction = type === USER_TYPES.USER ? setUserData : setSellerData
 
-		if (activeLoginForm === 'create') {
-			res = await signupFunction(params)
-		} else if (type === USER_TYPES.USER || type === USER_TYPES.SELLER) {
-			res = await loginFunction(params)
+		if (create && type === USER_TYPES.USER) {
+			res = await userSignup(params)
+			dispatch(setType(USER_TYPES.USER))
+		}
+
+		if (create && type === USER_TYPES.SELLER) {
+			res = await sellerSignup(params)
+			dispatch(setType(USER_TYPES.SELLER))
+		}
+
+		if (user) {
+			res = await userLogin(params)
+			dispatch(setType(USER_TYPES.USER))
+		}
+
+		if (seller) {
+			res = await sellerLogin(params)
+			dispatch(setType(USER_TYPES.SELLER))
 		}
 
 		if (res?.success) {
-			await dispatch(setType(type))
-			await dispatch(setDataFunction(res?.data))
+			if (create && type === USER_TYPES.USER) {
+				await dispatch(setUserData(res?.data))
+			} else {
+				await dispatch(setSellerData(res?.data))
+			}
+			if (user) {
+				await dispatch(setUserData(res?.data))
+			} else {
+				await dispatch(setSellerData(res?.data))
+			}
 			await dispatch(setUserToken(res?.token))
 			setLocalStorage('token', res?.token)
 			formRef?.current?.resetFields()
