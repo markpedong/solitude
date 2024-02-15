@@ -3,11 +3,11 @@
 import { sellerLogin, sellerSignup, userLogin, userSignup } from '@/api'
 import { USER_TYPES } from '@/constants'
 import { afterModalformFinish } from '@/constants/helper'
-import { setActiveLoginForm } from '@/redux/features/booleanSlice'
+import { setActiveLoginForm, setDarkMode } from '@/redux/features/booleanSlice'
 import { setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { setLocalStorage } from '@/utils/xLocalStorage'
-import { DownOutlined, MenuOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
+import { DownOutlined, MenuOutlined, MoonFilled, MoonOutlined, SearchOutlined, ShoppingCartOutlined, SunFilled, SunOutlined, UserOutlined } from '@ant-design/icons'
 import { ActionType, ModalForm, ProFormInstance } from '@ant-design/pro-components'
 import type { MenuProps } from 'antd'
 import { Divider, Drawer, Dropdown, Input } from 'antd'
@@ -41,13 +41,13 @@ const Navbar = () => {
 	const router = useRouter()
 	const [open, setOpen] = useState(false)
 	const dispatch = useDispatch<AppDispatch>()
-    const { activeLoginForm } = useAppSelector(state => state.boolean)
-    const { isLoggedIn, type } = useAppSelector(state => state.userData)
-    const formRef = useRef<ProFormInstance>()
-    const actionRef = useRef<ActionType>()
-    const create = activeLoginForm === 'create'
-    const login = activeLoginForm === 'login'
-    const seller = activeLoginForm === 'seller'
+	const { activeLoginForm, darkMode } = useAppSelector(state => state.boolean)
+	const { isLoggedIn, type } = useAppSelector(state => state.userData)
+	const formRef = useRef<ProFormInstance>()
+	const actionRef = useRef<ActionType>()
+	const create = activeLoginForm === 'create'
+	const login = activeLoginForm === 'login'
+	const seller = activeLoginForm === 'seller'
 
 	const showDrawer = () => {
 		setOpen(true)
@@ -58,41 +58,43 @@ const Navbar = () => {
 	}
 
 	const handleFinish = async params => {
-        let res
+		let res
 
-        if (create && type === USER_TYPES.USER) {
-            res = await userSignup(params)
-            await dispatch(setUserData(res?.data))
-            dispatch(setType(USER_TYPES.USER))
-        }
+		if (create && type === USER_TYPES.USER) {
+			res = await userSignup(params)
+			await dispatch(setUserData(res?.data))
+			dispatch(setType(USER_TYPES.USER))
+		}
 
-        if (create && type === USER_TYPES.SELLER) {
-            res = await sellerSignup(params)
-            await dispatch(setSellerData(res?.data))
-            dispatch(setType(USER_TYPES.SELLER))
-        }
+		if (create && type === USER_TYPES.SELLER) {
+			res = await sellerSignup(params)
+			await dispatch(setSellerData(res?.data))
+			dispatch(setType(USER_TYPES.SELLER))
+		}
 
-        if (login) {
-            res = await userLogin(params)
-            await dispatch(setUserData(res?.data))
-            dispatch(setType(USER_TYPES.USER))
-        }
+		if (login) {
+			res = await userLogin(params)
+			await dispatch(setUserData(res?.data))
+			dispatch(setType(USER_TYPES.USER))
+		}
 
-        if (seller) {
-            res = await sellerLogin(params)
-            await dispatch(setSellerData(res?.data))
-            dispatch(setType(USER_TYPES.SELLER))
-        }
+		if (seller) {
+			res = await sellerLogin(params)
+			await dispatch(setSellerData(res?.data))
+			dispatch(setType(USER_TYPES.SELLER))
+		}
 
-        if (res?.success) {
-            await dispatch(setUserToken(res?.token))
-            setLocalStorage('token', res?.token)
-            formRef?.current?.resetFields()
-            router.push('/account')
-        }
+		if (res?.success) {
+			await dispatch(setUserToken(res?.token))
+			setLocalStorage('token', res?.token)
+			formRef?.current?.resetFields()
+			router.push('/account')
+		}
 
-        return afterModalformFinish(actionRef, res?.message, res?.success)
-    }
+		return afterModalformFinish(actionRef, res?.message, res?.success)
+	}
+	
+	const handleChangeTheme = () => dispatch(setDarkMode(!darkMode))
 
 	const renderLoginModal = () => {
 		return (
@@ -149,6 +151,7 @@ const Navbar = () => {
 						) : (
 							renderLoginModal()
 						)}
+						{darkMode ? <MoonOutlined onClick={handleChangeTheme} /> : <SunOutlined onClick={handleChangeTheme}/>}
 					</div>
 				</div>
 			</div>
