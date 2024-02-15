@@ -6,19 +6,19 @@
 }
 
 .newsLetterContainer {
-    @apply p-8 mr-auto ml-auto max-w-7xl bg-black relative -top-20 flex justify-between gap-10;
+    @apply p-6 mr-auto ml-auto max-w-7xl bg-black relative -top-20 flex justify-between gap-10;
     border-radius: toRem(25);
     height: auto;
 
     .title {
         @apply text-white;
         font-family: 'Integral';
-        font-size: toRem(30);
+        font-size: toRem(25);
         font-weight: 600;
     }
 
     .inputContainer {
-        width: 70%;
+        width: 50%;
 
         .input {
             @apply bg-white rounded-full pl-3;
@@ -80,8 +80,8 @@
             @apply flex gap-5 justify-start;
 
             svg {
-                width: toRem(30);
-                height: toRem(30);
+                width: toRem(24);
+                height: toRem(24);
             }
         }
     }

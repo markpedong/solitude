@@ -1,14 +1,13 @@
-'use client'
-
-import isAuth from '@/components/isAuth'
 import React from 'react'
+import Account from './components'
+import styles from './styles.module.scss';
 
-type Props = {}
-
-const Account = (props: Props) => {
-  return (
-    <div>Account</div>
-  )
+const Page = () => {
+    return (
+        <div className={styles.mainWrapper}>
+            <Account />
+        </div>
+    )
 }
 
-export default isAuth(Account)
+export default Page

@@ -18,7 +18,7 @@ func init() {
 
 func CORSMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		allowedOrigins := []string{"https://solitude-ph.vercel.app", "https://solitude-git-test-markpedong.vercel.app"}
+		allowedOrigins := []string{"https://solitude-ph.vercel.app", "https://solitude-git-test-markpedong.vercel.app", "http://localhost:3001"}
 		origin := c.Request.Header.Get("Origin")
 
 		for _, allowedOrigin := range allowedOrigins {

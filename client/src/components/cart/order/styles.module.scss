@@ -7,18 +7,12 @@
 
     .image {
         @apply rounded-3xl flex items-center justify-center object-cover object-center p-3;
-        height: toRem(124);
-        width: toRem(124);
+        height: toRem(80);
+        width: toRem(80);
         background-color: #F0EEED;
-
-        @media screen and (max-width: 500px) {
-            height: toRem(70);
-            width: toRem(70);
-        }
     }
 
     .textContainer {
-
         .title,
         .price {
             @apply flex justify-between;
@@ -27,7 +21,7 @@
         .variant {
             @apply grid grid-cols-1;
             font-family: 'Satoshi';
-            font-size: toRem(14);
+            font-size: toRem(12);
 
             span {
                 @apply flex gap-1;
@@ -48,37 +42,26 @@
         .title {
             span {
                 font-family: 'Satoshi';
-                font-size: toRem(20);
+                font-size: toRem(16);
                 font-weight: 700;
             }
 
             svg {
                 color: #FF3333;
-                width: toRem(24);
-                height: toRem(24);
-            }
-
-            @media screen and (max-width: 576px) {
-                span {
-                    font-size: toRem(15);
-                }
-
-                svg {
-                    width: toRem(18);
-                    height: toRem(18);
-                }
+                width: toRem(15);
+                height: toRem(15);
             }
         }
 
         .price {
             @apply pt-4;
             font-family: "Satoshi";
-            font-size: toRem(24);
+            font-size: toRem(18);
             font-weight: 600;
 
             .addItemContainer {
-                @apply flex justify-center items-center gap-5 text-black py-2 px-4 rounded-full;
-                font-size: toRem(14);
+                @apply flex justify-center items-center gap-5 text-black py-1 px-3 rounded-full;
+                font-size: toRem(12);
                 background-color: #F0EEED;
             }
 

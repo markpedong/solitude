@@ -1,0 +1,49 @@
+@import "@/styles/_helpers.scss";
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;400&display=swap');
+
+.addProductWrapper {
+    padding-block: toRem(5);
+}
+
+.productContainer {
+    padding-block-start: toRem(10);
+    padding-inline-end: toRem(10);
+
+    .productFront {
+        margin-block-end: toRem(3);
+
+        img {
+            height: toRem(200);
+            width: toRem(200);
+        }
+    }
+
+}
+
+.galleryContainer {
+    padding-block-start: toRem(15);
+
+    :global {
+        .ant-upload-wrapper .ant-upload-list {
+            .ant-upload-list-item-container:nth-of-type(1) {
+                display: flex !important;
+                height: toRem(300) !important;
+                width: 100% !important;
+                justify-content: center !important;
+
+                .ant-upload-list-item-thumbnail {
+                    height: toRem(270) !important;
+                    width: toRem(270) !important;
+                }
+            }
+        }
+    }
+}
+
+.prolistContainer {
+    :global {
+        .ant-pro-form-list-action {
+            margin-block-end: toRem(12) !important;
+        }
+    }
+}

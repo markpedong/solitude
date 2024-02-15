@@ -5,6 +5,7 @@
 
     .productCategory {
         @apply flex items-center gap-2 text-gray-500 mb-10;
+        font-size: toRem(12);
 
         span:last-child {
             color: black;
@@ -25,6 +26,12 @@
 .orderContainer {
     @apply bg-white text-black p-5 rounded-3xl;
     border: toRem(1) solid var(--border-color);
+
+    :global {
+        .ant-divider{ 
+            margin: toRem(12) 0; 
+        }
+    }
 }
 
 .orderSummaryContainer {
@@ -33,7 +40,7 @@
 
     .subContent {
         @apply flex justify-between pb-5;
-        font-size: toRem(20);
+        font-size: toRem(14);
         font-family: "Satoshi";
 
         :nth-child(1) {
@@ -67,19 +74,19 @@
                 input {
                     &[type="text"] {
                         font-family: "Satoshi";
-                        font-size: toRem(16)
+                        font-size: toRem(14)
                     }
 
                     ::placeholder {
-                        font-size: toRem(16);
+                        font-size: toRem(14);
                     }
                 }
 
                 :global {
                     .ant-input-prefix {
                         svg {
-                            width: toRem(20);
-                            height: toRem(20);
+                            width: toRem(14);
+                            height: toRem(14);
                             margin-right: toRem(10)
                         }
                     }
@@ -87,23 +94,24 @@
             }
 
             div {
-                @apply bg-black text-white p-3 px-7 rounded-full;
+                @apply bg-black text-white p-2 px-6 rounded-full;
                 font-weight: 400;
-                font-size: toRem(16);
+                font-size: toRem(12);
                 font-family: "Satoshi";
             }
         }
     }
 
     .checkout {
-        @apply flex justify-center items-center bg-black text-white p-3 rounded-full mb-5;
+        @apply flex justify-center items-center bg-black text-white p-2 rounded-full mb-5;
+        font-size: toRem(14)
     }
 }
 
 .header {
     @apply pb-5 uppercase;
     font-family: 'Integral';
-    font-size: toRem(40);
-    line-height: toRem(40);
+    font-size: toRem(25);
+    line-height: toRem(25);
     font-weight: 700;
 }
