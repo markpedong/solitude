@@ -6,6 +6,7 @@ import { ArrowLeftOutlined, ArrowRightOutlined, CheckOutlined, CloseOutlined, Do
 import Product from '@/components/reusable/product'
 import { Divider, Pagination, Slider } from 'antd'
 import { ModalForm } from '@ant-design/pro-components'
+import { motion } from 'framer-motion'
 
 type Props = {}
 
@@ -128,8 +129,7 @@ const Products = (props: Props) => {
 					<div className={styles.mobileFilter}>
 						<FilterOutlined />
 					</div>
-				}
-			>
+				}>
 				<Filter />
 			</ModalForm>
 		)
@@ -184,10 +184,10 @@ const Products = (props: Props) => {
 						<div>
 							<Pagination total={500} showQuickJumper={false} showSizeChanger={false} size="small" />
 						</div>
-						<div className={styles.arrowContainer}>
+						<motion.div whileTap={{ scale: 0.8 }} className={styles.arrowContainer}>
 							<span>Next</span>
 							<ArrowRightOutlined />
-						</div>
+						</motion.div>
 					</div>
 				</div>
 			</div>

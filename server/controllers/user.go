@@ -32,6 +32,7 @@ func GetUserData(ctx *gin.Context) {
 
 func UserUpdate(ctx *gin.Context) {
 	var body struct {
+		Avatar    string `json:"avatar"`
 		ID        string `json:"id"`
 		FirstName string `json:"first_name"`
 		LastName  string `json:"last_name"`
@@ -75,6 +76,7 @@ func UserUpdate(ctx *gin.Context) {
 		"gender":     body.Gender,
 		"birthday":   body.Birthday,
 		"email":      body.Email,
+		"avatar":     body.Avatar,
 	}).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return

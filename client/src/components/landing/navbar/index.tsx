@@ -4,13 +4,13 @@ import { sellerLogin, sellerSignup, userLogin, userSignup } from '@/api'
 import { USER_TYPES } from '@/constants'
 import { afterModalformFinish } from '@/constants/helper'
 import { setActiveLoginForm, setDarkMode } from '@/redux/features/booleanSlice'
-import { setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
+import { resetUserData, setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { setLocalStorage } from '@/utils/xLocalStorage'
 import { DownOutlined, MenuOutlined, MoonFilled, MoonOutlined, SearchOutlined, ShoppingCartOutlined, SunFilled, SunOutlined, UserOutlined } from '@ant-design/icons'
 import { ActionType, ModalForm, ProFormInstance } from '@ant-design/pro-components'
 import type { MenuProps } from 'antd'
-import { Divider, Drawer, Dropdown, Input } from 'antd'
+import { Divider, Drawer, Dropdown, Input, Typography } from 'antd'
 import classNames from 'classnames'
 import { useRouter } from 'next/navigation'
 import { FC, useRef, useState } from 'react'
@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux'
 import ModalProfile from './modalProfile'
 import styles from './styles.module.scss'
 import { motion } from 'framer-motion'
+import Profile from '@/components/profile'
 
 type Props = {
 	title: string
@@ -27,16 +28,7 @@ const MenuItem: FC<Props> = ({ title }) => {
 	return <div className={styles.mobileMenuItem}>{title}</div>
 }
 
-const items: MenuProps['items'] = [
-	{
-		key: 'account',
-		label: <span className={styles.menuItems}>ACCOUNT</span>
-	},
-	{
-		key: 'logout',
-		label: <span className={styles.menuItems}>LOGOUT</span>
-	}
-]
+
 
 const Navbar = () => {
 	const router = useRouter()
@@ -57,6 +49,29 @@ const Navbar = () => {
 	const onClose = () => {
 		setOpen(false)
 	}
+
+	const items: MenuProps['items'] = [
+		{
+			key: 'account',
+			label: <Profile />,
+		},
+		{
+			key: 'logout',
+			danger: true,
+			label: (
+				<Typography.Link
+					className={styles.menuItems}
+					onClick={async () => {
+						await dispatch(resetUserData())
+						localStorage.clear()
+						router.push('/')
+					}}
+					type="danger">
+					LOGOUT
+				</Typography.Link>
+			),
+		},
+	]
 
 	const handleFinish = async params => {
 		let res
