@@ -45,7 +45,7 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 	}
 
 	return (
-		<Flex className={styles.loginContainer} justify="space-between" gap={20} style={{ blockSize: create ? '34rem' : forgot ? '22rem' : '26rem' }}>
+		<Flex className={styles.loginContainer} justify="space-between" gap={20} style={{ blockSize: create ? '34rem' : '30rem' }}>
 			<div className={styles.loginImage}>
 				<Image alt="loginCover" src={create ? signUpModalCover : forgot ? forgotModalCover : seller ? sellerModalCover : loginModalCover} />
 			</div>
