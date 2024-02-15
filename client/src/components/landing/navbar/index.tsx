@@ -122,7 +122,7 @@ const Navbar = () => {
 				trigger={<UserOutlined />}
 				submitter={false}
 				width={create ? 1000 : 600}
-				modalProps={{ style: { top: create ? '5%' : '10%' }, destroyOnClose: true, maskClosable: false }}
+				modalProps={{ destroyOnClose: true, maskClosable: false }}
 				grid={true}
 				formRef={formRef}
 				preserve={false}
