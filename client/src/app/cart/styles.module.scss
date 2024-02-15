@@ -1,7 +1,7 @@
 @import '@/styles/_helpers.scss';
 
 .cartWrapper {
-    @apply max-w-7xl mx-auto my-10 px-5;
+    @apply max-w-6xl mx-auto my-10 px-5;
 
     .productCategory {
         @apply flex items-center gap-2 text-gray-500 mb-10;

@@ -1,12 +1,12 @@
 @import '@/styles/_helpers.scss';
 
 .navbarWrapper {
-    @apply max-w-7xl ml-auto mr-auto h-10;
+    @apply max-w-6xl mx-auto ;
     border-bottom: toRem(1) solid var(--border-color)
 }
 
 .navbarContainer {
-    @apply flex mt-2 pl-5 pr-5;
+    @apply flex my-5 px-5;
 
     .navbarMobile {
         @apply flex items-center pr-4;

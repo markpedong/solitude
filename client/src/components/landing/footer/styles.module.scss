@@ -1,12 +1,12 @@
 @import '@/styles/_helpers.scss';
 
 .footerWrapper {
-    @apply mt-48 px-5 h-auto;
+    @apply mt-48 h-auto px-5;
     background-color: var(--bg-secondary);
 }
 
 .newsLetterContainer {
-    @apply p-6 mr-auto ml-auto max-w-7xl bg-black relative -top-20 flex justify-between gap-10;
+    @apply p-6 bg-black relative -top-20 gap-10 flex items-center justify-between max-w-6xl mx-auto;
     border-radius: toRem(25);
     height: auto;
 
@@ -56,7 +56,7 @@
 }
 
 .mainFooterContainer {
-    @apply max-w-7xl mr-auto ml-auto flex gap-20;
+    @apply max-w-6xl mr-auto ml-auto flex gap-20;
 
     .titleContainer {
         @apply flex flex-col gap-6;
@@ -87,7 +87,7 @@
     }
 
     .extraContainer {
-        @apply grid w-full;
+        @apply grid w-full justify-items-center;
         grid-template-columns: repeat(4, 1fr);
 
         div {
@@ -127,7 +127,7 @@
 }
 
 .extraFooterContainer {
-    @apply max-w-7xl mr-auto ml-auto px-5;
+    @apply max-w-6xl mx-auto;
 
     .reservedContainer {
         @apply flex justify-between items-center;

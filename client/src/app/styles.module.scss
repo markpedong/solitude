@@ -1,7 +1,7 @@
 @import '@/styles/_helpers.scss';
 
 .mainWrapper {
-    @apply max-w-7xl ml-auto mr-auto gap-5 pt-10 grid pl-5 pr-5 items-center h-auto;
+    @apply max-w-6xl mx-auto gap-5 pt-10 grid pl-5 pr-5 items-center h-auto;
     grid-template-columns: minmax(toRem(300), 1fr) 1fr;
 
     @media screen and (max-width: 992px) {
@@ -136,7 +136,7 @@
 }
 
 .footerContainer {
-    @apply max-w-7xl ml-auto mr-auto grid gap-4 items-center justify-items-center justify-center py-6;
+    @apply max-w-6xl mx-auto grid gap-4 items-center justify-items-center justify-center py-6;
     grid-template-columns: repeat(auto-fit, toRem(180));
 
     img {
@@ -148,14 +148,14 @@
 }
 
 .categoryWrapper {
-    @apply max-w-6xl ml-auto mr-auto pt-12 px-8 mx-4 pb-20;
+    @apply max-w-6xl mx-auto pt-12 px-8 pb-20;
     border-radius: toRem(40);
     background-color: var(--bg-secondary);
     text-align: center;
 }
 
 .reviewWrapper {
-    @apply max-w-6xl ml-auto mr-auto mt-20 mb-20;
+    @apply max-w-6xl mx-auto mt-20 mb-20;
 
     .reviewContainer {
         @apply flex justify-between items-center mb-10 px-5;

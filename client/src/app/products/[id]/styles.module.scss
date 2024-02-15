@@ -1,7 +1,7 @@
 @import '@/styles/_helpers.scss';
 
 .productWrapper {
-    @apply max-w-7xl mx-auto mt-10;
+    @apply max-w-6xl mx-auto mt-10;
 
     .mainContainer {
         @apply grid grid-cols-2 gap-20 px-5;
