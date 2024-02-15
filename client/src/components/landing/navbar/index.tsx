@@ -15,7 +15,7 @@ import classNames from 'classnames'
 import { useRouter } from 'next/navigation'
 import { FC, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import ModalProfile from './modalProfile'
+import LoginModal from './loginModal'
 import styles from './styles.module.scss'
 import { motion } from 'framer-motion'
 import Profile from '@/components/profile'
@@ -28,8 +28,6 @@ const MenuItem: FC<Props> = ({ title }) => {
 	return <div className={styles.mobileMenuItem}>{title}</div>
 }
 
-
-
 const Navbar = () => {
 	const router = useRouter()
 	const [open, setOpen] = useState(false)
@@ -39,7 +37,7 @@ const Navbar = () => {
 	const formRef = useRef<ProFormInstance>()
 	const actionRef = useRef<ActionType>()
 	const create = activeLoginForm === 'create'
-	const login = activeLoginForm === 'login'
+	const user = activeLoginForm === 'user'
 	const seller = activeLoginForm === 'seller'
 
 	const showDrawer = () => {
@@ -53,7 +51,7 @@ const Navbar = () => {
 	const items: MenuProps['items'] = [
 		{
 			key: 'account',
-			label: <Profile />,
+			label: <Profile />
 		},
 		{
 			key: 'logout',
@@ -69,38 +67,26 @@ const Navbar = () => {
 					type="danger">
 					LOGOUT
 				</Typography.Link>
-			),
-		},
+			)
+		}
 	]
 
 	const handleFinish = async params => {
+		console.log(activeLoginForm, type)
 		let res
+		let signupFunction = type === USER_TYPES.USER ? userSignup : sellerSignup
+		let loginFunction = type === USER_TYPES.USER ? userLogin : sellerLogin
+		let setDataFunction = type === USER_TYPES.USER ? setUserData : setSellerData
 
-		if (create && type === USER_TYPES.USER) {
-			res = await userSignup(params)
-			await dispatch(setUserData(res?.data))
-			dispatch(setType(USER_TYPES.USER))
-		}
-
-		if (create && type === USER_TYPES.SELLER) {
-			res = await sellerSignup(params)
-			await dispatch(setSellerData(res?.data))
-			dispatch(setType(USER_TYPES.SELLER))
-		}
-
-		if (login) {
-			res = await userLogin(params)
-			await dispatch(setUserData(res?.data))
-			dispatch(setType(USER_TYPES.USER))
-		}
-
-		if (seller) {
-			res = await sellerLogin(params)
-			await dispatch(setSellerData(res?.data))
-			dispatch(setType(USER_TYPES.SELLER))
+		if (activeLoginForm === 'create') {
+			res = await signupFunction(params)
+		} else if (type === USER_TYPES.USER || type === USER_TYPES.SELLER) {
+			res = await loginFunction(params)
 		}
 
 		if (res?.success) {
+			await dispatch(setType(type))
+			await dispatch(setDataFunction(res?.data))
 			await dispatch(setUserToken(res?.token))
 			setLocalStorage('token', res?.token)
 			formRef?.current?.resetFields()
@@ -125,11 +111,11 @@ const Navbar = () => {
 				onOpenChange={visible => {
 					if (!visible) {
 						formRef?.current?.resetFields()
-						dispatch(setActiveLoginForm('login'))
+						dispatch(setActiveLoginForm('user'))
 					}
 				}}
 				onFinish={handleFinish}>
-				<ModalProfile formRef={formRef} />
+				<LoginModal formRef={formRef} />
 			</ModalForm>
 		)
 	}
@@ -159,9 +145,11 @@ const Navbar = () => {
 					<Input className={styles.input} prefix={<SearchOutlined />} placeholder="Filled" variant="filled" />
 					<div className={styles.userContainer}>
 						<SearchOutlined className={styles.smallInput} />
-						<motion.div whileTap={{ scale: 0.8 }}>
-							<ShoppingCartOutlined onClick={() => router.push('/cart')} />
-						</motion.div>
+						{isLoggedIn && (
+							<motion.div whileTap={{ scale: 0.8 }}>
+								<ShoppingCartOutlined onClick={() => router.push('/cart')} />
+							</motion.div>
+						)}
 						{isLoggedIn ? (
 							<Dropdown menu={{ items }} placement="bottomCenter">
 								<UserOutlined onClick={e => e.preventDefault()} />
