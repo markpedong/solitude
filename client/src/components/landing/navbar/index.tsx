@@ -17,6 +17,7 @@ import { FC, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import ModalProfile from './modalProfile'
 import styles from './styles.module.scss'
+import { motion } from 'framer-motion'
 
 type Props = {
 	title: string
@@ -29,11 +30,11 @@ const MenuItem: FC<Props> = ({ title }) => {
 const items: MenuProps['items'] = [
 	{
 		key: 'account',
-		label: <span>ACCOUNT</span>
+		label: <span className={styles.menuItems}>ACCOUNT</span>
 	},
 	{
 		key: 'logout',
-		label: <span>LOGOUT</span>
+		label: <span className={styles.menuItems}>LOGOUT</span>
 	}
 ]
 
@@ -93,7 +94,7 @@ const Navbar = () => {
 
 		return afterModalformFinish(actionRef, res?.message, res?.success)
 	}
-	
+
 	const handleChangeTheme = () => dispatch(setDarkMode(!darkMode))
 
 	const renderLoginModal = () => {
@@ -129,9 +130,9 @@ const Navbar = () => {
 						<MenuItem title="new arrivals" />
 						<MenuItem title="brands" />
 					</Drawer>
-					<div className={classNames(styles.navbarLogo, 'cursor-pointer')} onClick={() => router.push('/')}>
+					<motion.div whileTap={{ scale: 0.8 }} className={classNames(styles.navbarLogo, 'cursor-pointer')} onClick={() => router.push('/')}>
 						SOLITUDE
-					</div>
+					</motion.div>
 					<div className={styles.navbarHeader}>
 						<div>
 							shop <DownOutlined />
@@ -143,7 +144,9 @@ const Navbar = () => {
 					<Input className={styles.input} prefix={<SearchOutlined />} placeholder="Filled" variant="filled" />
 					<div className={styles.userContainer}>
 						<SearchOutlined className={styles.smallInput} />
-						<ShoppingCartOutlined onClick={() => router.push('/cart')} />
+						<motion.div whileTap={{ scale: 0.8 }}>
+							<ShoppingCartOutlined onClick={() => router.push('/cart')} />
+						</motion.div>
 						{isLoggedIn ? (
 							<Dropdown menu={{ items }} placement="bottomCenter">
 								<UserOutlined onClick={e => e.preventDefault()} />
@@ -151,7 +154,7 @@ const Navbar = () => {
 						) : (
 							renderLoginModal()
 						)}
-						{darkMode ? <MoonOutlined onClick={handleChangeTheme} /> : <SunOutlined onClick={handleChangeTheme}/>}
+						<motion.div whileTap={{ scale: 0.8 }}>{darkMode ? <MoonOutlined onClick={handleChangeTheme} /> : <SunOutlined onClick={handleChangeTheme} />}</motion.div>
 					</div>
 				</div>
 			</div>

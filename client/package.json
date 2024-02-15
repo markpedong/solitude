@@ -16,6 +16,7 @@
 		"@types/qs": "^6.9.11",
 		"antd": "^5.14.0",
 		"classnames": "^2.5.1",
+		"framer-motion": "^11.0.5",
 		"lodash": "^4.17.21",
 		"lz-string": "^1.5.0",
 		"next": "14.1.0",

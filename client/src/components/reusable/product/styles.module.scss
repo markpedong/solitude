@@ -2,18 +2,18 @@
 
 .productContainer {
     height: auto;
-    min-width: toRem(200);
+    min-width: toRem(170);
     font-family: 'Satoshi';
 
     .imageContainer {
         @apply rounded-3xl flex items-center justify-center object-cover object-center mb-5;
         background-color: #F0EEED;
-        height: toRem(250);
+        height: toRem(200);
         // width: toRem(250);
 
         img {
-            height: toRem(130);
-            width: toRem(130);
+            height: toRem(100);
+            width: toRem(100);
         }
     }
 
