@@ -103,7 +103,7 @@
     }
 
     .checkout {
-        @apply flex justify-center items-center bg-black text-white p-2 rounded-full mb-5;
+        @apply flex justify-center items-center bg-black text-white p-2 rounded-full mb-5 gap-3;
         font-size: toRem(14)
     }
 }
