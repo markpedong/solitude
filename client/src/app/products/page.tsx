@@ -1,18 +1,25 @@
 'use client'
 
-import React, { CSSProperties, FC } from 'react'
+import React, { CSSProperties, FC, useState } from 'react'
 import styles from './styles.module.scss'
-import { ArrowLeftOutlined, ArrowRightOutlined, CheckOutlined, CloseOutlined, DownOutlined, FilterOutlined, RightOutlined, UpOutlined } from '@ant-design/icons'
+import { ArrowLeftOutlined, ArrowRightOutlined, CheckOutlined, CloseOutlined, DownOutlined, FilterOutlined, RightOutlined, SmileOutlined, UpOutlined } from '@ant-design/icons'
 import Product from '@/components/reusable/product'
-import { Divider, Pagination, Slider } from 'antd'
+import { Divider, Dropdown, Flex, Pagination, Slider } from 'antd'
 import { ModalForm } from '@ant-design/pro-components'
 import { motion } from 'framer-motion'
+import type { MenuProps, PaginationProps } from 'antd'
 
 type Props = {}
 
 const flexStyle: CSSProperties = {
 	display: 'flex',
 	justifyContent: 'space-between'
+}
+
+const FILTER = {
+	1: 'Most Popular',
+	2: 'Top Selling',
+	3: 'Relevance'
 }
 
 const Filter: FC = () => {
@@ -116,6 +123,33 @@ const Filter: FC = () => {
 	)
 }
 const Products = (props: Props) => {
+	const [sort, setSort] = useState(1)
+	const [current, setCurrent] = useState(1)
+
+	const handleClickSort = e => setSort(e.key)
+	const items: MenuProps['items'] = [
+		{
+			key: 1,
+			label: <span>Most Popular</span>,
+			onClick: handleClickSort
+		},
+		{
+			key: 2,
+			label: <span>Top Selling</span>,
+			onClick: handleClickSort
+		},
+		{
+			key: 3,
+			label: <span>Relevance</span>,
+			onClick: handleClickSort
+		}
+	]
+
+	const onChange: PaginationProps['onChange'] = page => {
+		console.log(page)
+		setCurrent(page)
+	}
+
 	const renderFilter = () => {
 		return (
 			<ModalForm
@@ -135,6 +169,27 @@ const Products = (props: Props) => {
 			</ModalForm>
 		)
 	}
+
+	const itemRender: PaginationProps['itemRender'] = (_, type, originalElement) => {
+		if (type === 'prev') {
+			return (
+				<motion.div whileTap={{ scale: 0.8 }} className={styles.arrowContainer}>
+					<ArrowLeftOutlined />
+					<span>Previous</span>
+				</motion.div>
+			)
+		}
+		if (type === 'next') {
+			return (
+				<motion.div whileTap={{ scale: 0.8 }} className={styles.arrowContainer}>
+					<span>Next</span>
+					<ArrowRightOutlined />
+				</motion.div>
+			)
+		}
+		return originalElement
+	}
+
 	return (
 		<div className={styles.productWrapper}>
 			<div className={styles.productCategory}>
@@ -159,8 +214,13 @@ const Products = (props: Props) => {
 							<span className={styles.showing}>Showing 1-10 of 100 Products</span>
 							<div className={styles.sortContainer}>
 								<span>Sort by:</span>
-								<p>Most Popular</p>
-								<DownOutlined />
+
+								<Dropdown menu={{ items }} placement="bottomCenter" trigger={['click']}>
+									<Flex justify="center" gap={5}>
+										<p>{FILTER[sort]}</p>
+										<DownOutlined />
+									</Flex>
+								</Dropdown>
 							</div>
 							{renderFilter()}
 						</div>
@@ -178,17 +238,7 @@ const Products = (props: Props) => {
 					</div>
 					<Divider />
 					<div className={styles.paginationContainer}>
-						<div className={styles.arrowContainer}>
-							<ArrowLeftOutlined />
-							<span>Previous</span>
-						</div>
-						<div>
-							<Pagination total={500} showQuickJumper={false} showSizeChanger={false} size="small" />
-						</div>
-						<motion.div whileTap={{ scale: 0.8 }} className={styles.arrowContainer}>
-							<span>Next</span>
-							<ArrowRightOutlined />
-						</motion.div>
+						<Pagination total={500} itemRender={itemRender} showQuickJumper={false} showSizeChanger={false} size="small" onChange={onChange} />
 					</div>
 				</div>
 			</div>
