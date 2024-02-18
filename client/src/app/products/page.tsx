@@ -17,7 +17,7 @@ const flexStyle: CSSProperties = {
 
 const Filter: FC = () => {
 	return (
-		<>
+		<div className={styles.filterWrapper}>
 			<Divider />
 			<div className={styles.firstFilter}>
 				<div>
@@ -112,7 +112,7 @@ const Filter: FC = () => {
 				</div>
 			</div>
 			<div className={styles.applyButton}>Apply Filters</div>
-		</>
+		</div>
 	)
 }
 const Products = (props: Props) => {
@@ -129,7 +129,8 @@ const Products = (props: Props) => {
 					<div className={styles.mobileFilter}>
 						<FilterOutlined />
 					</div>
-				}>
+				}
+			>
 				<Filter />
 			</ModalForm>
 		)

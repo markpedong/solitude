@@ -2,23 +2,22 @@
 
 .productContainer {
     height: auto;
-    min-width: toRem(170);
+    min-width: toRem(180);
     font-family: 'Satoshi';
 
     .imageContainer {
         @apply rounded-3xl flex items-center justify-center object-cover object-center mb-5;
         background-color: #F0EEED;
-        height: toRem(200);
-        // width: toRem(250);
+        height: toRem(180);
 
         img {
-            height: toRem(100);
-            width: toRem(100);
+            height: toRem(80);
+            width: toRem(80);
         }
     }
 
     .productHeader {
-        font-size: toRem(16);
+        font-size: toRem(12);
         font-weight: 600;
 
     }
@@ -35,7 +34,7 @@
     .priceContainer {
         @apply flex items-center gap-2 pt-2;
 
-        font-size: toRem(18);
+        font-size: toRem(16);
 
         :nth-child(1) {
             font-weight: 700;
@@ -51,7 +50,7 @@
             background-color: #ff33333d;
             width: toRem(45);
             height: toRem(20);
-            font-size: toRem(12);
+            font-size: toRem(10);
         }
     }
 }

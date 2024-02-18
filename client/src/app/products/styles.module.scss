@@ -6,6 +6,7 @@
 
     .productCategory {
         @apply flex items-center gap-2 text-gray-500 mb-10 pl-5;
+        font-size: toRem(12);
 
         span:last-child {
             color: black;
@@ -27,14 +28,14 @@
 
     .header {
         font-family: 'Satoshi';
-        font-size: toRem(32);
-        line-height: toRem(32);
+        font-size: toRem(16);
+        line-height: toRem(16);
         font-weight: 700;
     }
 
     .showingContainer {
         @apply flex justify-center items-center gap-10;
-        font-size: toRem(16);
+        font-size: toRem(12);
         font-weight: 300;
 
         .sortContainer {
@@ -79,7 +80,8 @@
 }
 
 .productsWrapper {
-    @apply grid grid-cols-3 py-5 gap-5 gap-y-10;
+    @apply grid py-5 gap-5 gap-y-10;
+    grid-template-columns: repeat(auto-fill, minmax(toRem(180), 1fr));
 
     @media screen and (max-width: 768px) {
         @apply grid-cols-2;
@@ -97,26 +99,41 @@
     .arrowContainer {
         @apply flex items-center justify-center gap-3 h-10 bg-white text-black rounded-lg px-3;
         border: toRem(1) solid var(--border-color);
+
+        span {
+            font-size: toRem(12)
+        }
     }
 }
 
 .filterContainer {
-    @apply rounded-3xl p-8 h-fit;
+    @apply rounded-3xl p-4 h-fit;
     border: toRem(1) solid var(--border-color);
 
     .header {
+        @apply flex justify-between items-center;
+
         font-family: "Satoshi";
-        font-size: toRem(20);
+        font-size: toRem(12);
         font-weight: 700;
 
         svg {
-            width: toRem(20);
-            height: toRem(20);
+            width: toRem(12);
+            height: toRem(12);
         }
     }
 
     @media screen and (max-width: 992px) {
         display: none;
+    }
+}
+
+.filterWrapper {
+
+    :global {
+        .ant-divider {
+            margin: toRem(12) 0;
+        }
     }
 }
 
@@ -129,26 +146,29 @@
 
         span {
             color: var(--color-secondary);
+            font-size: toRem(12);
         }
 
         svg {
             color: var(--color-primary);
+            height: toRem(12);
+            width: toRem(12)
         }
     }
 }
 
 .colorContainer {
-    @apply grid gap-5 py-5 grid-cols-5;
+    @apply grid gap-5 py-2 grid-cols-7;
 
     span {
         @apply rounded-full flex items-center justify-center;
 
         background-color: red;
         color: white;
-        font-size: toRem(20);
+        font-size: toRem(15);
         font-weight: 500;
-        height: toRem(37);
-        width: toRem(37);
+        height: toRem(25);
+        width: toRem(25);
     }
 }
 
@@ -156,16 +176,17 @@
     @apply overflow-scroll grid grid-cols-2 justify-items-start gap-4 py-5;
 
     span {
-        @apply px-5 rounded-full flex items-center capitalize whitespace-nowrap;
-        font-size: toRem(16);
+        @apply px-3 rounded-full flex items-center capitalize whitespace-nowrap;
+        font-size: toRem(12);
         color: var(--color-secondary);
-        height: toRem(50);
+        height: toRem(25);
         background-color: #F0EEED;
     }
 }
 
 .applyButton {
-    @apply flex items-center justify-center bg-black text-white w-full mt-20 py-4 rounded-full;
+    @apply flex items-center justify-center bg-black text-white w-full mt-10 py-3 rounded-full;
+    font-size: toRem(14)
 }
 
 .mobileFilter {
