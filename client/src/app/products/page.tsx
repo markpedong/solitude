@@ -4,7 +4,7 @@ import React, { CSSProperties, FC, useState } from 'react'
 import styles from './styles.module.scss'
 import { ArrowLeftOutlined, ArrowRightOutlined, CheckOutlined, CloseOutlined, DownOutlined, FilterOutlined, RightOutlined, SmileOutlined, UpOutlined } from '@ant-design/icons'
 import Product from '@/components/reusable/product'
-import { Divider, Dropdown, Flex, Pagination, Slider } from 'antd'
+import { Collapse, Divider, Dropdown, Flex, Pagination, Slider } from 'antd'
 import { ModalForm } from '@ant-design/pro-components'
 import { motion } from 'framer-motion'
 import type { MenuProps, PaginationProps } from 'antd'
@@ -26,99 +26,138 @@ const Filter: FC = () => {
 	return (
 		<div className={styles.filterWrapper}>
 			<Divider />
-			<div className={styles.firstFilter}>
-				<div>
-					<span>T-shirts</span>
-					<RightOutlined />
-				</div>
-				<div>
-					<span>Shorts</span>
-					<RightOutlined />
-				</div>
-				<div>
-					<span>Hoodie</span>
-					<RightOutlined />
-				</div>
-				<div>
-					<span>Jeans</span>
-					<RightOutlined />
-				</div>
-			</div>
+			<Collapse
+				expandIconPosition={'end'}
+				items={[
+					{
+						key: '1',
+						label: <div className={styles.collapseLabel}>T-shirts</div>,
+						children: <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, temporibus?</div>
+					},
+					{
+						key: '2',
+						label: <div className={styles.collapseLabel}>Shorts</div>,
+						children: <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, temporibus?</div>
+					},
+					{
+						key: '3',
+						label: <div className={styles.collapseLabel}>Jeans</div>,
+						children: <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, temporibus?</div>
+					},
+					{
+						key: '4',
+						label: <div className={styles.collapseLabel}>Hoodie</div>,
+						children: <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, temporibus?</div>
+					}
+				]}
+			/>
 			<Divider />
-			<div className={styles.header} style={flexStyle}>
-				<span>Price</span>
-				<UpOutlined />
-			</div>
-			<Slider range defaultValue={[0, 999]} />
+			<Collapse
+				expandIconPosition={'end'}
+				items={[
+					{
+						key: '1',
+						label: <div className={styles.header}>Price</div>,
+						children: <Slider range defaultValue={[0, 999]} />
+					}
+				]}
+			/>
 			<Divider />
-			<div className={styles.header} style={flexStyle}>
-				<span>Colors</span>
-				<UpOutlined />
-			</div>
-			<div className={styles.colorContainer}>
-				<span>
-					<CheckOutlined />
-				</span>
-				<span>
-					<CheckOutlined />
-				</span>
-				<span>
-					<CheckOutlined />
-				</span>
-				<span>
-					<CheckOutlined />
-				</span>
-				<span>
-					<CheckOutlined />
-				</span>
-				<span>
-					<CheckOutlined />
-				</span>
-				<span>
-					<CheckOutlined />
-				</span>
-				<span>
-					<CheckOutlined />
-				</span>
-			</div>
+			<Collapse
+				expandIconPosition={'end'}
+				items={[
+					{
+						key: '1',
+						label: <div className={styles.header}>Colors</div>,
+						children: (
+							<div className={styles.colorContainer}>
+								<span>
+									<CheckOutlined />
+								</span>
+								<span>
+									<CheckOutlined />
+								</span>
+								<span>
+									<CheckOutlined />
+								</span>
+								<span>
+									<CheckOutlined />
+								</span>
+								<span>
+									<CheckOutlined />
+								</span>
+								<span>
+									<CheckOutlined />
+								</span>
+								<span>
+									<CheckOutlined />
+								</span>
+								<span>
+									<CheckOutlined />
+								</span>
+							</div>
+						)
+					}
+				]}
+			/>
 			<Divider />
-			<div className={styles.header} style={flexStyle}>
-				<span>Size</span>
-				<UpOutlined />
-			</div>
-			<div className={styles.sizeVariationContainer}>
-				<span>small</span>
-				<span>medium</span>
-				<span>large</span>
-				<span>x-large</span>
-				<span>xx-large</span>
-				<span>3x-large</span>
-				<span>4x-large</span>
-			</div>
+			<Collapse
+				expandIconPosition={'end'}
+				items={[
+					{
+						key: '1',
+						label: <div className={styles.header}>Size</div>,
+						children: (
+							<div className={styles.sizeVariationContainer}>
+								<span>small</span>
+								<span>medium</span>
+								<span>large</span>
+								<span>x-large</span>
+								<span>xx-large</span>
+								<span>3x-large</span>
+								<span>4x-large</span>
+							</div>
+						)
+					}
+				]}
+			/>
 			<Divider />
-			<div className={styles.header} style={{ ...flexStyle, paddingBottom: '1rem' }}>
-				<span>Dress Style</span>
-				<UpOutlined />
-			</div>
-			<div className={styles.firstFilter}>
-				<div>
-					<span>Casual</span>
-					<RightOutlined />
-				</div>
-				<div>
-					<span>Formal</span>
-					<RightOutlined />
-				</div>
-				<div>
-					<span>Party</span>
-					<RightOutlined />
-				</div>
-				<div>
-					<span>Gym</span>
-					<RightOutlined />
-				</div>
-			</div>
-			<div className={styles.applyButton}>Apply Filters</div>
+			<Collapse
+				expandIconPosition={'end'}
+				items={[
+					{
+						key: '1',
+						label: <span>Dress Style</span>,
+						children: (
+							<Collapse
+								expandIconPosition="end"
+								items={[
+									{
+										label: <span className={styles.collapseLabel}>Casual</span>,
+										children: <div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, rem.</div>
+									},
+									{
+										label: <span className={styles.collapseLabel}>Formal</span>,
+										children: <div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, rem.</div>
+									},
+									{
+										label: <span className={styles.collapseLabel}>Party</span>,
+										children: <div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, rem.</div>
+									},
+									{
+										label: <span className={styles.collapseLabel}>Gym</span>,
+										children: <div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, rem.</div>
+									}
+								]}
+							/>
+						)
+					}
+				]}
+			/>
+
+			<motion.div whileTap={{ scale: 0.8 }} className={styles.applyButton}>
+				Apply Filters
+			</motion.div>
 		</div>
 	)
 }

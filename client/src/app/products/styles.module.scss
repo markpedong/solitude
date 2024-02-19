@@ -135,10 +135,38 @@
 }
 
 .filterWrapper {
+    .collapseLabel {
+        color: var(--color-secondary);
+        font-size: toRem(12);
+    }
 
     :global {
         .ant-divider {
             margin: toRem(12) 0;
+        }
+
+        .ant-collapse {
+            border: 0;
+            background: none;
+
+            .ant-collapse-item {
+                border: 0;
+
+                .ant-collapse-content.ant-collapse-content-active {
+                    border: 0 !important;
+                }
+
+                .ant-collapse-header {
+                    @apply px-0 pt-0 pb-3;
+                    border-bottom: 0 !important
+                }
+
+                .ant-collapse-content-box {
+                    @apply px-0 pt-0 pb-3;
+                }
+            }
+
+
         }
     }
 }
@@ -191,7 +219,7 @@
 }
 
 .applyButton {
-    @apply flex items-center justify-center bg-black text-white w-full mt-10 py-3 rounded-full;
+    @apply flex items-center justify-center bg-black text-white w-full mt-10 py-3 rounded-full cursor-pointer touch-none;
     font-size: toRem(14)
 }
 
