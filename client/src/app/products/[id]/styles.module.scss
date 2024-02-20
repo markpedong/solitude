@@ -4,7 +4,7 @@
     @apply max-w-6xl mx-auto mt-10;
 
     .mainContainer {
-        @apply grid grid-cols-2 gap-20 px-5;
+        @apply grid grid-cols-2 gap-10 px-5;
 
         @media screen and (max-width:992px) {
             @apply grid-cols-1;
@@ -16,13 +16,16 @@
         gap: toRem(15);
 
         >div {
-            @apply flex justify-center items-center;
+            @apply flex justify-center items-center rounded-md;
             background-color: #F0EEED;
-            border-radius: toRem(20);
 
             &:not(:first-child) {
-                width: 100%;
-                height: auto;
+                width: toRem(100);
+                height: toRem(100);
+
+                img {
+                    @apply p-[1rem];
+                }
 
                 &:hover {
                     border: toRem(1) solid black;
@@ -32,10 +35,11 @@
 
         .div1 {
             grid-area: 1 / 2 / 4 / 4;
-            @apply w-full px-5;
+            @apply w-full px-5 h-80;
 
 
             img {
+                @apply p-[1rem];
                 width: 100%;
                 height: auto;
             }
@@ -93,20 +97,20 @@
     }
 
     .descriptionContainer {
-        @apply flex flex-col gap-3;
+        @apply flex flex-col gap-1;
 
         .productTitle {
             font-family: 'Integral';
-            font-size: toRem(40);
+            font-size: toRem(20);
         }
 
         .rateContainer {
-            @apply flex gap-5;
+            @apply flex gap-5 items-center;
 
             span {
                 @apply flex;
                 font-family: 'Satoshi';
-                font-size: toRem(16);
+                font-size: toRem(12);
 
                 p {
                     color: rgba(0, 0, 0, 0.8);
@@ -116,15 +120,14 @@
             :global {
                 .ant-rate {
                     color: #FFC633;
-
                 }
             }
         }
 
         .priceContainer {
-            @apply flex gap-5 items-center;
+            @apply flex gap-2 items-center;
 
-            font-size: toRem(32);
+            font-size: toRem(16);
             font-family: 'Satoshi';
             font-weight: 700;
 
@@ -136,7 +139,7 @@
             span:nth-child(3) {
                 @apply px-3 py-1 rounded-full;
                 color: #FF3333;
-                font-size: toRem(16);
+                font-size: toRem(10);
                 font-weight: 500;
                 background-color: #ff33334c;
 
@@ -145,7 +148,7 @@
 
         .description {
             font-family: 'Satoshi';
-            font-size: toRem(16);
+            font-size: toRem(12);
             color: rgba(0, 0, 0, 0.8);
             font-weight: 500;
         }
@@ -156,33 +159,33 @@
 
             .label {
                 font-family: 'Satoshi';
-                font-size: toRem(16);
+                font-size: toRem(12);
                 color: rgba(0, 0, 0, 0.5)
             }
 
             div {
-                @apply flex gap-5;
+                @apply flex gap-2;
 
                 span {
                     @apply rounded-full flex items-center justify-center;
 
                     background-color: red;
                     color: white;
-                    font-size: toRem(20);
+                    font-size: toRem(12);
                     font-weight: 500;
-                    height: toRem(37);
-                    width: toRem(37);
+                    height: toRem(20);
+                    width: toRem(20);
                 }
             }
         }
 
         .sizeVariationContainer {
-            @apply w-full flex flex-col justify-center gap-3 py-2;
+            @apply w-full flex flex-col justify-center gap-2 py-2;
             border-top: toRem(1) solid var(--color-secondary);
 
             .label {
                 font-family: 'Satoshi';
-                font-size: toRem(16);
+                font-size: toRem(12);
                 color: rgba(0, 0, 0, 0.5)
             }
 
@@ -190,52 +193,49 @@
                 @apply flex gap-4 overflow-scroll;
 
                 span {
-                    @apply px-5 rounded-full flex items-center capitalize whitespace-nowrap;
-                    font-size: toRem(16);
+                    @apply px-3 rounded-full flex items-center capitalize whitespace-nowrap;
+                    font-size: toRem(12);
                     color: var(--color-secondary);
-                    height: toRem(50);
+                    height: toRem(25);
                     background-color: #F0EEED;
                 }
             }
         }
 
         .addToCartContainer {
-            @apply flex gap-5 py-6;
+            @apply flex gap-5 py-3;
             border-top: toRem(1) solid var(--color-secondary);
             font-family: 'Satoshi';
 
             .addToCart {
-                @apply flex gap-7 rounded-full items-center justify-center p-3;
+                @apply flex gap-4 rounded-full items-center justify-center p-2;
                 background-color: #F0EEED;
-                width: toRem(170);
-                font-size: toRem(16);
+                width: toRem(100);
+                font-size: toRem(12);
 
                 svg {
-                    width: toRem(20);
-                    height: toRem(20);
+                    width: toRem(10);
+                    height: toRem(10);
                 }
             }
 
             .button {
                 @apply text-center bg-black text-white w-full rounded-full flex items-center justify-center;
+                font-size: toRem(12)
             }
         }
     }
 
     .tabsContainer {
-        @apply pt-16 text-black;
+        @apply pt-8 text-black;
 
         :global {
             .ant-tabs-tab-btn {
                 color: rgba(0, 0, 0, 0.5) !important;
                 font-family: 'Satoshi';
-                font-size: toRem(20) !important;
+                font-size: toRem(12) !important;
                 overflow: scroll;
                 width: 100%;
-
-                @media screen and (max-width: 576px) {
-                    font-size: toRem(15) !important;
-                }
             }
 
             .ant-tabs-nav-list {

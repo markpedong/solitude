@@ -14,72 +14,54 @@
         font-family: "Satoshi";
 
         span:first-child {
-            font-size: toRem(24);
-            line-height: toRem(24);
+            font-size: toRem(20);
+            line-height: toRem(20);
             font-weight: 700;
         }
 
         span:last-child {
-            font-size: toRem(16);
-            line-height: toRem(16);
+            font-size: toRem(12);
+            line-height: toRem(12);
             color: var(--color-secondary);
-        }
-
-        @media screen and (max-width: 576px) {
-            span:first-child {
-                font-size: toRem(20);
-                line-height: toRem(20);
-            }
-
-            span:last-child {
-                font-size: toRem(12);
-                line-height: toRem(12);
-            }
         }
     }
 
     div:last-child {
-        @apply flex gap-5 justify-center items-center;
-        height: toRem(48);
+        @apply flex gap-1 justify-center items-center;
+        height: toRem(24);
 
         .filter {
             @apply rounded-full p-2;
             background-color: var(--bg-secondary);
 
             svg {
-                height: toRem(25);
-                width: toRem(25)
+                height: toRem(15);
+                width: toRem(15)
             }
         }
 
         .latest {
-            @apply flex justify-center items-center gap-3 py-3 px-5 rounded-full;
+            @apply flex justify-center items-center gap-3 py-1 px-4 rounded-full;
             background-color: var(--bg-secondary);
+            font-size: toRem(12)
         }
 
         .review {
-            @apply py-3 px-5 bg-black text-white rounded-full;
+            @apply py-1 px-4 bg-black text-white rounded-full;
         }
 
         @media screen and (max-width: 576px) {
-            @apply gap-1;
-
             .filter {
                 @apply rounded-full p-1;
-
-                svg {
-                    height: toRem(20);
-                    width: toRem(20)
-                }
             }
 
             .latest {
-                @apply gap-1 py-1 px-3;
+                @apply gap-1 px-3;
             }
 
 
             .review {
-                @apply py-1 px-3;
+                @apply px-3;
             }
         }
     }
@@ -87,7 +69,8 @@
 }
 
 .reviewWrapper {
-    @apply grid grid-cols-2 justify-items-center gap-5 pt-10 px-5;
+    @apply grid justify-items-center gap-5 pt-10 px-3;
+    grid-template-columns: repeat(auto-fill, minmax(toRem(300), 1fr));
 
     @media screen and (max-width: 700px) {
         @apply grid-cols-1;
@@ -95,9 +78,9 @@
 }
 
 .loadMoreReview {
-    @apply flex items-center justify-center my-10 py-4 bg-white text-black max-w-52 mx-auto rounded-full;
+    @apply flex items-center justify-center my-10 py-2 bg-white text-black max-w-44 mx-auto rounded-full;
     border: toRem(1) solid var(--border-color);
-    font-size: toRem(16);
+    font-size: toRem(12);
 }
 
 .productWrapper {

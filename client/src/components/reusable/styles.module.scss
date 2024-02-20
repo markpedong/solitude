@@ -32,23 +32,23 @@
 }
 
 .reviewContainer {
-    @apply p-7 rounded-3xl;
-    height: toRem(230);
-    width: toRem(400);
+    @apply p-5 rounded-3xl;
+    height: auto;
+    width: toRem(300);
     font-family: 'Satoshi';
     border: toRem(1) solid var(--border-color);
 
     .nameContainer {
-        @apply flex items-center gap-3 pt-5 pb-3;
+        @apply flex items-center gap-3 pt-1 pb-2;
 
         span {
-            font-size: toRem(16);
+            font-size: toRem(12);
             font-weight: 600;
         }
 
         svg {
-            width: toRem(20);
-            height: toRem(20);
+            width: toRem(15);
+            height: toRem(15);
             border-radius: 50%;
             color: white;
             background-color: #01AB31;
@@ -57,12 +57,15 @@
     }
 
     .comment {
-        font-size: toRem(12);
-        line-height: toRem(12);
+        font-size: toRem(11);
+        line-height: toRem(11);
         color: var(--color-secondary);
     }
 
-    @media screen and (max-width: 576px) {
-        @apply p-5;
+    :global {
+        .ant-rate {
+            color: #FFC633;
+            font-size: toRem(14);
+        }
     }
 }

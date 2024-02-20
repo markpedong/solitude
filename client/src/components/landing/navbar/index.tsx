@@ -64,7 +64,8 @@ const Navbar = () => {
 						localStorage.clear()
 						router.push('/')
 					}}
-					type="danger">
+					type="danger"
+				>
 					LOGOUT
 				</Typography.Link>
 			)
@@ -107,7 +108,7 @@ const Navbar = () => {
 			}
 			await dispatch(setUserToken(res?.token))
 			await dispatch(setIsBannerHidden(true))
-			
+
 			setLocalStorage('token', res?.token)
 			formRef?.current?.resetFields()
 			router.push('/account')
@@ -134,7 +135,8 @@ const Navbar = () => {
 						dispatch(setActiveLoginForm('user'))
 					}
 				}}
-				onFinish={handleFinish}>
+				onFinish={handleFinish}
+			>
 				<LoginModal formRef={formRef} />
 			</ModalForm>
 		)
@@ -171,7 +173,7 @@ const Navbar = () => {
 							</motion.div>
 						)}
 						{isLoggedIn ? (
-							<Dropdown menu={{ items }} placement="bottomCenter">
+							<Dropdown menu={{ items }} placement="bottomCenter" trigger={['click']}>
 								<UserOutlined onClick={e => e.preventDefault()} />
 							</Dropdown>
 						) : (
