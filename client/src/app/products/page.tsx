@@ -8,18 +8,13 @@ import { Collapse, Divider, Dropdown, Flex, Pagination, Slider } from 'antd'
 import { ModalForm } from '@ant-design/pro-components'
 import { motion } from 'framer-motion'
 import type { MenuProps, PaginationProps } from 'antd'
+import { FILTER } from '@/constants'
 
 type Props = {}
 
 const flexStyle: CSSProperties = {
 	display: 'flex',
 	justifyContent: 'space-between'
-}
-
-const FILTER = {
-	1: 'Most Popular',
-	2: 'Top Selling',
-	3: 'Relevance'
 }
 
 const Filter: FC = () => {

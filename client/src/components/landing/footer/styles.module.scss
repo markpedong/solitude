@@ -32,10 +32,12 @@
 
             [type=text] {
                 font-size: toRem(14);
+                color: var(--color-primary)
             }
 
             ::placeholder {
                 font-size: toRem(14);
+                color: black
             }
         }
 
@@ -61,19 +63,20 @@
     .titleContainer {
         @apply flex flex-col gap-6;
         width: auto;
+        color: var(--color-primary);
 
         .title {
             font-family: 'Integral';
             font-size: toRem(24);
             line-height: toRem(24);
-            font-weight: 600;    
+            font-weight: 600;
         }
 
 
         .extraText {
             font-family: 'Satoshi';
             font-size: toRem(12);
-            color: rgba(0, 0, 0, 0.8);
+            color: var(--color-secondary);
         }
 
         .iconContainer {
@@ -92,12 +95,12 @@
 
         div {
             @apply flex flex-col gap-5;
-            color: rgba(0, 0, 0, 0.8);
+            color: var(--color-secondary);
             font-family: 'Satoshi';
             font-size: toRem(12);
 
             :first-child {
-                color: black;
+                color: var(--color-primary);
                 letter-spacing: toRem(1);
                 font-weight: 500
             }
@@ -133,7 +136,7 @@
         @apply flex justify-between items-center;
         font-family: 'Satoshi';
         font-size: toRem(12);
-        color: rgba(0, 0, 0, 0.8);
+        color: var(--color-secondary);
 
         .cardContainer {
             @apply flex;

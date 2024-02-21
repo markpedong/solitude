@@ -1,8 +1,9 @@
 @import '@/styles/_helpers.scss';
 
 .navbarWrapper {
-    @apply max-w-6xl mx-auto ;
-    border-bottom: toRem(1) solid var(--border-color)
+    @apply max-w-6xl mx-auto;
+    border-bottom: toRem(1) solid var(--border-color);
+    color: var(--color-primary);
 }
 
 .navbarContainer {
@@ -53,6 +54,7 @@
     .input {
         @apply ml-10;
         width: toRem(400);
+        color: var(--color-primary);
 
         @media screen and (max-width: 992px) {
             display: none;
@@ -73,8 +75,19 @@
         }
 
         svg {
+            color: var(--color-primary);
             width: toRem(18);
             height: toRem(18);
+        }
+    }
+
+    :global {
+        .ant-input-filled {
+            border-color: var(--border-color) !important;
+
+            &:focus-within {
+                background-color: var(--bg-secondary) !important
+            }
         }
     }
 }

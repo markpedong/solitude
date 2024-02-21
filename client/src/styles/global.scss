@@ -4,24 +4,37 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --color-primary: rgb(0, 0, 0);
+    --color-secondary: rgba(0, 0, 0, 0.5);
+    --white-color: rgb(255, 255, 255);
+    --bg-secondary: #f0f0f0;
+    --border-color: rgba(0, 0, 0, 0.2);
+
+    &.dark {
+        --color-primary: rgb(255, 255, 255);
+        --white-color: rgb(0, 0, 0);
+        --color-secondary: rgba(255, 255, 255, 0.5);
+        --bg-secondary: rgba(20, 20, 20, 0.9);
+        --border-color: rgba(255, 255, 255, 0.2);
+
+    }
+}
+
 html,
 body {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     transition: all 0.3s ease-in;
+    background-color: var(--white-color);
 
     ::-webkit-scrollbar {
         display: none !important;
     }
 }
 
-:root {
-    --color-primary: rgba(0, 0, 0, 0.8);
-    --color-secondary: rgba(0, 0, 0, 0.5);
-    --bg-secondary: #f0f0f0;
-    --border-color: rgba(0, 0, 0, 0.2)
-}
+
 
 .ant-select-dropdown {
     font-family: 'Jost' !important;
@@ -60,11 +73,15 @@ label.ant-form-item-required::before {
     letter-spacing: toRem(2);
 }
 
-.ant-form-item-required,.ant-typography,.ant-btn, .ant-form-item-explain  {
+.ant-form-item-required,
+.ant-typography,
+.ant-btn,
+.ant-form-item-explain {
     font-family: 'Satoshi' !important;
 }
 
-.ant-select-selector, .ant-btn-primary {
+.ant-select-selector,
+.ant-btn-primary {
     box-shadow: none !important;
 }
 
@@ -79,7 +96,9 @@ label.ant-form-item-required::before {
 input.ant-input {
     // background-color: red !important;
 
-    &::placeholder, &[type="text"] {
+    &::placeholder,
+    &[type="text"] {
+        color: var(--color-primary);
         font-family: 'Satoshi' !important;
     }
 }

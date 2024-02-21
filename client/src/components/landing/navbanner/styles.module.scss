@@ -6,8 +6,8 @@
     justify-items: center;
     height: toRem(30);
     font-family: 'satoshi';
-    background-color: black;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--bg-secondary);
     font-weight: 300;
     font-size: toRem(14);
 

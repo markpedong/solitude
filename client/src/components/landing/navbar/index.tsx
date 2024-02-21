@@ -117,7 +117,10 @@ const Navbar = () => {
 		return afterModalformFinish(actionRef, res?.message, res?.success)
 	}
 
-	const handleChangeTheme = () => dispatch(setDarkMode(!darkMode))
+	const handleChangeTheme = () => {
+		dispatch(setDarkMode(!darkMode))
+		document.documentElement.classList.toggle('dark', darkMode)
+	}
 
 	const renderLoginModal = () => {
 		return (

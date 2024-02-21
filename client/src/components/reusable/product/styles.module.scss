@@ -19,7 +19,7 @@
     .productHeader {
         font-size: toRem(12);
         font-weight: 600;
-
+        color: var(--color-primary)
     }
 
     .rateContainer {
@@ -29,12 +29,17 @@
         span {
             font-size: toRem(12);
         }
+
+        .rate {
+            color: var(--color-primary)
+        }
     }
 
     .priceContainer {
         @apply flex items-center gap-2 pt-2;
 
         font-size: toRem(16);
+        color: var(--color-primary);
 
         :nth-child(1) {
             font-weight: 700;

@@ -6,11 +6,13 @@
     grid-template-rows: repeat(2, 1fr);
 
     >div {
-        @apply relative bg-white rounded-3xl flex justify-between overflow-hidden;
+        @apply relative rounded-3xl flex justify-between overflow-hidden;
         height: toRem(140);
         font-family: 'Satoshi';
         font-weight: 700;
         text-transform: capitalize;
+        background-color: var(--white-color);
+        color: var(--color-primary);
 
         img {
             @apply rounded-3xl object-contain;
