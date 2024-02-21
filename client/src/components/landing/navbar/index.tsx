@@ -13,7 +13,7 @@ import type { MenuProps } from 'antd'
 import { Divider, Drawer, Dropdown, Input, Typography } from 'antd'
 import classNames from 'classnames'
 import { useRouter } from 'next/navigation'
-import { FC, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import LoginModal from './loginModal'
 import styles from './styles.module.scss'
@@ -119,7 +119,6 @@ const Navbar = () => {
 
 	const handleChangeTheme = () => {
 		dispatch(setDarkMode(!darkMode))
-		document.documentElement.classList.toggle('dark', darkMode)
 	}
 
 	const renderLoginModal = () => {
@@ -144,6 +143,10 @@ const Navbar = () => {
 			</ModalForm>
 		)
 	}
+
+	useEffect(() => {
+		document.documentElement.classList.toggle('dark', darkMode)
+	}, [darkMode])
 
 	return (
 		<>
