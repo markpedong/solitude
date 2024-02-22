@@ -19,17 +19,27 @@
         letter-spacing: toRem(1);
         text-transform: capitalize;
         font-family: "Integral";
+        color: var(--color-primary);
     }
 
     :nth-child(2) {
         font-size: toRem(12);
         line-height: toRem(12);
-        color: #65635F;
+        color: var(--color-secondary);
     }
 }
 
+
 .tabsContainer {
     margin-block-end: toRem(15);
+
+    :global {
+        .ant-tabs-tab-btn {
+            letter-spacing: toRem(2);
+            font-family: "Satoshi";
+            color: var(--color-primary);
+        }
+    }
 }
 
 .extraContentHeader {
@@ -44,7 +54,7 @@
 .orderContainer {
     gap: toRem(20);
     padding-block: toRem(3);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: toRem(1) solid var(--border-color);
 
     img {
         width: toRem(100);
@@ -93,7 +103,7 @@
 .allProducts {
     gap: toRem(20);
     padding-block-start: toRem(10);
-    border: toRem(1) solid rgba(50, 50, 50, 0.2);
+    border: toRem(1) solid var(--border-color);
     border-radius: toRem(5);
     padding: toRem(5);
 
@@ -120,7 +130,7 @@
         }
 
         :nth-child(2) {
-            color: #65635F;
+            color: var(--color-secondary);
         }
 
         :nth-child(3) {
@@ -131,18 +141,18 @@
 
 .addressContainer {
     padding-block: toRem(12);
-    border-block-end: toRem(1) solid rgba(50, 50, 50, 0.5);
+    border-block-end: toRem(1) solid var(--border-color);
 
     >div:first-child {
         > :first-child span:nth-of-type(2) {
-            color: rgba(50, 50, 50, 0.5);
+            color: var(--border-color);
         }
 
         > :nth-child(4) {
             margin-block-start: toRem(5);
 
             * {
-                border: toRem(1) solid rgba(50, 50, 50, 0.5);
+                border: toRem(1) solid var(--border-color);
                 border-radius: toRem(3);
                 padding: toRem(3) toRem(5);
                 margin-inline-end: toRem(5);
@@ -158,7 +168,7 @@
 
         > :nth-child(1),
         > :nth-child(2) {
-            color: rgba(0, 0, 0, 1);
+            color: var(--color-primary);
         }
 
         > :nth-child(1) {

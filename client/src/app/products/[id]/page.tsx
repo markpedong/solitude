@@ -8,6 +8,7 @@ import { Rate, Tabs } from 'antd'
 import type { TabsProps } from 'antd'
 import Rating from '@/components/products/rating'
 import { motion } from 'framer-motion'
+import { useAppSelector } from '@/redux/store'
 
 type Props = {}
 
@@ -34,6 +35,7 @@ const sizeOption = [
 
 const ProductID = (props: Props) => {
 	const [selectedSize, setSelectedSize] = useState<number>()
+	const { darkMode } = useAppSelector(s => s.boolean)
 	const onChange = (key: string) => {
 		console.log(key)
 	}
@@ -130,8 +132,8 @@ const ProductID = (props: Props) => {
 									style={
 										selectedSize === q.value
 											? {
-													background: 'black',
-													color: 'white'
+													background: darkMode ? 'white' : 'black',
+													color: darkMode ? 'black' : 'white'
 											  }
 											: {}
 									}

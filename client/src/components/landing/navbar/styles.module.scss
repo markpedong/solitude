@@ -102,7 +102,7 @@
 
 
 .loginContainer {
-    background-color: white;
+    background-color: var(--bg-secondary);
     width: 100%;
 }
 
@@ -126,10 +126,12 @@
 
 .loginForm {
     flex: 1;
+    background-color: var(--bg-secondary);
 
     .loginHeader {
         margin-block-start: 1rem;
         font-family: "Integral";
+        color: var(--color-primary);
 
         img {
             block-size: 1rem;
@@ -140,9 +142,10 @@
     .loginHeaderText {
         text-align: center;
         margin-block-start: 1rem;
+        color: var(--color-primary);
 
         h1 {
-            font-family: "Satoshi"
+            font-family: "Satoshi";
         }
 
         span {
@@ -156,14 +159,15 @@
 }
 
 .loginButton {
+    @apply flex justify-center items-center py-[0.5rem] rounded-md cursor-pointer;
     box-shadow: none !important;
 
-    span {
-        text-transform: uppercase;
-        font-family: "Satoshi";
-        font-weight: 200;
-        letter-spacing: 0rem;
-    }
+    text-transform: uppercase;
+    font-family: "Satoshi";
+    font-weight: 400;
+    letter-spacing: toRem(3);
+    background-color: var(--color-primary);
+    color: var(--bg-secondary);
 }
 
 .formContainer {
@@ -206,4 +210,10 @@
 .menuItems {
     font-family: "Satoshi";
     letter-spacing: toRem(1);
+    color: var(--color-primary);
+}
+
+.userTypes {
+    @apply cursor-pointer;
+    color: var(--color-primary);
 }

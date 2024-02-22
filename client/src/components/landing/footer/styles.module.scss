@@ -95,12 +95,11 @@
 
         div {
             @apply flex flex-col gap-5;
-            color: var(--color-secondary);
+            color: var(--color-primary);
             font-family: 'Satoshi';
             font-size: toRem(12);
 
             :first-child {
-                color: var(--color-primary);
                 letter-spacing: toRem(1);
                 font-weight: 500
             }

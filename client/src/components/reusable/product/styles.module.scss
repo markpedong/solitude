@@ -19,7 +19,8 @@
     .productHeader {
         font-size: toRem(12);
         font-weight: 600;
-        color: var(--color-primary)
+        color: var(--color-primary);
+        cursor: pointer
     }
 
     .rateContainer {

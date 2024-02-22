@@ -114,26 +114,10 @@
         border-right: none;
     }
 
-    // @media screen and (max-width: 992px) {
-    //     @apply justify-items-center grid-flow-col pb-0;
-    //     grid-template-columns:repeat(auto-fill, toRem(180));
-    // }
-
     @media screen and (max-width: 576px) {
         @apply grid-cols-1 gap-3;
     }
 
-    //     div {
-    //         :first-child {
-    //             font-size: toRem(30);
-    //         }
-
-    //         :last-child {
-    //             font-size: toRem(12);
-    //         }
-    //     }
-
-    // }
 }
 
 .footerWrapper {
@@ -173,6 +157,7 @@
             line-height: toRem(32);
             text-transform: uppercase;
             font-weight: 600;
+            color: var(--color-primary)
         }
 
         .arrowContainer {

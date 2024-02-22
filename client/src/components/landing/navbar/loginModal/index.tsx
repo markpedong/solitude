@@ -56,15 +56,14 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 				</Flex>
 				<Flex className={styles.loginHeaderText} justify="center" vertical>
 					<h1>{create ? 'Create an Account' : forgot ? 'Forgotten your Password?' : seller ? 'Got any products? Post it Here!' : `Hello, Let's Sign In`}</h1>
-					<span>
-						{create ? 'Register New Solitude Account' : forgot ? 'Enter your email to recover your Account!' : seller ? 'Login as a Seller' : 'Please register or sign in'}
-					</span>
+					<span>{create ? 'Register New Solitude Account' : forgot ? 'Enter your email to recover your Account!' : seller ? 'Login as a Seller' : 'Please register or sign in'}</span>
 				</Flex>
 				<div
 					className={styles.formContainer}
 					style={{
 						margin: `${forgot ? '2.5rem' : '3.5rem'} 0 0.5rem 0`
-					}}>
+					}}
+				>
 					{create && (
 						<ProFormSelect
 							label="Type"
@@ -158,47 +157,49 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 					)}
 					{!forgot && !create && (
 						<Flex justify="space-between">
-							<Typography.Link
-								type="secondary"
+							<span
+								className={styles.userTypes}
 								onClick={() => {
 									if (type === USER_TYPES.USER) {
 										dispatch(setActiveLoginForm('seller'))
-                                        dispatch(setType(USER_TYPES.SELLER))
+										dispatch(setType(USER_TYPES.SELLER))
 									} else {
 										dispatch(setActiveLoginForm('user'))
-                                        dispatch(setType(USER_TYPES.USER))
+										dispatch(setType(USER_TYPES.USER))
 									}
 									formRef?.current?.resetFields()
-								}}>
+								}}
+							>
 								{type === USER_TYPES.USER ? 'Seller? Click here' : 'Buyer? Click here'}
-							</Typography.Link>
-							<Typography.Link
-								type="secondary"
+							</span>
+							<span
+								className={styles.userTypes}
 								onClick={() => {
 									dispatch(setActiveLoginForm('forgot'))
 									formRef?.current?.resetFields()
-								}}>
+								}}
+							>
 								Forgot Password?
-							</Typography.Link>
+							</span>
 						</Flex>
 					)}
 				</div>
 				<Flex style={{ height: '100%' }} justify="end" vertical>
-					<Button
-						className={create ? styles.loginButton : ''}
+					<span
+						className={styles.loginButton}
 						style={{
 							marginBlockStart: create ? '2rem' : forgot ? '0.4rem' : '2rem'
 						}}
-						type="primary"
 						onClick={() => {
 							formRef.current?.submit()
-						}}>
+						}}
+					>
 						{create ? 'SIGN IN' : forgot ? 'RECOVER YOUR ACCOUNT' : 'LOGIN'}
-					</Button>
+					</span>
 					<Flex className={styles.createAccountContainer} justify="center" align="center">
-						<Typography.Link type="secondary" onClick={handleLoginRegister}>
+						<span className={styles.userTypes} onClick={handleLoginRegister}>
 							{create ? 'SIGN IN TO ACCOUNT' : 'CREATE AN ACCOUNT'}
-						</Typography.Link>
+						</span>
 						<RightOutlined onClick={handleLoginRegister} />
 					</Flex>
 				</Flex>

@@ -4,11 +4,12 @@
     @apply max-w-6xl mx-auto my-10 px-5;
 
     .productCategory {
-        @apply flex items-center gap-2 text-gray-500 mb-10;
+        @apply flex items-center gap-2 mb-10;
+        color: var(--color-secondary);
         font-size: toRem(12);
 
         span:last-child {
-            color: black;
+            color: var(--color-primary);
         }
     }
 
@@ -24,19 +25,23 @@
 }
 
 .orderContainer {
-    @apply bg-white text-black p-5 rounded-3xl;
+    @apply p-5 rounded-3xl;
     border: toRem(1) solid var(--border-color);
+    color: var(--color-primary);
+    background-color: var(--white-color);
 
     :global {
-        .ant-divider{ 
-            margin: toRem(12) 0; 
+        .ant-divider {
+            margin: toRem(12) 0;
         }
     }
 }
 
 .orderSummaryContainer {
-    @apply bg-white text-black p-5 rounded-3xl;
+    @apply p-5 rounded-3xl;
     border: toRem(1) solid var(--border-color);
+    color: var(--color-primary);
+    background-color: var(--white-color);
 
     .subContent {
         @apply flex justify-between pb-5;
@@ -54,7 +59,7 @@
 
         &.total {
             :nth-child(1) {
-                color: black;
+                color: var(--color-primary);
             }
         }
 
@@ -69,7 +74,7 @@
 
             span {
                 @apply rounded-full;
-                background-color: #F0F0F0;
+                background-color: var(--bg-secondary);
 
                 input {
                     &[type="text"] {
@@ -94,17 +99,21 @@
             }
 
             div {
-                @apply bg-black text-white p-2 px-6 rounded-full;
+                @apply p-2 px-6 rounded-full;
                 font-weight: 400;
                 font-size: toRem(12);
                 font-family: "Satoshi";
+                background-color: var(--color-primary);
+                color: var(--white-color);
             }
         }
     }
 
     .checkout {
-        @apply flex justify-center items-center bg-black text-white p-2 rounded-full mb-5 gap-3;
-        font-size: toRem(14)
+        @apply flex justify-center items-center p-2 rounded-full mb-5 gap-3;
+        font-size: toRem(14);
+        background-color: var(--color-primary);
+        color: var(--white-color);
     }
 }
 
@@ -114,4 +123,5 @@
     font-size: toRem(25);
     line-height: toRem(25);
     font-weight: 700;
+    color: var(--color-primary);
 }

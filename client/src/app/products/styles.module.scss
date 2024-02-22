@@ -6,10 +6,11 @@
 
     .productCategory {
         @apply flex items-center gap-2 text-gray-500 mb-10 pl-5;
+        color: var(--color-secondary);
         font-size: toRem(12);
 
         span:last-child {
-            color: black;
+            color: var(--color-primary);
         }
     }
 }
@@ -31,18 +32,21 @@
         font-size: toRem(16);
         line-height: toRem(16);
         font-weight: 700;
+        color: var(--color-primary)
     }
 
     .showingContainer {
         @apply flex justify-center items-center gap-10;
         font-size: toRem(12);
         font-weight: 300;
+        color: var(--color-primary);
 
         .sortContainer {
             @apply flex items-center justify-center gap-1;
 
             span {
                 @apply pr-3;
+                color: var(--color-primary);
 
                 @media screen and (max-width: 768px) {
                     &:first-child {
@@ -53,6 +57,7 @@
 
             p {
                 font-weight: 700;
+                color: var(--color-primary);
             }
 
             @media screen and (max-width: 420px) {
@@ -99,6 +104,26 @@
     :global {
         .ant-pagination {
             @apply h-10;
+            color: var(--color-primary) !important;
+
+            .ant-pagination-item-active a {
+                @apply rounded-sm;
+
+                color: var(--white-color);
+                background-color: var(--color-primary);
+
+                &:hover {
+                    color: var(--color-primary);
+                }
+            }
+
+            .ant-pagination-item-ellipsis {
+                color: var(--color-primary) !important;
+            }
+
+            .ant-pagination-item-link-icon {
+                color: var(--color-primary) !important
+            }
         }
     }
 
@@ -122,6 +147,7 @@
         font-family: "Satoshi";
         font-size: toRem(12);
         font-weight: 700;
+        color: var(--color-primary);
 
         svg {
             width: toRem(12);
@@ -136,7 +162,7 @@
 
 .filterWrapper {
     .collapseLabel {
-        color: var(--color-secondary);
+        color: var(--color-primary);
         font-size: toRem(12);
     }
 
@@ -163,6 +189,22 @@
 
                 .ant-collapse-content-box {
                     @apply px-0 pt-0 pb-3;
+
+                    .ant-slider-track.ant-slider-track-1 {
+                        background-color: var(--color-primary);
+                    }
+
+                    .ant-slider-handle.ant-slider-handle-1 {
+                        &::after {
+                            background-color: var(--color-primary)
+                        }
+                    }
+
+                    .ant-slider-handle.ant-slider-handle-2 {
+                        &::after {
+                            background-color: var(--color-primary)
+                        }
+                    }
                 }
             }
 
@@ -198,7 +240,7 @@
         @apply rounded-full flex items-center justify-center;
 
         background-color: red;
-        color: white;
+        color: var(--color-primary);
         font-size: toRem(15);
         font-weight: 500;
         height: toRem(25);
@@ -212,13 +254,15 @@
     span {
         @apply px-3 rounded-full flex items-center capitalize whitespace-nowrap;
         font-size: toRem(12);
-        color: var(--color-secondary);
+        color: var(--color-primary);
         height: toRem(25);
     }
 }
 
 .applyButton {
-    @apply flex items-center justify-center bg-black text-white w-full mt-10 py-3 rounded-full cursor-pointer touch-none;
+    @apply flex items-center justify-center w-full mt-10 py-3 rounded-full cursor-pointer touch-none;
+    background-color: var(--color-primary);
+    color: var(--white-color);
     font-size: toRem(14)
 }
 

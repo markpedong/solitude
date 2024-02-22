@@ -122,7 +122,7 @@ const Filter: FC = () => {
 				items={[
 					{
 						key: '1',
-						label: <span>Dress Style</span>,
+						label: <span className={styles.collapseLabel}>Dress Style</span>,
 						children: (
 							<Collapse
 								expandIconPosition="end"
@@ -164,17 +164,17 @@ const Products = (props: Props) => {
 	const items: MenuProps['items'] = [
 		{
 			key: 1,
-			label: <span>Most Popular</span>,
+			label: <span className={styles.header}>Most Popular</span>,
 			onClick: handleClickSort
 		},
 		{
 			key: 2,
-			label: <span>Top Selling</span>,
+			label: <span className={styles.header}>Top Selling</span>,
 			onClick: handleClickSort
 		},
 		{
 			key: 3,
-			label: <span>Relevance</span>,
+			label: <span className={styles.header}>Relevance</span>,
 			onClick: handleClickSort
 		}
 	]
