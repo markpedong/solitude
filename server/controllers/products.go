@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"solitude/cloudinary"
 	"solitude/database"
@@ -111,7 +110,7 @@ func GetAllProducts(ctx *gin.Context) {
 	}
 
 	var productModels []models.Product
-	if err := query.Model(&models.Product{}).Find(&productModels).Error; err != nil {
+	if err := query.Find(&productModels).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -139,7 +138,6 @@ func GetAllProducts(ctx *gin.Context) {
 		}
 	}
 
-	fmt.Println(products)
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(products))
 }
 
