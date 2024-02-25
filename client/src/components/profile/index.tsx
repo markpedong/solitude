@@ -83,7 +83,7 @@ const Profile: FC = () => {
 					? {
 							...userData,
 							password: '',
-							birthday: !!userData?.birthday ? userData?.birthday : dayjs().format('MM-DD-YYYY'),
+							birthday: !!userData?.birthday ? userData?.birthday : dayjs().format('MM-DD-YYYY')
 					  }
 					: { ...sellerData }
 			}
@@ -99,7 +99,7 @@ const Profile: FC = () => {
 			}}
 			onOpenChange={async visible => {
 				if (visible) {
-                    let data 
+					let data
 					if (type === USER_TYPES.SELLER) {
 						data = await getSellerData({ seller_id: sellerData?.seller_id })
 						await dispatch(setSellerData(data?.data))
@@ -108,10 +108,11 @@ const Profile: FC = () => {
 						await dispatch(setUserData(data?.data))
 					}
 
-                    setImageUrl(data?.data?.avatar)
+					setImageUrl(data?.data?.avatar)
 				}
 			}}
-			onFinish={handleFinish}>
+			onFinish={handleFinish}
+		>
 			<Flex gap={20} align="center" style={{ margin: '0 auto' }}>
 				<Upload
 					listType="picture-circle"
@@ -130,8 +131,9 @@ const Profile: FC = () => {
 						} finally {
 							setUploading(false)
 						}
-					}}>
-					{imageUrl ? <Image className={styles.profileImage} src={imageUrl} alt="avatar" style={{ width: '100%' }} width={100} height={100} /> : uploadButton}
+					}}
+				>
+					{imageUrl ? <Image className={styles.profileImage} src={imageUrl} alt="avatar" width={100} height={100} /> : uploadButton}
 				</Upload>
 				<ProForm.Group>
 					{type === USER_TYPES.USER ? (

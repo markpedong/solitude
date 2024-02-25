@@ -4,8 +4,11 @@ import styles from './styles.module.scss'
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import CategoryEl from '@/components/landing/category'
+import { getProducts } from '@/api'
 
 const Page = async () => {
+	const products = await getProducts({})
+
 	return (
 		<>
 			<div className={styles.mainWrapper}>
@@ -45,8 +48,8 @@ const Page = async () => {
 					<Image src="/assets/footer/ck.png" alt="ck" width={100} height={100} />
 				</div>
 			</div>
-			<LandingContent title="new arrival" />
-			<LandingContent title="top selling" />
+			<LandingContent title="new arrival" products={products?.data} />
+			<LandingContent title="top selling" products={products?.data} />
 			<div className={styles.categoryWrapper}>
 				<PageHeader title="browse by dress style" />
 				<CategoryEl />

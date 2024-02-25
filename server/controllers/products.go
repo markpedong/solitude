@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"solitude/cloudinary"
 	"solitude/database"
@@ -121,6 +122,7 @@ func GetAllProducts(ctx *gin.Context) {
 		Price       float64  `json:"price"`
 		Image       []string `json:"image"`
 		Description string   `json:"description"`
+		Rating      int      `json:"rating"`
 	}
 	products := make([]returnedProduct, len(productModels))
 	for i, productModel := range productModels {
@@ -130,12 +132,14 @@ func GetAllProducts(ctx *gin.Context) {
 			Price:       productModel.Price,
 			Description: productModel.Description,
 			Image:       []string(productModel.Image),
+			Rating:      productModel.Rating,
 		}
 		if len(products[i].Image) > 1 {
 			products[i].Image = []string{products[i].Image[0]}
 		}
 	}
 
+	fmt.Println(products)
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(products))
 }
 

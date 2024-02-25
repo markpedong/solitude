@@ -7,12 +7,15 @@ import styles from './styles.module.scss'
 import Product from './product'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
+import { TProduct } from '@/api'
+
 type Props = {
 	title: string
 }
 
 type LandingProps = {
 	title: string
+	products: TProduct[]
 }
 
 type ReviewProps = {
@@ -23,18 +26,16 @@ export const PageHeader: FC<Props> = ({ title }) => {
 	return <div className={styles.header}>{title}</div>
 }
 
-export const LandingContent: FC<LandingProps> = ({ title }) => {
+export const LandingContent: FC<LandingProps> = ({ title, products }) => {
 	const router = useRouter()
 
 	return (
 		<div className={styles.newArrivalWrapper}>
 			<PageHeader title={title} />
 			<div className={styles.productContainer}>
-				<Product />
-				<Product />
-				<Product />
-				<Product />
-				<Product />
+				{products?.map(q => (
+					<Product data={q} key={q?.product_id} />
+				))}
 			</div>
 			<div className={styles.viewButtonContainer}>
 				<motion.span className={styles.button} onClick={() => router.push('/products')} whileHover={{ scale: 1.1 }}>

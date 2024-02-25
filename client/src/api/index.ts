@@ -1,14 +1,14 @@
 import { get, post, upload } from './http'
 
 export type UserData = {
-    id: string
-    created_at: string
-    updated_at: string
-    user_cart: []
-    address_details: []
-    orders: []
-    password: string
-    email: string
+	id: string
+	created_at: string
+	updated_at: string
+	user_cart: []
+	address_details: []
+	orders: []
+	password: string
+	email: string
 }
 
 // /users/signup
@@ -25,25 +25,26 @@ export const sellerSignup = params => post('/users/signupSeller', params)
 
 // /users/products
 export type TProduct = {
-    categories: string[]
-    product_id: string
-    product_name: string
-    price: number
-    image: string[]
-    created_at: number
-    description: string
-    stock: number
-    variations: TVariations[]
+	categories: string[]
+	product_id: string
+	product_name: string
+	price: number
+	image: string[]
+	created_at: number
+	description: string
+	stock: number
+	variations: TVariations[]
+	rating: number
 }
 
 export const getProducts = params => post<TProduct[]>('/users/products', params)
 
 // /api/collections
 export type TCollection = {
-    image: string
-    title: string
-    description: string
-    link: string
+	image: string
+	title: string
+	description: string
+	link: string
 }
 export const getCollections = () => get<TCollection[]>('/users/collections')
 
@@ -61,14 +62,14 @@ export const getUserData = params => post('/users/getUserData', params)
 
 // /users/getSellerData
 export type SellerData = {
-    seller_id: string
-    created_at: string
-    updated_at: string
-    seller_name: string
-    phone: string
-    location: string
-    avatar: string
-    products: number
+	seller_id: string
+	created_at: string
+	updated_at: string
+	seller_name: string
+	phone: string
+	location: string
+	avatar: string
+	products: number
 }
 export const getSellerData = params => post<SellerData>('/users/getSellerData', params)
 
@@ -79,13 +80,13 @@ export const uploadImages = params => upload('/api/uploadImage', params)
 export const addProduct = params => post('/api/add-product', params)
 
 // /api/getProductsByID
-export const getAllProducts = params => post('/users/getProductsByID', params)
+export const getProductsData = params => post('/users/getProductsByID', params)
 
 // /users/getVariationsByID
 export type TVariations = {
-    id: string
-    product_id: string
-    label: string
-    value: string[]
+	id: string
+	product_id: string
+	label: string
+	value: string[]
 }
 export const getVariations = params => post('/users/getVariationsByID', params)

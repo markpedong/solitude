@@ -22,7 +22,7 @@ func DBSet() {
 	_, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 
-	DB, err = gorm.Open(postgres.Open(os.Getenv("DB_DSN")),
+	DB, err = gorm.Open(postgres.Open(os.Getenv("DB_DSN_LOCAL")),
 		&gorm.Config{
 			NamingStrategy: schema.NamingStrategy{SingularTable: true},
 		})

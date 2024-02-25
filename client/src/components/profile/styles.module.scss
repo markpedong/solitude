@@ -7,8 +7,6 @@
 }
 
 .profileImage {
-    border-radius: 50%;
-    object-fit: contain;
-    object-position: center center;
+    @apply object-cover h-full rounded-full;
     background-color: #f8f8f8;
 }

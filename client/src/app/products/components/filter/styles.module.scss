@@ -1,0 +1,141 @@
+@import '@/styles/_helpers.scss';
+
+.filterWrapper {
+    .collapseLabel {
+        color: var(--color-primary);
+        font-size: toRem(12);
+    }
+
+    :global {
+        .ant-divider {
+            margin: toRem(12) 0;
+        }
+
+        .ant-collapse {
+            border: 0;
+            background: none;
+
+            .ant-collapse-item {
+                border: 0;
+
+                .ant-collapse-content.ant-collapse-content-active {
+                    border: 0 !important;
+                }
+
+                .ant-collapse-header {
+                    @apply px-0 pt-0 pb-3;
+                    border-bottom: 0 !important
+                }
+
+                .ant-collapse-content-box {
+                    @apply px-0 pt-0 pb-3;
+
+                    .ant-slider-track.ant-slider-track-1 {
+                        background-color: var(--color-primary);
+                    }
+
+                    .ant-slider-handle.ant-slider-handle-1 {
+                        &::after {
+                            background-color: var(--color-primary)
+                        }
+                    }
+
+                    .ant-slider-handle.ant-slider-handle-2 {
+                        &::after {
+                            background-color: var(--color-primary)
+                        }
+                    }
+                }
+            }
+
+
+        }
+    }
+}
+
+.filterContainer {
+    @apply rounded-3xl p-4 h-fit;
+    border: toRem(1) solid var(--border-color);
+
+    .header {
+        @apply flex justify-between items-center;
+
+        font-family: "Satoshi";
+        font-size: toRem(12);
+        font-weight: 700;
+        color: var(--color-primary);
+
+        svg {
+            width: toRem(12);
+            height: toRem(12);
+        }
+    }
+
+    @media screen and (max-width: 992px) {
+        display: none;
+    }
+}
+
+
+
+.firstFilter {
+    @apply flex flex-col gap-5;
+    font-family: "Satoshi";
+
+    div {
+        @apply flex justify-between;
+
+        span {
+            color: var(--color-secondary);
+            font-size: toRem(12);
+        }
+
+        svg {
+            color: var(--color-primary);
+            height: toRem(12);
+            width: toRem(12)
+        }
+    }
+}
+
+.colorContainer {
+    @apply grid gap-5 py-2 grid-cols-6 px-2;
+
+    span {
+        @apply rounded-full flex items-center justify-center;
+
+        background-color: red;
+        color: var(--color-primary);
+        font-size: toRem(15);
+        font-weight: 500;
+        height: toRem(25);
+        width: toRem(25);
+    }
+}
+
+.sizeVariationContainer {
+    @apply overflow-scroll grid grid-cols-2 justify-items-start gap-4 py-5;
+
+    span {
+        @apply px-3 rounded-full flex items-center capitalize whitespace-nowrap;
+        font-size: toRem(12);
+        color: var(--color-primary);
+        height: toRem(25);
+    }
+}
+
+.applyButton {
+    @apply flex items-center justify-center w-full mt-10 py-3 rounded-full cursor-pointer touch-none;
+    background-color: var(--color-primary);
+    color: var(--white-color);
+    font-size: toRem(14)
+}
+
+.mobileFilter {
+    @apply p-1 px-2 rounded-full;
+    background-color: #F0EEED;
+
+    @media screen and (min-width: 993px) {
+        display: none;
+    }
+}
