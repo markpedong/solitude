@@ -5,90 +5,87 @@ import { getLocalStorage } from '@/utils/xLocalStorage'
 import { clearUserData } from '@/constants/helper'
 
 type ApiResponse<T> = {
-    data?: T | any
-    message: string
-    success: boolean
-    status: number
+	data?: T | any
+	message: string
+	success: boolean
+	status: number
 }
 
 export const throttleAlert = (msg: string) => throttle(message.error(msg), 1500, { trailing: false, leading: true })
 
 const upload = async <T>(url: string, data): Promise<ApiResponse<T>> => {
-    const token = getLocalStorage('token')
-    const form = new FormData()
+	const token = getLocalStorage('token')
+	const form = new FormData()
 
-    form.append('file', data)
+	form.append('file', data)
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_LOCAL}${url}`, {
-        method: 'POST',
-        headers: {
-            ...(token ? { token: String(token)?.replaceAll(`"`, '') } : {}),
-        },
-        body: form,
-    })
-    //prettier-ignore
-    const result = await response.json() as ApiResponse<T>
+	const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`, {
+		method: 'POST',
+		headers: {
+			...(token ? { token: String(token)?.replaceAll(`"`, '') } : {})
+		},
+		body: form
+	})
+	//prettier-ignore
+	const result = await response.json() as ApiResponse<T>
 
-    if (result?.status !== 200) {
-        if (response?.status === 401) {
-            clearUserData()
-        }
+	if (result?.status !== 200) {
+		if (response?.status === 401) {
+			clearUserData()
+		}
 
-        throttleAlert(result?.message)
-        return result
-    }
+		throttleAlert(result?.message)
+		return result
+	}
 
-    return result as ApiResponse<T>
+	return result as ApiResponse<T>
 }
 
 const post = async <T>(url: string, data = {}, client = true): Promise<ApiResponse<T>> => {
-    const token = getLocalStorage('token')
-    const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_LOCAL}${url}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            ...(token ? { token: String(token)?.replaceAll(`"`, '') } : {}),
-        },
-        body: JSON.stringify(data) || '{}',
-    })
-    //prettier-ignore
-    const response = await apiResponse.json() as ApiResponse<T>
+	const token = getLocalStorage('token')
+	const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			...(token ? { token: String(token)?.replaceAll(`"`, '') } : {})
+		},
+		body: JSON.stringify(data) || '{}'
+	})
+	//prettier-ignore
+	const response = await apiResponse.json() as ApiResponse<T>
 
-    if (response?.status !== 200 && client) {
-        if (response?.status === 401) {
-            clearUserData()
-        }
+	if (response?.status !== 200 && client) {
+		if (response?.status === 401) {
+			clearUserData()
+		}
 
-        throttleAlert(response?.message)
-        return response
-    }
+		throttleAlert(response?.message)
+		return response
+	}
 
-    return response as ApiResponse<T>
+	return response as ApiResponse<T>
 }
 
 const get = async <T>(url: string, data = {}, client = true): Promise<ApiResponse<T>> => {
-    const token = getLocalStorage('token')
-    const apiResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_LOCAL}${url}${stringify(data) ? '?' + stringify(data) : ''}`,
-        {
-            method: 'GET',
-            headers: {
-                ...(token ? { token: String(token)?.replaceAll(`"`, '') } : {}),
-            },
-        }
-    )
-    //prettier-ignore
-    const response = await apiResponse.json() as ApiResponse<T>
-    if (response?.status !== 200 && client) {
-        if (response?.status === 401) {
-            clearUserData()
-        }
+	const token = getLocalStorage('token')
+	const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}${stringify(data) ? '?' + stringify(data) : ''}`, {
+		method: 'GET',
+		headers: {
+			...(token ? { token: String(token)?.replaceAll(`"`, '') } : {})
+		}
+	})
+	//prettier-ignore
+	const response = await apiResponse.json() as ApiResponse<T>
+	if (response?.status !== 200 && client) {
+		if (response?.status === 401) {
+			clearUserData()
+		}
 
-        throttleAlert(response?.message)
-        return response
-    }
+		throttleAlert(response?.message)
+		return response
+	}
 
-    return response as ApiResponse<T>
+	return response as ApiResponse<T>
 }
 
 export { get, post, upload }
