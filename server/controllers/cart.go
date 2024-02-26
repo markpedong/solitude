@@ -17,25 +17,23 @@ func AddToCart(ctx *gin.Context) {
 	}
 
 	if err := ctx.ShouldBindJSON(&ids); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid JSON input",
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid JSON input")
 		return
 	}
 
 	if err := Validate.Struct(ids); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	var foundUser models.User
+	if err := database.DB.Table("user").Where("id = ?", ids.UserID).First(&foundUser).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	// ADD TO CART DATABASE QUERY IS NOT YET IMPLEMENTED
-	helpers.JSONResponse(ctx, "added to cart successfully")
+	helpers.JSONResponse(ctx, "added to cart successfully", helpers.DataHelper(foundUser))
 }
 
 func RemoveItem(ctx *gin.Context) {
