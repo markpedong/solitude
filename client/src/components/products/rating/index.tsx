@@ -7,10 +7,9 @@ import { Dropdown, Flex } from 'antd'
 import type { MenuProps } from 'antd'
 import { FILTER } from '@/constants'
 import { motion } from 'framer-motion'
+import { TProduct } from '@/api'
 
-type Props = {}
-
-const Rating: FC = (props: Props) => {
+const Rating: FC<{ products: TProduct[] }> = ({ products }) => {
 	const [sort, setSort] = useState(1)
 	const handleClickSort = e => setSort(e.key)
 
@@ -55,7 +54,7 @@ const Rating: FC = (props: Props) => {
 				</div>
 				<div>
 					<ControlOutlined className={styles.filter} />
-					<Dropdown className={styles.latest} menu={{ items }} trigger={['click']} placement="bottomCenter">
+					<Dropdown className={styles.latest} menu={{ items }} trigger={['click']} placement="bottom">
 						<Flex justify="center" gap={5}>
 							<p>{FILTER[sort]}</p>
 							<DownOutlined />
@@ -70,11 +69,9 @@ const Rating: FC = (props: Props) => {
 			</motion.div>
 			<PageHeader title="you might also like" />
 			<div className={styles.productWrapper}>
-				<Product />
-				<Product />
-				<Product />
-				<Product />
-				<Product />
+				{products?.slice(0, 10).map(q => (
+					<Product data={q} key={q?.product_id} />
+				))}
 			</div>
 		</div>
 	)

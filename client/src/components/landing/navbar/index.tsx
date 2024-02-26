@@ -179,7 +179,7 @@ const Navbar = () => {
 							</motion.div>
 						)}
 						{isLoggedIn ? (
-							<Dropdown menu={{ items }} placement="bottomCenter" trigger={['click']}>
+							<Dropdown menu={{ items }} placement="bottom" trigger={['click']}>
 								<UserOutlined onClick={e => e.preventDefault()} />
 							</Dropdown>
 						) : (

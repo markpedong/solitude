@@ -15,7 +15,7 @@ const Product: FC<Props> = ({ data }) => {
 	return (
 		<div className={styles.productContainer}>
 			<div className={styles.imageContainer}>
-				<Image src={data?.image?.[0] ?? ''} alt="sample" width={300} height={300} />
+				<Image src={data?.image?.[0] ?? ''} alt="sample" width={300} height={300} priority />
 			</div>
 			<div className={styles.productHeader} onClick={() => router.push(`/products/${data?.product_id}`)}>
 				{data?.product_name}
@@ -28,7 +28,7 @@ const Product: FC<Props> = ({ data }) => {
 			</div>
 			<div className={styles.priceContainer}>
 				<span className={styles.price}>₱{data?.price}</span>
-				<span className={styles.price}>₱250</span>
+				<span className={styles.price}>₱{data?.price}</span>
 				<span className={styles.price}>-20%</span>
 			</div>
 		</div>

@@ -13,6 +13,7 @@ import { TProduct } from '@/api'
 
 type Props = {
 	data: TProduct
+	products: TProduct[]
 }
 const scaleSize = { scale: 0.9 }
 
@@ -35,7 +36,7 @@ const sizeOption = [
 	}
 ]
 
-const ProductDetails: FC<Props> = ({ data }) => {
+const ProductDetails: FC<Props> = ({ data, products }) => {
 	const [selectedSize, setSelectedSize] = useState<number>()
 	const { darkMode } = useAppSelector(s => s.boolean)
 
@@ -52,7 +53,7 @@ const ProductDetails: FC<Props> = ({ data }) => {
 		{
 			key: '2',
 			label: 'Rating & Reviews',
-			children: <Rating />
+			children: <Rating products={products} />
 		},
 		{
 			key: '3',
@@ -64,18 +65,11 @@ const ProductDetails: FC<Props> = ({ data }) => {
 	const memoizedImageContainer = useMemo(
 		() => (
 			<div className={styles.productImageContainer}>
-				<div className={styles.div1}>
-					<Image src="/assets/products/tshirt-sample.png" alt="sample" height={100} width={100} />
-				</div>
-				<div className={styles.div2}>
-					<Image src="/assets/products/tshirt-sample.png" alt="sample" height={100} width={100} />
-				</div>
-				<div className={styles.div3}>
-					<Image src="/assets/products/tshirt-sample.png" alt="sample" height={100} width={100} />
-				</div>
-				<div className={styles.div4}>
-					<Image src="/assets/products/tshirt-sample.png" alt="sample" height={100} width={100} />
-				</div>
+				{data?.image?.slice(0, 4).map((q, i) => (
+					<div key={q + i}>
+						<Image src={q} alt="product_image" height={100} width={100} />
+					</div>
+				))}
 			</div>
 		),
 		[]
@@ -113,11 +107,13 @@ const ProductDetails: FC<Props> = ({ data }) => {
 		[]
 	)
 
+	console.log('DATA', data)
+
 	return (
 		<div className={styles.productWrapper}>
 			<div className={styles.mainContainer}>
 				{memoizedImageContainer}
-				<div className={styles.descriptionContainer}>
+				{/* <div className={styles.descriptionContainer}>
 					<span className={styles.productTitle}>One Life Graphic Tshirt</span>
 					{memoizedRateContainer}
 					<div className={styles.priceContainer}>
@@ -142,6 +138,7 @@ const ProductDetails: FC<Props> = ({ data }) => {
 									}
 									onClick={() => setSelectedSize(q.value)}
 									whileTap={scaleSize}
+									key={q.value}
 								>
 									{q.label}
 								</motion.span>
@@ -162,7 +159,7 @@ const ProductDetails: FC<Props> = ({ data }) => {
 							Add to Cart
 						</motion.div>
 					</div>
-				</div>
+				</div> */}
 			</div>
 			<div className={styles.tabsContainer}>
 				<Tabs centered defaultActiveKey="2" items={items} onChange={onChange} />

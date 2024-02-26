@@ -105,7 +105,7 @@ const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 							<div className={styles.sortContainer}>
 								<span>Sort by:</span>
 
-								<Dropdown menu={{ items }} placement="bottomCenter" trigger={['click']}>
+								<Dropdown menu={{ items }} placement="bottom" trigger={['click']}>
 									<Flex justify="center" gap={5}>
 										<p>{FILTER[sort]}</p>
 										<DownOutlined />
