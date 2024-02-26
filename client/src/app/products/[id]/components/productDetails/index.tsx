@@ -38,6 +38,7 @@ const sizeOption = [
 
 const ProductDetails: FC<Props> = ({ data, products }) => {
 	const [selectedSize, setSelectedSize] = useState<number>()
+	const [qty, setQty] = useState<number>(1)
 	const { darkMode } = useAppSelector(s => s.boolean)
 
 	const onChange = (key: string) => {
@@ -145,11 +146,11 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 					</div>
 					<div className={styles.addToCartContainer}>
 						<div className={styles.addToCart}>
-							<motion.span whileTap={scaleSize}>
+							<motion.span whileTap={scaleSize} onClick={() => setQty(qty => (qty > 0 ? qty - 1 : qty))}>
 								<MinusOutlined />
 							</motion.span>
-							<span>1</span>
-							<motion.span whileTap={scaleSize}>
+							<span>{qty}</span>
+							<motion.span whileTap={scaleSize} onClick={() => setQty(qty => qty + 1)}>
 								<PlusOutlined />
 							</motion.span>
 						</div>
