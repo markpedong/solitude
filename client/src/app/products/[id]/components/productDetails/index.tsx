@@ -65,7 +65,7 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 	const memoizedImageContainer = useMemo(
 		() => (
 			<div className={styles.productImageContainer}>
-				{data?.image?.slice(0, 4).map((q, i) => (
+				{data?.image?.slice(0, 5).map((q, i) => (
 					<div key={q + i}>
 						<Image src={q} alt="product_image" height={100} width={100} />
 					</div>
@@ -107,21 +107,19 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 		[]
 	)
 
-	console.log('DATA', data)
-
 	return (
 		<div className={styles.productWrapper}>
 			<div className={styles.mainContainer}>
 				{memoizedImageContainer}
-				{/* <div className={styles.descriptionContainer}>
-					<span className={styles.productTitle}>One Life Graphic Tshirt</span>
+				<div className={styles.descriptionContainer}>
+					<span className={styles.productTitle}>{data?.product_name}</span>
 					{memoizedRateContainer}
 					<div className={styles.priceContainer}>
-						<span>₱260</span>
-						<span>₱300</span>
+						<span>₱{data?.price}</span>
+						<span>₱{data?.price}</span>
 						<span>-40%</span>
 					</div>
-					<span className={styles.description}>This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.</span>
+					<span className={styles.description}>{data?.description}</span>
 					{memoizedColorContainer}
 					<div className={styles.sizeVariationContainer}>
 						<span className={styles.label}>Choose Size</span>
@@ -159,7 +157,7 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 							Add to Cart
 						</motion.div>
 					</div>
-				</div> */}
+				</div>
 			</div>
 			<div className={styles.tabsContainer}>
 				<Tabs centered defaultActiveKey="2" items={items} onChange={onChange} />
