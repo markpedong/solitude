@@ -27,7 +27,7 @@ func AddToCart(ctx *gin.Context) {
 	}
 
 	var foundUser models.User
-	if err := database.DB.Table("user").Where("id = ?", ids.UserID).First(&foundUser).Error; err != nil {
+	if err := database.DB.Model(&foundUser).Preload("UserCart").First(&foundUser, "id = ?", ids.UserID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
