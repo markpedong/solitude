@@ -79,8 +79,8 @@ export const uploadImages = params => upload('/api/uploadImage', params)
 // /api/addProduct
 export const addProduct = params => post('/api/add-product', params)
 
-// /api/getProductsByID
-export const getProductsData = params => post('/users/getProductsByID', params)
+// /api/getAllProductsByID
+export const getProductsData = params => post('/users/getAllProductsByID', params)
 
 // /users/getVariationsByID
 export type TVariations = {
