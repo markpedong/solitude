@@ -199,7 +199,7 @@ const Profile: FC = () => {
 						]}
 						colProps={{ span: 12 }}
 					/>
-					<ProFormDatePicker label="Birthday" name="birthday" placeholder="MONTH" width="xl" colProps={{ span: 12 }} />
+					<ProFormDatePicker label="Birthday" name="birthday" placeholder="MONTH" width="xl" colProps={{ span: 12 }} fieldProps={{ variant: 'outlined' }} />
 				</ProForm.Group>
 			)}
 		</ModalForm>
