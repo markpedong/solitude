@@ -1,6 +1,6 @@
 'use client'
 
-import React, { FC, useMemo, useState } from 'react'
+import React, { FC, useEffect, useMemo, useState } from 'react'
 import styles from './styles.module.scss'
 import { CheckOutlined, MinusOutlined, PlusOutlined, RightOutlined } from '@ant-design/icons'
 import Image from 'next/image'
@@ -10,6 +10,7 @@ import Rating from '@/components/products/rating'
 import { motion } from 'framer-motion'
 import { useAppSelector } from '@/redux/store'
 import { TProduct } from '@/api'
+import { useRouter } from 'next/navigation'
 
 type Props = {
 	data: TProduct
@@ -40,6 +41,7 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 	const [selectedSize, setSelectedSize] = useState<number>()
 	const [qty, setQty] = useState<number>(1)
 	const { darkMode } = useAppSelector(s => s.boolean)
+	const router = useRouter()
 
 	const onChange = (key: string) => {
 		console.log(key)
@@ -107,6 +109,12 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 		),
 		[]
 	)
+
+	useEffect(() => {
+		if (!!!data) {
+			router.push('/products')
+		}
+	}, [])
 
 	return (
 		<div className={styles.productWrapper}>
