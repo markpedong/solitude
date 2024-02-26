@@ -133,7 +133,7 @@ const Profile: FC = () => {
 						}
 					}}
 				>
-					{imageUrl ? <Image className={styles.profileImage} src={imageUrl} alt="avatar" width={100} height={100} /> : uploadButton}
+					{imageUrl ? <Image priority className={styles.profileImage} src={imageUrl} alt="avatar" width={100} height={100} /> : uploadButton}
 				</Upload>
 				<ProForm.Group>
 					{type === USER_TYPES.USER ? (

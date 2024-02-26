@@ -74,7 +74,7 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 			<div className={styles.productImageContainer}>
 				{data?.image?.slice(0, 5).map((q, i) => (
 					<div key={q + i}>
-						<Image src={q} alt="product_image" height={100} width={100} />
+						<Image src={q} alt="product_image" height={100} width={100} priority />
 					</div>
 				))}
 			</div>
