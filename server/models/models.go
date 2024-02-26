@@ -13,6 +13,7 @@ type User struct {
 	UserCart       *[]Product `json:"user_cart" gorm:"foreignKey:SellerID"`
 	AddressDetails *[]Address `json:"address_details" gorm:"foreignKey:UserID"`
 	Orders         *[]Order   `json:"orders" gorm:"foreignKey:UserID"`
+	Cart           []Product  `json:"cart" gorm:"foreignKey:ProductID"`
 	FirstName      string     `json:"first_name" validate:"max=30"`
 	LastName       string     `json:"last_name" validate:"max=30"`
 	Password       string     `json:"password" validate:"required,min=6"`
