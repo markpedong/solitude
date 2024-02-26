@@ -14,7 +14,7 @@ import type { MenuProps } from 'antd'
 import { Drawer, Dropdown, Input, Typography } from 'antd'
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { FC, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import LoginModal from './loginModal'
@@ -30,6 +30,7 @@ const MenuItem: FC<Props> = ({ title }) => {
 
 const Navbar = () => {
 	const router = useRouter()
+	const pathname = usePathname()
 	const [open, setOpen] = useState(false)
 	const dispatch = useDispatch<AppDispatch>()
 	const { activeLoginForm, darkMode, isLoginModalOpen } = useAppSelector(state => state.boolean)
@@ -111,7 +112,10 @@ const Navbar = () => {
 
 			setLocalStorage('token', res?.token)
 			formRef?.current?.resetFields()
-			router.push('/account')
+
+			if (pathname === '/') {
+				router.push('/account')
+			}
 		}
 
 		return afterModalformFinish(actionRef, res?.message, res?.success)

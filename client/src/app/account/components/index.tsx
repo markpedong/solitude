@@ -47,5 +47,4 @@ const Account: FC<Props> = () => {
 	)
 }
 
-// export default isAuth(Account)
-export default Account
+export default isAuth(Account)
