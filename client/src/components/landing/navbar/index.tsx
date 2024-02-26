@@ -1,24 +1,24 @@
 'use client'
 
 import { sellerLogin, sellerSignup, userLogin, userSignup } from '@/api'
+import Profile from '@/components/profile'
 import { USER_TYPES } from '@/constants'
 import { afterModalformFinish } from '@/constants/helper'
-import { setActiveLoginForm, setDarkMode, setIsBannerHidden } from '@/redux/features/booleanSlice'
+import { setActiveLoginForm, setDarkMode, setIsBannerHidden, setLoginModalOpen } from '@/redux/features/booleanSlice'
 import { resetUserData, setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { setLocalStorage } from '@/utils/xLocalStorage'
-import { DownOutlined, MenuOutlined, MoonFilled, MoonOutlined, SearchOutlined, ShoppingCartOutlined, SunFilled, SunOutlined, UserOutlined } from '@ant-design/icons'
+import { DownOutlined, MenuOutlined, MoonOutlined, SearchOutlined, ShoppingCartOutlined, SunOutlined, UserOutlined } from '@ant-design/icons'
 import { ActionType, ModalForm, ProFormInstance } from '@ant-design/pro-components'
 import type { MenuProps } from 'antd'
-import { Divider, Drawer, Dropdown, Input, Typography } from 'antd'
+import { Drawer, Dropdown, Input, Typography } from 'antd'
 import classNames from 'classnames'
+import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { FC, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import LoginModal from './loginModal'
 import styles from './styles.module.scss'
-import { motion } from 'framer-motion'
-import Profile from '@/components/profile'
 
 type Props = {
 	title: string
@@ -32,7 +32,7 @@ const Navbar = () => {
 	const router = useRouter()
 	const [open, setOpen] = useState(false)
 	const dispatch = useDispatch<AppDispatch>()
-	const { activeLoginForm, darkMode } = useAppSelector(state => state.boolean)
+	const { activeLoginForm, darkMode, isLoginModalOpen } = useAppSelector(state => state.boolean)
 	const { isLoggedIn, type } = useAppSelector(state => state.userData)
 	const formRef = useRef<ProFormInstance>()
 	const actionRef = useRef<ActionType>()
@@ -124,7 +124,7 @@ const Navbar = () => {
 	const renderLoginModal = () => {
 		return (
 			<ModalForm
-				trigger={<UserOutlined />}
+				open={isLoginModalOpen}
 				submitter={false}
 				width={create ? 1000 : 600}
 				modalProps={{ destroyOnClose: true, maskClosable: false }}
@@ -135,6 +135,7 @@ const Navbar = () => {
 					if (!visible) {
 						formRef?.current?.resetFields()
 						dispatch(setActiveLoginForm('user'))
+						dispatch(setLoginModalOpen(false))
 					}
 				}}
 				onFinish={handleFinish}
@@ -150,6 +151,7 @@ const Navbar = () => {
 
 	return (
 		<>
+			{renderLoginModal()}
 			<div className={styles.navbarWrapper}>
 				<div className={styles.navbarContainer}>
 					<MenuOutlined className={styles.navbarMobile} onClick={showDrawer} />
@@ -183,7 +185,7 @@ const Navbar = () => {
 								<UserOutlined onClick={e => e.preventDefault()} />
 							</Dropdown>
 						) : (
-							renderLoginModal()
+							<UserOutlined onClick={() => dispatch(setLoginModalOpen(true))} />
 						)}
 						<motion.div whileTap={{ scale: 0.8 }}>{darkMode ? <MoonOutlined onClick={handleChangeTheme} /> : <SunOutlined onClick={handleChangeTheme} />}</motion.div>
 					</div>

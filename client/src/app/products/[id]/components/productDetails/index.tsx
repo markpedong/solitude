@@ -11,6 +11,8 @@ import { motion } from 'framer-motion'
 import { useAppSelector } from '@/redux/store'
 import { TProduct } from '@/api'
 import { useRouter } from 'next/navigation'
+import { useDispatch } from 'react-redux'
+import { setActiveLoginForm, setLoginModalOpen } from '@/redux/features/booleanSlice'
 
 type Props = {
 	data: TProduct
@@ -38,10 +40,12 @@ const sizeOption = [
 ]
 
 const ProductDetails: FC<Props> = ({ data, products }) => {
+	const { darkMode } = useAppSelector(s => s.boolean)
+	const { token } = useAppSelector(s => s.userData)
 	const [selectedSize, setSelectedSize] = useState<number>()
 	const [qty, setQty] = useState<number>(1)
-	const { darkMode } = useAppSelector(s => s.boolean)
 	const router = useRouter()
+	const dispatch = useDispatch()
 
 	const onChange = (key: string) => {
 		console.log(key)
@@ -110,6 +114,12 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 		[]
 	)
 
+	const handleAddtoCart = async () => {
+		if (!!!token) {
+			dispatch(setLoginModalOpen(true))
+		}
+	}
+
 	useEffect(() => {
 		if (!!!data) {
 			router.push('/products')
@@ -162,7 +172,7 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 								<PlusOutlined />
 							</motion.span>
 						</div>
-						<motion.div whileTap={scaleSize} className={styles.button}>
+						<motion.div whileTap={scaleSize} className={styles.button} onClick={handleAddtoCart}>
 							Add to Cart
 						</motion.div>
 					</div>
