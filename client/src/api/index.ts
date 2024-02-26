@@ -90,3 +90,6 @@ export type TVariations = {
 	value: string[]
 }
 export const getVariations = params => post('/users/getVariationsByID', params)
+
+// /api/add-to-cart
+export const addToCart = params => post('/api/add-to-cart', params)

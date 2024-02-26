@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"solitude/database"
+	"solitude/helpers"
 	"solitude/models"
 
 	"github.com/gin-gonic/gin"
@@ -34,12 +35,7 @@ func AddToCart(ctx *gin.Context) {
 	}
 
 	// ADD TO CART DATABASE QUERY IS NOT YET IMPLEMENTED
-
-	ctx.JSON(http.StatusOK, gin.H{
-		"success": false,
-		"status":  http.StatusOK,
-		"message": "added to cart successfully!",
-	})
+	helpers.JSONResponse(ctx, "added to cart successfully")
 }
 
 func RemoveItem(ctx *gin.Context) {

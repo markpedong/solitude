@@ -9,7 +9,7 @@ import type { TabsProps } from 'antd'
 import Rating from '@/components/products/rating'
 import { motion } from 'framer-motion'
 import { useAppSelector } from '@/redux/store'
-import { TProduct } from '@/api'
+import { TProduct, addToCart } from '@/api'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { setActiveLoginForm, setLoginModalOpen } from '@/redux/features/booleanSlice'
@@ -41,7 +41,7 @@ const sizeOption = [
 
 const ProductDetails: FC<Props> = ({ data, products }) => {
 	const { darkMode } = useAppSelector(s => s.boolean)
-	const { token } = useAppSelector(s => s.userData)
+	const { token, userData } = useAppSelector(s => s.userData)
 	const [selectedSize, setSelectedSize] = useState<number>()
 	const [qty, setQty] = useState<number>(1)
 	const router = useRouter()
@@ -117,7 +117,10 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 	const handleAddtoCart = async () => {
 		if (!!!token) {
 			dispatch(setLoginModalOpen(true))
+			return
 		}
+
+		const res = await addToCart({ user_id: userData?.id, product_id: data?.product_id })
 	}
 
 	useEffect(() => {
