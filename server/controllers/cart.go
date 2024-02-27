@@ -27,13 +27,23 @@ func AddToCart(ctx *gin.Context) {
 	}
 
 	var foundUser models.User
-	if err := database.DB.Model(&foundUser).Preload("UserCart").First(&foundUser, "id = ?", ids.UserID).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+	if err := database.DB.First(&foundUser, "id = ?", ids.UserID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "User not found")
 		return
 	}
 
-	// ADD TO CART DATABASE QUERY IS NOT YET IMPLEMENTED
-	helpers.JSONResponse(ctx, "added to cart successfully", helpers.DataHelper(foundUser))
+	var userProduct models.Product
+	if err := database.DB.First(&userProduct, "product_id = ?", ids.ProductID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "Product not found")
+		return
+	}
+
+	if err := database.DB.Model(&foundUser).Association("Cart").Append(&userProduct); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Failed to add product to cart")
+		return
+	}
+
+	helpers.JSONResponse(ctx, "added to cart successfully", helpers.DataHelper(foundUser.Cart))
 }
 
 func RemoveItem(ctx *gin.Context) {
