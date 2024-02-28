@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"log"
 	"net/http"
 	"solitude/database"
 	"solitude/helpers"
@@ -86,48 +85,27 @@ func RemoveItem(ctx *gin.Context) {
 	})
 }
 
-func GetItemFromCart(ctx *gin.Context) {
+func GetItemsFromCart(ctx *gin.Context) {
 	var body struct {
 		UserID string `json:"user_id"`
 	}
 
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid JSON input")
+		return
+	}
+
 	if body.UserID == "" {
-		ctx.Header("Content-Type", "application/json")
-		ctx.JSON(http.StatusNotFound, gin.H{
-			"message": "invalid id",
-			"status":  http.StatusNotFound,
-			"success": false,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid id passed!")
 		return
 	}
 
-	var filledcart models.User
-
-	err := database.DB.First(&filledcart, body.UserID).Error
-	if err != nil {
-		log.Println(err)
-		ctx.IndentedJSON(500, "not id found")
-		return
+	var foundUser models.User
+	if err := database.DB.Preload("Cart").First(&foundUser, "id = ? ", body.UserID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 	}
 
-	var totalSum uint64
-	err = database.DB.Model(&models.User{}).
-		Where("id = ?", body.UserID).
-		Select("sum(usercart.price) as total").
-		Scan(&totalSum).
-		Error
-
-	if err != nil {
-		log.Println(err)
-		ctx.AbortWithStatus(http.StatusInternalServerError)
-		return
-	}
-
-	ctx.IndentedJSON(200, gin.H{
-		"total": totalSum,
-		// "userCart": filledcart.UserCart,
-	})
-
+	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(foundUser.Cart))
 }
 
 func BuyFromCart(ctx *gin.Context) {

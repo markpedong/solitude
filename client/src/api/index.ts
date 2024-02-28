@@ -74,13 +74,13 @@ export type SellerData = {
 export const getSellerData = params => post<SellerData>('/users/getSellerData', params)
 
 // /api/uploadImage
-export const uploadImages = params => upload('/api/uploadImage', params)
+export const uploadImages = params => upload<any>('/api/uploadImage', params)
 
 // /api/addProduct
 export const addProduct = params => post('/api/add-product', params)
 
 // /api/getAllProductsByID
-export const getProductsData = params => post('/users/getAllProductsByID', params)
+export const getProductsData = params => post<TProduct[]>('/users/getAllProductsByID', params)
 
 // /users/getVariationsByID
 export type TVariations = {
@@ -93,3 +93,6 @@ export const getVariations = params => post('/users/getVariationsByID', params)
 
 // /api/add-to-cart
 export const addToCart = params => post('/api/add-to-cart', params)
+
+// /api/checkCart
+export const checkCart = params => post<TProduct[]>('/api/checkCart', params)

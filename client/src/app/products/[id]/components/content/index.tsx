@@ -4,15 +4,17 @@ import React, { FC, useEffect, useMemo, useState } from 'react'
 import styles from './styles.module.scss'
 import { CheckOutlined, MinusOutlined, PlusOutlined, RightOutlined } from '@ant-design/icons'
 import Image from 'next/image'
-import { Rate, Tabs } from 'antd'
+import { Rate, Tabs, message } from 'antd'
 import type { TabsProps } from 'antd'
-import Rating from '@/components/products/rating'
 import { motion } from 'framer-motion'
 import { useAppSelector } from '@/redux/store'
-import { TProduct, addToCart } from '@/api'
-import { useRouter } from 'next/navigation'
+import { TProduct, addToCart, checkCart } from '@/api'
+import { useParams, useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
-import { setActiveLoginForm, setLoginModalOpen } from '@/redux/features/booleanSlice'
+import { setLoginModalOpen } from '@/redux/features/booleanSlice'
+import Rating from '../rating'
+import { messageHelper } from '@/constants/antd'
+import { setUserCart } from '@/redux/features/userSlice'
 
 type Props = {
 	data: TProduct
@@ -45,6 +47,7 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 	const [selectedSize, setSelectedSize] = useState<number>()
 	const [qty, setQty] = useState<number>(1)
 	const router = useRouter()
+	const params = useParams()
 	const dispatch = useDispatch()
 
 	const onChange = (key: string) => {
@@ -60,7 +63,7 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 		{
 			key: '2',
 			label: 'Rating & Reviews',
-			children: <Rating products={products} />
+			children: <Rating products={products} curr={params.id as string} />
 		},
 		{
 			key: '3',
@@ -119,8 +122,16 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 			dispatch(setLoginModalOpen(true))
 			return
 		}
+		const res = await checkCart({ user_id: userData?.id })
 
-		const res = await addToCart({ user_id: userData?.id, product_id: data?.product_id })
+		if (res?.data.findIndex(q => q.product_id === params.id) === -1) {
+			const res = await addToCart({ user_id: userData?.id, product_id: data?.product_id })
+			messageHelper(res?.message)
+		}
+
+		// const reCheck = await checkCart({ user_id: userData?.id })
+
+		// dispatch(setUserCart(s ))
 	}
 
 	useEffect(() => {

@@ -16,7 +16,7 @@
         gap: toRem(15);
 
         >div {
-            @apply flex justify-center items-center rounded-md;
+            @apply flex justify-center items-center rounded-md object-cover;
             background-color: #F0EEED;
 
             &:not(:first-child) {
@@ -39,9 +39,9 @@
 
 
             img {
-                @apply p-[1rem];
-                width: 100%;
-                height: auto;
+                @apply p-[1rem] object-contain;
+                width: auto;
+                height: 100%;
             }
         }
 
@@ -58,42 +58,42 @@
         }
 
 
-        @media screen and (max-width:992px) {
-            @apply justify-items-center;
+        // @media screen and (max-width:992px) {
+        //     @apply justify-items-center;
 
-            >div {
-                @apply px-5 py-10;
+        //     >div {
+        //         @apply px-5 py-10;
 
-                &:not(:first-child) {
-                    width: auto;
-                    height: auto;
-                }
-            }
-
-
-            .div1 {
-                @apply max-w-2xl p-20;
-                grid-area: 1 / 1 / 4 / 4;
+        //         &:not(:first-child) {
+        //             width: auto;
+        //             height: auto;
+        //         }
+        //     }
 
 
-                img {
-                    width: 100%;
-                    height: auto;
-                }
-            }
+        //     .div1 {
+        //         @apply max-w-2xl p-20;
+        //         grid-area: 1 / 1 / 4 / 4;
 
-            .div2 {
-                grid-area: 4 / 1 / 5 / 2;
-            }
 
-            .div3 {
-                grid-area: 4 / 2 / 5 / 3;
-            }
+        //         img {
+        //             width: 100%;
+        //             height: auto;
+        //         }
+        //     }
 
-            .div4 {
-                grid-area: 4 / 3 / 5 / 4;
-            }
-        }
+        //     .div2 {
+        //         grid-area: 4 / 1 / 5 / 2;
+        //     }
+
+        //     .div3 {
+        //         grid-area: 4 / 2 / 5 / 3;
+        //     }
+
+        //     .div4 {
+        //         grid-area: 4 / 3 / 5 / 4;
+        //     }
+        // }
     }
 
     .descriptionContainer {

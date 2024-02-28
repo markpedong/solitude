@@ -9,7 +9,7 @@ import { FILTER } from '@/constants'
 import { motion } from 'framer-motion'
 import { TProduct } from '@/api'
 
-const Rating: FC<{ products: TProduct[] }> = ({ products }) => {
+const Rating: FC<{ products: TProduct[]; curr: string }> = ({ products, curr }) => {
 	const [sort, setSort] = useState(1)
 	const handleClickSort = e => setSort(e.key)
 
@@ -69,9 +69,12 @@ const Rating: FC<{ products: TProduct[] }> = ({ products }) => {
 			</motion.div>
 			<PageHeader title="you might also like" />
 			<div className={styles.productWrapper}>
-				{products?.slice(0, 10).map(q => (
-					<Product data={q} key={q?.product_id} />
-				))}
+				{products
+					.slice(0, 10)
+					.filter(q => q.product_id !== curr)
+					.map(q => (
+						<Product data={q} key={q?.product_id} />
+					))}
 			</div>
 		</div>
 	)

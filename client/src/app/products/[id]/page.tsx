@@ -1,5 +1,5 @@
 import { getProductData, getProducts } from '@/api'
-import ProductDetails from './components/productDetails'
+import Content from './components/content'
 
 type Props = {
 	params: {
@@ -13,7 +13,7 @@ const ProductID = async (props: Props) => {
 
 	return (
 		<div>
-			<ProductDetails data={data?.data} products={products?.data} />
+			<Content data={data?.data} products={products?.data} />
 		</div>
 	)
 }

@@ -5,7 +5,7 @@ import { getLocalStorage } from '@/utils/xLocalStorage'
 import { clearUserData } from '@/constants/helper'
 
 type ApiResponse<T> = {
-	data?: T | any
+	data?: T
 	message: string
 	success: boolean
 	status: number
