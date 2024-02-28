@@ -27,7 +27,7 @@ func AddToCart(ctx *gin.Context) {
 	}
 
 	var foundUser models.User
-	if err := database.DB.First(&foundUser, "id = ?", ids.UserID).Error; err != nil {
+	if err := database.DB.Preload("Cart").First(&foundUser, "id = ?", ids.UserID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "User not found")
 		return
 	}
@@ -36,6 +36,13 @@ func AddToCart(ctx *gin.Context) {
 	if err := database.DB.First(&userProduct, "product_id = ?", ids.ProductID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "Product not found")
 		return
+	}
+
+	for _, v := range foundUser.Cart {
+		if v.ProductID == userProduct.ProductID {
+			helpers.ErrJSONResponse(ctx, http.StatusNotFound, "Product already exist!, add quantity")
+			return
+		}
 	}
 
 	if err := database.DB.Model(&foundUser).Association("Cart").Append(&userProduct); err != nil {
