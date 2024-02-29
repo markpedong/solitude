@@ -91,8 +91,8 @@ export type TVariations = {
 }
 export const getVariations = params => post('/users/getVariationsByID', params)
 
-// /api/add-to-cart
-export const addToCart = params => post('/api/add-to-cart', params)
+// /api/addToCart
+export const addToCart = params => post('/api/addToCart', params)
 
 // /api/checkCart
 export const checkCart = params => post<TProduct[]>('/api/checkCart', params)

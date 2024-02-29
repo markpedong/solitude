@@ -3,9 +3,11 @@ import styles from './styles.module.scss'
 import { Divider } from 'antd'
 import Image from 'next/image'
 import { DeleteOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons'
+import { TProduct } from '@/api'
 
 type Props = {
 	divider?: boolean
+	data: TProduct
 }
 
 const Order: FC<Props> = ({ divider = true }) => {

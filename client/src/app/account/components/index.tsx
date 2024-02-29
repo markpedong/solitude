@@ -4,8 +4,8 @@ import { TProduct } from '@/api'
 import isAuth from '@/components/isAuth'
 import { USER_TYPES } from '@/constants'
 import { useAppSelector } from '@/redux/store'
-import { Col, Flex, Row, Tabs } from 'antd'
-import { Cormorant, Inter, Jost } from 'next/font/google'
+import { Flex, Tabs } from 'antd'
+import { Jost } from 'next/font/google'
 import { FC } from 'react'
 import AddProduct from './addProduct'
 import ProductsAdded from './addedProduct'
@@ -13,7 +13,6 @@ import Address from './address'
 import Orders from './orders'
 import styles from './styles.module.scss'
 
-const inter = Inter({ weight: '400', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 type Props = {

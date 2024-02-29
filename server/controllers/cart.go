@@ -52,37 +52,39 @@ func AddToCart(ctx *gin.Context) {
 	helpers.JSONResponse(ctx, "added to cart successfully", helpers.DataHelper(foundUser.Cart))
 }
 
-func RemoveItem(ctx *gin.Context) {
+func RemoveItemFromCart(ctx *gin.Context) {
 	var ids struct {
 		ProductID string `json:"product_id" validate:"required"`
 		UserID    string `json:"user_id" validate:"required"`
 	}
 
 	if err := ctx.ShouldBindJSON(&ids); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid JSON input",
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid JSON input")
 		return
 	}
 
 	if err := Validate.Struct(ids); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	// REMOVE FROM CART DATABASE QUERY IS NOT YET IMPLEMENTED
+	var foundUser models.User
+	if err := database.DB.Preload("Cart").First(&foundUser, "id = ?", ids.UserID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "User not found")
+		return
+	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"success": false,
-		"status":  http.StatusOK,
-		"message": "removed from cart successfully!",
-	})
+	var userProduct models.Product
+	if err := database.DB.First(&userProduct, "product_id = ?", ids.ProductID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "Product not found")
+		return
+	}
+
+	if err := database.DB.Model(&foundUser).Association("Cart").Delete(userProduct); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+	}
+
+	helpers.JSONResponse(ctx, "removed from cart successfully!")
 }
 
 func GetItemsFromCart(ctx *gin.Context) {
