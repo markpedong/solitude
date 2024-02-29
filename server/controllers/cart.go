@@ -10,46 +10,52 @@ import (
 )
 
 func AddToCart(ctx *gin.Context) {
-	var ids struct {
-		ProductID string `json:"product_id" validate:"required"`
-		UserID    string `json:"user_id" validate:"required"`
+	type Variation struct {
+		Label string   `json:"label"`
+		Value []string `json:"value"`
 	}
 
-	if err := ctx.ShouldBindJSON(&ids); err != nil {
+	var cartItem struct {
+		ProductID string      `json:"product_id" validate:"required"`
+		UserID    string      `json:"user_id" validate:"required"`
+		Variation []Variation `json:"variation" validate:"required"`
+	}
+
+	if err := ctx.ShouldBindJSON(&cartItem); err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid JSON input")
 		return
 	}
 
-	if err := Validate.Struct(ids); err != nil {
+	if err := Validate.Struct(cartItem); err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	var foundUser models.User
-	if err := database.DB.Preload("Cart").First(&foundUser, "id = ?", ids.UserID).Error; err != nil {
+	if err := database.DB.Preload("Cart").First(&foundUser, "id = ?", cartItem.UserID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "User not found")
 		return
 	}
 
 	var userProduct models.Product
-	if err := database.DB.First(&userProduct, "product_id = ?", ids.ProductID).Error; err != nil {
+	if err := database.DB.First(&userProduct, "product_id = ?", cartItem.ProductID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "Product not found")
 		return
 	}
 
-	for _, v := range foundUser.Cart {
-		if v.ProductID == userProduct.ProductID {
-			helpers.ErrJSONResponse(ctx, http.StatusNotFound, "Product already exist!, add quantity")
-			return
-		}
-	}
+	// for _, v := range foundUser.Cart {
+	// 	if v.ProductID == userProduct.ProductID {
+	// 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "Product already exist!, add quantity")
+	// 		return
+	// 	}
+	// }
 
 	if err := database.DB.Model(&foundUser).Association("Cart").Append(&userProduct); err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Failed to add product to cart")
 		return
 	}
 
-	helpers.JSONResponse(ctx, "added to cart successfully", helpers.DataHelper(foundUser.Cart))
+	helpers.JSONResponse(ctx, "added to cart successfully")
 }
 
 func RemoveItemFromCart(ctx *gin.Context) {
@@ -103,11 +109,22 @@ func GetItemsFromCart(ctx *gin.Context) {
 	}
 
 	var foundUser models.User
-	if err := database.DB.Preload("Cart").First(&foundUser, "id = ? ", body.UserID).Error; err != nil {
+	if err := database.DB.Preload("Cart.Variations").First(&foundUser, "id = ? ", body.UserID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
 	}
 
-	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(foundUser.Cart))
+	ids := []models.JSONProduct{}
+	for _, v := range foundUser.Cart {
+		ids = append(ids, models.JSONProduct{
+			ID:          v.ProductID,
+			ProductName: v.ProductName,
+			Variations:  v.Variations,
+			Category:    v.Category,
+		})
+	}
+
+	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(ids))
 }
 
 func BuyFromCart(ctx *gin.Context) {

@@ -7,7 +7,7 @@ type InitialSlice = {
 		updated_at: string
 		user_cart: { product_id: string; quantity: number }[]
 		address_details: []
-		orders: []
+		orders: { id: string }[]
 		password: string
 		email: string
 		first_name: string

@@ -38,6 +38,12 @@ type Product struct {
 	Variations  []ProductVariations `json:"variations" gorm:"foreignkey:ProductID"`
 	Category    pq.StringArray      `json:"categories" gorm:"type:text[]"`
 }
+type JSONProduct struct {
+	ID          string              `json:"product_id"`
+	ProductName string              `json:"product_name"`
+	Variations  []ProductVariations `json:"variations"`
+	Category    []string            `json:"categories"`
+}
 
 type Address struct {
 	AddressID string  `json:"id"  gorm:"primaryKey"`

@@ -127,6 +127,7 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 		if (res?.data.findIndex(q => q.product_id === params.id) === -1) {
 			const res = await addToCart({ user_id: userData?.id, product_id: data?.product_id })
 			messageHelper(res?.message)
+			// dispatch(setUserCart())
 		}
 
 		// const reCheck = await checkCart({ user_id: userData?.id })
