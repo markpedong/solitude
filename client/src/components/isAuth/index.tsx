@@ -24,6 +24,6 @@ export default function isAuth(Component: any) {
 			return null
 		}
 
-		return <Component {...props} />
+		return auth && <Component {...props} />
 	}
 }
