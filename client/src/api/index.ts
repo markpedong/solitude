@@ -82,14 +82,14 @@ export const addProduct = params => post('/api/add-product', params)
 // /api/getAllProductsByID
 export const getProductsData = params => post<TProduct[]>('/users/getAllProductsByID', params)
 
-// /users/getVariationsByID
+// /users/getVariations
 export type TVariations = {
 	id: string
 	product_id: string
 	label: string
 	value: string[]
 }
-export const getVariations = params => post('/users/getVariationsByID', params)
+export const getVariations = params => post('/users/getVariations', params)
 
 // /api/addToCart
 export const addToCart = params => post('/api/addToCart', params)

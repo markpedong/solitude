@@ -20,7 +20,6 @@ func UserRoutes(r *gin.Engine) {
 		users.POST("/getSellerData", controllers.GetSellerData)
 		users.POST("/getProductData", controllers.GetProductsByID)
 		users.POST("/getAllProductsByID", controllers.GetAllProductsByID)
-		users.POST("/getVariationsByID", controllers.GetVariationsByID)
 	}
 
 	api := r.Group("/api")
@@ -29,6 +28,8 @@ func UserRoutes(r *gin.Engine) {
 		api.POST("/checkCart", controllers.GetItemsFromCart)
 		api.POST("/addToCart", controllers.AddToCart)
 		api.POST("/removeFromCart", controllers.RemoveItemFromCart)
+		api.POST("/addVariations", controllers.AddVariation)
+		api.POST("/getVariations", controllers.GetVariationsByID)
 		// api.GET("/cart-checkout", controllers.BuyFromCart)
 		// api.GET("/instant-buy", controllers.InstantBuy)
 		// api.POST("/search", controllers.SearchProductByQuery)
