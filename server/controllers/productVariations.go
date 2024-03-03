@@ -182,6 +182,7 @@ func UpdateVariation(ctx *gin.Context) {
 
 	if err := database.DB.Where("id = ?", body.VarID).Updates(models.ProductVariations{
 		Label: body.Variation.Label,
+		// pass new value here
 		// Value: body.Variation.Value,
 	}).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
