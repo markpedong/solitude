@@ -176,6 +176,12 @@ func SellerLogin(ctx *gin.Context) {
 		return
 	}
 
+	notValid, msg := VerifyPassword(existingSeller.Password, body.Password)
+	if notValid {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, msg)
+		return
+	}
+
 	token, refreshToken, err := tokens.TokenGenerator(existingSeller.Email, existingSeller.SellerName, "", existingSeller.SellerID)
 	if err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())

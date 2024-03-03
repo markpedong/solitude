@@ -168,6 +168,12 @@ func UserLogin(ctx *gin.Context) {
 		return
 	}
 
+	notValid, msg := VerifyPassword(existingUser.Password, body.Password)
+	if notValid {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, msg)
+		return
+	}
+
 	token, refreshToken, err := tokens.TokenGenerator(existingUser.Email, existingUser.FirstName, existingUser.LastName, existingUser.ID)
 	if err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())

@@ -32,14 +32,14 @@ func VerifyPassword(expectedHashedPassword, givenPassword string) (bool, string)
 
 	switch {
 	case err:
-		return true, "Password matched!"
+		return false, "Password matched!"
 	// case errors.Is(_, bcrypt.ErrMismatchedHashAndPassword):
 	// 	return false, "Password is incorrect!"
 	case !err:
-		return false, "Password is incorrect!"
+		return true, "Password is incorrect!"
 	default:
 		// fmt.Printf("Password verification error: %s\n", err)
-		return false, "Failed to verify password"
+		return true, "Failed to verify password"
 	}
 }
 
