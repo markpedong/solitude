@@ -126,11 +126,41 @@ func DeleteVariation(ctx *gin.Context) {
 		return
 	}
 
-	var variationArr models.ProductVariations
-	if err := database.DB.Delete(&variationArr, "id = ?", body.VarID).Error; err != nil {
+	var variation models.ProductVariations
+	if err := database.DB.Delete(&variation, "id = ?", body.VarID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	helpers.JSONResponse(ctx, "deleted successfully")
+}
+
+func UpdateVariation(ctx *gin.Context) {
+	var body struct {
+		VarID     string `json:"variation_id" validate:"required"`
+		Variation struct {
+			Label string   `json:"label"`
+			Value []string `json:"value"`
+		} `json:"variations" validate:"required"`
+	}
+
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	if err := Validate.Struct(body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	if err := database.DB.Where("id = ?", body.VarID).Updates(models.ProductVariations{
+		Label: body.Variation.Label,
+		Value: body.Variation.Value,
+	}).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	helpers.JSONResponse(ctx, "updated successfully")
 }
