@@ -83,11 +83,17 @@ type Payment struct {
 	COD     bool   `json:"cod"`
 }
 
+type VariationValue struct {
+	VariationID string `json:"variation_id" validate:"required"`
+	ID          string `json:"id" gorm:"primaryKey"`
+	Value       string `json:"value" validate:"required"`
+}
+
 type ProductVariations struct {
-	ID        string         `json:"id" gorm:"primaryKey"`
-	ProductID string         `json:"product_id"`
-	Label     string         `json:"label" validate:"required"`
-	Value     pq.StringArray `json:"value" validate:"required" gorm:"type:text[]"`
+	ID        string           `json:"id" gorm:"primaryKey"`
+	ProductID string           `json:"product_id"`
+	Label     string           `json:"label" validate:"required"`
+	Value     []VariationValue `json:"value" gorm:"foreignKey:VariationID"`
 }
 
 type Collections struct {

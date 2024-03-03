@@ -32,7 +32,12 @@ func DBSet() {
 		return
 	}
 
-	err = DB.AutoMigrate(&models.Product{}, &models.Address{}, &models.Order{}, &models.ProductVariations{})
+	err = DB.AutoMigrate(
+		&models.Product{},
+		models.Address{}, &models.Order{},
+		&models.ProductVariations{},
+		&models.VariationValue{},
+	)
 	if err != nil {
 		log.Fatal(err.Error())
 		return

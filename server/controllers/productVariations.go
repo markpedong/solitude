@@ -25,13 +25,13 @@ func GetVariationsByID(ctx *gin.Context) {
 		return
 	}
 
-	var existingCategories []models.ProductVariations
-	if err := database.DB.Find(&existingCategories, "product_id = ?", body.ProductID).Error; err != nil {
+	var existingProduct models.Product
+	if err := database.DB.Preload("Variations.Value").Find(&existingProduct, "product_id = ?", body.ProductID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	helpers.JSONResponse(ctx, "", helpers.DataHelper(existingCategories))
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(existingProduct.Variations))
 }
 
 func AddVariation(ctx *gin.Context) {
@@ -61,6 +61,7 @@ func AddVariation(ctx *gin.Context) {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
+
 	var found bool
 	for _, v := range *currSeller.Products {
 		if body.ProductID == v.ProductID {
@@ -85,24 +86,41 @@ func AddVariation(ctx *gin.Context) {
 	}
 
 	var newVar []models.ProductVariations
+
 	for _, v := range body.Variation {
-		newVar = append(newVar, models.ProductVariations{
+		newVarInstance := models.ProductVariations{
 			ID:        uuid.Must(uuid.NewRandom()).String(),
 			Label:     v.Label,
-			Value:     v.Value,
 			ProductID: currProd.ProductID,
-		})
+		}
+
+		if err := database.DB.Create(&newVarInstance).Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		for _, val := range v.Value {
+			varValue := models.VariationValue{
+				VariationID: newVarInstance.ID,
+				ID:          uuid.Must(uuid.NewRandom()).String(),
+				Value:       val,
+			}
+
+			if err := database.DB.Create(&varValue).Error; err != nil {
+				helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+				return
+			}
+		}
+
+		newVar = append(newVar, newVarInstance)
 	}
 
-	if len(currProd.Variations) >= 3 {
+	if len(currProd.Variations)+len(newVar) > 3 {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Maximum variations limit reached")
 		return
 	}
 
-	if err := database.DB.
-		Model(&currProd).
-		Association("Variations").
-		Append(newVar); err != nil {
+	if err := database.DB.Model(&currProd).Association("Variations").Append(newVar); err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -134,32 +152,32 @@ func DeleteVariation(ctx *gin.Context) {
 	helpers.JSONResponse(ctx, "deleted successfully")
 }
 
-func UpdateVariation(ctx *gin.Context) {
-	var body struct {
-		VarID     string `json:"variation_id" validate:"required"`
-		Variation struct {
-			Label string   `json:"label"`
-			Value []string `json:"value"`
-		} `json:"variations" validate:"required"`
-	}
+// func UpdateVariation(ctx *gin.Context) {
+// 	var body struct {
+// 		VarID     string `json:"variation_id" validate:"required"`
+// 		Variation struct {
+// 			Label string   `json:"label"`
+// 			Value []string `json:"value"`
+// 		} `json:"variations" validate:"required"`
+// 	}
 
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
-		return
-	}
+// 	if err := ctx.ShouldBindJSON(&body); err != nil {
+// 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+// 		return
+// 	}
 
-	if err := Validate.Struct(body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
-		return
-	}
+// 	if err := Validate.Struct(body); err != nil {
+// 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+// 		return
+// 	}
 
-	if err := database.DB.Where("id = ?", body.VarID).Updates(models.ProductVariations{
-		Label: body.Variation.Label,
-		Value: body.Variation.Value,
-	}).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-		return
-	}
+// 	if err := database.DB.Where("id = ?", body.VarID).Updates(models.ProductVariations{
+// 		Label: body.Variation.Label,
+// 		Value: body.Variation.Value,
+// 	}).Error; err != nil {
+// 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+// 		return
+// 	}
 
-	helpers.JSONResponse(ctx, "updated successfully")
-}
+// 	helpers.JSONResponse(ctx, "updated successfully")
+// }

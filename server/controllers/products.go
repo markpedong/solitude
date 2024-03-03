@@ -133,17 +133,10 @@ func GetProductsByID(ctx *gin.Context) {
 	}
 
 	var product models.Product
-	if err := database.DB.Where("product_id = ?", body.ID).First(&product).Error; err != nil {
+	if err := database.DB.Preload("Variations.Value").Where("product_id = ?", body.ID).First(&product).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
-
-	var variations []models.ProductVariations
-	if err := database.DB.Where("product_id = ?", body.ID).Find(&variations).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-		return
-	}
-	product.Variations = variations
 
 	helpers.JSONResponse(ctx, "successfully got the product details!", helpers.DataHelper(product))
 }
