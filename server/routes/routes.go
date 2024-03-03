@@ -30,6 +30,7 @@ func UserRoutes(r *gin.Engine) {
 		api.POST("/removeFromCart", controllers.RemoveItemFromCart)
 		api.POST("/addVariations", controllers.AddVariation)
 		api.POST("/getVariations", controllers.GetVariationsByID)
+		api.POST("/deleteVariations", controllers.DeleteVariation)
 		// api.GET("/cart-checkout", controllers.BuyFromCart)
 		// api.GET("/instant-buy", controllers.InstantBuy)
 		// api.POST("/search", controllers.SearchProductByQuery)
