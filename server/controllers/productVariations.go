@@ -32,7 +32,6 @@ func GetVariationsByID(ctx *gin.Context) {
 	}
 
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(existingCategories))
-
 }
 
 func AddVariation(ctx *gin.Context) {

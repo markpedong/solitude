@@ -191,3 +191,22 @@ func SellerLogin(ctx *gin.Context) {
 	ctx.Header("token", token)
 	helpers.JSONResponse(ctx, "", userRes)
 }
+
+func GetAllProductsBySellerID(ctx *gin.Context) {
+	var body struct {
+		SellerID string `json:"seller_id"`
+	}
+
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	var existingSeller models.Seller
+	if err := database.DB.Preload("Products").Where("seller_id = ?", body.SellerID).First(&existingSeller).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(existingSeller.Products))
+}
