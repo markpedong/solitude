@@ -8,8 +8,8 @@ import (
 
 type User struct {
 	ID             string     `json:"id" gorm:"primaryKey"`
-	CreatedAt      time.Time  `json:"created_at" gorm:"autoCreateTime"`
-	UpdatedAt      time.Time  `json:"updated_at" gorm:"autoUpdateTime"`
+	CreatedAt      time.Time  `json:"created_at" gorm:"autoCreateTime:milli"`
+	UpdatedAt      time.Time  `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	Cart           []Product  `json:"cart"  gorm:"many2many:user_cart"`
 	AddressDetails *[]Address `json:"address_details" gorm:"foreignKey:UserID"`
 	Orders         *[]Order   `json:"orders" gorm:"foreignKey:UserID"`
@@ -31,8 +31,8 @@ type Product struct {
 	Price       float64             `json:"price" validate:"required"`
 	Rating      int                 `json:"rating"`
 	Image       pq.StringArray      `json:"image" gorm:"type:text[]"`
-	CreatedAt   int                 `json:"created_at" gorm:"autoCreateTime"`
-	UpdatedAt   int                 `json:"updated_at" gorm:"autoUpdateTime"`
+	CreatedAt   int                 `json:"created_at" gorm:"autoCreateTime:milli"`
+	UpdatedAt   int                 `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	Description string              `json:"description" validate:"required"`
 	Stock       int                 `json:"stock" validate:"required"`
 	Variations  []ProductVariations `json:"variations" gorm:"foreignkey:ProductID"`
@@ -57,7 +57,7 @@ type Address struct {
 type Order struct {
 	OrderID       string    `json:"id" gorm:"primaryKey"`
 	UserID        string    `json:"user_id"`
-	OrderedAt     time.Time `json:"ordered_at" gorm:"autoCreateTime"`
+	OrderedAt     time.Time `json:"ordered_at" gorm:"autoCreateTime:milli"`
 	Price         int       `json:"price"`
 	Discount      *int      `json:"discount"`
 	PaymentMethod Payment   `json:"payment_method" gorm:"foreignKey:ID"`
@@ -66,8 +66,8 @@ type Order struct {
 
 type Seller struct {
 	SellerID   string     `json:"seller_id" gorm:"primaryKey"`
-	CreatedAt  time.Time  `json:"created_at" gorm:"autoCreateTime"`
-	UpdatedAt  time.Time  `json:"updated_at" gorm:"autoCreateTime"`
+	CreatedAt  time.Time  `json:"created_at" gorm:"autoCreateTime:milli"`
+	UpdatedAt  time.Time  `json:"updated_at" gorm:"autoCreateTime:milli"`
 	SellerName string     `json:"seller_name" validate:"max=30"`
 	Password   string     `json:"password" validate:"required,min=6"`
 	Email      string     `json:"email" validate:"required"`
@@ -95,5 +95,5 @@ type Collections struct {
 	Title       string `json:"title" validate:"required"`
 	Description string `json:"description" validate:"required"`
 	Image       string `json:"image" validate:"required"`
-	CreatedAt   int    `json:"created_at" gorm:"autoCreateTime"`
+	CreatedAt   int    `json:"created_at" gorm:"autoCreateTime:milli"`
 }

@@ -11,8 +11,8 @@ import (
 
 func AddToCart(ctx *gin.Context) {
 	type Variation struct {
-		Label string   `json:"label"`
-		Value []string `json:"value"`
+		ID    string `json:"variation_id"`
+		Value string `json:"value"`
 	}
 
 	var cartItem struct {
@@ -43,6 +43,17 @@ func AddToCart(ctx *gin.Context) {
 		return
 	}
 
+	var varIds []string
+	for _, v := range cartItem.Variation {
+		varIds = append(varIds, v.ID)
+	}
+
+	var variations models.ProductVariations
+	if err := database.DB.Where(varIds).Find(&variations).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
 	// for _, v := range foundUser.Cart {
 	// 	if v.ProductID == userProduct.ProductID {
 	// 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "Product already exist!, add quantity")
@@ -50,12 +61,12 @@ func AddToCart(ctx *gin.Context) {
 	// 	}
 	// }
 
-	if err := database.DB.Model(&foundUser).Association("Cart").Append(&userProduct); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Failed to add product to cart")
-		return
-	}
+	// if err := database.DB.Model(&foundUser).Association("Cart").Append(&userProduct); err != nil {
+	// 	helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Failed to add product to cart")
+	// 	return
+	// }
 
-	helpers.JSONResponse(ctx, "added to cart successfully")
+	helpers.JSONResponse(ctx, "added to cart successfully", helpers.DataHelper(variations))
 }
 
 func RemoveItemFromCart(ctx *gin.Context) {
