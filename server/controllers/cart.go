@@ -49,11 +49,14 @@ func AddToCart(ctx *gin.Context) {
 	}
 
 	var variations models.ProductVariations
+	// create nested variation, value will consist of value and id.
 	if err := database.DB.Where(varIds).Find(&variations).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
+	// need to add a logic to check if the certain variation already exist
+	// - create another relationship between user and product which includes qty, variation and id of product and user id.
 	// for _, v := range foundUser.Cart {
 	// 	if v.ProductID == userProduct.ProductID {
 	// 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "Product already exist!, add quantity")
