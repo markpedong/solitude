@@ -87,6 +87,7 @@ func AddVariation(ctx *gin.Context) {
 
 	var newVar []models.ProductVariations
 
+	tx := database.DB.Begin()
 	for _, v := range body.Variation {
 		newVarInstance := models.ProductVariations{
 			ID:        uuid.Must(uuid.NewRandom()).String(),
@@ -94,7 +95,8 @@ func AddVariation(ctx *gin.Context) {
 			ProductID: currProd.ProductID,
 		}
 
-		if err := database.DB.Create(&newVarInstance).Error; err != nil {
+		if err := tx.Create(&newVarInstance).Error; err != nil {
+			tx.Rollback()
 			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 			return
 		}
@@ -106,7 +108,8 @@ func AddVariation(ctx *gin.Context) {
 				Value:       val,
 			}
 
-			if err := database.DB.Create(&varValue).Error; err != nil {
+			if err := tx.Create(&varValue).Error; err != nil {
+				tx.Rollback()
 				helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 				return
 			}
@@ -116,7 +119,14 @@ func AddVariation(ctx *gin.Context) {
 	}
 
 	if len(currProd.Variations)+len(newVar) > 3 {
+		tx.Rollback()
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Maximum variations limit reached")
+		return
+	}
+
+	if err := tx.Commit().Error; err != nil {
+		tx.Rollback()
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
