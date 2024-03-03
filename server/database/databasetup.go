@@ -43,9 +43,4 @@ func DBSet() {
 		log.Fatal(err.Error())
 		return
 	}
-
-	if err != nil {
-		log.Fatal("There seems to be a problem when migrating")
-		return
-	}
 }
