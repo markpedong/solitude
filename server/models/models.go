@@ -10,7 +10,7 @@ type User struct {
 	ID             string     `json:"id" gorm:"primaryKey"`
 	CreatedAt      time.Time  `json:"created_at" gorm:"autoCreateTime:milli"`
 	UpdatedAt      time.Time  `json:"updated_at" gorm:"autoUpdateTime:milli"`
-	Cart           []Product  `json:"cart"  gorm:"many2many:user_cart"`
+	Cart           *[]Product `json:"cart"  gorm:"many2many:user_cart"`
 	AddressDetails *[]Address `json:"address_details" gorm:"foreignKey:UserID"`
 	Orders         *[]Order   `json:"orders" gorm:"foreignKey:UserID"`
 	FirstName      string     `json:"first_name" validate:"max=30"`
