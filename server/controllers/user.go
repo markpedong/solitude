@@ -8,7 +8,6 @@ import (
 	"solitude/tokens"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 func GetUserData(ctx *gin.Context) {
@@ -117,7 +116,7 @@ func UserSignup(ctx *gin.Context) {
 	}
 
 	newUser := models.User{
-		ID:             uuid.Must(uuid.NewRandom()).String(),
+		ID:             helpers.NewUUID(),
 		FirstName:      body.FirstName,
 		LastName:       body.LastName,
 		Password:       body.Password,

@@ -80,9 +80,6 @@ const get = async <T>(url: string, data = {}, client = true): Promise<ApiRespons
 		if (response?.status === 401) {
 			clearUserData()
 		}
-
-		throttleAlert(response?.message)
-		return response
 	}
 
 	return response as ApiResponse<T>

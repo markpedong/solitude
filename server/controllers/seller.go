@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 func GetSellerData(ctx *gin.Context) {
@@ -129,7 +128,7 @@ func SellerSignup(ctx *gin.Context) {
 	}
 
 	newSeller := models.Seller{
-		SellerID:   uuid.Must(uuid.NewRandom()).String(),
+		SellerID:   helpers.NewUUID(),
 		SellerName: body.SellerName,
 		Password:   body.Password,
 		Email:      body.Email,

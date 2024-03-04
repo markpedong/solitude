@@ -6,6 +6,7 @@ import (
 	"solitude/models"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func ErrJSONResponse(ctx *gin.Context, status int, message string) {
@@ -59,4 +60,8 @@ func ExistingFields(field string, value interface{}) bool {
 	}
 
 	return false
+}
+
+func NewUUID() string {
+	return uuid.Must(uuid.NewRandom()).String()
 }

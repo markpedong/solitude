@@ -7,7 +7,6 @@ import (
 	"solitude/models"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 func GetVariationsByID(ctx *gin.Context) {
@@ -89,7 +88,7 @@ func AddVariation(ctx *gin.Context) {
 	tx := database.DB.Begin()
 	for _, v := range body.Variation {
 		newVarInstance := models.ProductVariations{
-			ID:        uuid.Must(uuid.NewRandom()).String(),
+			ID:        helpers.NewUUID(),
 			Label:     v.Label,
 			ProductID: currProd.ProductID,
 		}
@@ -103,7 +102,7 @@ func AddVariation(ctx *gin.Context) {
 		for _, val := range v.Value {
 			varValue := models.VariationValue{
 				VariationID: newVarInstance.ID,
-				ID:          uuid.Must(uuid.NewRandom()).String(),
+				ID:          helpers.NewUUID(),
 				Value:       val,
 			}
 

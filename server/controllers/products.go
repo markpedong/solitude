@@ -9,7 +9,6 @@ import (
 
 	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
@@ -27,7 +26,7 @@ func AddProducts(ctx *gin.Context) {
 	}
 
 	product := &models.Product{
-		ProductID:   uuid.Must(uuid.NewRandom()).String(),
+		ProductID:   helpers.NewUUID(),
 		SellerID:    body.SellerID,
 		ProductName: body.ProductName,
 		Price:       body.Price,
@@ -44,7 +43,7 @@ func AddProducts(ctx *gin.Context) {
 	}
 	for i := range body.Variations {
 		variant := &models.ProductVariations{
-			ID:        uuid.Must(uuid.NewRandom()).String(),
+			ID:        helpers.NewUUID(),
 			ProductID: product.ProductID,
 			Label:     body.Variations[i].Label,
 			Value:     body.Variations[i].Value,
