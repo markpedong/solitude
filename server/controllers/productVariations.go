@@ -158,7 +158,7 @@ func UpdateVariation(ctx *gin.Context) {
 		VarID     string `json:"variation_id" validate:"required"`
 		Variation struct {
 			Label string   `json:"label"`
-			Value []string `json:"value"`
+			Value []string `json:"values"`
 		} `json:"variations" validate:"required"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
@@ -166,7 +166,7 @@ func UpdateVariation(ctx *gin.Context) {
 	}
 
 	var currVariations models.ProductVariations
-	if err := database.DB.First(&currVariations, "id = ?", body.VarID).Error; err != nil {
+	if err := database.DB.Preload("Value").First(&currVariations, "id = ?", body.VarID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -178,6 +178,23 @@ func UpdateVariation(ctx *gin.Context) {
 		return
 	}
 
-	// helpers.JSONResponse(ctx, "updated successfully")
+	var newValues []models.VariationValue
+	for _, v := range body.Variation.Value {
+		valInstance := models.VariationValue{
+			VariationID: currVariations.ID,
+			ID:          helpers.NewUUID(),
+			Value:       v,
+		}
+
+		newValues = append(newValues, valInstance)
+	}
+	if err := database.DB.
+		Model(&currVariations).
+		Association("Value").
+		Replace(newValues); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(currVariations))
 }
