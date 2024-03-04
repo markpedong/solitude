@@ -144,8 +144,15 @@ func DeleteVariation(ctx *gin.Context) {
 		return
 	}
 
-	var variation models.ProductVariations
-	if err := database.DB.Delete(&variation, "id = ?", body.VarID).Error; err != nil {
+	var currVariations models.ProductVariations
+	if err := database.DB.Preload("Value").First(&currVariations, "id = ?", body.VarID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+	for _, v := range currVariations.Value {
+		database.DB.Delete(v)
+	}
+	if err := database.DB.Delete(&currVariations).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
