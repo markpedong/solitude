@@ -10,59 +10,42 @@ import (
 )
 
 func AddToCart(ctx *gin.Context) {
-	type Variation struct {
-		ID    string `json:"variation_id"`
-		Value string `json:"value"`
-	}
-
 	var cartItem struct {
-		ProductID string      `json:"product_id" validate:"required"`
-		UserID    string      `json:"user_id" validate:"required"`
-		Variation []Variation `json:"variation" validate:"required"`
+		ProductID    string   `json:"product_id" validate:"required"`
+		UserID       string   `json:"user_id" validate:"required"`
+		VariationIDs []string `json:"variation_ids" validate:"required"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &cartItem); err != nil {
 		return
 	}
 
 	var foundUser models.User
-	if err := database.DB.Preload("Cart").First(&foundUser, "id = ?", cartItem.UserID).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "User not found")
+	if err := database.DB.First(&foundUser, "id = ?", cartItem.UserID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusNotFound, err.Error())
 		return
 	}
 
-	var userProduct models.Product
-	if err := database.DB.First(&userProduct, "product_id = ?", cartItem.ProductID).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "Product not found")
+	var selectedProduct models.Product
+	if err := database.DB.Preload("Variations.Value").First(&selectedProduct, "product_id = ?", cartItem.ProductID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "product not found")
 		return
 	}
 
-	var varIds []string
-	for _, v := range cartItem.Variation {
-		varIds = append(varIds, v.ID)
-	}
-
-	var variations models.ProductVariations
-	// create nested variation, value will consist of value and id.
-	if err := database.DB.Where(varIds).Find(&variations).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+	var selectedVariations []models.VariationValue
+	if err := database.DB.
+		Where("id IN ?", cartItem.VariationIDs).
+		Find(&selectedVariations).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "variation not found")
 		return
 	}
 
-	// need to add a logic to check if the certain variation already exist
-	// - create another relationship between user and product which includes qty, variation and id of product and user id.
-	// for _, v := range foundUser.Cart {
-	// 	if v.ProductID == userProduct.ProductID {
-	// 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "Product already exist!, add quantity")
-	// 		return
-	// 	}
-	// }
-
-	// if err := database.DB.Model(&foundUser).Association("Cart").Append(&userProduct); err != nil {
+	// COMMENT THIS FOR NOW, need to filter the selectedVariations.
+	// if err := database.DB.Save(&foundUser).Error; err != nil {
 	// 	helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Failed to add product to cart")
 	// 	return
 	// }
 
-	helpers.JSONResponse(ctx, "added to cart successfully", helpers.DataHelper(variations))
+	helpers.JSONResponse(ctx, "added to cart successfully")
 }
 
 func RemoveItemFromCart(ctx *gin.Context) {
@@ -107,22 +90,12 @@ func GetItemsFromCart(ctx *gin.Context) {
 	}
 
 	var foundUser models.User
-	if err := database.DB.Preload("Cart.Variations").First(&foundUser, "id = ? ", body.UserID).Error; err != nil {
+	if err := database.DB.Preload("Cart.Variations.Value").First(&foundUser, "id = ? ", body.UserID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	ids := []models.JSONProduct{}
-	for _, v := range foundUser.Cart {
-		ids = append(ids, models.JSONProduct{
-			ID:          v.ProductID,
-			ProductName: v.ProductName,
-			Variations:  v.Variations,
-			Category:    v.Category,
-		})
-	}
-
-	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(ids))
+	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(foundUser.Cart))
 }
 
 func BuyFromCart(ctx *gin.Context) {
