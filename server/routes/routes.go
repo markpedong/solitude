@@ -31,7 +31,7 @@ func UserRoutes(r *gin.Engine) {
 		api.POST("/addVariations", controllers.AddVariation)
 		api.POST("/getVariations", controllers.GetVariationsByID)
 		api.POST("/deleteVariations", controllers.DeleteVariation)
-		// api.POST("/updateVariation", controllers.UpdateVariation)
+		api.POST("/updateVariations", controllers.UpdateVariation)
 		// api.GET("/cart-checkout", controllers.BuyFromCart)
 		// api.GET("/instant-buy", controllers.InstantBuy)
 		// api.POST("/search", controllers.SearchProductByQuery)

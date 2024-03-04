@@ -165,14 +165,14 @@ func UpdateVariation(ctx *gin.Context) {
 		return
 	}
 
-	if err := database.DB.Where("id = ?", body.VarID).Updates(models.ProductVariations{
-		Label: body.Variation.Label,
-		// pass new value here
-		// Value: body.Variation.Value,
-	}).Error; err != nil {
+	var currVariations models.ProductVariations
+	if err := database.DB.
+		First(&currVariations, "id = ?", body.VarID).
+		Updates(models.ProductVariations{Label: body.Variation.Label}).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	helpers.JSONResponse(ctx, "updated successfully")
+	// helpers.JSONResponse(ctx, "updated successfully")
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(currVariations))
 }
