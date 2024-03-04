@@ -166,9 +166,14 @@ func UpdateVariation(ctx *gin.Context) {
 	}
 
 	var currVariations models.ProductVariations
-	if err := database.DB.
-		First(&currVariations, "id = ?", body.VarID).
-		Updates(models.ProductVariations{Label: body.Variation.Label}).Error; err != nil {
+	if err := database.DB.First(&currVariations, "id = ?", body.VarID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	if err := database.DB.Model(&currVariations).Updates(models.ProductVariations{
+		Label: body.Variation.Label,
+	}).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
