@@ -20,14 +20,7 @@ func AddToCart(ctx *gin.Context) {
 		UserID    string      `json:"user_id" validate:"required"`
 		Variation []Variation `json:"variation" validate:"required"`
 	}
-
-	if err := ctx.ShouldBindJSON(&cartItem); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid JSON input")
-		return
-	}
-
-	if err := Validate.Struct(cartItem); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := helpers.BindValidateJSON(ctx, &cartItem); err != nil {
 		return
 	}
 
@@ -77,14 +70,7 @@ func RemoveItemFromCart(ctx *gin.Context) {
 		ProductID string `json:"product_id" validate:"required"`
 		UserID    string `json:"user_id" validate:"required"`
 	}
-
-	if err := ctx.ShouldBindJSON(&ids); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid JSON input")
-		return
-	}
-
-	if err := Validate.Struct(ids); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := helpers.BindValidateJSON(ctx, &ids); err != nil {
 		return
 	}
 
@@ -111,9 +97,7 @@ func GetItemsFromCart(ctx *gin.Context) {
 	var body struct {
 		UserID string `json:"user_id"`
 	}
-
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid JSON input")
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
@@ -146,22 +130,7 @@ func BuyFromCart(ctx *gin.Context) {
 		ProductIDs string `json:"product_ids" validate:"required"`
 		UserID     string `json:"user_id" validate:"required"`
 	}
-
-	if err := ctx.ShouldBindJSON(&ids); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid JSON input",
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
-		return
-	}
-
-	if err := Validate.Struct(ids); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+	if err := helpers.BindValidateJSON(ctx, &ids); err != nil {
 		return
 	}
 
@@ -177,28 +146,9 @@ func InstantBuy(ctx *gin.Context) {
 		ProductID string `json:"product_id" validate:"required"`
 		UserID    string `json:"user_id" validate:"required"`
 	}
-
-	if err := ctx.ShouldBindJSON(&ids); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid JSON input",
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
+	if err := helpers.BindValidateJSON(ctx, &ids); err != nil {
 		return
 	}
 
-	if err := Validate.Struct(ids); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
-		return
-	}
-
-	ctx.JSON(http.StatusOK, gin.H{
-		"success": false,
-		"status":  http.StatusOK,
-		"message": "successfully placed the order!",
-	})
+	helpers.JSONResponse(ctx, "")
 }

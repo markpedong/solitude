@@ -41,10 +41,10 @@ func UserUpdate(ctx *gin.Context) {
 		Email     string `json:"email"`
 		Phone     string `json:"phone"`
 	}
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
+
 	if body.ID == "" {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid ID")
 		return
@@ -86,14 +86,7 @@ func UserUpdate(ctx *gin.Context) {
 
 func UserSignup(ctx *gin.Context) {
 	var body models.User
-
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid JSON input")
-		return
-	}
-
-	if err := Validate.Struct(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
@@ -150,14 +143,7 @@ func UserLogin(ctx *gin.Context) {
 		Email    string `json:"email" validate:"required"`
 		Password string `json:"password" validate:"required,min=6"`
 	}
-
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid JSON input")
-		return
-	}
-
-	if err := Validate.Struct(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 

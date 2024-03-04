@@ -42,24 +42,7 @@ func AddCollection(ctx *gin.Context) {
 		Description string `json:"description" validate:"required"`
 		Image       string `json:"image" validate:"required"`
 	}
-
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-			"success": false,
-			"status":  http.StatusBadRequest,
-		})
-
-		return
-	}
-
-	if err := Validate.Struct(body); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-			"status":  http.StatusBadRequest,
-			"success": false,
-		})
-
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 

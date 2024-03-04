@@ -6,8 +6,11 @@ import (
 	"solitude/models"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
 )
+
+var Validate = validator.New()
 
 func ErrJSONResponse(ctx *gin.Context, status int, message string) {
 	ctx.AbortWithStatusJSON(status, gin.H{
@@ -64,4 +67,18 @@ func ExistingFields(field string, value interface{}) bool {
 
 func NewUUID() string {
 	return uuid.Must(uuid.NewRandom()).String()
+}
+
+func BindValidateJSON(ctx *gin.Context, body interface{}) error {
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return err
+	}
+
+	if err := Validate.Struct(body); err != nil {
+		ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return err
+	}
+
+	return nil
 }

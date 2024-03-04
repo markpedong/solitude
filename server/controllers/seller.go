@@ -15,9 +15,7 @@ func GetSellerData(ctx *gin.Context) {
 	var body struct {
 		SellerID string `json:"seller_id"`
 	}
-
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
@@ -51,8 +49,7 @@ func GetSellerData(ctx *gin.Context) {
 
 func SellerUpdate(ctx *gin.Context) {
 	var body models.Seller
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
@@ -97,14 +94,7 @@ func SellerUpdate(ctx *gin.Context) {
 
 func SellerSignup(ctx *gin.Context) {
 	var body models.Seller
-
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid JSON input")
-		return
-	}
-
-	if err := Validate.Struct(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
@@ -158,14 +148,7 @@ func SellerLogin(ctx *gin.Context) {
 		Email    string `json:"email" validate:"required"`
 		Password string `json:"password" validate:"required,min=6"`
 	}
-
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid JSON input")
-		return
-	}
-
-	if err := Validate.Struct(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
@@ -201,9 +184,7 @@ func GetAllProductsBySellerID(ctx *gin.Context) {
 	var body struct {
 		SellerID string `json:"seller_id"`
 	}
-
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 

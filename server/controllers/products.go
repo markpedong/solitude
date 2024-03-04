@@ -14,14 +14,7 @@ import (
 
 func AddProducts(ctx *gin.Context) {
 	var body models.Product
-
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
-		return
-	}
-
-	if err := Validate.Struct(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
@@ -66,8 +59,7 @@ func GetAllProducts(ctx *gin.Context) {
 		Price    int    `json:"price"`
 		Gender   string `json:"gender"`
 	}
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
@@ -125,9 +117,7 @@ func GetProductsByID(ctx *gin.Context) {
 	var body struct {
 		ID string `json:"product_id"`
 	}
-
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
@@ -167,8 +157,7 @@ func SearchProductByQuery(ctx *gin.Context) {
 	var body struct {
 		ProductID string `json:"product_id"`
 	}
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "check the JSON format!")
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 

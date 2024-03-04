@@ -140,14 +140,7 @@ func DeleteVariation(ctx *gin.Context) {
 	var body struct {
 		VarID string `json:"variation_id" validate:"required"`
 	}
-
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
-		return
-	}
-
-	if err := Validate.Struct(body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
@@ -168,14 +161,7 @@ func UpdateVariation(ctx *gin.Context) {
 			Value []string `json:"value"`
 		} `json:"variations" validate:"required"`
 	}
-
-	if err := ctx.ShouldBindJSON(&body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
-		return
-	}
-
-	if err := Validate.Struct(body); err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
