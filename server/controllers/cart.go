@@ -90,44 +90,18 @@ func GetItemsFromCart(ctx *gin.Context) {
 		return
 	}
 
+	if body.UserID == "" {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "invalid id passed!")
+		return
+	}
+
 	var userCart []models.Carts
 	if err := database.DB.Find(&userCart, "user_id = ? ", body.UserID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	var productsWithVariations []models.Product
-	for _, cart := range userCart {
-		var product models.Product
-		if err := database.DB.Find(&product, "product_id = ?", cart.ProductID).Error; err != nil {
-			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-			return
-		}
-
-		var variations []models.ProductVariations
-		if err := database.DB.Find(&variations, "product_id = ?", product.ProductID).Error; err != nil {
-			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-			return
-		}
-
-		for i, variation := range variations {
-			var values []models.VariationValue
-			for _, variationID := range cart.VariationIDs {
-				var value models.VariationValue
-				if err := database.DB.Find(&value, "id = ? AND variation_id = ?", variationID, variation.ID).Error; err != nil {
-					helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-					return
-				}
-				values = append(values, value)
-			}
-			variations[i].Value = values
-		}
-
-		product.Variations = variations
-		productsWithVariations = append(productsWithVariations, product)
-	}
-
-	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(productsWithVariations))
+	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(userCart))
 }
 
 func BuyFromCart(ctx *gin.Context) {
