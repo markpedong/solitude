@@ -116,7 +116,6 @@ func UserSignup(ctx *gin.Context) {
 		Email:          body.Email,
 		Phone:          body.Phone,
 		Username:       body.Username,
-		Cart:           []*models.Product{},
 		AddressDetails: &[]models.Address{},
 		Orders:         &[]models.Order{},
 		Gender:         body.Gender,

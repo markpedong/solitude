@@ -39,13 +39,19 @@ func AddToCart(ctx *gin.Context) {
 		return
 	}
 
-	// COMMENT THIS FOR NOW, need to filter the selectedVariations.
-	// if err := database.DB.Save(&foundUser).Error; err != nil {
-	// 	helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Failed to add product to cart")
-	// 	return
-	// }
+	newCartItem := models.Carts{
+		ID:           helpers.NewUUID(),
+		ProductID:    selectedProduct.ProductID,
+		UserID:       foundUser.ID,
+		VariationIDs: cartItem.VariationIDs,
+	}
 
-	helpers.JSONResponse(ctx, "added to cart successfully")
+	if err := database.DB.Create(&newCartItem).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	helpers.JSONResponse(ctx, "added to cart successfully", helpers.DataHelper(selectedVariations))
 }
 
 func RemoveItemFromCart(ctx *gin.Context) {
@@ -89,13 +95,13 @@ func GetItemsFromCart(ctx *gin.Context) {
 		return
 	}
 
-	var foundUser models.User
-	if err := database.DB.Preload("Cart.Variations.Value").First(&foundUser, "id = ? ", body.UserID).Error; err != nil {
+	var userCart []models.Carts
+	if err := database.DB.Find(&userCart, "user_id = ? ", body.UserID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(foundUser.Cart))
+	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(userCart))
 }
 
 func BuyFromCart(ctx *gin.Context) {

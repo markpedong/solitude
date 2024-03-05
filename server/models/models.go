@@ -10,7 +10,6 @@ type User struct {
 	ID             string     `json:"id" gorm:"primaryKey"`
 	CreatedAt      time.Time  `json:"created_at" gorm:"autoCreateTime:milli"`
 	UpdatedAt      time.Time  `json:"updated_at" gorm:"autoUpdateTime:milli"`
-	Cart           []*Product `json:"cart"  gorm:"many2many:user_cart"`
 	AddressDetails *[]Address `json:"address_details" gorm:"foreignKey:UserID"`
 	Orders         *[]Order   `json:"orders" gorm:"foreignKey:UserID"`
 	FirstName      string     `json:"first_name" validate:"max=30"`
@@ -102,4 +101,11 @@ type Collections struct {
 	Description string `json:"description" validate:"required"`
 	Image       string `json:"image" validate:"required"`
 	CreatedAt   int    `json:"created_at" gorm:"autoCreateTime:milli"`
+}
+
+type Carts struct {
+	ID           string         `json:"id" gorm:"primaryKey"`
+	ProductID    string         `json:"product_id" validate:"required"`
+	UserID       string         `json:"user_id" validate:"required"`
+	VariationIDs pq.StringArray `json:"variation_ids" gorm:"type:text[]"`
 }

@@ -28,7 +28,7 @@ func DBSet() {
 		})
 
 	if err != nil {
-		log.Fatal("Failed to Connect to a Database")
+		log.Fatal("failed to Connect to a Database")
 		return
 	}
 
@@ -37,6 +37,7 @@ func DBSet() {
 		models.Address{}, &models.Order{},
 		&models.ProductVariations{},
 		&models.VariationValue{},
+		&models.Carts{},
 	)
 	if err != nil {
 		log.Fatal(err.Error())
