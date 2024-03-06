@@ -1,9 +1,10 @@
 @import "@/styles/_helpers.scss";
 
 .specsHeader {
-    @apply py-[1rem];
+    @apply mt-[1rem];
     font-size: toRem(18);
     font-weight: 700;
+    font-family: "Integral"
 }
 
 .specificationsWrapper {
@@ -15,16 +16,15 @@
     @apply flex flex-col gap-1;
 }
 
-.specifications {
-    @apply flex;
-
-    > :first-child {
-        @apply mr-[1rem];
+.labelContainer {
+    >* {
+        font-family: "Satoshi";
         color: var(--color-secondary);
     }
+}
 
-    >:last-child {
-        @apply flex-1;
+.detailsContainer {
+    >* {
         color: var(--color-primary);
     }
 }

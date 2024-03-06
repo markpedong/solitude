@@ -1,7 +1,7 @@
 @import '@/styles/_helpers.scss';
 
 .productWrapper {
-    @apply max-w-[65rem] mx-auto mt-10;
+    @apply max-w-[65rem] mx-auto mt-10 px-2;
 
     .productCategory {
         @apply flex items-center gap-2 mb-10;

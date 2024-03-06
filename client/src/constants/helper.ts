@@ -56,6 +56,6 @@ export const clearUserData = () => {
 	}, 1500)
 }
 
-export const capFrstLtr = str => str.charAt(0).toUpperCase() + str.slice(1)
+export const capFrstLtr = (str: string) => str?.charAt(0).toUpperCase() + str?.slice(1)
 
-export const dateParser = (date: number) => dayjs.unix(date).format('MMMM/DD/YYYY')
+export const dateParser = (date: number, format: string = 'MM/DD/YYYY') => dayjs.unix(date).format(format)

@@ -43,12 +43,12 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 			key: '2',
 			label: 'Rating & Reviews',
 			children: <Rating products={products} curr={params.id as string} />
-		},
-		{
-			key: '3',
-			label: 'FAQs',
-			children: 'Content of Tab Pane 3'
 		}
+		// {
+		// 	key: '3',
+		// 	label: 'FAQs',
+		// 	children: 'Content of Tab Pane 3'
+		// }
 	]
 
 	const memoizedImageContainer = useMemo(
@@ -67,9 +67,9 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 	const memoizedRateContainer = useMemo(
 		() => (
 			<div className={styles.rateContainer}>
-				<Rate value={4.5} />
+				<Rate value={data?.rating} disabled />
 				<span className={styles.rate}>
-					4.5 / <p>5</p>
+					{data?.rating} / <p>5</p>
 				</span>
 			</div>
 		),

@@ -50,7 +50,7 @@ export const LandingContent: FC<LandingProps> = ({ title, products }) => {
 export const ReviewComp: FC<ReviewProps> = ({ product }) => {
 	return (
 		<div className={styles.reviewContainer} style={product ? { maxWidth: '20rem', width: '100%' } : {}}>
-			<Rate value={3} />
+			{/* <Rate value={product?.rating} disabled /> */}
 			<div className={styles.nameContainer}>
 				<span>Sarah M.</span>
 				<CheckOutlined />

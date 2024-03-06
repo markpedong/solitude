@@ -50,9 +50,9 @@ const Rating: FC<{ products: TProduct[]; curr: string }> = ({ products, curr }) 
 			<div className={styles.headerContainer}>
 				<div>
 					<span>All Reviews</span>
-					<span>{'(451)'}</span>
+					{/* <span>{'(451)'}</span> */}
 				</div>
-				<div>
+				{/* <div>
 					<ControlOutlined className={styles.filter} />
 					<Dropdown className={styles.latest} menu={{ items }} trigger={['click']} placement="bottom">
 						<Flex justify="center" gap={5}>
@@ -61,9 +61,9 @@ const Rating: FC<{ products: TProduct[]; curr: string }> = ({ products, curr }) 
 						</Flex>
 					</Dropdown>
 					<span className={styles.review}>Write a Review</span>
-				</div>
+				</div> */}
 			</div>
-			{reviewComponent}
+			{/* {reviewComponent}
 			<motion.div whileTap={{ scale: 0.9 }} className={styles.loadMoreReview}>
 				Load more Review
 			</motion.div>
@@ -75,7 +75,7 @@ const Rating: FC<{ products: TProduct[]; curr: string }> = ({ products, curr }) 
 					.map(q => (
 						<Product data={q} key={q?.product_id} />
 					))}
-			</div>
+			</div> */}
 		</div>
 	)
 }

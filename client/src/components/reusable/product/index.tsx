@@ -21,7 +21,7 @@ const Product: FC<Props> = ({ data }) => {
 				{data?.product_name}
 			</div>
 			<div className={styles.rateContainer}>
-				<Rate value={3} />
+				<Rate value={data?.rating} disabled />
 				<span className={styles.rate}>
 					{data?.rating} /<span className="pl-1">5</span>
 				</span>
