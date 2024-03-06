@@ -1,176 +1,143 @@
 package controllers
 
-// func AddAddress(ctx *gin.Context) {
-// 	var body struct {
-// 		UserID  string  `json:"user_id"`
-// 		House   *string `json:"house"`
-// 		Street  *string `json:"street"`
-// 		City    *string `json:"city"`
-// 		PinCode *string `json:"pin_code"`
-// 	}
+import (
+	"net/http"
+	"solitude/database"
+	"solitude/helpers"
+	"solitude/models"
 
-// 	if err := ctx.BindJSON(&body); err != nil {
-// 		ctx.AbortWithStatusJSON(http.StatusNotAcceptable, gin.H{"error": err.Error()})
-// 		return
-// 	}
+	"github.com/gin-gonic/gin"
+)
 
-// 	if body.UserID == "" {
-// 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "Invalid ID"})
-// 		return
-// 	}
+func AddAddress(ctx *gin.Context) {
+	var body struct {
+		UserID  string  `json:"user_id" validate:"required"`
+		House   *string `json:"house" validate:"required"`
+		Street  *string `json:"street" validate:"required"`
+		City    *string `json:"city" validate:"required"`
+		PinCode *string `json:"pin_code" validate:"required"`
+	}
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
+		return
+	}
 
-// 	var user models.User
-// 	if err := database.DB.Where("id = ?", body.UserID).First(&user).Error; err != nil {
-// 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-// 		return
-// 	}
+	var user models.User
+	if err := database.DB.Where("id = ?", body.UserID).First(&user).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
 
-// 	var existingAddresses []models.Address
-// 	// Establish connection with AddressDetails TABLE
-// 	if err := database.DB.Model(&user).Association("AddressDetails").Find(&existingAddresses); err != nil {
-// 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-// 		return
-// 	}
+	var existingAddresses []models.Address
+	if err := database.DB.Model(&user).Association("AddressDetails").Find(&existingAddresses); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
 
-// 	if len(existingAddresses) < 2 {
-// 		newAddress := models.Address{
-// 			AddressID: Guid.String(),
-// 			House:     body.House,
-// 			Street:    body.Street,
-// 			City:      body.City,
-// 			Pincode:   body.PinCode,
-// 		}
+	if len(existingAddresses) < 4 {
+		newAddress := models.Address{
+			AddressID: helpers.NewUUID(),
+			House:     body.House,
+			Street:    body.Street,
+			City:      body.City,
+			Pincode:   body.PinCode,
+			UserID:    user.ID,
+		}
 
-// 		// Append the new address to the user's addresses
-// 		if err := database.DB.Model(&user).Association("AddressDetails").Append(&newAddress); err != nil {
-// 			ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-// 			return
-// 		}
+		if err := database.DB.Model(&user).Association("AddressDetails").Append(&newAddress); err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
+	} else {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "maximum address exceeded, delete some.")
+	}
 
-// 		// GORM automatically updates the user with the new address, no need for explicit update
-// 		ctx.JSON(http.StatusOK, gin.H{"message": "Address added successfully"})
-// 		return
-// 	}
+	helpers.JSONResponse(ctx, "addded address successfully!")
+}
 
-// 	ctx.JSON(http.StatusBadRequest, gin.H{"error": "Not Allowed"})
-// }
+func EditHomeAddress(ctx *gin.Context) {
+	var body struct {
+		AddressID string  `json:"address_id" validate:"required"`
+		UserID    string  `json:"user_id" validate:"required"`
+		House     *string `json:"house"`
+		Street    *string `json:"street"`
+		City      *string `json:"city"`
+		PinCode   *string `json:"pin_code"`
+	}
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
+		return
+	}
 
-// func EditHomeAddress(ctx *gin.Context) {
-// 	var body struct {
-// 		UserID  string  `json:"user_id"`
-// 		House   *string `json:"house"`
-// 		Street  *string `json:"street"`
-// 		City    *string `json:"city"`
-// 		PinCode *string `json:"pin_code"`
-// 	}
+	var user models.User
+	if err := database.DB.Preload("AddressDetails").First(&user, "id = ?", body.UserID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
 
-// 	if err := ctx.BindJSON(&body); err != nil {
-// 		ctx.IndentedJSON(http.StatusBadRequest, err.Error())
-// 		return
-// 	}
+	var found bool
+	for _, v := range *user.AddressDetails {
+		if body.AddressID == v.AddressID {
+			found = true
+			break
+		}
+	}
 
-// 	if body.UserID == "" {
-// 		ctx.Header("Content-Type", "application/json")
-// 		ctx.JSON(http.StatusNotFound, gin.H{"Error": "Invalid"})
-// 		ctx.Abort()
-// 		return
-// 	}
+	if !found {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "check address_id")
+		return
+	}
 
-// 	var user models.User
-// 	result := database.DB.Preload("AddressDetails").First(&user, "id = ?", body.City)
-// 	if result.Error != nil {
-// 		ctx.IndentedJSON(http.StatusInternalServerError, result.Error)
-// 		return
-// 	}
+	var editAddress models.Address
+	if err := database.DB.First(&editAddress, "id = ?", body.AddressID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
 
-// 	var editAddress models.Address
-// 	if err := ctx.BindJSON(&editAddress); err != nil {
-// 		ctx.IndentedJSON(http.StatusBadRequest, err.Error())
-// 		return
-// 	}
+	editAddress = models.Address{
+		City:    body.City,
+		House:   body.House,
+		Pincode: body.PinCode,
+		Street:  body.Street,
+	}
+	if err := database.DB.Save(&editAddress).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
 
-// 	if len(user.AddressDetails) > 0 {
-// 		user.AddressDetails[0].House = editAddress.House
-// 		user.AddressDetails[0].Street = editAddress.Street
-// 		user.AddressDetails[0].City = editAddress.City
-// 		user.AddressDetails[0].Pincode = editAddress.Pincode
-// 	} else {
-// 		// Create a new address if the user doesn't have one
-// 		editAddress.AddressID = user.ID
-// 		user.AddressDetails = []models.Address{editAddress}
-// 	}
+	helpers.JSONResponse(ctx, "edited successfully!")
+}
 
-// 	result = database.DB.Save(&user)
-// 	if result.Error != nil {
-// 		ctx.IndentedJSON(http.StatusInternalServerError, result.Error)
-// 		return
-// 	}
+func DeleteAddress(ctx *gin.Context) {
+	var body struct {
+		AddressID string `json:"address_id" validate:"required"`
+		UserID    string `json:"user_id" validate:"required"`
+	}
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
+		return
+	}
 
-// 	ctx.IndentedJSON(http.StatusOK, "Successfully Updated the Home address")
-// }
+	var user models.User
+	if err := database.DB.Preload("AddressDetails").First(&user, "id = ?", body.UserID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
 
-// func EdiWorkAddress(ctx *gin.Context) {
-// 	var body struct {
-// 		ID string `json:"id"`
-// 	}
+	var found bool
+	for _, v := range *user.AddressDetails {
+		if body.AddressID == v.AddressID {
+			found = true
+			break
+		}
+	}
 
-// 	if body.ID == "" {
-// 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{"Error": "Wrong id not provided"})
-// 		return
-// 	}
+	if !found {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "check address_id")
+		return
+	}
 
-// 	var editAddress models.Address
-// 	if err := ctx.BindJSON(&editAddress); err != nil {
-// 		ctx.JSON(http.StatusBadRequest, err.Error())
-// 		return
-// 	}
+	if err := database.DB.Where("id = ?", body.AddressID).Find(&models.Address{}).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
 
-// 	if err := database.DB.Model(&models.User{}).Where("id = ?", body.ID).Updates(map[string]interface{}{
-// 		"address.1.house_name":  editAddress.House,
-// 		"address.1.street_name": editAddress.Street,
-// 		"address.1.city_name":   editAddress.City,
-// 		"address.1.pin_code":    editAddress.Pincode,
-// 	}).Error; err != nil {
-// 		ctx.JSON(500, "Something went wrong")
-// 		return
-// 	}
-
-// 	ctx.JSON(200, "Successfully updated the Work Address")
-// }
-
-// func DeleteAddress(ctx *gin.Context) {
-// 	var body struct {
-// 		AddressID string `json:"address_id" validate:"required"`
-// 	}
-
-// 	if err := Validate.Struct(body); err != nil {
-// 		ctx.Header("Content-Type", "application/json")
-// 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-// 			"message": err.Error(),
-// 			"status":  http.StatusBadRequest,
-// 			"success": false,
-// 		})
-// 	}
-
-// 	cx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-// 	defer cancel()
-
-// 	addresses := make([]models.Address, 0)
-// 	if err := database.DB.WithContext(cx).
-// 		Model(&models.User{}).
-// 		Where("id = ?", body.AddressID).
-// 		Update("address_details", addresses).
-// 		Error; err != nil {
-// 		ctx.JSON(http.StatusInternalServerError, gin.H{
-// 			"message": err.Error(),
-// 			"status":  http.StatusInternalServerError,
-// 			"success": false,
-// 		})
-// 	}
-
-// 	ctx.JSON(http.StatusOK, gin.H{
-// 		"message": "deleted successfully!!",
-// 		"status":  http.StatusOK,
-// 		"success": false,
-// 	})
-// }
+	helpers.JSONResponse(ctx, "edited successfully!")
+}

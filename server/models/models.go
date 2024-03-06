@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/lib/pq"
+	"gorm.io/gorm"
 )
 
 type User struct {
@@ -55,6 +56,7 @@ type Address struct {
 	Street    *string `json:"street"`
 	City      *string `json:"city"`
 	Pincode   *string `json:"pin_code"`
+	Deleted   gorm.DeletedAt
 }
 
 type Seller struct {
