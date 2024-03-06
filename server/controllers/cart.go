@@ -51,32 +51,27 @@ func AddToCart(ctx *gin.Context) {
 		return
 	}
 
-	helpers.JSONResponse(ctx, "added to cart successfully", helpers.DataHelper(selectedVariations))
+	helpers.JSONResponse(ctx, "added to cart successfully")
 }
 
 func RemoveItemFromCart(ctx *gin.Context) {
-	var ids struct {
-		ProductID string `json:"product_id" validate:"required"`
-		UserID    string `json:"user_id" validate:"required"`
+	var body struct {
+		UserID     string `json:"user_id"`
+		CheckoutID string `json:"checkout_id"`
 	}
-	if err := helpers.BindValidateJSON(ctx, &ids); err != nil {
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
-	var foundUser models.User
-	if err := database.DB.Preload("Cart").First(&foundUser, "id = ?", ids.UserID).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "User not found")
-		return
-	}
-
-	var userProduct models.Product
-	if err := database.DB.First(&userProduct, "product_id = ?", ids.ProductID).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "Product not found")
-		return
-	}
-
-	if err := database.DB.Model(&foundUser).Association("Cart").Delete(userProduct); err != nil {
+	var userCart []models.Carts
+	if err := database.DB.Find(&userCart, "user_id = ? ", body.UserID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	if err := database.DB.Delete(&models.Carts{}, "id = ?", body.CheckoutID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
 	}
 
 	helpers.JSONResponse(ctx, "removed from cart successfully!")
@@ -96,7 +91,7 @@ func GetItemsFromCart(ctx *gin.Context) {
 		return
 	}
 
-	var productsWithVariations []models.Product
+	var productsWithVariations []models.JSONProduct
 	for _, cart := range userCart {
 		var product models.Product
 		if err := database.DB.Find(&product, "product_id = ?", cart.ProductID).Error; err != nil {
@@ -118,13 +113,27 @@ func GetItemsFromCart(ctx *gin.Context) {
 					helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 					return
 				}
-				values = append(values, value)
+
+				if value.ID != "" {
+					values = append(values, value)
+				}
+
 			}
 			variations[i].Value = values
 		}
 
-		product.Variations = variations
-		productsWithVariations = append(productsWithVariations, product)
+		// product.Variations = variations
+		// product.CheckoutID = cart.ID
+		productRes := models.JSONProduct{
+			ProductID:   product.ProductID,
+			SellerID:    product.SellerID,
+			ProductName: product.ProductName,
+			Price:       product.Price,
+			Image:       product.Image,
+			Variations:  variations,
+			CheckoutID:  cart.ID,
+		}
+		productsWithVariations = append(productsWithVariations, productRes)
 	}
 
 	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(productsWithVariations))

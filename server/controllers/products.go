@@ -28,6 +28,7 @@ func AddProducts(ctx *gin.Context) {
 		Stock:       body.Stock,
 		Rating:      body.Rating,
 		Category:    pq.StringArray(body.Category),
+		Variations:  body.Variations,
 	}
 
 	if err := database.DB.Create(&product).Error; err != nil {

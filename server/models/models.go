@@ -36,12 +36,16 @@ type Product struct {
 	Stock       int                 `json:"stock" validate:"required"`
 	Variations  []ProductVariations `json:"variations" gorm:"foreignkey:ProductID"`
 	Category    pq.StringArray      `json:"categories" gorm:"type:text[]"`
+	CheckoutID  string              `json:"checkout_id"`
 }
 type JSONProduct struct {
-	ID          string              `json:"product_id"`
-	ProductName string              `json:"product_name"`
-	Variations  []ProductVariations `json:"variations"`
-	Category    []string            `json:"categories"`
+	ProductID   string              `json:"product_id"`
+	SellerID    string              `json:"seller_id" `
+	ProductName string              `json:"product_name" `
+	Price       float64             `json:"price" `
+	Image       pq.StringArray      `json:"image" `
+	Variations  []ProductVariations `json:"variations" `
+	CheckoutID  string              `json:"checkout_id"`
 }
 
 type Address struct {
