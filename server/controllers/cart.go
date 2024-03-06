@@ -44,6 +44,7 @@ func AddToCart(ctx *gin.Context) {
 		ProductID:    selectedProduct.ProductID,
 		UserID:       foundUser.ID,
 		VariationIDs: cartItem.VariationIDs,
+		Ordered:      false,
 	}
 
 	if err := database.DB.Create(&newCartItem).Error; err != nil {
@@ -137,32 +138,4 @@ func GetItemsFromCart(ctx *gin.Context) {
 	}
 
 	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(productsWithVariations))
-}
-
-func BuyFromCart(ctx *gin.Context) {
-	var ids struct {
-		ProductIDs string `json:"product_ids" validate:"required"`
-		UserID     string `json:"user_id" validate:"required"`
-	}
-	if err := helpers.BindValidateJSON(ctx, &ids); err != nil {
-		return
-	}
-
-	ctx.JSON(http.StatusOK, gin.H{
-		"success": false,
-		"status":  http.StatusOK,
-		"message": "successfully placed the order!",
-	})
-}
-
-func InstantBuy(ctx *gin.Context) {
-	var ids struct {
-		ProductID string `json:"product_id" validate:"required"`
-		UserID    string `json:"user_id" validate:"required"`
-	}
-	if err := helpers.BindValidateJSON(ctx, &ids); err != nil {
-		return
-	}
-
-	helpers.JSONResponse(ctx, "")
 }

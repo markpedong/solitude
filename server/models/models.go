@@ -112,4 +112,5 @@ type Carts struct {
 	ProductID    string         `json:"product_id" validate:"required"`
 	UserID       string         `json:"user_id" validate:"required"`
 	VariationIDs pq.StringArray `json:"variation_ids" gorm:"type:text[]"`
+	Ordered      bool           `json:"ordered"`
 }
