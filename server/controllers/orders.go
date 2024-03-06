@@ -57,6 +57,8 @@ func CheckoutOrder(ctx *gin.Context) {
 			Discount:        body.Discount,
 		}
 
+		currProd.Stock = currProd.Stock - 1
+		database.DB.Save(&currProd)
 		orderArr = append(orderArr, newOrder)
 	}
 

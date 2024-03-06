@@ -46,6 +46,10 @@
         font-weight: 400;
         font-size: toRem(14);
 
+        >* {
+            @apply cursor-pointer;
+        }
+
         @media screen and (max-width: 992px) {
             display: none;
         }

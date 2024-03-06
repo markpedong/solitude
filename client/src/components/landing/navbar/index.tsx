@@ -169,11 +169,11 @@ const Navbar = () => {
 						SOLITUDE
 					</motion.div>
 					<div className={styles.navbarHeader}>
-						<div>
+						<div onClick={() => router.push('/products')}>
 							shop <DownOutlined />
 						</div>
 						<div>on sale</div>
-						<div>new arrivals</div>
+						<div onClick={() => router.push('/products')}>new arrivals</div>
 						<div>brands</div>
 					</div>
 					<Input className={styles.input} prefix={<SearchOutlined />} placeholder="Filled" variant="filled" />

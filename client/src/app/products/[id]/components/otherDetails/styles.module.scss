@@ -1,0 +1,30 @@
+@import "@/styles/_helpers.scss";
+
+.specsHeader {
+    @apply py-[1rem];
+    font-size: toRem(18);
+    font-weight: 700;
+}
+
+.specificationsWrapper {
+    @apply grid grid-cols-2;
+}
+
+.labelContainer,
+.detailsContainer {
+    @apply flex flex-col gap-1;
+}
+
+.specifications {
+    @apply flex;
+
+    > :first-child {
+        @apply mr-[1rem];
+        color: var(--color-secondary);
+    }
+
+    >:last-child {
+        @apply flex-1;
+        color: var(--color-primary);
+    }
+}

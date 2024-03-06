@@ -87,7 +87,7 @@ export type TVariations = {
 	id: string
 	product_id: string
 	label: string
-	value: string[]
+	value: { value: string; id: string }[]
 }
 export const getVariations = params => post('/users/getVariations', params)
 

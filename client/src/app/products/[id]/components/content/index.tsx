@@ -2,9 +2,9 @@
 
 import React, { FC, useEffect, useMemo, useState } from 'react'
 import styles from './styles.module.scss'
-import { CheckOutlined, MinusOutlined, PlusOutlined, RightOutlined } from '@ant-design/icons'
+import { MinusOutlined, PlusOutlined, RightOutlined } from '@ant-design/icons'
 import Image from 'next/image'
-import { Rate, Tabs, message } from 'antd'
+import { Rate, Tabs } from 'antd'
 import type { TabsProps } from 'antd'
 import { motion } from 'framer-motion'
 import { useAppSelector } from '@/redux/store'
@@ -14,37 +14,16 @@ import { useDispatch } from 'react-redux'
 import { setLoginModalOpen } from '@/redux/features/booleanSlice'
 import Rating from '../rating'
 import { messageHelper } from '@/constants/antd'
-import { setUserCart } from '@/redux/features/userSlice'
+import { capFrstLtr } from '@/constants/helper'
+import OtherDetails from '../otherDetails'
 
 type Props = {
 	data: TProduct
 	products: TProduct[]
 }
 const scaleSize = { scale: 0.9 }
-
-const sizeOption = [
-	{
-		label: 'small',
-		value: 1
-	},
-	{
-		label: 'medium',
-		value: 2
-	},
-	{
-		label: 'large',
-		value: 3
-	},
-	{
-		label: 'x-large',
-		value: 4
-	}
-]
-
 const ProductDetails: FC<Props> = ({ data, products }) => {
-	const { darkMode } = useAppSelector(s => s.boolean)
 	const { token, userData } = useAppSelector(s => s.userData)
-	const [selectedSize, setSelectedSize] = useState<number>()
 	const [qty, setQty] = useState<number>(1)
 	const router = useRouter()
 	const params = useParams()
@@ -58,7 +37,7 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 		{
 			key: '1',
 			label: 'Product Details',
-			children: 'Content of Tab Pane 1'
+			children: <OtherDetails data={data} />
 		},
 		{
 			key: '2',
@@ -89,29 +68,9 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 		() => (
 			<div className={styles.rateContainer}>
 				<Rate value={4.5} />
-				<span>
-					4.5/<p>5</p>
+				<span className={styles.rate}>
+					4.5 / <p>5</p>
 				</span>
-			</div>
-		),
-		[]
-	)
-
-	const memoizedColorContainer = useMemo(
-		() => (
-			<div className={styles.variationContainer}>
-				<span className={styles.label}>Select Color</span>
-				<div>
-					<span>
-						<CheckOutlined />
-					</span>
-					<span>
-						<CheckOutlined />
-					</span>
-					<span>
-						<CheckOutlined />
-					</span>
-				</div>
 			</div>
 		),
 		[]
@@ -127,12 +86,8 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 		if (res?.data.findIndex(q => q.product_id === params.id) === -1) {
 			const res = await addToCart({ user_id: userData?.id, product_id: data?.product_id })
 			messageHelper(res?.message)
-			// dispatch(setUserCart())
+			return
 		}
-
-		// const reCheck = await checkCart({ user_id: userData?.id })
-
-		// dispatch(setUserCart(s ))
 	}
 
 	useEffect(() => {
@@ -140,9 +95,15 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 			router.push('/products')
 		}
 	}, [])
-
 	return (
 		<div className={styles.productWrapper}>
+			<div className={styles.productCategory}>
+				<span>Products</span>
+				<RightOutlined />
+				<span>{capFrstLtr(data?.categories?.[0])}</span>
+				<RightOutlined />
+				<span>{capFrstLtr(data?.categories?.[1])}</span>
+			</div>
 			<div className={styles.mainContainer}>
 				{memoizedImageContainer}
 				<div className={styles.descriptionContainer}>
@@ -153,48 +114,54 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 						<span>₱{data?.price}</span>
 						<span>-40%</span>
 					</div>
-					<span className={styles.description}>{data?.description}</span>
-					{memoizedColorContainer}
-					<div className={styles.sizeVariationContainer}>
-						<span className={styles.label}>Choose Size</span>
-						<div>
-							{sizeOption?.map(q => (
-								<motion.span
-									style={
-										selectedSize === q.value
-											? {
-													background: darkMode ? 'white' : 'black',
-													color: darkMode ? 'black' : 'white'
-											  }
-											: {}
-									}
-									onClick={() => setSelectedSize(q.value)}
-									whileTap={scaleSize}
-									key={q.value}
-								>
-									{q.label}
-								</motion.span>
-							))}
-						</div>
+					{/* <span className={styles.description}>{data?.description}</span> */}
+					<div className={styles.variationWrapper}>
+						{data?.variations.map(q => (
+							<div className={styles.variationContainer} key={q.id}>
+								<span className={styles.label}>{capFrstLtr(q?.label)}:</span>
+								<div className={styles.options}>
+									{q?.value.map(w => (
+										<motion.span
+											// style={
+											// 	selectedSize === w.id
+											// 		? {
+											// 				background: darkMode ? 'white' : 'black',
+											// 				color: darkMode ? 'black' : 'white'
+											// 		  }
+											// 		: {}
+											// }
+											// onClick={() => setSelectedSize(q.value)}
+											whileTap={scaleSize}
+											key={w.id}
+										>
+											{w.value}
+										</motion.span>
+									))}
+								</div>
+							</div>
+						))}
 					</div>
 					<div className={styles.addToCartContainer}>
-						<div className={styles.addToCart}>
-							<motion.span whileTap={scaleSize} onClick={() => setQty(qty => (qty > 0 ? qty - 1 : qty))}>
-								<MinusOutlined />
-							</motion.span>
-							<span>{qty}</span>
-							<motion.span whileTap={scaleSize} onClick={() => setQty(qty => qty + 1)}>
-								<PlusOutlined />
-							</motion.span>
+						<div className={styles.stockText}>Stocks: {data?.stock}</div>
+						<div className={styles.addToCartButton}>
+							<div className={styles.addToCart}>
+								<motion.span whileTap={{ scale: 0.7 }} onClick={() => setQty(qty => (qty > 1 ? qty - 1 : qty))}>
+									<MinusOutlined />
+								</motion.span>
+								<span>{qty}</span>
+								<motion.span whileTap={{ scale: 0.7 }} onClick={() => setQty(qty => qty + 1)}>
+									<PlusOutlined />
+								</motion.span>
+							</div>
+							<motion.div whileTap={scaleSize} className={styles.button} onClick={handleAddtoCart}>
+								Add to Cart
+							</motion.div>
 						</div>
-						<motion.div whileTap={scaleSize} className={styles.button} onClick={handleAddtoCart}>
-							Add to Cart
-						</motion.div>
 					</div>
 				</div>
 			</div>
 			<div className={styles.tabsContainer}>
-				<Tabs centered defaultActiveKey="2" items={items} onChange={onChange} />
+				<Tabs centered defaultActiveKey="1" items={items} onChange={onChange} />
 			</div>
 		</div>
 	)

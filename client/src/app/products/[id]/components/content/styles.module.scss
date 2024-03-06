@@ -1,7 +1,17 @@
 @import '@/styles/_helpers.scss';
 
 .productWrapper {
-    @apply max-w-6xl mx-auto mt-10;
+    @apply max-w-[65rem] mx-auto mt-10;
+
+    .productCategory {
+        @apply flex items-center gap-2 mb-10;
+        color: var(--color-secondary);
+        font-size: toRem(12);
+
+        span:last-child {
+            color: var(--color-primary);
+        }
+    }
 
     .mainContainer {
         @apply grid grid-cols-2 gap-10 px-5;
@@ -118,6 +128,10 @@
                 }
             }
 
+            .rate {
+                color: var(--color-primary);
+            }
+
             :global {
                 .ant-rate {
                     color: #FFC633;
@@ -126,7 +140,7 @@
         }
 
         .priceContainer {
-            @apply flex gap-2 items-center;
+            @apply flex gap-2 items-center pt-[1rem];
 
             font-size: toRem(16);
             font-family: 'Satoshi';
@@ -156,7 +170,7 @@
         }
 
         .variationContainer {
-            @apply w-full flex flex-col justify-center gap-3 py-2 overflow-scroll;
+            @apply w-full flex justify-start items-center gap-3 py-2 overflow-scroll;
             border-top: toRem(1) solid var(--color-secondary);
 
             .label {
@@ -169,45 +183,46 @@
                 @apply flex gap-2;
 
                 span {
-                    @apply rounded-full flex items-center justify-center;
-
-                    background-color: red;
-                    color: var(--color-primary);
-                    font-size: toRem(12);
-                    font-weight: 500;
-                    height: toRem(20);
-                    width: toRem(20);
-                }
-            }
-        }
-
-        .sizeVariationContainer {
-            @apply w-full flex flex-col justify-center gap-2 py-2;
-            border-top: toRem(1) solid var(--color-secondary);
-
-            .label {
-                font-family: 'Satoshi';
-                font-size: toRem(12);
-                color: var(--color-primary)
-            }
-
-            div {
-                @apply flex gap-4 overflow-scroll;
-
-                span {
-                    @apply px-3 rounded-full flex items-center capitalize whitespace-nowrap;
+                    @apply px-3 rounded-full flex items-center capitalize whitespace-nowrap cursor-pointer select-none;
                     font-size: toRem(12);
                     color: var(--color-secondary);
-                    height: toRem(25);
+                    height: toRem(20);
                     background-color: var(--bg-secondary);
                 }
             }
         }
 
+        // .variationContainer {
+        //     @apply w-full flex flex-col justify-center gap-2 py-2;
+        //     border-top: toRem(1) solid var(--color-secondary);
+
+        //     .label {
+        //         font-family: 'Satoshi';
+        //         font-size: toRem(12);
+        //         color: var(--color-primary)
+        //     }
+
+        //     div {
+        //         @apply flex gap-4 overflow-scroll;
+
+        //         span {
+        //             @apply px-3 rounded-full flex items-center capitalize whitespace-nowrap;
+        //             font-size: toRem(12);
+        //             color: var(--color-secondary);
+        //             height: toRem(25);
+        //             background-color: var(--bg-secondary);
+        //         }
+        //     }
+        // }
+
         .addToCartContainer {
-            @apply flex gap-5 py-3;
+            @apply flex flex-col gap-1 py-3;
             border-top: toRem(1) solid var(--color-secondary);
             font-family: 'Satoshi';
+
+            .addToCartButton {
+                @apply flex gap-3;
+            }
 
             .addToCart {
                 @apply flex gap-4 rounded-full items-center justify-center p-2;
@@ -269,4 +284,14 @@
             }
         }
     }
+}
+
+.stockText {
+    @apply text-[0.8rem];
+    color: var(--color-primary);
+    font-size: toRem(12);
+}
+
+.variationWrapper {
+    @apply pt-[2rem]
 }
