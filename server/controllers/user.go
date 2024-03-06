@@ -109,17 +109,15 @@ func UserSignup(ctx *gin.Context) {
 	}
 
 	newUser := models.User{
-		ID:             helpers.NewUUID(),
-		FirstName:      body.FirstName,
-		LastName:       body.LastName,
-		Password:       body.Password,
-		Email:          body.Email,
-		Phone:          body.Phone,
-		Username:       body.Username,
-		AddressDetails: &[]models.Address{},
-		Orders:         &[]models.Orders{},
-		Gender:         body.Gender,
-		Birthday:       body.Birthday,
+		ID:        helpers.NewUUID(),
+		FirstName: body.FirstName,
+		LastName:  body.LastName,
+		Password:  body.Password,
+		Email:     body.Email,
+		Phone:     body.Phone,
+		Username:  body.Username,
+		Gender:    body.Gender,
+		Birthday:  body.Birthday,
 	}
 
 	if err := database.DB.Create(&newUser).Error; err != nil {

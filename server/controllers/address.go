@@ -9,6 +9,29 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func GetAddresses(ctx *gin.Context) {
+	var body struct {
+		UserID string `json:"user_id" validate:"required"`
+	}
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
+		return
+	}
+
+	var user models.User
+	if err := database.DB.Where("id = ?", body.UserID).First(&user).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	var existingAddresses []models.Address
+	if err := database.DB.Model(&user).Association("AddressDetails").Find(&existingAddresses); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(existingAddresses))
+}
+
 func AddAddress(ctx *gin.Context) {
 	var body struct {
 		UserID  string  `json:"user_id" validate:"required"`
@@ -33,25 +56,26 @@ func AddAddress(ctx *gin.Context) {
 		return
 	}
 
-	if len(existingAddresses) < 4 {
-		newAddress := models.Address{
-			AddressID: helpers.NewUUID(),
-			House:     body.House,
-			Street:    body.Street,
-			City:      body.City,
-			Pincode:   body.PinCode,
-			UserID:    user.ID,
-		}
-
-		if err := database.DB.Model(&user).Association("AddressDetails").Append(&newAddress); err != nil {
-			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-			return
-		}
-	} else {
+	if len(existingAddresses) >= 3 {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "maximum address exceeded, delete some.")
+		return
 	}
 
-	helpers.JSONResponse(ctx, "addded address successfully!")
+	newAddress := models.Address{
+		AddressID: helpers.NewUUID(),
+		UserID:    user.ID,
+		House:     body.House,
+		Street:    body.Street,
+		City:      body.City,
+		Pincode:   body.PinCode,
+	}
+
+	if err := database.DB.Model(&user).Association("AddressDetails").Append(&newAddress); err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	helpers.JSONResponse(ctx, "addded address successfully!", helpers.DataHelper(existingAddresses))
 }
 
 func EditHomeAddress(ctx *gin.Context) {
@@ -74,7 +98,7 @@ func EditHomeAddress(ctx *gin.Context) {
 	}
 
 	var found bool
-	for _, v := range *user.AddressDetails {
+	for _, v := range user.AddressDetails {
 		if body.AddressID == v.AddressID {
 			found = true
 			break
@@ -122,7 +146,7 @@ func DeleteAddress(ctx *gin.Context) {
 	}
 
 	var found bool
-	for _, v := range *user.AddressDetails {
+	for _, v := range user.AddressDetails {
 		if body.AddressID == v.AddressID {
 			found = true
 			break

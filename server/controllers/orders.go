@@ -76,8 +76,8 @@ func GetOrders(ctx *gin.Context) {
 		return
 	}
 
-	var currOrders []models.Carts
-	if err := database.DB.Where("user_id = ? AND ordered = ?", body.ID, true).Find(&currOrders).Error; err != nil {
+	var currOrders []models.Orders
+	if err := database.DB.Where("user_id = ?", body.ID).Find(&currOrders).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -122,7 +122,6 @@ func GetOrders(ctx *gin.Context) {
 			Price:       product.Price,
 			Image:       product.Image,
 			Variations:  variations,
-			CheckoutID:  cart.ID,
 		}
 		productsWithVariations = append(productsWithVariations, productRes)
 	}
