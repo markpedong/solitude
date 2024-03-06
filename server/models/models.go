@@ -11,7 +11,7 @@ type User struct {
 	CreatedAt      time.Time  `json:"created_at" gorm:"autoCreateTime:milli"`
 	UpdatedAt      time.Time  `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	AddressDetails *[]Address `json:"address_details" gorm:"foreignKey:UserID"`
-	Orders         *[]Order   `json:"orders" gorm:"foreignKey:UserID"`
+	Orders         *[]Orders  `json:"orders" gorm:"foreignKey:UserID"`
 	FirstName      string     `json:"first_name" validate:"max=30"`
 	LastName       string     `json:"last_name" validate:"max=30"`
 	Password       string     `json:"password" validate:"required,min=6"`
@@ -57,16 +57,6 @@ type Address struct {
 	Pincode   *string `json:"pin_code"`
 }
 
-type Order struct {
-	OrderID       string    `json:"id" gorm:"primaryKey"`
-	UserID        string    `json:"user_id"`
-	OrderedAt     time.Time `json:"ordered_at" gorm:"autoCreateTime:milli"`
-	Price         int       `json:"price"`
-	Discount      *int      `json:"discount"`
-	PaymentMethod Payment   `json:"payment_method" gorm:"foreignKey:ID"`
-	ProductID     string    `json:"product_id"`
-}
-
 type Seller struct {
 	SellerID   string     `json:"seller_id" gorm:"primaryKey"`
 	CreatedAt  time.Time  `json:"created_at" gorm:"autoCreateTime:milli"`
@@ -79,11 +69,6 @@ type Seller struct {
 	Location   string     `json:"location"`
 	Products   *[]Product `json:"products" gorm:"foreignKey:SellerID"`
 	Avatar     string     `json:"avatar"`
-}
-type Payment struct {
-	ID      string `json:"id" gorm:"primaryKey"`
-	Digital bool   `json:"digital"`
-	COD     bool   `json:"cod"`
 }
 
 type VariationValue struct {
@@ -112,5 +97,16 @@ type Carts struct {
 	ProductID    string         `json:"product_id" validate:"required"`
 	UserID       string         `json:"user_id" validate:"required"`
 	VariationIDs pq.StringArray `json:"variation_ids" gorm:"type:text[]"`
-	Ordered      bool           `json:"ordered"`
+}
+
+type Orders struct {
+	OrderID         string         `json:"id" gorm:"primaryKey"`
+	ProductID       string         `json:"product_id"`
+	UserID          string         `json:"user_id"`
+	VariationIDs    pq.StringArray `json:"variation_ids" gorm:"type:text[]"`
+	OrderedAt       time.Time      `json:"ordered_at" gorm:"autoCreateTime:milli"`
+	Price           int            `json:"price"`
+	Discount        *int           `json:"discount"`
+	PaymentMethod   int            `json:"payment_method"`
+	SelectedAddress string         `json:"address" validate:"required"`
 }

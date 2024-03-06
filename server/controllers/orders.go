@@ -11,7 +11,10 @@ import (
 
 func CheckoutOrder(ctx *gin.Context) {
 	var body struct {
-		CheckoutIDs []string `json:"checkout_ids" validate:"required"`
+		CheckoutIDs   []string `json:"checkout_ids" validate:"required"`
+		AddressID     string   `json:"address_id" vaidate:"required"`
+		PaymentMethod int      `json:"payment_method" validate:"required"`
+		Discount      *int     `json:"discount"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
@@ -35,13 +38,31 @@ func CheckoutOrder(ctx *gin.Context) {
 		}
 	}
 
+	var orderArr []models.Orders
 	for _, v := range currOrder {
-		v.Ordered = true
-
-		if err := database.DB.Save(&v).Error; err != nil {
-			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		var currProd models.Product
+		if err := database.DB.Find(&currProd, "product_id = ?", v.ProductID).Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 			return
 		}
+
+		newOrder := models.Orders{
+			OrderID:         helpers.NewUUID(),
+			ProductID:       v.ProductID,
+			UserID:          v.UserID,
+			VariationIDs:    v.VariationIDs,
+			Price:           int(currProd.Price),
+			SelectedAddress: body.AddressID,
+			PaymentMethod:   body.PaymentMethod,
+			Discount:        body.Discount,
+		}
+
+		orderArr = append(orderArr, newOrder)
+	}
+
+	if err := database.DB.Create(&orderArr).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
 	}
 
 	helpers.JSONResponse(ctx, "ordered successfully")

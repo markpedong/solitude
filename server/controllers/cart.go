@@ -44,7 +44,6 @@ func AddToCart(ctx *gin.Context) {
 		ProductID:    selectedProduct.ProductID,
 		UserID:       foundUser.ID,
 		VariationIDs: cartItem.VariationIDs,
-		Ordered:      false,
 	}
 
 	if err := database.DB.Create(&newCartItem).Error; err != nil {

@@ -34,10 +34,11 @@ func DBSet() {
 
 	err = DB.AutoMigrate(
 		&models.Product{},
-		models.Address{}, &models.Order{},
+		models.Address{},
 		&models.ProductVariations{},
 		&models.VariationValue{},
 		&models.Carts{},
+		&models.Orders{},
 	)
 	if err != nil {
 		log.Fatal(err.Error())
