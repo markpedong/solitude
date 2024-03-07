@@ -48,7 +48,7 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 		{
 			key: '2',
 			label: 'Rating & Reviews',
-			children: <Rating products={products} curr={params.id as string} />
+			children: <Rating products={products} curr={params.id as string} rating={[]} />
 		}
 		// {
 		// 	key: '3',
