@@ -34,16 +34,19 @@ func GetDeliveryInfo(ctx *gin.Context) {
 
 func AddDeliveryInfo(ctx *gin.Context) {
 	var body struct {
-		UserID  string  `json:"user_id" validate:"required"`
-		House   *string `json:"house" validate:"required"`
-		Street  *string `json:"street" validate:"required"`
-		City    *string `json:"city" validate:"required"`
-		PinCode *string `json:"pin_code" validate:"required"`
+		UserID      string `json:"user_id" validate:"required"`
+		House       string `json:"house" validate:"required"`
+		Street      string `json:"street" validate:"required"`
+		City        string `json:"city" validate:"required"`
+		Pincode     string `json:"pin_code" validate:"required"`
+		AddressType int    `json:"address_type" validate:"required"`
+		FirstName   string `json:"first_name" validate:"required"`
+		LastName    string `json:"last_name" validate:"required"`
+		Phone       string `json:"phone" validate:"required"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
-
 	var user models.User
 	if err := database.DB.Where("id = ?", body.UserID).First(&user).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
@@ -62,12 +65,16 @@ func AddDeliveryInfo(ctx *gin.Context) {
 	}
 
 	newDeliveryInfo := models.DeliveryInformation{
-		ID:      helpers.NewUUID(),
-		UserID:  user.ID,
-		House:   body.House,
-		Street:  body.Street,
-		City:    body.City,
-		Pincode: body.PinCode,
+		ID:          helpers.NewUUID(),
+		UserID:      user.ID,
+		House:       body.House,
+		Street:      body.Street,
+		City:        body.City,
+		Pincode:     body.Pincode,
+		AddressType: body.AddressType,
+		FirstName:   body.FirstName,
+		LastName:    body.LastName,
+		Phone:       body.Phone,
 	}
 
 	if err := database.DB.Model(&user).Association("DeliveryInformation").Append(&newDeliveryInfo); err != nil {
@@ -75,17 +82,17 @@ func AddDeliveryInfo(ctx *gin.Context) {
 		return
 	}
 
-	helpers.JSONResponse(ctx, "addded info successfully!", helpers.DataHelper(existingDeliveryInfo))
+	helpers.JSONResponse(ctx, "addded info successfully!")
 }
 
 func EditHomeAddress(ctx *gin.Context) {
 	var body struct {
-		DeliveryInfoID string  `json:"delivery_id" validate:"required"`
-		UserID         string  `json:"user_id" validate:"required"`
-		House          *string `json:"house"`
-		Street         *string `json:"street"`
-		City           *string `json:"city"`
-		PinCode        *string `json:"pin_code"`
+		DeliveryInfoID string `json:"delivery_id" validate:"required"`
+		UserID         string `json:"user_id" validate:"required"`
+		House          string `json:"house"`
+		Street         string `json:"street"`
+		City           string `json:"city"`
+		PinCode        string `json:"pin_code"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return

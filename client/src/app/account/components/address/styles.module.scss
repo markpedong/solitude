@@ -70,3 +70,8 @@
         font-family: "Satoshi";
     }
 }
+
+.activeAddress {
+    background-color: var(--color-primary) !important;
+    color: var(--white-color) !important;
+}

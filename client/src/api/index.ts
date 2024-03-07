@@ -115,3 +115,23 @@ export const checkCart = params => post<CartItem[]>('/api/getCart', params)
 
 // /api/removeFromCart
 export const removeCart = params => post('/api/removeFromCart', params)
+
+// /api/addDeliveryInfo
+export const addDeliveryInfo = params => post('/api/addDeliveryInfo', params)
+
+// /api/getDeliveryInfo
+export type InfoItem = {
+	address_type: number
+	city: string
+	created_at: number
+	first_name: string
+	house: string
+	id: string
+	last_name: string
+	phone: string
+	pin_code: string
+	street: string
+	updated_at: number
+	user_id: string
+}
+export const getDeliveryInfo = params => post<InfoItem[]>('/api/getDeliveryInfo', params)
