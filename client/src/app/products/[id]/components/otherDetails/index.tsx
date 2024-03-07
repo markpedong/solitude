@@ -49,6 +49,10 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 							<span>Started selling on: </span>
 							<span>{dateParser(+seller?.created_at)}</span>
 						</div>
+						<div>
+							<span>Products: </span>
+							<span>{seller?.products}</span>
+						</div>
 					</div>
 					<div>
 						<motion.div className={styles.storeContainer} whileTap={scaleSize}>
