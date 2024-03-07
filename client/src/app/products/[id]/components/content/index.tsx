@@ -27,8 +27,10 @@ type Props = {
 
 const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 	const { token, userData } = useAppSelector(s => s.userData)
+	const { darkMode } = useAppSelector(s => s.boolean)
 	const [qty, setQty] = useState<number>(1)
 	const [firstImage, setFirstImage] = useState(data?.image?.[0])
+	const [selectedVariations, setSelectedVariations] = useState({})
 	const router = useRouter()
 	const params = useParams()
 	const dispatch = useDispatch()
@@ -41,7 +43,7 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 		{
 			key: '1',
 			label: 'Product Details',
-			children: <OtherDetails data={data} seller={seller}/>
+			children: <OtherDetails data={data} seller={seller} />
 		},
 		{
 			key: '2',
@@ -62,7 +64,7 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 					<Image src={firstImage ?? data?.image?.[0]} alt="product_image" height={100} width={100} priority />
 				</div>
 				{data?.image?.slice(1, 5).map((q, i) => (
-					<div key={q + i} onMouseEnter={() => setFirstImage(q)} onMouseLeave={() => setFirstImage(data?.image?.[0])}>
+					<div key={q} onMouseEnter={() => setFirstImage(q)} onMouseLeave={() => setFirstImage(data?.image?.[0])}>
 						<Image src={q} alt="product_image" height={100} width={100} priority />
 					</div>
 				))}
@@ -90,11 +92,11 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 		}
 		const res = await checkCart({ user_id: userData?.id })
 
-		if (res?.data.findIndex(q => q.product_id === params.id) === -1) {
-			const res = await addToCart({ user_id: userData?.id, product_id: data?.product_id })
-			messageHelper(res?.message)
-			return
-		}
+		// if (res?.data.findIndex(q => q.product_id === params.id) === -1) {
+		// 	const res = await addToCart({ user_id: userData?.id, product_id: data?.product_id })
+		// 	messageHelper(res?.message)
+		// 	return
+		// }
 	}
 
 	useEffect(() => {
@@ -123,33 +125,37 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 					</div>
 					{/* <span className={styles.description}>{data?.description}</span> */}
 					<div className={styles.variationWrapper}>
-					<Divider/>
+						<Divider />
 						{data?.variations.map(q => (
-							<>
-							<div className={styles.variationContainer} key={q.id}>
-								<span className={styles.label}>{capFrstLtr(q?.label)}:</span>
-								<div className={styles.options}>
-									{q?.value.map(w => (
-										<motion.span
-											// style={
-											// 	selectedSize === w.id
-											// 		? {
-											// 				background: darkMode ? 'white' : 'black',
-											// 				color: darkMode ? 'black' : 'white'
-											// 		  }
-											// 		: {}
-											// }
-											// onClick={() => setSelectedSize(q.value)}
-											whileTap={scaleSize}
-											key={w.id}
-										>
-											{w.value}
-										</motion.span>
-									))}
+							<div key={q.id}>
+								<div className={styles.variationContainer}>
+									<span className={styles.label}>{capFrstLtr(q?.label)}:</span>
+									<div className={styles.options}>
+										{q?.value.map(w => (
+											<motion.span
+												style={
+													selectedVariations[q.id] === w.id
+														? {
+																background: darkMode ? 'white' : 'black',
+																color: darkMode ? 'black' : 'white'
+														  }
+														: {}
+												}
+												onClick={() => {
+													setSelectedVariations(prevSelectedVariations => ({
+														...prevSelectedVariations,
+														[q.id]: w.id
+													}))
+												}}
+												whileTap={scaleSize}
+												key={w.id}>
+												{w.value}
+											</motion.span>
+										))}
+									</div>
 								</div>
+								<Divider />
 							</div>
-							<Divider/>
-							</>
 						))}
 					</div>
 					<div className={styles.addToCartContainer}>

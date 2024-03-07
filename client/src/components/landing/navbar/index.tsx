@@ -132,20 +132,34 @@ const Navbar = () => {
 	const renderCart = () => (
 		<ModalForm
 			open={cartModal}
+			modalProps={{
+				closeIcon: false
+			}}
 			submitter={{
 				render: props =>
 					!!orders.length && (
-						<motion.div
-							whileTap={scaleSize}
-							className={styles.checkoutBtn}
-							onClick={() => {
-								router.push('/checkout')
-								setCartModal(false)
-							}}>
-							Submit
-						</motion.div>
+						<div className={styles.cartBtnCon}>
+							<motion.div
+								whileTap={scaleSize}
+								className={styles.cancelBtn}
+								onClick={() => {
+									setCartModal(false)
+								}}>
+								Cancel
+							</motion.div>
+							<motion.div
+								whileTap={scaleSize}
+								className={styles.checkoutBtn}
+								onClick={() => {
+									router.push('/checkout')
+									setCartModal(false)
+								}}>
+								Submit
+							</motion.div>
+						</div>
 					)
 			}}
+			
 			title={<div className={styles.header}>your cart</div>}>
 			<div className={styles.orderContainer}>
 				{orders &&
@@ -220,7 +234,7 @@ const Navbar = () => {
 					<Input className={styles.input} prefix={<SearchOutlined />} placeholder="Filled" variant="filled" />
 					<div className={styles.userContainer}>
 						<SearchOutlined className={styles.smallInput} />
-						{isLoggedIn && cartModal && (
+						{isLoggedIn && !!orders.length && (
 							<motion.div whileTap={scaleSize} onClick={() => setCartModal(true)}>
 								<ShoppingCartOutlined />
 							</motion.div>

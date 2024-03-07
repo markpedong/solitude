@@ -49,9 +49,9 @@
 }
 
 .sellerName{
-    font-size: toRem(18);
+    font-size: toRem(15);
     font-weight: 700;
-    letter-spacing: toRem(2);
+    letter-spacing: toRem(1);
     font-family: "Satoshi";
     line-height: toRem(18)
 }
@@ -60,6 +60,7 @@
     @apply flex items-center gap-[0.3rem] w-auto max-w-fit py-1 mt-[0.3rem] px-2 rounded-md;
     background-color: var(--color-primary);
     color: var(--white-color);
+    font-size: toRem(10);
 }
 
 .sellerTextContainer{

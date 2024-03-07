@@ -15,7 +15,7 @@ type Props = {
 }
 
 const OtherDetails: FC<Props> = ({ data, seller }) => {
-	console.log('@@@@@@', seller)
+
 	return (
 		<div>
 			<div className={styles.specsHeader}>Product Specifications</div>

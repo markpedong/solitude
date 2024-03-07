@@ -244,6 +244,9 @@
     color: var(--color-primary);
 }
 
+.cartBtnCon{
+    @apply flex gap-4;
+}
 .checkoutBtn{
     @apply px-[1rem] py-[0.5rem] rounded-md;
     font-size: toRem(15);
@@ -252,3 +255,12 @@
     font-family: "Satoshi";
     letter-spacing: toRem(1);
 }   
+
+.cancelBtn{
+    @apply px-[1rem] py-[0.5rem] rounded-md;
+    font-size: toRem(15);
+    color: var(--color-primary);
+    background-color: var(--white-color);
+    font-family: "Satoshi";
+    letter-spacing: toRem(1);
+}
