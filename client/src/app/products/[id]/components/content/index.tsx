@@ -18,6 +18,7 @@ import OtherDetails from '../otherDetails'
 import { LandingContent } from '@/components/reusable'
 import { scaleSize, scaleSizeSm } from '@/constants'
 import { messageHelper } from '@/constants/antd'
+import { setCart } from '@/redux/features/userSlice'
 
 type Props = {
 	data: TProduct
@@ -92,8 +93,10 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 		}
 
 		const res = await addToCart({ user_id: userData?.id, product_id: data?.product_id, variation_ids: Object.values(selectedVariations) })
+		const cart = await checkCart({user_id: userData?.id})
 		messageHelper(res)
 		setSelectedVariations({})
+		dispatch(setCart(cart?.data))
 	}
 
 	useEffect(() => {

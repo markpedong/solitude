@@ -61,8 +61,13 @@
     background-color: var(--color-primary);
     color: var(--white-color);
     font-size: toRem(10);
-}
 
+    span {
+        font-weight: 400 !important;
+    }
+
+
+}
 .otherContainer{
     @apply grid grid-cols-3 items-center;
 

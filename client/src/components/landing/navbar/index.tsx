@@ -5,8 +5,8 @@ import Profile from '@/components/profile'
 import { USER_TYPES, scaleSize } from '@/constants'
 import { afterModalformFinish } from '@/constants/helper'
 import { setActiveLoginForm, setDarkMode, setIsBannerHidden, setLoginModalOpen } from '@/redux/features/booleanSlice'
-import { resetUserData, setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
-import { AppDispatch, useAppSelector } from '@/redux/store'
+import { resetUserData, setCart, setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
+import { AppDispatch, useAppDispatch, useAppSelector } from '@/redux/store'
 import { setLocalStorage } from '@/utils/xLocalStorage'
 import { DownOutlined, MenuOutlined, MoonOutlined, SearchOutlined, ShoppingCartOutlined, SunOutlined, UserOutlined } from '@ant-design/icons'
 import { ActionType, ModalForm, ProFormInstance } from '@ant-design/pro-components'
@@ -15,7 +15,7 @@ import { Drawer, Dropdown, Input, Typography } from 'antd'
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
 import { usePathname, useRouter } from 'next/navigation'
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import LoginModal from './loginModal'
 import styles from './styles.module.scss'
@@ -30,16 +30,17 @@ const MenuItem: FC<Props> = ({ title }) => {
 }
 
 const Navbar = () => {
-	const dispatch = useDispatch<AppDispatch>()
+	const dispatch = useAppDispatch()
 	const router = useRouter()
 	const pathname = usePathname()
 	const actionRef = useRef<ActionType>()
 	const formRef = useRef<ProFormInstance>()
 	const { isLoggedIn, type } = useAppSelector(state => state.userData)
 	const { activeLoginForm, darkMode, isLoginModalOpen } = useAppSelector(state => state.boolean)
-	const { userData } = useAppSelector(s => s.userData)
+	const {
+		userData: { userCart, id }
+	} = useAppSelector(s => s.userData)
 	const [open, setOpen] = useState(false)
-	const [orders, setOrders] = useState<CartItem[]>([])
 	const [cartModal, setCartModal] = useState(false)
 
 	const create = activeLoginForm === 'create'
@@ -131,44 +132,55 @@ const Navbar = () => {
 
 	const renderCart = () => (
 		<ModalForm
-			open={cartModal}
+			open={!!!userCart?.length ? false : cartModal }
 			modalProps={{
 				closeIcon: false
 			}}
 			submitter={{
-				render: props =>
-					!!orders.length && (
-						<div className={styles.cartBtnCon}>
-							<motion.div
-								whileTap={scaleSize}
-								className={styles.cancelBtn}
-								onClick={() => {
-									setCartModal(false)
-								}}>
-								Cancel
-							</motion.div>
-							<motion.div
-								whileTap={scaleSize}
-								className={styles.checkoutBtn}
-								onClick={() => {
-									router.push('/checkout')
-									setCartModal(false)
-								}}>
-								Submit
-							</motion.div>
-						</div>
-					)
+				render: props => (
+					<>
+						<motion.div
+							whileTap={scaleSize}
+							className={styles.cancelBtn}
+							onClick={() => {
+								setCartModal(false)
+							}}>
+							Cancel
+						</motion.div>
+						{!!userCart.length && (
+							<div className={styles.cartBtnCon}>
+								<motion.div
+									whileTap={scaleSize}
+									className={styles.checkoutBtn}
+									onClick={() => {
+										router.push('/checkout')
+										setCartModal(false)
+									}}>
+									Submit
+								</motion.div>
+							</div>
+						)}
+					</>
+				)
 			}}
-			
 			title={<div className={styles.header}>your cart</div>}>
 			<div className={styles.orderContainer}>
-				{orders &&
-					(orders.length > 1
-						? orders.slice(0, -1).map(q => <Order data={q} key={q?.checkout_id} />)
-						: orders.map(q => <Order data={q} key={q?.checkout_id} divider={false} />))}
-				{orders?.length > 1 && <Order data={orders?.findLast(q => q)} divider={false} />}
+				{userCart &&
+					(userCart.length > 1
+						? userCart.slice(0, -1).map(q => <Order data={q} key={q?.checkout_id} />)
+						: userCart.map(q => <Order data={q} key={q?.checkout_id} divider={false} />))}
+				{userCart?.length > 1 && <Order data={userCart?.findLast(q => q)} divider={false} />}
 			</div>
 		</ModalForm>
+	)
+
+	const memoizedCartButton = useMemo(
+		() => (
+			<motion.div whileTap={scaleSize} onClick={() => setCartModal(true)}>
+				<ShoppingCartOutlined />
+			</motion.div>
+		),
+		[userCart?.length]
 	)
 
 	const renderLoginModal = () => {
@@ -195,9 +207,9 @@ const Navbar = () => {
 	}
 
 	const fetchCart = async () => {
-		const res = await checkCart({ user_id: userData?.id })
+		const res = await checkCart({ user_id: id })
 
-		setOrders(res?.data ?? [])
+		dispatch(setCart(res?.data ?? []))
 	}
 
 	useEffect(() => {
@@ -206,7 +218,8 @@ const Navbar = () => {
 
 	useEffect(() => {
 		fetchCart()
-	}, [userData?.id])
+	}, [id, userCart?.length])
+
 	return (
 		<>
 			{renderLoginModal()}
@@ -234,11 +247,7 @@ const Navbar = () => {
 					<Input className={styles.input} prefix={<SearchOutlined />} placeholder="Filled" variant="filled" />
 					<div className={styles.userContainer}>
 						<SearchOutlined className={styles.smallInput} />
-						{isLoggedIn && !!orders.length && (
-							<motion.div whileTap={scaleSize} onClick={() => setCartModal(true)}>
-								<ShoppingCartOutlined />
-							</motion.div>
-						)}
+						{isLoggedIn && userCart.length > 0 && memoizedCartButton}
 						{isLoggedIn ? (
 							<Dropdown menu={{ items }} placement="bottom" trigger={['click']}>
 								<UserOutlined onClick={e => e.preventDefault()} />

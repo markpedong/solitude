@@ -1,3 +1,4 @@
+import { CartItem } from '@/api'
 import { createSlice } from '@reduxjs/toolkit'
 
 type InitialSlice = {
@@ -5,7 +6,6 @@ type InitialSlice = {
 		id: string
 		created_at: string
 		updated_at: string
-		user_cart: { product_id: string; quantity: number }[]
 		address_details: []
 		orders: { id: string }[]
 		password: string
@@ -13,6 +13,7 @@ type InitialSlice = {
 		first_name: string
 		birthday: string
 		username: string
+		userCart: CartItem[]
 	}
 	sellerData: {
 		seller_id: string
@@ -32,14 +33,14 @@ const initialState: InitialSlice = {
 		id: '',
 		created_at: '',
 		updated_at: '',
-		user_cart: [],
 		address_details: [],
 		orders: [],
 		password: '',
 		email: '',
 		first_name: '',
 		birthday: '',
-		username: ''
+		username: '',
+		userCart: []
 	},
 	sellerData: {
 		created_at: '',
@@ -64,9 +65,10 @@ export const UserSlice = createSlice({
 		setUserData: (state, action) => ({ ...state, isLoggedIn: true, userData: action.payload }),
 		setSellerData: (state, action) => ({ ...state, isLoggedIn: true, sellerData: action.payload }),
 		setUserToken: (state, action) => ({ ...state, token: action.payload }),
-		setUserCart: (state, action) => ({ ...state, userData: { ...state.userData, user_cart: action.payload } })
+		setUserCart: (state, action) => ({ ...state, userData: { ...state.userData, user_cart: action.payload } }),
+		setCart: (state, action) => ({ ...state, userData: { ...state.userData, userCart: action.payload } })
 	}
 })
 
-export const { setUserData, resetUserData, setUserToken, setSellerData, setType, setUserCart } = UserSlice.actions
+export const { setUserData, resetUserData, setUserToken, setSellerData, setType, setUserCart, setCart } = UserSlice.actions
 export default UserSlice.reducer

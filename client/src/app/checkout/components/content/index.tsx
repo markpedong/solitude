@@ -1,28 +1,16 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import styles from './styles.module.scss'
+import isAuth from '@/components/isAuth'
+import { useAppSelector } from '@/redux/store'
 import { ArrowRightOutlined, PercentageOutlined, RightOutlined } from '@ant-design/icons'
 import { Divider, Input } from 'antd'
 import classNames from 'classnames'
-import Order from '@/components/reusable/order'
-import { CartItem, checkCart } from '@/api'
-import isAuth from '@/components/isAuth'
-import { useAppSelector } from '@/redux/store'
+import styles from './styles.module.scss'
 
 const Content = () => {
-	const [orders, setOrders] = useState<CartItem[]>([])
 	const { userData } = useAppSelector(s => s.userData)
 
-	const fetchCart = async () => {
-		const res = await checkCart({ user_id: userData?.id })
-
-		setOrders(res?.data)
-	}
-	useEffect(() => {
-		fetchCart()
-	}, [userData?.id])
-
+	
 	return (
 		<div className={styles.cartWrapper}>
 			<div className={styles.productCategory}>

@@ -1,13 +1,14 @@
-import React, { FC } from 'react'
+import React, { FC, memo, useEffect } from 'react'
 import styles from './styles.module.scss'
 import { Divider } from 'antd'
 import Image from 'next/image'
 import { MdDelete } from 'react-icons/md'
-import { CartItem, removeCart } from '@/api'
+import { CartItem, checkCart, removeCart } from '@/api'
 import { LuMinus, LuPlus } from 'react-icons/lu'
 import { capFrstLtr } from '@/constants/helper'
-import { useAppSelector } from '@/redux/store'
+import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { messageHelper } from '@/constants/antd'
+import { setCart } from '@/redux/features/userSlice'
 
 type Props = {
 	divider?: boolean
@@ -16,12 +17,16 @@ type Props = {
 
 const Order: FC<Props> = ({ divider = true, data }) => {
 	const { userData } = useAppSelector(s => s.userData)
+	const dispatch = useAppDispatch()
 
 	const handleRemoveCart = async () => {
 		const res = await removeCart({ user_id: userData?.id, checkout_id: data?.checkout_id })
+		const cart = await checkCart({ user_id: userData?.id })
 
 		messageHelper(res)
+		dispatch(setCart(cart?.data ?? []))
 	}
+
 	return (
 		<>
 			<div className={styles.orderWrapper}>
@@ -29,14 +34,17 @@ const Order: FC<Props> = ({ divider = true, data }) => {
 				<div className={styles.textContainer}>
 					<div className={styles.title}>
 						<span>{data?.product_name}</span>
-						<MdDelete onClick={handleRemoveCart}/>
+						<MdDelete onClick={handleRemoveCart} />
 					</div>
 					<div className={styles.variant}>
-						{data?.variations?.map(q => (
-							<span key={q.id}>
-								{capFrstLtr(q?.label)}: <p>{q?.value?.[0].value}</p>
-							</span>
-						))}
+						{data?.variations?.map(q => {
+							const fst = q?.value?.[0].value
+							return (
+								fst && <span key={q.id}>
+									{capFrstLtr(q?.label)}: <p>{q?.value?.[0].value}</p>
+								</span>
+							)
+						})}
 					</div>
 					<div className={styles.price}>
 						<span>₱{data?.price}</span>
@@ -53,4 +61,4 @@ const Order: FC<Props> = ({ divider = true, data }) => {
 	)
 }
 
-export default Order
+export default memo(Order)
