@@ -20,6 +20,9 @@ import { useDispatch } from 'react-redux'
 import LoginModal from './loginModal'
 import styles from './styles.module.scss'
 import Order from '@/components/reusable/order'
+import { Jost } from 'next/font/google'
+
+const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 type Props = {
 	title: string
@@ -61,6 +64,14 @@ const Navbar = () => {
 			label: <Profile />
 		},
 		{
+			key: 'details',
+			label: (
+				<span className={classNames(`uppercase`, jost.className)} onClick={() => router.push('/account')}>
+					details
+				</span>
+			)
+		},
+		{
 			key: 'logout',
 			danger: true,
 			label: (
@@ -71,7 +82,8 @@ const Navbar = () => {
 						localStorage.clear()
 						router.push('/')
 					}}
-					type="danger">
+					type="danger"
+				>
 					LOGOUT
 				</Typography.Link>
 			)
@@ -133,22 +145,23 @@ const Navbar = () => {
 	const renderCart = () => (
 		<ModalForm
 			// when adding to cart, it automatically pops up if length is less than 1 fix it.
-			open={!!!userCart?.length ? false : cartModal }
+			open={!!!userCart?.length ? false : cartModal}
 			modalProps={{
 				closeIcon: false
 			}}
 			submitter={{
 				render: props => (
-					<>
+					<div className={styles.footerBtn}>
 						<motion.div
 							whileTap={scaleSize}
 							className={styles.cancelBtn}
 							onClick={() => {
 								setCartModal(false)
-							}}>
+							}}
+						>
 							Cancel
 						</motion.div>
-						{!!userCart.length && (
+						{!!userCart?.length && (
 							<div className={styles.cartBtnCon}>
 								<motion.div
 									whileTap={scaleSize}
@@ -156,20 +169,19 @@ const Navbar = () => {
 									onClick={() => {
 										router.push('/checkout')
 										setCartModal(false)
-									}}>
+									}}
+								>
 									Submit
 								</motion.div>
 							</div>
 						)}
-					</>
+					</div>
 				)
 			}}
-			title={<div className={styles.header}>your cart</div>}>
+			title={<div className={styles.header}>your cart</div>}
+		>
 			<div className={styles.orderContainer}>
-				{userCart &&
-					(userCart.length > 1
-						? userCart.slice(0, -1).map(q => <Order data={q} key={q?.checkout_id} />)
-						: userCart.map(q => <Order data={q} key={q?.checkout_id} divider={false} />))}
+				{userCart && (userCart?.length > 1 ? userCart.slice(0, -1).map(q => <Order data={q} key={q?.checkout_id} />) : userCart.map(q => <Order data={q} key={q?.checkout_id} divider={false} />))}
 				{userCart?.length > 1 && <Order data={userCart?.findLast(q => q)} divider={false} />}
 			</div>
 		</ModalForm>
@@ -178,7 +190,7 @@ const Navbar = () => {
 	const memoizedCartButton = useMemo(
 		() => (
 			<motion.div whileTap={scaleSize} onClick={() => setCartModal(true)}>
-				<ShoppingCartOutlined />
+				<ShoppingCartOutlined className="cursor-pointer" />
 			</motion.div>
 		),
 		[userCart?.length]
@@ -201,25 +213,16 @@ const Navbar = () => {
 						dispatch(setLoginModalOpen(false))
 					}
 				}}
-				onFinish={handleFinish}>
+				onFinish={handleFinish}
+			>
 				<LoginModal formRef={formRef} />
 			</ModalForm>
 		)
 	}
 
-	const fetchCart = async () => {
-		const res = await checkCart({ user_id: id })
-
-		dispatch(setCart(res?.data ?? []))
-	}
-
 	useEffect(() => {
 		document.documentElement.classList.toggle('dark', darkMode)
 	}, [darkMode])
-
-	useEffect(() => {
-		fetchCart()
-	}, [id, userCart?.length])
 
 	return (
 		<>
@@ -248,7 +251,7 @@ const Navbar = () => {
 					<Input className={styles.input} prefix={<SearchOutlined />} placeholder="Filled" variant="filled" />
 					<div className={styles.userContainer}>
 						<SearchOutlined className={styles.smallInput} />
-						{isLoggedIn && userCart.length > 0 && memoizedCartButton}
+						{isLoggedIn && userCart?.length > 0 && memoizedCartButton}
 						{isLoggedIn ? (
 							<Dropdown menu={{ items }} placement="bottom" trigger={['click']}>
 								<UserOutlined onClick={e => e.preventDefault()} />

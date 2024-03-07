@@ -34,15 +34,17 @@ const Order: FC<Props> = ({ divider = true, data }) => {
 				<div className={styles.textContainer}>
 					<div className={styles.title}>
 						<span>{data?.product_name}</span>
-						<MdDelete onClick={handleRemoveCart} />
+						<MdDelete onClick={handleRemoveCart} className="cursor-pointer" />
 					</div>
 					<div className={styles.variant}>
 						{data?.variations?.map(q => {
 							const fst = q?.value?.[0].value
 							return (
-								fst && <span key={q.id}>
-									{capFrstLtr(q?.label)}: <p>{q?.value?.[0].value}</p>
-								</span>
+								fst && (
+									<span key={q.id}>
+										{capFrstLtr(q?.label)}: <p>{q?.value?.[0].value}</p>
+									</span>
+								)
 							)
 						})}
 					</div>

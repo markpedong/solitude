@@ -93,26 +93,25 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 		}
 
 		const res = await addToCart({ user_id: userData?.id, product_id: data?.product_id, variation_ids: Object.values(selectedVariations) })
-		const cart = await checkCart({user_id: userData?.id})
+		const cart = await checkCart({ user_id: userData?.id })
 		messageHelper(res)
 		setSelectedVariations({})
 		dispatch(setCart(cart?.data))
 	}
 
-	useEffect(() => {
-		if (!!!data) {
-			router.push('/products')
-		}
-	}, [])
 	return (
 		<div className={styles.productWrapper}>
-			<div className={styles.productCategory}>
-				<span>Products</span>
-				<RightOutlined />
-				<span>{capFrstLtr(data?.categories?.[0])}</span>
-				<RightOutlined />
-				<span>{capFrstLtr(data?.categories?.[1])}</span>
-			</div>
+			{!!data?.categories?.length && (
+				<div className={styles.productCategory}>
+					<>
+						<span>Products</span>
+						<RightOutlined />
+						<span>{capFrstLtr(data?.categories?.[0])}</span>
+						<RightOutlined />
+						<span>{capFrstLtr(data?.categories?.[1])}</span>
+					</>
+				</div>
+			)}
 			<div className={styles.mainContainer}>
 				{memoizedImageContainer}
 				<div className={styles.descriptionContainer}>
@@ -121,7 +120,7 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 					<div className={styles.priceContainer}>
 						<span>₱{data?.price}</span>
 						<span>₱{data?.price}</span>
-						<span>-40%</span>
+						{data?.discount && <span>-40%</span>}
 					</div>
 					<div className={styles.variationWrapper}>
 						<Divider />
@@ -147,7 +146,8 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 													}))
 												}}
 												whileTap={scaleSize}
-												key={w.id}>
+												key={w.id}
+											>
 												{w.value}
 											</motion.span>
 										))}
@@ -160,7 +160,7 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 					<div className={styles.addToCartContainer}>
 						{/* <div className={styles.stockText}>Stocks: {data?.stock}</div> */}
 						<div className={styles.addToCartButton}>
-							<div className={styles.addToCart}>
+							{/* <div className={styles.addToCart}>
 								<motion.span whileTap={scaleSizeSm} onClick={() => setQty(qty => (qty > 1 ? qty - 1 : qty))}>
 									<MinusOutlined />
 								</motion.span>
@@ -168,7 +168,7 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 								<motion.span whileTap={scaleSizeSm} onClick={() => setQty(qty => qty + 1)}>
 									<PlusOutlined />
 								</motion.span>
-							</div>
+							</div> */}
 							<motion.div whileTap={scaleSize} className={styles.button} onClick={handleAddtoCart}>
 								Add to Cart
 							</motion.div>

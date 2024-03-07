@@ -34,7 +34,7 @@ func DBSet() {
 
 	err = DB.AutoMigrate(
 		&models.Product{},
-		models.Address{},
+		models.DeliveryInformation{},
 		&models.ProductVariations{},
 		&models.VariationValue{},
 		&models.Carts{},

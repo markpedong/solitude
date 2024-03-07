@@ -15,24 +15,27 @@ type Props = {
 }
 
 const OtherDetails: FC<Props> = ({ data, seller }) => {
-
 	return (
 		<div>
 			<div className={styles.specsHeader}>Product Specifications</div>
 			<div className={styles.specificationsWrapper}>
 				<div className={styles.labelContainer}>
-					<span>Category:</span>
+					{!!data?.categories?.length && <span>Category:</span>}
 					<span>Stock:</span>
 					<span>Product Added:</span>
 				</div>
 				<div className={styles.detailsContainer}>
 					<span>
-						{data?.categories?.slice(0, -1).map(q => (
-							<span key={q}>{q}</span>
-						))}{' '}
-						<RightOutlined /> {data?.categories?.findLast(q => q)}
+						{!!data?.categories?.length && (
+							<>
+								{data?.categories?.slice(0, -1).map(q => (
+									<span key={q}>{q}</span>
+								))}
+								<RightOutlined /> {data?.categories?.findLast(q => q)}
+							</>
+						)}
 					</span>
-					<span>{data?.stock}</span>
+					<span>{data?.stock ?? '0'}</span>
 					<span>{dateParser(data?.created_at)}</span>
 				</div>
 			</div>
@@ -47,7 +50,7 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 						<span className={styles.sellerName}>{seller?.seller_name}</span>
 						<div>
 							<span>Phone: </span>
-							<span>{seller?.phone}</span>
+							<span>{!!seller?.phone ? seller?.phone : '-'}</span>
 						</div>
 						<div>
 							<span>Products: </span>

@@ -1,28 +1,53 @@
-import classNames from 'classnames'
 import React, { FC } from 'react'
 import styles from './styles.module.scss'
-// import { ModalForm, ProForm, ProFormCheckbox, ProFormSelect, ProFormText } from '@ant-design/pro-components'
-// import { MODAL_FORM_PROPS } from '@/constants'
 import { Jost } from 'next/font/google'
 import { ModalForm, ProForm, ProFormCheckbox, ProFormSelect, ProFormText } from '@ant-design/pro-components'
-import { MODAL_FORM_PROPS } from '@/constants'
+import { MODAL_FORM_PROPS, scaleSize, scaleSizeSm } from '@/constants'
 import { Popconfirm } from 'antd'
+import { motion } from 'framer-motion'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 const Address: FC = () => {
 	const renderEditAddress = () => {
 		return (
-			<ModalForm {...MODAL_FORM_PROPS} width={600} grid title={<span>Edit Address</span>} trigger={<span className={styles.addressTrigger}>Edit</span>}>
-				<ProForm.Group>
-					<ProFormText label="Full Name" name="name" placeholder="Full Name" colProps={{ span: 12 }} />
-					<ProFormText label="Phone Number" name="number" placeholder="Phone Number" colProps={{ span: 12 }} />
-				</ProForm.Group>
-				<ProFormSelect label="Region, Province, City, Barangay" name="address1" placeholder="Region, Province, City, Barangay" />
-				<ProFormText label="Postal Code" name="postal" placeholder="Postal Code" />
-				<ProFormText label="Street Name, Building, House No." name="address2" placeholder="Street Name, Building, House No." />
-				<ProFormCheckbox.Group name="label_as" layout="horizontal" label="Label As:" options={['Home', 'Work']} />
-				<ProFormCheckbox.Group name="check_address" options={['Set as Default Address', 'Set as Pickup Address', 'Set as Return Address']} />
+			<ModalForm
+				{...MODAL_FORM_PROPS}
+				width={600}
+				grid
+				title={<span>Edit Address</span>}
+				trigger={<span className={styles.addressTrigger}>Edit</span>}
+				submitter={{
+					render: props => (
+						<div className={styles.footerBtn}>
+							<motion.span whileTap={scaleSize} className={styles.cancelBtn} onClick={() => props?.reset()}>
+								Reset
+							</motion.span>
+							<motion.span whileTap={scaleSize} className={styles.submitBtn} onClick={() => props?.submit()}>
+								Submit
+							</motion.span>
+						</div>
+					)
+				}}
+			>
+				<ProFormText colProps={{ span: 12 }} label="First Name" name="first_name" required placeholder="eg: John" />
+				<ProFormText colProps={{ span: 12 }} label="Last Name" name="last_name" required placeholder="eg: Smith" />
+				<ProFormText colProps={{ span: 12 }} label="Phone Number" name="phone_number" required placeholder="eg: +639798161248" />
+				<ProFormText colProps={{ span: 12 }} label="House" name="house" required placeholder="eg: Blk 65 Lot 20" />
+				<ProFormText colProps={{ span: 12 }} label="Street" name="street" required placeholder="eg: Harbor Drive" />
+				<ProFormText colProps={{ span: 12 }} label="City" name="city" required placeholder="eg: Manila" />
+				<ProFormText colProps={{ span: 12 }} label="Pin Code" name="pin_code" required placeholder="eg: 4684" />
+				<ProFormSelect
+					colProps={{ span: 12 }}
+					label="Address Type"
+					required
+					placeholder="eg: Default Address"
+					options={[
+						{ label: 'Default Address', value: 1 },
+						{ label: 'Pickup Address', value: 2 },
+						{ label: 'Return Address', value: 3 }
+					]}
+				/>
 			</ModalForm>
 		)
 	}
@@ -43,9 +68,55 @@ const Address: FC = () => {
 		)
 	}
 
+	const renderAddAddress = () => {
+		return (
+			<ModalForm
+				title={<span className={styles.addModalTitle}>add address</span>}
+				trigger={
+					<motion.span className={styles.addBtn} whileTap={scaleSize}>
+						New Address
+					</motion.span>
+				}
+				grid
+				submitter={{
+					render: props => (
+						<div className={styles.footerBtn}>
+							<motion.span whileTap={scaleSize} className={styles.cancelBtn} onClick={() => props?.reset()}>
+								Reset
+							</motion.span>
+							<motion.span whileTap={scaleSize} className={styles.submitBtn} onClick={() => props?.submit()}>
+								Submit
+							</motion.span>
+						</div>
+					)
+				}}
+			>
+				<ProFormText colProps={{ span: 12 }} label="First Name" name="first_name" required placeholder="eg: John" />
+				<ProFormText colProps={{ span: 12 }} label="Last Name" name="last_name" required placeholder="eg: Smith" />
+				<ProFormText colProps={{ span: 12 }} label="Phone Number" name="phone_number" required placeholder="eg: +639798161248" />
+				<ProFormText colProps={{ span: 12 }} label="House" name="house" required placeholder="eg: Blk 65 Lot 20" />
+				<ProFormText colProps={{ span: 12 }} label="Street" name="street" required placeholder="eg: Harbor Drive" />
+				<ProFormText colProps={{ span: 12 }} label="City" name="city" required placeholder="eg: Manila" />
+				<ProFormText colProps={{ span: 12 }} label="Pin Code" name="pin_code" required placeholder="eg: 4684" />
+				<ProFormSelect
+					colProps={{ span: 12 }}
+					label="Address Type"
+					required
+					placeholder="eg: Default Address"
+					options={[
+						{ label: 'Default Address', value: 1 },
+						{ label: 'Pickup Address', value: 2 },
+						{ label: 'Return Address', value: 3 }
+					]}
+				/>
+			</ModalForm>
+		)
+	}
+
 	return (
 		<div>
-			{/* {new Array(5).fill('').map(() => (
+			{renderAddAddress()}
+			{new Array(5).fill('').map(() => (
 				<div className={styles.addressContainer}>
 					<div className={styles.detailsContainer}>
 						<div>
@@ -65,7 +136,7 @@ const Address: FC = () => {
 						{renderSetDefault()}
 					</div>
 				</div>
-			))} */}
+			))}
 		</div>
 	)
 }

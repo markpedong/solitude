@@ -1,17 +1,18 @@
 'use client'
 
-import { TProduct } from '@/api'
+import { TProduct, checkCart } from '@/api'
 import isAuth from '@/components/isAuth'
 import { USER_TYPES } from '@/constants'
-import { useAppSelector } from '@/redux/store'
+import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { Flex, Tabs } from 'antd'
 import { Jost } from 'next/font/google'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import AddProduct from './addProduct'
 import ProductsAdded from './addedProduct'
 import Address from './address'
 import Orders from './orders'
 import styles from './styles.module.scss'
+import { setCart } from '@/redux/features/userSlice'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -20,9 +21,18 @@ type Props = {
 }
 
 const Account: FC<Props> = () => {
+	const dispatch = useAppDispatch()
 	const { userData, type, sellerData } = useAppSelector(state => state.userData)
-	const { darkMode } = useAppSelector(state => state.boolean)
 	const seller = type === USER_TYPES.SELLER
+
+	const fetchCart = async () => {
+		const res = await checkCart({ user_id: userData?.id })
+
+		dispatch(setCart(res?.data))
+	}
+	useEffect(() => {
+		fetchCart()
+	}, [])
 
 	return (
 		<>

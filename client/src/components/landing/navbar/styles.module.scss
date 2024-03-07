@@ -244,23 +244,32 @@
     color: var(--color-primary);
 }
 
-.cartBtnCon{
+.cartBtnCon {
     @apply flex gap-4;
 }
-.checkoutBtn{
+
+.checkoutBtn {
     @apply px-[1rem] py-[0.5rem] rounded-md;
     font-size: toRem(15);
     background-color: var(--color-primary);
     color: var(--white-color);
     font-family: "Satoshi";
     letter-spacing: toRem(1);
-}   
+}
 
-.cancelBtn{
+.cancelBtn {
     @apply px-[1rem] py-[0.5rem] rounded-md;
     font-size: toRem(15);
     color: var(--color-primary);
     background-color: var(--white-color);
     font-family: "Satoshi";
     letter-spacing: toRem(1);
+}
+
+.footerBtn {
+    @apply flex gap-4 items-center;
+
+    >* {
+        @apply cursor-pointer;
+    }
 }

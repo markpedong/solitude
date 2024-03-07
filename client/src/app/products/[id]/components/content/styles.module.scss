@@ -246,7 +246,8 @@
             }
 
             .button {
-                @apply text-center w-full rounded-full flex items-center justify-center;
+                // remove py-2 if there's a qty btn
+                @apply text-center w-full rounded-full flex items-center justify-center py-2;
                 color: var(--white-color);
                 background-color: var(--color-primary);
                 font-size: toRem(12);

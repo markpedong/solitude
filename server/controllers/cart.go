@@ -86,7 +86,7 @@ func GetItemsFromCart(ctx *gin.Context) {
 	}
 
 	var userCart []models.Carts
-	if err := database.DB.Find(&userCart, "user_id = ? ", body.UserID).Error; err != nil {
+	if err := database.DB.Order("created_at DESC").Find(&userCart, "user_id = ? ", body.UserID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}

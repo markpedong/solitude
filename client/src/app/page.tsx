@@ -4,7 +4,7 @@ import styles from './styles.module.scss'
 import Link from 'next/link'
 import CategoryEl from '@/components/landing/category'
 import { getProducts } from '@/api'
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
 const Page = async () => {
 	const products = await getProducts({})
@@ -58,8 +58,8 @@ const Page = async () => {
 				<div className={styles.reviewContainer}>
 					<span className={styles.header}>our happy customers</span>
 					<div className={styles.arrowContainer}>
-					<FaArrowLeft />
-					<FaArrowRight />
+						<FaArrowLeft />
+						<FaArrowRight />
 					</div>
 				</div>
 				<div className={styles.reviewsContainer}>

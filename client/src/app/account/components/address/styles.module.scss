@@ -35,3 +35,38 @@
 .addressTrigger {
     @apply cursor-pointer;
 }
+
+.addModalTitle {
+    @apply uppercase;
+    font-family: "Satoshi";
+    font-size: toRem(15);
+}
+
+.addBtn {
+    @apply px-5 py-3 rounded-md absolute right-0 top-[-4.5rem] cursor-pointer;
+    background-color: var(--color-primary);
+    color: var(--white-color);
+    font-family: "Satoshi";
+}
+
+.footerBtn {
+    @apply flex gap-5 items-center;
+
+    >* {
+        user-select: none
+    }
+
+    .cancelBtn {
+        @apply px-5 py-2 rounded-md cursor-pointer;
+        color: var(--color-primary);
+        background-color: var(--white-color);
+        font-family: "Satoshi";
+    }
+
+    .submitBtn {
+        @apply px-5 py-2 rounded-md cursor-pointer;
+        background-color: var(--color-primary);
+        color: var(--white-color);
+        font-family: "Satoshi";
+    }
+}

@@ -65,10 +65,9 @@ export const UserSlice = createSlice({
 		setUserData: (state, action) => ({ ...state, isLoggedIn: true, userData: action.payload }),
 		setSellerData: (state, action) => ({ ...state, isLoggedIn: true, sellerData: action.payload }),
 		setUserToken: (state, action) => ({ ...state, token: action.payload }),
-		setUserCart: (state, action) => ({ ...state, userData: { ...state.userData, user_cart: action.payload } }),
 		setCart: (state, action) => ({ ...state, userData: { ...state.userData, userCart: action.payload } })
 	}
 })
 
-export const { setUserData, resetUserData, setUserToken, setSellerData, setType, setUserCart, setCart } = UserSlice.actions
+export const { setUserData, resetUserData, setUserToken, setSellerData, setType, setCart } = UserSlice.actions
 export default UserSlice.reducer

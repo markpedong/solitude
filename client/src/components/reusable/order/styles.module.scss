@@ -43,8 +43,8 @@
         .title {
             span {
                 font-family: 'Satoshi';
-                font-size: toRem(16);
-                font-weight: 700;
+                font-size: toRem(14);
+                font-weight: 800;
             }
 
             svg {
@@ -57,21 +57,13 @@
         .price {
             @apply pt-4;
             font-family: "Satoshi";
-            font-size: toRem(18);
+            font-size: toRem(15);
             font-weight: 600;
 
             .addItemContainer {
                 @apply flex justify-center items-center gap-5 text-black py-1 px-3 rounded-full;
-                font-size: toRem(12);
+                font-size: toRem(10);
                 background-color: #F0EEED;
-            }
-
-            @media screen and (max-width: 576px) {
-                font-size: toRem(18);
-
-                .addItemContainer {
-                    font-size: toRem(10);
-                }
             }
         }
     }

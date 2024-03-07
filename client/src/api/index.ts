@@ -36,6 +36,7 @@ export type TProduct = {
 	stock: number
 	variations: TVariations[]
 	rating: number
+	discount: number
 }
 
 export const getProducts = params => post<TProduct[]>('/users/products', params)
@@ -113,4 +114,4 @@ export type CartItem = {
 export const checkCart = params => post<CartItem[]>('/api/getCart', params)
 
 // /api/removeFromCart
-export const removeCart = params => post("/api/removeFromCart", params)
+export const removeCart = params => post('/api/removeFromCart', params)
