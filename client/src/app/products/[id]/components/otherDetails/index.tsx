@@ -43,22 +43,30 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 			<div className={styles.sellerInfoWrapper}>
 				<Image className={styles.avatar} src={seller?.avatar} alt="seller" width={50} height={50} />
 				<div className={styles.sellerDetails}>
-					<div className={styles.sellerTextContainer}>
+					<div className={styles.otherContainer}>
 						<span className={styles.sellerName}>{seller?.seller_name}</span>
 						<div>
-							<span>Started selling on: </span>
-							<span>{dateParser(+seller?.created_at)}</span>
+							<span>Phone: </span>
+							<span>{seller?.phone}</span>
 						</div>
 						<div>
 							<span>Products: </span>
 							<span>{seller?.products}</span>
 						</div>
 					</div>
-					<div>
+					<div className={styles.otherContainer}>
 						<motion.div className={styles.storeContainer} whileTap={scaleSize}>
 							<IoStorefront />
 							<span>View Shop</span>
 						</motion.div>
+						<div>
+							<span>Location: </span>
+							<span>{seller?.location}</span>
+						</div>
+						<div>
+							<span>Started selling on: </span>
+							<span>{dateParser(+seller?.created_at)}</span>
+						</div>
 					</div>
 				</div>
 			</div>

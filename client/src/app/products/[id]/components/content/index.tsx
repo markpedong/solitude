@@ -180,6 +180,7 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 			<div className={styles.tabsContainer}>
 				<Tabs centered defaultActiveKey="1" items={items} onChange={onChange} />
 			</div>
+			<Divider/>
 			<LandingContent title="checkout other products" products={products} />
 		</div>
 	)
