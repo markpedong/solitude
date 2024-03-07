@@ -6,7 +6,6 @@ import (
 	"solitude/helpers"
 	"solitude/models"
 	"solitude/tokens"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -19,23 +18,11 @@ func GetSellerData(ctx *gin.Context) {
 		return
 	}
 
-	type returnedSeller struct {
-		SellerID   string    `json:"seller_id"`
-		CreatedAt  time.Time `json:"created_at"`
-		UpdatedAt  time.Time `json:"updated_at"`
-		SellerName string    `json:"seller_name"`
-		Phone      string    `json:"phone"`
-		Location   string    `json:"location"`
-		Avatar     string    `json:"avatar"`
-		Email      string    `json:"email"`
-		Products   int64     `json:"products"`
-		Username   string    `json:"username"`
-	}
-	var foundSeller returnedSeller
+	var foundSeller models.JSONSeller
 	var productCount int64
 
 	if err := database.DB.Table("seller").Where("seller_id = ?", body.SellerID).First(&foundSeller).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "user not found")
+		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "seller not found")
 		return
 	}
 	if err := database.DB.Model(&models.Product{}).Where("seller_id = ?", foundSeller.SellerID).Count(&productCount).Error; err != nil {

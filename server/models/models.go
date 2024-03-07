@@ -1,16 +1,14 @@
 package models
 
 import (
-	"time"
-
 	"github.com/lib/pq"
 	"gorm.io/gorm"
 )
 
 type User struct {
 	ID             string    `json:"id" gorm:"primaryKey"`
-	CreatedAt      time.Time `json:"created_at" gorm:"autoCreateTime:milli"`
-	UpdatedAt      time.Time `json:"updated_at" gorm:"autoUpdateTime:milli"`
+	CreatedAt      int       `json:"created_at" gorm:"autoCreateTime:milli"`
+	UpdatedAt      int       `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	AddressDetails []Address `json:"address_details" gorm:"foreignKey:UserID"`
 	Orders         []Orders  `json:"orders" gorm:"foreignKey:UserID"`
 	FirstName      string    `json:"first_name" validate:"max=30"`
@@ -61,8 +59,8 @@ type Address struct {
 
 type Seller struct {
 	SellerID   string     `json:"seller_id" gorm:"primaryKey"`
-	CreatedAt  time.Time  `json:"created_at" gorm:"autoCreateTime:milli"`
-	UpdatedAt  time.Time  `json:"updated_at" gorm:"autoCreateTime:milli"`
+	CreatedAt  int        `json:"created_at" gorm:"autoCreateTime:milli"`
+	UpdatedAt  int        `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	SellerName string     `json:"seller_name" validate:"max=30"`
 	Password   string     `json:"password" validate:"required,min=6"`
 	Email      string     `json:"email" validate:"required"`
@@ -71,6 +69,18 @@ type Seller struct {
 	Location   string     `json:"location"`
 	Products   *[]Product `json:"products" gorm:"foreignKey:SellerID"`
 	Avatar     string     `json:"avatar"`
+}
+type JSONSeller struct {
+	SellerID   string `json:"seller_id"`
+	CreatedAt  int    `json:"created_at"`
+	UpdatedAt  int    `json:"updated_at"`
+	SellerName string `json:"seller_name"`
+	Phone      string `json:"phone"`
+	Location   string `json:"location"`
+	Avatar     string `json:"avatar"`
+	Email      string `json:"email"`
+	Products   int64  `json:"products"`
+	Username   string `json:"username"`
 }
 
 type VariationValue struct {

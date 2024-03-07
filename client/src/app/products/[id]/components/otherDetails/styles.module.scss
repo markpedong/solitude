@@ -61,3 +61,7 @@
     background-color: var(--color-primary);
     color: var(--white-color);
 }
+
+.sellerTextContainer{
+    @apply grid grid-cols-3
+}

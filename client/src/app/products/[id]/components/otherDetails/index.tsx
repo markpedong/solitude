@@ -43,8 +43,12 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 			<div className={styles.sellerInfoWrapper}>
 				<Image className={styles.avatar} src={seller?.avatar} alt="seller" width={50} height={50} />
 				<div className={styles.sellerDetails}>
-					<div>
+					<div className={styles.sellerTextContainer}>
 						<span className={styles.sellerName}>{seller?.seller_name}</span>
+						<div>
+							<span>Started selling on: </span>
+							<span>{dateParser(+seller?.created_at)}</span>
+						</div>
 					</div>
 					<div>
 						<motion.div className={styles.storeContainer} whileTap={scaleSize}>
