@@ -16,9 +16,6 @@
 }
 
 .mainContainer {
-    @apply grid gap-5;
-    grid-template-columns: 1.5fr 1fr;
-
     @media screen and (max-width: 992px) {
         @apply grid-cols-1;
     }

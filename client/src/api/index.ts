@@ -96,4 +96,18 @@ export const getVariations = params => post('/users/getVariations', params)
 export const addToCart = params => post('/api/addToCart', params)
 
 // /api/checkCart
-export const checkCart = params => post<TProduct[]>('/api/checkCart', params)
+export type CartItem = {
+	checkout_id: string
+	image: string[]
+	price: 129
+	product_id: string
+	product_name: string
+	seller_id: string
+	variations: {
+		id: string
+		product_id: string
+		label: string
+		value: { value: string }[]
+	}[]
+}
+export const checkCart = params => post<CartItem[]>('/api/getCart', params)

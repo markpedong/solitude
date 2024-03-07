@@ -5,37 +5,33 @@ import styles from './styles.module.scss'
 import { ArrowRightOutlined, PercentageOutlined, RightOutlined } from '@ant-design/icons'
 import { Divider, Input } from 'antd'
 import classNames from 'classnames'
-import Order from '@/components/cart/order'
-import { TProduct, checkCart } from '@/api'
+import Order from '@/components/reusable/order'
+import { CartItem, checkCart } from '@/api'
 import isAuth from '@/components/isAuth'
+import { useAppSelector } from '@/redux/store'
 
 const Content = () => {
-	const [orders, setOrders] = useState<TProduct[]>([])
+	const [orders, setOrders] = useState<CartItem[]>([])
+	const { userData } = useAppSelector(s => s.userData)
 
 	const fetchCart = async () => {
-		const res = await checkCart({})
+		const res = await checkCart({ user_id: userData?.id })
 
 		setOrders(res?.data)
 	}
 	useEffect(() => {
 		fetchCart()
-	}, [])
+	}, [userData?.id])
 
 	return (
 		<div className={styles.cartWrapper}>
 			<div className={styles.productCategory}>
 				<span>Home</span>
 				<RightOutlined />
-				<span>Cart</span>
+				<span>Checkout</span>
 			</div>
-			<div className={styles.header}>your cart</div>
+			<div className={styles.header}>Finalize Details</div>
 			<div className={styles.mainContainer}>
-				<div className={styles.orderContainer}>
-					{orders?.slice(0, -1).map(q => (
-						<Order data={q} />
-					))}
-					<Order data={orders?.pop()} divider={false} />
-				</div>
 				<div className={styles.orderSummaryContainer}>
 					<div className={styles.header}>Order Summary</div>
 					<div className={styles.subContent}>

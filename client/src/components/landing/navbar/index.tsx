@@ -1,6 +1,6 @@
 'use client'
 
-import { sellerLogin, sellerSignup, userLogin, userSignup } from '@/api'
+import { CartItem, checkCart, sellerLogin, sellerSignup, userLogin, userSignup } from '@/api'
 import Profile from '@/components/profile'
 import { USER_TYPES, scaleSize } from '@/constants'
 import { afterModalformFinish } from '@/constants/helper'
@@ -19,6 +19,7 @@ import { FC, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import LoginModal from './loginModal'
 import styles from './styles.module.scss'
+import Order from '@/components/reusable/order'
 
 type Props = {
 	title: string
@@ -29,14 +30,18 @@ const MenuItem: FC<Props> = ({ title }) => {
 }
 
 const Navbar = () => {
+	const dispatch = useDispatch<AppDispatch>()
 	const router = useRouter()
 	const pathname = usePathname()
-	const [open, setOpen] = useState(false)
-	const dispatch = useDispatch<AppDispatch>()
-	const { activeLoginForm, darkMode, isLoginModalOpen } = useAppSelector(state => state.boolean)
-	const { isLoggedIn, type } = useAppSelector(state => state.userData)
-	const formRef = useRef<ProFormInstance>()
 	const actionRef = useRef<ActionType>()
+	const formRef = useRef<ProFormInstance>()
+	const { isLoggedIn, type } = useAppSelector(state => state.userData)
+	const { activeLoginForm, darkMode, isLoginModalOpen } = useAppSelector(state => state.boolean)
+	const { userData } = useAppSelector(s => s.userData)
+	const [open, setOpen] = useState(false)
+	const [orders, setOrders] = useState<CartItem[]>([])
+	const [cartModal, setCartModal] = useState(false)
+
 	const create = activeLoginForm === 'create'
 	const user = activeLoginForm === 'user'
 	const seller = activeLoginForm === 'seller'
@@ -65,8 +70,7 @@ const Navbar = () => {
 						localStorage.clear()
 						router.push('/')
 					}}
-					type="danger"
-				>
+					type="danger">
 					LOGOUT
 				</Typography.Link>
 			)
@@ -125,6 +129,34 @@ const Navbar = () => {
 		dispatch(setDarkMode(!darkMode))
 	}
 
+	const renderCart = () => (
+		<ModalForm
+			open={cartModal}
+			submitter={{
+				render: props =>
+					!!orders.length && (
+						<motion.div
+							whileTap={scaleSize}
+							className={styles.checkoutBtn}
+							onClick={() => {
+								router.push('/checkout')
+								setCartModal(false)
+							}}>
+							Submit
+						</motion.div>
+					)
+			}}
+			title={<div className={styles.header}>your cart</div>}>
+			<div className={styles.orderContainer}>
+				{orders &&
+					(orders.length > 1
+						? orders.slice(0, -1).map(q => <Order data={q} key={q?.checkout_id} />)
+						: orders.map(q => <Order data={q} key={q?.checkout_id} divider={false} />))}
+				{orders?.length > 1 && <Order data={orders?.findLast(q => q)} divider={false} />}
+			</div>
+		</ModalForm>
+	)
+
 	const renderLoginModal = () => {
 		return (
 			<ModalForm
@@ -142,20 +174,29 @@ const Navbar = () => {
 						dispatch(setLoginModalOpen(false))
 					}
 				}}
-				onFinish={handleFinish}
-			>
+				onFinish={handleFinish}>
 				<LoginModal formRef={formRef} />
 			</ModalForm>
 		)
+	}
+
+	const fetchCart = async () => {
+		const res = await checkCart({ user_id: userData?.id })
+
+		setOrders(res?.data ?? [])
 	}
 
 	useEffect(() => {
 		document.documentElement.classList.toggle('dark', darkMode)
 	}, [darkMode])
 
+	useEffect(() => {
+		fetchCart()
+	}, [userData?.id])
 	return (
 		<>
 			{renderLoginModal()}
+			{renderCart()}
 			<div className={styles.navbarWrapper}>
 				<div className={styles.navbarContainer}>
 					<MenuOutlined className={styles.navbarMobile} onClick={showDrawer} />
@@ -179,9 +220,9 @@ const Navbar = () => {
 					<Input className={styles.input} prefix={<SearchOutlined />} placeholder="Filled" variant="filled" />
 					<div className={styles.userContainer}>
 						<SearchOutlined className={styles.smallInput} />
-						{isLoggedIn && (
-							<motion.div whileTap={scaleSize}>
-								<ShoppingCartOutlined onClick={() => router.push('/cart')} />
+						{isLoggedIn && cartModal && (
+							<motion.div whileTap={scaleSize} onClick={() => setCartModal(true)}>
+								<ShoppingCartOutlined />
 							</motion.div>
 						)}
 						{isLoggedIn ? (

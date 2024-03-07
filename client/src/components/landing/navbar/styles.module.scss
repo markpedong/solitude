@@ -191,6 +191,28 @@
     letter-spacing: toRem(1);
 }
 
+.orderContainer {
+    @apply p-5 rounded-3xl;
+    border: toRem(1) solid var(--border-color);
+    color: var(--color-primary);
+    background-color: var(--white-color);
+
+    :global {
+        .ant-divider {
+            margin: toRem(12) 0;
+        }
+    }
+}
+
+.header {
+    @apply pb-5 uppercase;
+    font-family: 'Integral';
+    font-size: toRem(25);
+    line-height: toRem(25);
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
 @media only screen and (max-width: 768px) {
     .navigation {
         display: none;
@@ -221,3 +243,12 @@
     @apply cursor-pointer;
     color: var(--color-primary);
 }
+
+.checkoutBtn{
+    @apply px-[1rem] py-[0.5rem] rounded-md;
+    font-size: toRem(15);
+    background-color: var(--color-primary);
+    color: var(--white-color);
+    font-family: "Satoshi";
+    letter-spacing: toRem(1);
+}   
