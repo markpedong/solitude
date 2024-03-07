@@ -3,9 +3,11 @@ import styles from './styles.module.scss'
 import { Divider } from 'antd'
 import Image from 'next/image'
 import { MdDelete } from 'react-icons/md'
-import { CartItem } from '@/api'
+import { CartItem, removeCart } from '@/api'
 import { LuMinus, LuPlus } from 'react-icons/lu'
 import { capFrstLtr } from '@/constants/helper'
+import { useAppSelector } from '@/redux/store'
+import { messageHelper } from '@/constants/antd'
 
 type Props = {
 	divider?: boolean
@@ -13,6 +15,13 @@ type Props = {
 }
 
 const Order: FC<Props> = ({ divider = true, data }) => {
+	const { userData } = useAppSelector(s => s.userData)
+
+	const handleRemoveCart = async () => {
+		const res = await removeCart({ user_id: userData?.id, checkout_id: data?.checkout_id })
+
+		messageHelper(res)
+	}
 	return (
 		<>
 			<div className={styles.orderWrapper}>
@@ -20,7 +29,7 @@ const Order: FC<Props> = ({ divider = true, data }) => {
 				<div className={styles.textContainer}>
 					<div className={styles.title}>
 						<span>{data?.product_name}</span>
-						<MdDelete />
+						<MdDelete onClick={handleRemoveCart}/>
 					</div>
 					<div className={styles.variant}>
 						{data?.variations?.map(q => (

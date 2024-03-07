@@ -111,3 +111,6 @@ export type CartItem = {
 	}[]
 }
 export const checkCart = params => post<CartItem[]>('/api/getCart', params)
+
+// /api/removeFromCart
+export const removeCart = params => post("/api/removeFromCart", params)

@@ -4,7 +4,7 @@ import React, { FC, useEffect, useMemo, useState } from 'react'
 import styles from './styles.module.scss'
 import { MinusOutlined, PlusOutlined, RightOutlined } from '@ant-design/icons'
 import Image from 'next/image'
-import { Divider, Rate, Tabs } from 'antd'
+import { Divider, Rate, Tabs, message } from 'antd'
 import type { TabsProps } from 'antd'
 import { motion } from 'framer-motion'
 import { useAppSelector } from '@/redux/store'
@@ -13,11 +13,11 @@ import { useParams, useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { setLoginModalOpen } from '@/redux/features/booleanSlice'
 import Rating from '../rating'
-import { messageHelper } from '@/constants/antd'
 import { capFrstLtr } from '@/constants/helper'
 import OtherDetails from '../otherDetails'
 import { LandingContent } from '@/components/reusable'
 import { scaleSize, scaleSizeSm } from '@/constants'
+import { messageHelper } from '@/constants/antd'
 
 type Props = {
 	data: TProduct
@@ -90,13 +90,10 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 			dispatch(setLoginModalOpen(true))
 			return
 		}
-		const res = await checkCart({ user_id: userData?.id })
 
-		// if (res?.data.findIndex(q => q.product_id === params.id) === -1) {
-		// 	const res = await addToCart({ user_id: userData?.id, product_id: data?.product_id })
-		// 	messageHelper(res?.message)
-		// 	return
-		// }
+		const res = await addToCart({ user_id: userData?.id, product_id: data?.product_id, variation_ids: Object.values(selectedVariations) })
+		messageHelper(res)
+		setSelectedVariations({})
 	}
 
 	useEffect(() => {
@@ -123,7 +120,6 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 						<span>₱{data?.price}</span>
 						<span>-40%</span>
 					</div>
-					{/* <span className={styles.description}>{data?.description}</span> */}
 					<div className={styles.variationWrapper}>
 						<Divider />
 						{data?.variations.map(q => (
@@ -180,7 +176,7 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 			<div className={styles.tabsContainer}>
 				<Tabs centered defaultActiveKey="1" items={items} onChange={onChange} />
 			</div>
-			<Divider/>
+			<Divider />
 			<LandingContent title="checkout other products" products={products} />
 		</div>
 	)

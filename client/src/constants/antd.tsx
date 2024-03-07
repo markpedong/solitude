@@ -1,7 +1,17 @@
 import { message } from 'antd'
 
-export const messageHelper = (msg: string) => {
+export const messageHelper = (res: any) => {
 	message.destroy()
-	message.success(msg)
+
+	if (res?.success){
+		message.success(res?.message)
+		return
+	}
+
+	if (!res?.success){
+		message.error(res?.message)
+		return
+	}
+
 	return
 }
