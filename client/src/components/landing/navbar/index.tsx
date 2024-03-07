@@ -132,6 +132,7 @@ const Navbar = () => {
 
 	const renderCart = () => (
 		<ModalForm
+			// when adding to cart, it automatically pops up if length is less than 1 fix it.
 			open={!!!userCart?.length ? false : cartModal }
 			modalProps={{
 				closeIcon: false
