@@ -28,3 +28,36 @@
         color: var(--color-primary);
     }
 }
+
+.sellerInfoWrapper {
+    @apply py-[1rem] flex items-center gap-3 px-[0.5rem] rounded-sm;
+
+    .avatar {
+        @apply rounded-full overflow-hidden object-contain w-14 h-14;
+        background-color: #F0EEED;
+    }
+
+    .sellerDetails {
+        @apply flex-1 flex flex-col;
+
+        //    grid-area: 1 / 2 / 2 / 7; 
+    }
+
+    // :nth-child(2){
+    //    grid-area:  2 / 2 / 3 / 7; 
+    // }
+}
+
+.sellerName{
+    font-size: toRem(18);
+    font-weight: 700;
+    letter-spacing: toRem(2);
+    font-family: "Satoshi";
+    line-height: toRem(18)
+}
+
+.storeContainer{
+    @apply flex items-center gap-[0.3rem] w-auto max-w-fit py-1 mt-[0.3rem] px-2 rounded-md;
+    background-color: var(--color-primary);
+    color: var(--white-color);
+}

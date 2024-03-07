@@ -1,7 +1,7 @@
 'use client'
 
 import Product from '@/components/reusable/product'
-import { FILTER } from '@/constants'
+import { FILTER, scaleSize } from '@/constants'
 import { ArrowLeftOutlined, ArrowRightOutlined, DownOutlined, FilterOutlined, RightOutlined } from '@ant-design/icons'
 import { Divider, Dropdown, Flex, Pagination } from 'antd'
 import Filter from '../filter'
@@ -63,7 +63,7 @@ const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 	const itemRender: PaginationProps['itemRender'] = (_, type, originalElement) => {
 		if (type === 'prev') {
 			return (
-				<motion.div whileTap={{ scale: 0.8 }} className={styles.arrowContainer}>
+				<motion.div whileTap={scaleSize} className={styles.arrowContainer}>
 					<ArrowLeftOutlined />
 					<span>Previous</span>
 				</motion.div>
@@ -71,7 +71,7 @@ const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 		}
 		if (type === 'next') {
 			return (
-				<motion.div whileTap={{ scale: 0.8 }} className={styles.arrowContainer}>
+				<motion.div whileTap={scaleSize} className={styles.arrowContainer}>
 					<span>Next</span>
 					<ArrowRightOutlined />
 				</motion.div>

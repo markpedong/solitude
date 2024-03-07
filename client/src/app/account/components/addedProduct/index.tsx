@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 import { ModalForm, ProForm, ProFormDigit, ProFormText, ProFormTextArea } from '@ant-design/pro-components'
 import { REQUIRED } from '@/constants/helper'
 import AddProduct from '../addProduct'
+import { scaleSize } from '@/constants'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -30,7 +31,7 @@ const ProductsAdded: FC<Props> = () => {
 				initialValues={product}
 				submitter={false}
 				trigger={
-					<motion.div whileTap={{ scale: 0.9 }}>
+					<motion.div whileTap={scaleSize}>
 						<EditOutlined style={{ cursor: 'pointer' }} />
 					</motion.div>
 				}
@@ -68,7 +69,7 @@ const ProductsAdded: FC<Props> = () => {
 					</Flex>
 					<div>
 						{renderEditProduct(q)}
-						<motion.div whileTap={{ scale: 0.9 }}>
+						<motion.div whileTap={scaleSize}>
 							<Popconfirm title={`Delete this product?`}>
 								<DeleteOutlined />
 							</Popconfirm>

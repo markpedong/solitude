@@ -2,7 +2,7 @@
 
 import { sellerLogin, sellerSignup, userLogin, userSignup } from '@/api'
 import Profile from '@/components/profile'
-import { USER_TYPES } from '@/constants'
+import { USER_TYPES, scaleSize } from '@/constants'
 import { afterModalformFinish } from '@/constants/helper'
 import { setActiveLoginForm, setDarkMode, setIsBannerHidden, setLoginModalOpen } from '@/redux/features/booleanSlice'
 import { resetUserData, setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
@@ -165,7 +165,7 @@ const Navbar = () => {
 						<MenuItem title="new arrivals" />
 						<MenuItem title="brands" />
 					</Drawer>
-					<motion.div whileTap={{ scale: 0.8 }} className={classNames(styles.navbarLogo, 'cursor-pointer')} onClick={() => router.push('/')}>
+					<motion.div whileTap={scaleSize} className={classNames(styles.navbarLogo, 'cursor-pointer')} onClick={() => router.push('/')}>
 						SOLITUDE
 					</motion.div>
 					<div className={styles.navbarHeader}>
@@ -180,7 +180,7 @@ const Navbar = () => {
 					<div className={styles.userContainer}>
 						<SearchOutlined className={styles.smallInput} />
 						{isLoggedIn && (
-							<motion.div whileTap={{ scale: 0.8 }}>
+							<motion.div whileTap={scaleSize}>
 								<ShoppingCartOutlined onClick={() => router.push('/cart')} />
 							</motion.div>
 						)}
@@ -191,7 +191,7 @@ const Navbar = () => {
 						) : (
 							<UserOutlined onClick={() => dispatch(setLoginModalOpen(true))} />
 						)}
-						<motion.div whileTap={{ scale: 0.8 }}>{darkMode ? <MoonOutlined onClick={handleChangeTheme} /> : <SunOutlined onClick={handleChangeTheme} />}</motion.div>
+						<motion.div whileTap={scaleSize}>{darkMode ? <MoonOutlined onClick={handleChangeTheme} /> : <SunOutlined onClick={handleChangeTheme} />}</motion.div>
 					</div>
 				</div>
 			</div>

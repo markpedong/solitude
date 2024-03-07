@@ -8,6 +8,7 @@ import Product from './product'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { TProduct } from '@/api'
+import { scaleSizeBig } from '@/constants'
 
 type Props = {
 	title: string
@@ -38,7 +39,7 @@ export const LandingContent: FC<LandingProps> = ({ title, products }) => {
 				))}
 			</div>
 			<div className={styles.viewButtonContainer}>
-				<motion.span className={styles.button} onClick={() => router.push('/products')} whileHover={{ scale: 1.1 }}>
+				<motion.span className={styles.button} onClick={() => router.push('/products')} whileHover={scaleSizeBig}>
 					View All
 				</motion.span>
 			</div>

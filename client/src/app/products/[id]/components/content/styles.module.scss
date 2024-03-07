@@ -171,7 +171,7 @@
 
         .variationContainer {
             @apply w-full flex justify-start items-center gap-3 py-2 overflow-scroll;
-            border-top: toRem(1) solid var(--color-secondary);
+            // border-top: toRem(1) solid var(--color-secondary);
 
             .label {
                 font-family: 'Satoshi';
@@ -190,6 +190,7 @@
                     background-color: var(--bg-secondary);
                 }
             }
+
         }
 
         // .variationContainer {
@@ -217,7 +218,6 @@
 
         .addToCartContainer {
             @apply flex flex-col gap-1 py-3;
-            border-top: toRem(1) solid var(--color-secondary);
             font-family: 'Satoshi';
 
             .addToCartButton {
@@ -231,6 +231,7 @@
                 font-size: toRem(12);
 
                 span {
+                    font-size: toRem(15);
                     -webkit-user-select: none;
                     -khtml-user-select: none;
                     -moz-user-select: none;
@@ -269,6 +270,7 @@
                 font-size: toRem(12) !important;
                 overflow: scroll;
                 width: 100%;
+                user-select: none
             }
 
             .ant-tabs-nav-list {
@@ -293,5 +295,11 @@
 }
 
 .variationWrapper {
-    @apply pt-[2rem]
+    @apply pt-[1rem];
+
+    :global {
+        .ant-divider {
+            margin: toRem(12) 0;
+        }
+    }
 }

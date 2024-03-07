@@ -5,6 +5,7 @@ import { Collapse, Divider, Slider } from 'antd'
 import { FC } from 'react'
 import { motion } from 'framer-motion'
 import styles from './styles.module.scss'
+import { scaleSize } from '@/constants'
 
 const Filter: FC = () => {
 	return (
@@ -139,7 +140,7 @@ const Filter: FC = () => {
 				]}
 			/>
 
-			<motion.div whileTap={{ scale: 0.8 }} className={styles.applyButton}>
+			<motion.div whileTap={scaleSize} className={styles.applyButton}>
 				Apply Filters
 			</motion.div>
 		</div>

@@ -6,7 +6,7 @@
     font-family: 'Satoshi';
 
     .imageContainer {
-        @apply rounded-3xl flex items-center justify-center object-cover object-center mb-5;
+        @apply rounded-3xl flex items-center justify-center object-cover object-center mb-5 px-[0.5rem];
         background-color: #F0EEED;
         height: toRem(180);
 

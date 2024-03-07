@@ -4,11 +4,11 @@ import React, { FC, useEffect, useMemo, useState } from 'react'
 import styles from './styles.module.scss'
 import { MinusOutlined, PlusOutlined, RightOutlined } from '@ant-design/icons'
 import Image from 'next/image'
-import { Rate, Tabs } from 'antd'
+import { Divider, Rate, Tabs } from 'antd'
 import type { TabsProps } from 'antd'
 import { motion } from 'framer-motion'
 import { useAppSelector } from '@/redux/store'
-import { TProduct, addToCart, checkCart } from '@/api'
+import { SellerData, TProduct, addToCart, checkCart } from '@/api'
 import { useParams, useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { setLoginModalOpen } from '@/redux/features/booleanSlice'
@@ -16,15 +16,19 @@ import Rating from '../rating'
 import { messageHelper } from '@/constants/antd'
 import { capFrstLtr } from '@/constants/helper'
 import OtherDetails from '../otherDetails'
+import { LandingContent } from '@/components/reusable'
+import { scaleSize, scaleSizeSm } from '@/constants'
 
 type Props = {
 	data: TProduct
 	products: TProduct[]
+	seller: SellerData
 }
-const scaleSize = { scale: 0.9 }
-const ProductDetails: FC<Props> = ({ data, products }) => {
+
+const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 	const { token, userData } = useAppSelector(s => s.userData)
 	const [qty, setQty] = useState<number>(1)
+	const [firstImage, setFirstImage] = useState(data?.image?.[0])
 	const router = useRouter()
 	const params = useParams()
 	const dispatch = useDispatch()
@@ -37,7 +41,7 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 		{
 			key: '1',
 			label: 'Product Details',
-			children: <OtherDetails data={data} />
+			children: <OtherDetails data={data} seller={seller}/>
 		},
 		{
 			key: '2',
@@ -54,14 +58,17 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 	const memoizedImageContainer = useMemo(
 		() => (
 			<div className={styles.productImageContainer}>
-				{data?.image?.slice(0, 5).map((q, i) => (
-					<div key={q + i}>
+				<div>
+					<Image src={firstImage ?? data?.image?.[0]} alt="product_image" height={100} width={100} priority />
+				</div>
+				{data?.image?.slice(1, 5).map((q, i) => (
+					<div key={q + i} onMouseEnter={() => setFirstImage(q)} onMouseLeave={() => setFirstImage(data?.image?.[0])}>
 						<Image src={q} alt="product_image" height={100} width={100} priority />
 					</div>
 				))}
 			</div>
 		),
-		[]
+		[firstImage]
 	)
 
 	const memoizedRateContainer = useMemo(
@@ -116,7 +123,9 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 					</div>
 					{/* <span className={styles.description}>{data?.description}</span> */}
 					<div className={styles.variationWrapper}>
+					<Divider/>
 						{data?.variations.map(q => (
+							<>
 							<div className={styles.variationContainer} key={q.id}>
 								<span className={styles.label}>{capFrstLtr(q?.label)}:</span>
 								<div className={styles.options}>
@@ -139,17 +148,19 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 									))}
 								</div>
 							</div>
+							<Divider/>
+							</>
 						))}
 					</div>
 					<div className={styles.addToCartContainer}>
-						<div className={styles.stockText}>Stocks: {data?.stock}</div>
+						{/* <div className={styles.stockText}>Stocks: {data?.stock}</div> */}
 						<div className={styles.addToCartButton}>
 							<div className={styles.addToCart}>
-								<motion.span whileTap={{ scale: 0.7 }} onClick={() => setQty(qty => (qty > 1 ? qty - 1 : qty))}>
+								<motion.span whileTap={scaleSizeSm} onClick={() => setQty(qty => (qty > 1 ? qty - 1 : qty))}>
 									<MinusOutlined />
 								</motion.span>
 								<span>{qty}</span>
-								<motion.span whileTap={{ scale: 0.7 }} onClick={() => setQty(qty => qty + 1)}>
+								<motion.span whileTap={scaleSizeSm} onClick={() => setQty(qty => qty + 1)}>
 									<PlusOutlined />
 								</motion.span>
 							</div>
@@ -163,6 +174,7 @@ const ProductDetails: FC<Props> = ({ data, products }) => {
 			<div className={styles.tabsContainer}>
 				<Tabs centered defaultActiveKey="1" items={items} onChange={onChange} />
 			</div>
+			<LandingContent title="checkout other products" products={products} />
 		</div>
 	)
 }

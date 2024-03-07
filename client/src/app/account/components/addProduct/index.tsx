@@ -18,6 +18,7 @@ import { motion } from 'framer-motion'
 import { FC, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import { omit } from 'lodash'
+import { scaleSize } from '@/constants'
 
 type Props = {
     product?: TProduct
@@ -164,7 +165,7 @@ const AddProduct: FC<Props> = ({ product }) => {
                         </ProForm.Group>
                     </ProFormList>
                     <Flex justify="center" gap={20}>
-                        <motion.div whileTap={{ scale: 0.9 }}>
+                        <motion.div whileTap={scaleSize}>
                             <Button type="primary" onClick={() => formRef?.current.submit()}>
                                 Submit
                             </Button>
