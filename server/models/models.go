@@ -49,6 +49,17 @@ type JSONProduct struct {
 	CheckoutID  string              `json:"checkout_id"`
 }
 
+type DeliveryInfoPayload struct {
+	UserID      string `json:"user_id" validate:"required"`
+	House       string `json:"house" validate:"required"`
+	Street      string `json:"street" validate:"required"`
+	City        string `json:"city" validate:"required"`
+	Pincode     string `json:"pin_code" validate:"required"`
+	AddressType int    `json:"address_type" validate:"required"`
+	FirstName   string `json:"first_name" validate:"required"`
+	LastName    string `json:"last_name" validate:"required"`
+	Phone       string `json:"phone" validate:"required"`
+}
 type DeliveryInformation struct {
 	ID          string         `json:"id" validate:"required"  gorm:"primaryKey"`
 	UserID      string         `json:"user_id" validate:"required"`

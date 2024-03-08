@@ -135,3 +135,6 @@ export type InfoItem = {
 	user_id: string
 }
 export const getDeliveryInfo = params => post<InfoItem[]>('/api/getDeliveryInfo', params)
+
+// /api/deleteDeliveryInfo
+export const deleteDeliveryInfo = params => post<InfoItem[]>('/api/deleteDeliveryInfo', params)

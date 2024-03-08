@@ -33,17 +33,7 @@ func GetDeliveryInfo(ctx *gin.Context) {
 }
 
 func AddDeliveryInfo(ctx *gin.Context) {
-	var body struct {
-		UserID      string `json:"user_id" validate:"required"`
-		House       string `json:"house" validate:"required"`
-		Street      string `json:"street" validate:"required"`
-		City        string `json:"city" validate:"required"`
-		Pincode     string `json:"pin_code" validate:"required"`
-		AddressType int    `json:"address_type" validate:"required"`
-		FirstName   string `json:"first_name" validate:"required"`
-		LastName    string `json:"last_name" validate:"required"`
-		Phone       string `json:"phone" validate:"required"`
-	}
+	var body models.DeliveryInfoPayload
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
@@ -87,12 +77,8 @@ func AddDeliveryInfo(ctx *gin.Context) {
 
 func EditHomeAddress(ctx *gin.Context) {
 	var body struct {
-		DeliveryInfoID string `json:"delivery_id" validate:"required"`
-		UserID         string `json:"user_id" validate:"required"`
-		House          string `json:"house"`
-		Street         string `json:"street"`
-		City           string `json:"city"`
-		PinCode        string `json:"pin_code"`
+		models.DeliveryInfoPayload
+		DeliveryInfoID string `json:"id"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
@@ -126,7 +112,7 @@ func EditHomeAddress(ctx *gin.Context) {
 	editDeliveryInfo = models.DeliveryInformation{
 		City:    body.City,
 		House:   body.House,
-		Pincode: body.PinCode,
+		Pincode: body.Pincode,
 		Street:  body.Street,
 	}
 	if err := database.DB.Save(&editDeliveryInfo).Error; err != nil {
@@ -137,7 +123,7 @@ func EditHomeAddress(ctx *gin.Context) {
 	helpers.JSONResponse(ctx, "edited successfully!")
 }
 
-func DeleteAddress(ctx *gin.Context) {
+func DeleteDeliveryInfo(ctx *gin.Context) {
 	var body struct {
 		DeliveryID string `json:"delivery_id" validate:"required"`
 		UserID     string `json:"user_id" validate:"required"`
@@ -161,14 +147,14 @@ func DeleteAddress(ctx *gin.Context) {
 	}
 
 	if !found {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "check address_id")
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "check delivery_id")
 		return
 	}
 
-	if err := database.DB.Where("id = ?", body.DeliveryID).Find(&models.DeliveryInformation{}).Error; err != nil {
+	if err := database.DB.Where("id = ?", body.DeliveryID).Delete(&models.DeliveryInformation{}).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	helpers.JSONResponse(ctx, "edited successfully!")
+	helpers.JSONResponse(ctx, "deleted successfully!")
 }

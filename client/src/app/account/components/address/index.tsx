@@ -6,7 +6,8 @@ import { Popconfirm } from 'antd'
 import { motion } from 'framer-motion'
 import { useAppSelector } from '@/redux/store'
 import { REQUIRED, afterModalformFinish } from '@/constants/helper'
-import { InfoItem, addDeliveryInfo, getDeliveryInfo } from '@/api'
+import { InfoItem, addDeliveryInfo, deleteDeliveryInfo, getDeliveryInfo } from '@/api'
+import { messageHelper } from '@/constants/antd'
 
 const Address: FC = () => {
 	const { userData } = useAppSelector(s => s.userData)
@@ -65,9 +66,16 @@ const Address: FC = () => {
 		)
 	}
 
+	const handleDeleteInfo = async (q: InfoItem) => {
+		const res = await deleteDeliveryInfo({ user_id: userData?.id, delivery_id: q?.id })
+		messageHelper(res)
+
+		const info = await getDeliveryInfo({ user_id: userData?.id })
+		setInfo(info?.data)
+	}
 	const renderDeleteInfo = (q: InfoItem) => {
 		return (
-			<Popconfirm title="Delete" description="Are you sure to delete this address?" onConfirm={() => console.log('deleted')} okText="Yes" cancelText="No">
+			<Popconfirm title="Delete" description="Are you sure to delete this address?" onConfirm={() => handleDeleteInfo(q)} okText="Yes" cancelText="No">
 				<span className={styles.addressTrigger}>Delete</span>
 			</Popconfirm>
 		)
