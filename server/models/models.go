@@ -47,6 +47,7 @@ type JSONProduct struct {
 	Image       pq.StringArray      `json:"image" `
 	Variations  []ProductVariations `json:"variations" `
 	CheckoutID  string              `json:"checkout_id"`
+	Quantity    int                 `json:"quantity"`
 }
 
 type DeliveryInfoPayload struct {
@@ -86,6 +87,8 @@ type Seller struct {
 	Location   string         `json:"location"`
 	Products   *[]Product     `json:"products" gorm:"foreignKey:SellerID"`
 	Avatar     string         `json:"avatar"`
+	Rating     int            `json:"rating"`
+	Followers  int            `json:"followers"`
 	CreatedAt  int            `json:"created_at" gorm:"autoCreateTime:milli"`
 	UpdatedAt  int            `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	Deleted    gorm.DeletedAt `json:"-"`
@@ -101,6 +104,8 @@ type JSONSeller struct {
 	Email      string `json:"email"`
 	Products   int64  `json:"products"`
 	Username   string `json:"username"`
+	Rating     int    `json:"rating"`
+	Followers  int    `json:"followers"`
 }
 
 type VariationValue struct {

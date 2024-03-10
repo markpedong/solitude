@@ -92,7 +92,7 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 			return
 		}
 
-		const res = await addToCart({ user_id: userData?.id, product_id: data?.product_id, variation_ids: Object.values(selectedVariations) })
+		const res = await addToCart({ user_id: userData?.id, product_id: data?.product_id, variation_ids: Object.values(selectedVariations), quantity: qty })
 		const cart = await checkCart({ user_id: userData?.id })
 		messageHelper(res)
 		setSelectedVariations({})

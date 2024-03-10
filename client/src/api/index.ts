@@ -72,6 +72,8 @@ export type SellerData = {
 	location: string
 	avatar: string
 	products: number
+	rating: number
+	followers: number
 }
 export const getSellerData = params => post<SellerData>('/users/getSellerData', params)
 
@@ -110,6 +112,7 @@ export type CartItem = {
 		label: string
 		value: { value: string }[]
 	}[]
+	quantity: number
 }
 export const checkCart = params => post<CartItem[]>('/api/getCart', params)
 

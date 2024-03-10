@@ -34,7 +34,7 @@
     background-color: #F0EEED;
 
     .avatar {
-        @apply rounded-full overflow-hidden object-contain w-14 h-14;
+        @apply rounded-full overflow-hidden object-cover w-14 h-14;
     }
 
     .sellerDetails {
@@ -48,7 +48,7 @@
     // }
 }
 
-.sellerName{
+.sellerName {
     font-size: toRem(15);
     font-weight: 700;
     letter-spacing: toRem(1);
@@ -56,7 +56,7 @@
     line-height: toRem(18)
 }
 
-.storeContainer{
+.storeContainer {
     @apply flex items-center gap-[0.3rem] w-auto max-w-fit py-1 mt-[0.3rem] px-2 rounded-md;
     background-color: var(--color-primary);
     color: var(--white-color);
@@ -68,19 +68,20 @@
 
 
 }
-.otherContainer{
-    @apply grid grid-cols-3 items-center;
+
+.otherContainer {
+    @apply grid grid-cols-4 items-center;
 
     div {
         font-size: toRem(13);
         line-height: toRem(13);
         font-family: "Satoshi";
 
-        :first-child{
+        :first-child {
             font-weight: 400;
         }
-        
-        :last-child{
+
+        :last-child {
             font-weight: 700;
         }
     }

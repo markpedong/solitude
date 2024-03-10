@@ -19,6 +19,8 @@ const Order: FC<Props> = ({ divider = true, data }) => {
 	const { userData } = useAppSelector(s => s.userData)
 	const dispatch = useAppDispatch()
 
+	console.log('@@@@@@', data)
+
 	const handleRemoveCart = async () => {
 		const res = await removeCart({ user_id: userData?.id, checkout_id: data?.checkout_id })
 		const cart = await checkCart({ user_id: userData?.id })
@@ -48,6 +50,7 @@ const Order: FC<Props> = ({ divider = true, data }) => {
 							)
 						})}
 					</div>
+					<span>X{data?.quantity}</span>
 					<div className={styles.price}>
 						<span>₱{data?.price}</span>
 						{/* <div className={styles.addItemContainer}>

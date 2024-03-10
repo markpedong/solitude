@@ -134,6 +134,7 @@ func GetItemsFromCart(ctx *gin.Context) {
 			Image:       product.Image,
 			Variations:  variations,
 			CheckoutID:  cart.ID,
+			Quantity:    cart.Quantity,
 		}
 		productsWithVariations = append(productsWithVariations, productRes)
 	}

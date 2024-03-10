@@ -1,5 +1,5 @@
 import { SellerData, TProduct } from '@/api'
-import { capFrstLtr, dateParser } from '@/constants/helper'
+import { capFrstLtr, dateParser, numSuffix } from '@/constants/helper'
 import React, { FC } from 'react'
 import styles from './styles.module.scss'
 import { RightOutlined } from '@ant-design/icons'
@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { IoStorefront } from 'react-icons/io5'
 import { motion } from 'framer-motion'
 import { scaleSize } from '@/constants'
+import dayjs from 'dayjs'
 
 type Props = {
 	data: TProduct
@@ -56,6 +57,10 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 							<span>Products: </span>
 							<span>{seller?.products}</span>
 						</div>
+						<div>
+							<span>Followers: </span>
+							<span>{numSuffix(seller?.followers)}</span>
+						</div>
 					</div>
 					<div className={styles.otherContainer}>
 						<motion.div className={styles.storeContainer} whileTap={scaleSize}>
@@ -67,8 +72,16 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 							<span>{seller?.location}</span>
 						</div>
 						<div>
+							<span>Ratings: </span>
+							<span>{numSuffix(seller?.rating)}</span>
+						</div>
+						<div>
 							<span>Joined: </span>
-							<span>{dateParser(+seller?.created_at)}</span>
+							<span>
+								{dayjs(+seller?.created_at).get('month') === 0
+									? `${dayjs(+seller?.created_at).get('days')} days ago`
+									: `${dayjs(+seller?.created_at).get('month')} months ago`}{' '}
+							</span>
 						</div>
 					</div>
 				</div>
