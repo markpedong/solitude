@@ -101,7 +101,7 @@ const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 					<div className={styles.productHeader}>
 						<span className={styles.header}>Casual</span>
 						<div className={styles.showingContainer}>
-							<span className={styles.showing}>Showing 1-10 of 100 Products</span>
+							<span className={styles.showing}>Showing {data?.length} Products</span>
 							<div className={styles.sortContainer}>
 								<span>Sort by:</span>
 
@@ -122,7 +122,7 @@ const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 					</div>
 					<Divider />
 					<div className={styles.paginationContainer}>
-						<Pagination total={500} itemRender={itemRender} showQuickJumper={false} showSizeChanger={false} size="small" onChange={onChange} />
+						<Pagination total={data?.length} itemRender={itemRender} showQuickJumper={false} size="small" onChange={onChange} />
 					</div>
 				</div>
 			</div>
