@@ -165,7 +165,7 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 									<MinusOutlined />
 								</motion.span>
 								<span>{qty}</span>
-								<motion.span whileTap={scaleSizeSm} onClick={() => setQty(qty => qty + 1)}>
+								<motion.span whileTap={scaleSizeSm} onClick={() => setQty(qty => (qty < 10 ? (qty += 1) : qty))}>
 									<PlusOutlined />
 								</motion.span>
 							</div>

@@ -51,7 +51,7 @@ func CheckoutOrder(ctx *gin.Context) {
 			ProductID:       v.ProductID,
 			UserID:          v.UserID,
 			VariationIDs:    v.VariationIDs,
-			Price:           int(currProd.Price),
+			Price:           int(currProd.Price * float64(v.Quantity)),
 			SelectedAddress: body.AddressID,
 			PaymentMethod:   body.PaymentMethod,
 			Discount:        body.Discount,

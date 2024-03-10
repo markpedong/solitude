@@ -130,7 +130,7 @@ func GetItemsFromCart(ctx *gin.Context) {
 			ProductID:   product.ProductID,
 			SellerID:    product.SellerID,
 			ProductName: product.ProductName,
-			Price:       product.Price,
+			Price:       product.Price * float64(cart.Quantity),
 			Image:       product.Image,
 			Variations:  variations,
 			CheckoutID:  cart.ID,
