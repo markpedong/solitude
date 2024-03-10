@@ -130,6 +130,7 @@ type Carts struct {
 	UserID       string         `json:"user_id" validate:"required"`
 	VariationIDs pq.StringArray `json:"variation_ids" gorm:"type:text[]"`
 	CreatedAt    int            `json:"created_at" gorm:"autoCreateTime:milli"`
+	Quantity     int            `json:"quantity"`
 }
 
 type Orders struct {
@@ -145,4 +146,5 @@ type Orders struct {
 	CreatedAt       int            `json:"created_at" gorm:"autoCreateTime:milli"`
 	UpdatedAt       int            `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	Deleted         gorm.DeletedAt `json:"-"`
+	Quantity        int            `json:"quantity"`
 }

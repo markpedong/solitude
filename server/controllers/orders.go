@@ -55,6 +55,7 @@ func CheckoutOrder(ctx *gin.Context) {
 			SelectedAddress: body.AddressID,
 			PaymentMethod:   body.PaymentMethod,
 			Discount:        body.Discount,
+			Quantity:        v.Quantity,
 		}
 
 		currProd.Stock = currProd.Stock - 1

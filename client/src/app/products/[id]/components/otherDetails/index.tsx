@@ -67,7 +67,7 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 							<span>{seller?.location}</span>
 						</div>
 						<div>
-							<span>Started selling on: </span>
+							<span>Joined: </span>
 							<span>{dateParser(+seller?.created_at)}</span>
 						</div>
 					</div>

@@ -160,7 +160,7 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 					<div className={styles.addToCartContainer}>
 						{/* <div className={styles.stockText}>Stocks: {data?.stock}</div> */}
 						<div className={styles.addToCartButton}>
-							{/* <div className={styles.addToCart}>
+							<div className={styles.addToCart}>
 								<motion.span whileTap={scaleSizeSm} onClick={() => setQty(qty => (qty > 1 ? qty - 1 : qty))}>
 									<MinusOutlined />
 								</motion.span>
@@ -168,7 +168,7 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 								<motion.span whileTap={scaleSizeSm} onClick={() => setQty(qty => qty + 1)}>
 									<PlusOutlined />
 								</motion.span>
-							</div> */}
+							</div>
 							<motion.div whileTap={scaleSize} className={styles.button} onClick={handleAddtoCart}>
 								Add to Cart
 							</motion.div>

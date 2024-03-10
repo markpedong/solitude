@@ -14,6 +14,7 @@ func AddToCart(ctx *gin.Context) {
 		ProductID    string   `json:"product_id" validate:"required"`
 		UserID       string   `json:"user_id" validate:"required"`
 		VariationIDs []string `json:"variation_ids" validate:"required"`
+		Quantity     int      `json:"quantity" validate:"required"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &cartItem); err != nil {
 		return
@@ -44,6 +45,7 @@ func AddToCart(ctx *gin.Context) {
 		ProductID:    selectedProduct.ProductID,
 		UserID:       foundUser.ID,
 		VariationIDs: cartItem.VariationIDs,
+		Quantity:     cartItem.Quantity,
 	}
 
 	if err := database.DB.Create(&newCartItem).Error; err != nil {
