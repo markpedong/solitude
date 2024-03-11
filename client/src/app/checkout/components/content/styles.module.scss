@@ -15,110 +15,100 @@
 
 }
 
-.mainContainer {
-    @media screen and (max-width: 992px) {
-        @apply grid-cols-1;
-    }
+.mainWrapper {
+    @apply grid gap-5;
+    grid-template-columns: 1.4fr 1fr;
 }
 
-.orderContainer {
+
+.addressWrapper {}
+
+.orderSummaryContainer,
+.cartContainer {
     @apply p-5 rounded-3xl;
     border: toRem(1) solid var(--border-color);
     color: var(--color-primary);
     background-color: var(--white-color);
-
-    :global {
-        .ant-divider {
-            margin: toRem(12) 0;
-        }
-    }
 }
 
-.orderSummaryContainer {
-    @apply p-5 rounded-3xl;
-    border: toRem(1) solid var(--border-color);
-    color: var(--color-primary);
-    background-color: var(--white-color);
+.subContent {
+    @apply flex justify-between pb-2;
+    font-size: toRem(12);
+    font-family: "Satoshi";
 
-    .subContent {
-        @apply flex justify-between pb-5;
-        font-size: toRem(14);
-        font-family: "Satoshi";
+    :nth-child(1) {
+        font-weight: 400;
+        color: var(--color-secondary);
+    }
 
+    :nth-child(2) {
+        font-weight: 700;
+    }
+
+    &.total {
         :nth-child(1) {
-            font-weight: 400;
-            color: var(--color-secondary);
+            color: var(--color-primary);
         }
+    }
 
+    &.discount {
         :nth-child(2) {
-            font-weight: 700;
-        }
-
-        &.total {
-            :nth-child(1) {
-                color: var(--color-primary);
-            }
-        }
-
-        &.discount {
-            :nth-child(2) {
-                color: #FF3333;
-            }
-        }
-
-        &.promoCode {
-            @apply gap-5;
-
-            span {
-                @apply rounded-full;
-                background-color: var(--bg-secondary);
-
-                input {
-                    &[type="text"] {
-                        font-family: "Satoshi";
-                        font-size: toRem(14)
-                    }
-
-                    ::placeholder {
-                        font-size: toRem(14);
-                    }
-                }
-
-                :global {
-                    .ant-input-prefix {
-                        svg {
-                            width: toRem(14);
-                            height: toRem(14);
-                            margin-right: toRem(10)
-                        }
-                    }
-                }
-            }
-
-            div {
-                @apply p-2 px-6 rounded-full;
-                font-weight: 400;
-                font-size: toRem(12);
-                font-family: "Satoshi";
-                background-color: var(--color-primary);
-                color: var(--white-color);
-            }
+            color: #FF3333;
         }
     }
 
-    .checkout {
-        @apply flex justify-center items-center p-2 rounded-full mb-5 gap-3;
-        font-size: toRem(14);
-        background-color: var(--color-primary);
-        color: var(--white-color);
+    &.promoCode {
+        @apply gap-5;
+
+        span {
+            @apply rounded-full;
+            background-color: var(--bg-secondary);
+
+            input {
+                &[type="text"] {
+                    font-family: "Satoshi";
+                    font-size: toRem(14)
+                }
+
+                ::placeholder {
+                    font-size: toRem(14);
+                }
+            }
+
+            :global {
+                .ant-input-prefix {
+                    svg {
+                        width: toRem(14);
+                        height: toRem(14);
+                        margin-right: toRem(10)
+                    }
+                }
+            }
+        }
+
+        div {
+            @apply p-2 px-6 rounded-full;
+            font-weight: 400;
+            font-size: toRem(12);
+            font-family: "Satoshi";
+            background-color: var(--color-primary);
+            color: var(--white-color);
+        }
     }
+}
+
+.checkout {
+    @apply flex justify-center items-center p-2 rounded-full mb-5 gap-3;
+    font-size: toRem(14);
+    background-color: var(--color-primary);
+    color: var(--white-color);
 }
 
 .header {
     @apply pb-5 uppercase;
     font-family: 'Integral';
-    font-size: toRem(25);
-    line-height: toRem(25);
+    font-size: toRem(20);
+    line-height: toRem(20);
     font-weight: 700;
     color: var(--color-primary);
 }

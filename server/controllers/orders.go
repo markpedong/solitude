@@ -12,7 +12,7 @@ import (
 func CheckoutOrder(ctx *gin.Context) {
 	var body struct {
 		CheckoutIDs   []string `json:"checkout_ids" validate:"required"`
-		AddressID     string   `json:"address_id" vaidate:"required"`
+		DeliveryID    string   `json:"delivery_id" vaidate:"required"`
 		PaymentMethod int      `json:"payment_method" validate:"required"`
 		Discount      *int     `json:"discount"`
 	}
@@ -52,7 +52,7 @@ func CheckoutOrder(ctx *gin.Context) {
 			UserID:          v.UserID,
 			VariationIDs:    v.VariationIDs,
 			Price:           int(currProd.Price * float64(v.Quantity)),
-			SelectedAddress: body.AddressID,
+			SelectedAddress: body.DeliveryID,
 			PaymentMethod:   body.PaymentMethod,
 			Discount:        body.Discount,
 			Quantity:        v.Quantity,

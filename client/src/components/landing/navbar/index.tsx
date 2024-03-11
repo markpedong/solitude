@@ -41,7 +41,7 @@ const Navbar = () => {
 	const { isLoggedIn, type } = useAppSelector(state => state.userData)
 	const { activeLoginForm, darkMode, isLoginModalOpen } = useAppSelector(state => state.boolean)
 	const {
-		userData: { userCart, id }
+		userData: { userCart }
 	} = useAppSelector(s => s.userData)
 	const [open, setOpen] = useState(false)
 	const [cartModal, setCartModal] = useState(false)
@@ -181,7 +181,10 @@ const Navbar = () => {
 			title={<div className={styles.header}>your cart</div>}
 		>
 			<div className={styles.orderContainer}>
-				{userCart && (userCart?.length > 1 ? userCart.slice(0, -1).map(q => <Order data={q} key={q?.checkout_id} />) : userCart.map(q => <Order data={q} key={q?.checkout_id} divider={false} />))}
+				{userCart &&
+					(userCart?.length > 1
+						? userCart.slice(0, -1).map(q => <Order data={q} key={q?.checkout_id} />)
+						: userCart.map(q => <Order data={q} key={q?.checkout_id} divider={false} />))}
 				{userCart?.length > 1 && <Order data={userCart?.findLast(q => q)} divider={false} />}
 			</div>
 		</ModalForm>

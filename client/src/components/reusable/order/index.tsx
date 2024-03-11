@@ -50,7 +50,7 @@ const Order: FC<Props> = ({ divider = true, data }) => {
 							)
 						})}
 					</div>
-					<span>X{data?.quantity}</span>
+					<span className={styles.qty}>Quantity: {data?.quantity}</span>
 					<div className={styles.price}>
 						<span>₱{data?.price}</span>
 						{/* <div className={styles.addItemContainer}>
