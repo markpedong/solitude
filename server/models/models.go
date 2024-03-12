@@ -24,20 +24,22 @@ type User struct {
 }
 
 type Product struct {
-	ProductID   string              `json:"product_id" gorm:"primaryKey"`
-	SellerID    string              `json:"seller_id" validate:"required"`
-	ProductName string              `json:"product_name" validate:"required"`
-	Price       float64             `json:"price" validate:"required"`
-	Rating      int                 `json:"rating"`
-	Image       pq.StringArray      `json:"image" gorm:"type:text[]"`
-	Description string              `json:"description" validate:"required"`
-	Stock       int                 `json:"stock" validate:"required"`
-	Variations  []ProductVariations `json:"variations" gorm:"foreignkey:ProductID"`
-	Category    pq.StringArray      `json:"categories" gorm:"type:text[]"`
-	CheckoutID  string              `json:"checkout_id"`
-	CreatedAt   int                 `json:"created_at" gorm:"autoCreateTime:milli"`
-	UpdatedAt   int                 `json:"updated_at" gorm:"autoUpdateTime:milli"`
-	Deleted     gorm.DeletedAt      `json:"-"`
+	ProductID     string              `json:"product_id" gorm:"primaryKey"`
+	SellerID      string              `json:"seller_id" validate:"required"`
+	ProductName   string              `json:"product_name" validate:"required"`
+	Price         float64             `json:"price" validate:"required"`
+	Rating        int                 `json:"rating"`
+	Image         pq.StringArray      `json:"image" gorm:"type:text[]"`
+	Description   string              `json:"description" validate:"required"`
+	Stock         int                 `json:"stock" validate:"required"`
+	Variations    []ProductVariations `json:"variations" gorm:"foreignkey:ProductID"`
+	Category      pq.StringArray      `json:"categories" gorm:"type:text[]"`
+	CheckoutID    string              `json:"checkout_id"`
+	CreatedAt     int                 `json:"created_at" gorm:"autoCreateTime:milli"`
+	UpdatedAt     int                 `json:"updated_at" gorm:"autoUpdateTime:milli"`
+	Discount      int                 `json:"discount"`
+	DiscountPrice int                 `json:"discount_price"`
+	Deleted       gorm.DeletedAt      `json:"-"`
 }
 type JSONProduct struct {
 	ProductID   string              `json:"product_id"`
