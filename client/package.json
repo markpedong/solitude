@@ -13,7 +13,7 @@
 		"@ant-design/pro-components": "^2.6.49",
 		"@reduxjs/toolkit": "^2.2.1",
 		"@types/qs": "^6.9.12",
-		"antd": "^5.15.1",
+		"antd": "^5.15.2",
 		"classnames": "^2.5.1",
 		"dayjs": "^1.11.10",
 		"framer-motion": "^11.0.8",
