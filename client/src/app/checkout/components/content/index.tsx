@@ -1,47 +1,62 @@
 'use client'
 
+import { InfoItem, getDeliveryInfo } from '@/api'
 import isAuth from '@/components/isAuth'
+import DeliveryInfo from '@/components/reusable/deliveryInfo'
+import Order from '@/components/reusable/order'
 import { useAppSelector } from '@/redux/store'
 import { ArrowRightOutlined, PercentageOutlined, RightOutlined } from '@ant-design/icons'
+import { ModalForm } from '@ant-design/pro-components'
 import { Divider, Input, Radio } from 'antd'
 import classNames from 'classnames'
-import styles from './styles.module.scss'
 import { useEffect, useState } from 'react'
-import { CartItem, InfoItem, checkCart, getDeliveryInfo } from '@/api'
-import Order from '@/components/reusable/order'
-import { ModalForm } from '@ant-design/pro-components'
-import { capFrstLtr } from '@/constants/helper'
-import DeliveryInfo from '@/components/reusable/deliveryInfo'
+import styles from './styles.module.scss'
+import { motion } from 'framer-motion'
+import { scaleSize } from '@/constants'
 
 const Content = () => {
 	const {
 		userData: { userCart, id }
 	} = useAppSelector(s => s.userData)
 	const [deliveryInfo, setDeliveryInfo] = useState<InfoItem[]>([])
-	const first = deliveryInfo?.[0]
+	const [infoID, setInfoID] = useState('')
 
 	const fetchDeliveryDetails = async () => {
 		const res = await getDeliveryInfo({ user_id: id })
 
 		setDeliveryInfo(res?.data)
+		setInfoID(res?.data.find(q => q?.address_type === 1)?.id)
 	}
 
 	const selectAddress = () => {
 		return (
-			<ModalForm title={<span className={styles.header}>Select Address</span>} width={600} trigger={<RightOutlined />}>
+			<ModalForm
+				title={<span className={styles.header}>Select Address</span>}
+				width={600}
+				trigger={<RightOutlined />}
+				onFinish={async () => true}
+				submitter={{
+					render: props => (
+						<div className={styles.footerBtn}>
+							<motion.span whileTap={scaleSize} className={styles.submitBtn} onClick={() => props?.submit()}>
+								Submit
+							</motion.span>
+						</div>
+					)
+				}}>
 				<div className={styles.addressWrapper}>
 					<div className={styles.addressDetails}>
 						{deliveryInfo?.map(q => (
-							<DeliveryInfo data={q} />
+							<DeliveryInfo key={q?.id} data={q} style={{ backgroundColor: infoID === q?.id ? 'rgba(0, 0, 0, 0.05)' : '' }} />
 						))}
 					</div>
-						<Radio.Group>
-					<div className={styles.selection}>
+					<Radio.Group onChange={e => setInfoID(e.target.value)} value={infoID}>
+						<div className={styles.selection}>
 							{deliveryInfo?.map(q => (
-								<Radio value={q?.id} />
+								<Radio key={q?.id} value={q?.id} />
 							))}
-					</div>
-						</Radio.Group>
+						</div>
+					</Radio.Group>
 				</div>
 			</ModalForm>
 		)
@@ -49,8 +64,6 @@ const Content = () => {
 
 	useEffect(() => {
 		fetchDeliveryDetails()
-
-		console.log(userCart)
 	}, [id])
 
 	return (
@@ -72,7 +85,7 @@ const Content = () => {
 				<div className={styles.orderSummaryContainer}>
 					<div className={styles.header}>Order Summary</div>
 					<div className="flex justify-between items-center">
-						<DeliveryInfo data={first} />
+						<DeliveryInfo data={deliveryInfo?.find(q => q?.id === infoID)} />
 						{selectAddress()}
 					</div>
 					<Divider />
