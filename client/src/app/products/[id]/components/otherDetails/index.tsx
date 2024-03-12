@@ -59,7 +59,7 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 						</div>
 						<div>
 							<span>Followers: </span>
-							<span>{numSuffix(seller?.followers)}</span>
+							<span>{seller?.followers < 1000 ? seller?.followers : numSuffix(seller?.followers)}</span>
 						</div>
 					</div>
 					<div className={styles.otherContainer}>
@@ -73,7 +73,7 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 						</div>
 						<div>
 							<span>Ratings: </span>
-							<span>{numSuffix(seller?.rating)}</span>
+							<span>{seller?.rating < 1000 ? seller?.rating : numSuffix(seller?.rating)}</span>
 						</div>
 						<div>
 							<span>Joined: </span>

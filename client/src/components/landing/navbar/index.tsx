@@ -192,7 +192,8 @@ const Navbar = () => {
 
 	const memoizedCartButton = useMemo(
 		() => (
-			<motion.div whileTap={scaleSize} onClick={() => setCartModal(true)}>
+			<motion.div whileTap={scaleSize} onClick={() => setCartModal(true)} className="relative">
+				<span className={styles.cartLength}>{userCart?.length}</span>
 				<ShoppingCartOutlined className="cursor-pointer" />
 			</motion.div>
 		),

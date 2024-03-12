@@ -95,7 +95,8 @@
 }
 
 .checkout {
-    @apply flex justify-center items-center p-2 rounded-full mb-5 gap-3;
+    @apply flex justify-center items-center p-2 rounded-full mb-5 gap-3 cursor-pointer;
+    user-select: none;
     font-size: toRem(14);
     background-color: var(--color-primary);
     color: var(--white-color);
@@ -137,6 +138,17 @@
         @apply px-5 py-2 rounded-md cursor-pointer;
         background-color: var(--color-primary);
         color: var(--white-color);
+        font-family: "Satoshi";
+    }
+}
+
+.paymentMethod{
+    @apply flex flex-col gap-3;
+
+    span:nth-child(1) {
+        font-weight: 400;
+        color: var(--color-secondary);
+        font-size: toRem(12);
         font-family: "Satoshi";
     }
 }

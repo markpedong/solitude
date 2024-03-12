@@ -1,6 +1,6 @@
 'use client'
 
-import { InfoItem, getDeliveryInfo } from '@/api'
+import { InfoItem, checkout, getDeliveryInfo } from '@/api'
 import isAuth from '@/components/isAuth'
 import DeliveryInfo from '@/components/reusable/deliveryInfo'
 import Order from '@/components/reusable/order'
@@ -13,13 +13,17 @@ import { useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { motion } from 'framer-motion'
 import { scaleSize } from '@/constants'
+import { messageHelper } from '@/constants/antd'
+import { useRouter } from 'next/navigation'
 
 const Content = () => {
+	const router = useRouter()
 	const {
 		userData: { userCart, id }
 	} = useAppSelector(s => s.userData)
 	const [deliveryInfo, setDeliveryInfo] = useState<InfoItem[]>([])
 	const [infoID, setInfoID] = useState('')
+	const [paymentMethod, setPaymentMethod] = useState(1)
 
 	const fetchDeliveryDetails = async () => {
 		const res = await getDeliveryInfo({ user_id: id })
@@ -62,6 +66,16 @@ const Content = () => {
 		)
 	}
 
+	const checkoutItems = async () => {
+		const res = await checkout({})
+		if (!res?.success){
+			messageHelper(res)
+			return
+		}
+
+		router.push("/account")
+	}
+
 	useEffect(() => {
 		fetchDeliveryDetails()
 	}, [id])
@@ -89,6 +103,15 @@ const Content = () => {
 						{selectAddress()}
 					</div>
 					<Divider />
+					<div className={classNames(styles.paymentMethod)}>
+						<span>Payment Method</span>
+						<Radio.Group value={paymentMethod} onChange={(e) => setPaymentMethod(e?.target.value)}>
+							<Radio value={1}>COD</Radio>
+							<Radio value={2}>Bank Transfer</Radio>
+							<Radio value={3}>GCash</Radio>
+						</Radio.Group>
+					</div>
+					<Divider />
 					<div className={styles.subContent}>
 						<span>Subtotal</span>
 						<span>₱{userCart?.reduce((acc, curr) => acc + curr.price, 0)}</span>
@@ -110,9 +133,9 @@ const Content = () => {
 						<Input placeholder="Add promo Code" prefix={<PercentageOutlined />} />
 						<div>Apply </div>
 					</div>
-					<div className={styles.checkout}>
+					<motion.div whileTap={scaleSize} className={styles.checkout} onClick={checkoutItems}>
 						Checkout <ArrowRightOutlined />
-					</div>
+					</motion.div>
 				</div>
 			</div>
 		</div>

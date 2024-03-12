@@ -275,3 +275,11 @@
         @apply cursor-pointer;
     }
 }
+
+.cartLength{
+    @apply absolute bottom-4 left-3 h-[1.2rem] w-[1.2rem] flex justify-center items-center rounded-full;
+    background-color: var(--color-primary);
+    color: var(--white-color);
+    font-size: toRem(10);
+    line-height: toRem(10);
+}
