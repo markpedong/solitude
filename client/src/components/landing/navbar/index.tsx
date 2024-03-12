@@ -171,7 +171,7 @@ const Navbar = () => {
 										setCartModal(false)
 									}}
 								>
-									Submit
+									Checkout
 								</motion.div>
 							</div>
 						)}
@@ -254,7 +254,7 @@ const Navbar = () => {
 					<Input className={styles.input} prefix={<SearchOutlined />} placeholder="Filled" variant="filled" />
 					<div className={styles.userContainer}>
 						<SearchOutlined className={styles.smallInput} />
-						{isLoggedIn && userCart?.length > 0 && memoizedCartButton}
+						{isLoggedIn && userCart?.length > 0 && !pathname.includes("/checkout") && memoizedCartButton}
 						{isLoggedIn ? (
 							<Dropdown menu={{ items }} placement="bottom" trigger={['click']}>
 								<UserOutlined onClick={e => e.preventDefault()} />

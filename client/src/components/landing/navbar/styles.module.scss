@@ -250,20 +250,22 @@
 
 .checkoutBtn {
     @apply px-[1rem] py-[0.5rem] rounded-md;
-    font-size: toRem(15);
+    font-size: toRem(12);
+    font-weight: 500;
     background-color: var(--color-primary);
     color: var(--white-color);
     font-family: "Satoshi";
-    letter-spacing: toRem(1);
+    letter-spacing: toRem(0.4);
 }
 
 .cancelBtn {
     @apply px-[1rem] py-[0.5rem] rounded-md;
-    font-size: toRem(15);
+    font-size: toRem(12);
+    font-weight: 500;
     color: var(--color-primary);
     background-color: var(--white-color);
     font-family: "Satoshi";
-    letter-spacing: toRem(1);
+    letter-spacing: toRem(0.4);
 }
 
 .footerBtn {

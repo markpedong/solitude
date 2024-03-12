@@ -20,9 +20,6 @@
     grid-template-columns: 1.4fr 1fr;
 }
 
-
-.addressWrapper {}
-
 .orderSummaryContainer,
 .cartContainer {
     @apply p-5 rounded-3xl;
@@ -111,4 +108,26 @@
     line-height: toRem(20);
     font-weight: 700;
     color: var(--color-primary);
+}
+
+.addressWrapper {
+    @apply flex justify-between;
+
+    .addressDetails{
+        @apply flex-1 pr-3;
+    }
+    
+    .addressDetails, .selection {
+        @apply flex flex-col justify-around h-full gap-3;
+
+        div {
+            @apply p-1 rounded-md;
+        }
+
+        > div:nth-child(odd) {
+            background-color: rgba(0, 0, 0, 0.05) !important;
+        }
+    }
+
+
 }

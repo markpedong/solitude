@@ -37,7 +37,7 @@ const Account: FC<Props> = () => {
 	return (
 		<>
 			<Flex className={styles.profileHeader} vertical gap={5} justify="center">
-				<span className={styles.nameHeader}>Welcome back, {userData?.first_name || sellerData?.seller_name}</span>
+				<span>Welcome back, {userData?.first_name || sellerData?.seller_name}</span>
 				<span className={jost.className}>{userData?.id ? 'Enjoy shopping with ease and happiness.' : 'Sell your products with ease and happiness!'}</span>
 			</Flex>
 			<div className={styles.tabsContainer}>

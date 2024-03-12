@@ -1,0 +1,30 @@
+@import '@/styles/_helpers.scss';
+
+.detailsContainer {
+    @apply flex-1 flex flex-col;
+
+    div {
+        font-size: toRem(11);
+        font-family: "Satoshi";
+    }
+    div:nth-child(1) {
+        font-weight: 600;
+        font-size: toRem(14);
+    }
+
+    div:nth-child(4) {
+        @apply flex gap-[0.5rem] pt-2;
+
+        >* {
+            @apply px-[1rem] py-[0.2rem] rounded-sm;
+            background-color: var(--bg-secondary);
+            color: var(--color-primary);
+            font-weight: 500;
+        }
+    }
+}
+
+.activeAddress {
+    background-color: var(--color-primary) !important;
+    color: var(--white-color) !important;
+}

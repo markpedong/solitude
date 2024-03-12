@@ -3,14 +3,15 @@
 import isAuth from '@/components/isAuth'
 import { useAppSelector } from '@/redux/store'
 import { ArrowRightOutlined, PercentageOutlined, RightOutlined } from '@ant-design/icons'
-import { Divider, Input } from 'antd'
+import { Divider, Input, Radio } from 'antd'
 import classNames from 'classnames'
 import styles from './styles.module.scss'
 import { useEffect, useState } from 'react'
 import { CartItem, InfoItem, checkCart, getDeliveryInfo } from '@/api'
 import Order from '@/components/reusable/order'
 import { ModalForm } from '@ant-design/pro-components'
-import Address from '@/app/account/components/address'
+import { capFrstLtr } from '@/constants/helper'
+import DeliveryInfo from '@/components/reusable/deliveryInfo'
 
 const Content = () => {
 	const {
@@ -18,6 +19,7 @@ const Content = () => {
 	} = useAppSelector(s => s.userData)
 	const [deliveryInfo, setDeliveryInfo] = useState<InfoItem[]>([])
 	const first = deliveryInfo?.[0]
+
 	const fetchDeliveryDetails = async () => {
 		const res = await getDeliveryInfo({ user_id: id })
 
@@ -25,11 +27,30 @@ const Content = () => {
 	}
 
 	const selectAddress = () => {
-		return <ModalForm trigger={<span>test</span>}></ModalForm>
+		return (
+			<ModalForm title={<span className={styles.header}>Select Address</span>} width={600} trigger={<RightOutlined />}>
+				<div className={styles.addressWrapper}>
+					<div className={styles.addressDetails}>
+						{deliveryInfo?.map(q => (
+							<DeliveryInfo data={q} />
+						))}
+					</div>
+						<Radio.Group>
+					<div className={styles.selection}>
+							{deliveryInfo?.map(q => (
+								<Radio value={q?.id} />
+							))}
+					</div>
+						</Radio.Group>
+				</div>
+			</ModalForm>
+		)
 	}
 
 	useEffect(() => {
 		fetchDeliveryDetails()
+
+		console.log(userCart)
 	}, [id])
 
 	return (
@@ -50,20 +71,23 @@ const Content = () => {
 				</div>
 				<div className={styles.orderSummaryContainer}>
 					<div className={styles.header}>Order Summary</div>
-					<div className={styles.addressWrapper}>{first?.first_name}</div>
+					<div className="flex justify-between items-center">
+						<DeliveryInfo data={first} />
+						{selectAddress()}
+					</div>
 					<Divider />
 					<div className={styles.subContent}>
 						<span>Subtotal</span>
 						<span>₱{userCart?.reduce((acc, curr) => acc + curr.price, 0)}</span>
 					</div>
-					<div className={classNames(styles.subContent, styles.discount)}>
+					{/* <div className={classNames(styles.subContent, styles.discount)}>
 						<span>Discount (-20%)</span>
 						<span>- $113</span>
 					</div>
 					<div className={styles.subContent}>
 						<span>Delivery Fee</span>
 						<span>$15</span>
-					</div>
+					</div> */}
 					<Divider />
 					<div className={classNames(styles.subContent, styles.total)}>
 						<span>Total</span>

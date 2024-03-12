@@ -1,10 +1,9 @@
 import React from 'react'
 import Account from './components'
-import styles from './styles.module.scss'
 
 const Page = () => {
 	return (
-		<div className={styles.mainWrapper}>
+		<div className="max-w-6xl mx-auto my-10 px-5">
 			<Account />
 		</div>
 	)

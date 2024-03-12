@@ -8,6 +8,7 @@ import { useAppSelector } from '@/redux/store'
 import { REQUIRED, afterModalformFinish } from '@/constants/helper'
 import { InfoItem, addDeliveryInfo, deleteDeliveryInfo, getDeliveryInfo } from '@/api'
 import { messageHelper } from '@/constants/antd'
+import DeliveryInfo from '@/components/reusable/deliveryInfo'
 
 const Address: FC = () => {
 	const { userData } = useAppSelector(s => s.userData)
@@ -112,22 +113,7 @@ const Address: FC = () => {
 			{renderAddEditInfo('ADD')}
 			{info.map(q => (
 				<div className={styles.addressContainer} key={q?.id}>
-					<div className={styles.detailsContainer}>
-						<div>
-							<span>{q?.first_name}</span> | <span>+{q?.phone}</span>
-						</div>
-						<div>
-							{q?.house}, {q?.street}
-						</div>
-						<div>
-							{q?.city}, {q?.pin_code}
-						</div>
-						<div>
-							<span className={q.address_type === 1 && styles.activeAddress}>Default</span>
-							<span className={q.address_type === 2 && styles.activeAddress}>Pickup Address</span>
-							<span className={q.address_type === 3 && styles.activeAddress}>Return Address</span>
-						</div>
-					</div>
+					<DeliveryInfo data={q} />
 					<div className={styles.addressOperators}>
 						{renderAddEditInfo('EDIT', q)}
 						{renderDeleteInfo(q)}
