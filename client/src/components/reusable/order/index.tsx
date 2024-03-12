@@ -50,7 +50,9 @@ const Order: FC<Props> = ({ divider = true, data }) => {
 					</div>
 					<span className={styles.qty}>Quantity: {data?.quantity}</span>
 					<div className={styles.price}>
-						<span>₱{data?.price}</span>
+						{!!!data?.discount_price ? <span>₱{data?.price}</span> : <span>₱{data?.discount_price}</span>}
+						{!!data?.discount_price && <span>₱{data?.price}</span>}
+						{!!data?.discount && <span>-{data?.discount}%</span>}
 						{/* <div className={styles.addItemContainer}>
 							<LuMinus />
 							<span>1</span>

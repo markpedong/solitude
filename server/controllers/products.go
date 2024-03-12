@@ -88,23 +88,17 @@ func GetAllProducts(ctx *gin.Context) {
 		return
 	}
 
-	type returnedProduct struct {
-		ProductID   string   `json:"product_id"`
-		ProductName string   `json:"product_name"`
-		Price       float64  `json:"price"`
-		Image       []string `json:"image"`
-		Description string   `json:"description"`
-		Rating      int      `json:"rating"`
-	}
-	products := make([]returnedProduct, len(productModels))
+	products := make([]models.JSONProduct, len(productModels))
 	for i, productModel := range productModels {
-		products[i] = returnedProduct{
-			ProductID:   productModel.ProductID,
-			ProductName: productModel.ProductName,
-			Price:       productModel.Price,
-			Description: productModel.Description,
-			Image:       []string(productModel.Image),
-			Rating:      productModel.Rating,
+		products[i] = models.JSONProduct{
+			ProductID:     productModel.ProductID,
+			ProductName:   productModel.ProductName,
+			Price:         productModel.Price,
+			Description:   productModel.Description,
+			Image:         []string(productModel.Image),
+			Rating:        productModel.Rating,
+			Discount:      productModel.Discount,
+			DiscountPrice: productModel.DiscountPrice,
 		}
 		if len(products[i].Image) > 1 {
 			products[i].Image = []string{products[i].Image[0]}

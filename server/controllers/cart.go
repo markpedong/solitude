@@ -127,14 +127,16 @@ func GetItemsFromCart(ctx *gin.Context) {
 		// product.Variations = variations
 		// product.CheckoutID = cart.ID
 		productRes := models.JSONProduct{
-			ProductID:   product.ProductID,
-			SellerID:    product.SellerID,
-			ProductName: product.ProductName,
-			Price:       product.Price * float64(cart.Quantity),
-			Image:       product.Image,
-			Variations:  variations,
-			CheckoutID:  cart.ID,
-			Quantity:    cart.Quantity,
+			ProductID:     product.ProductID,
+			SellerID:      product.SellerID,
+			ProductName:   product.ProductName,
+			Price:         product.Price * float64(cart.Quantity),
+			Image:         product.Image,
+			Variations:    variations,
+			CheckoutID:    cart.ID,
+			Quantity:      cart.Quantity,
+			Discount:      product.Discount,
+			DiscountPrice: product.DiscountPrice,
 		}
 		productsWithVariations = append(productsWithVariations, productRes)
 	}

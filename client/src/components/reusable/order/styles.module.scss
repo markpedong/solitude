@@ -14,8 +14,7 @@
 
     .textContainer {
 
-        .title,
-        .price {
+        .title {
             @apply flex justify-between;
         }
 
@@ -64,6 +63,19 @@
                 @apply flex justify-center items-center gap-5 text-black py-1 px-3 rounded-full;
                 font-size: toRem(10);
                 background-color: #F0EEED;
+            }
+
+            span:nth-child(2) {
+                @apply line-through pl-1;
+                color: var(--color-secondary);
+            }
+
+            span:nth-child(3) {
+                @apply text-red-600 p-1 px-2 ml-2 rounded-full;
+                background-color: #ff33333d;
+                width: toRem(45);
+                height: toRem(20);
+                font-size: toRem(10);
             }
         }
     }

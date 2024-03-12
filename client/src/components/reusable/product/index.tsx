@@ -27,9 +27,9 @@ const Product: FC<Props> = ({ data }) => {
 				</span>
 			</div>
 			<div className={styles.priceContainer}>
-				<span className={styles.price}>₱{data?.price}</span>
-				<span className={styles.price}>₱{data?.price}</span>
-				<span className={styles.price}>-20%</span>
+				{!!!data?.discount_price ? <span className={styles.price}>₱{data?.price}</span> : <span className={styles.price}>₱{data?.discount_price}</span>}
+				{!!data?.discount_price && <span className={styles.price}>₱{data?.price}</span>}
+				{!!data?.discount && <span className={styles.price}>-{data?.discount}%</span>}
 			</div>
 		</div>
 	)

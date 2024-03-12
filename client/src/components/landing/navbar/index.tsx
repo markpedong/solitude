@@ -1,12 +1,12 @@
 'use client'
 
-import { CartItem, checkCart, sellerLogin, sellerSignup, userLogin, userSignup } from '@/api'
+import { sellerLogin, sellerSignup, userLogin, userSignup } from '@/api'
 import Profile from '@/components/profile'
 import { USER_TYPES, scaleSize } from '@/constants'
 import { afterModalformFinish } from '@/constants/helper'
 import { setActiveLoginForm, setDarkMode, setIsBannerHidden, setLoginModalOpen } from '@/redux/features/booleanSlice'
-import { resetUserData, setCart, setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
-import { AppDispatch, useAppDispatch, useAppSelector } from '@/redux/store'
+import { resetUserData, setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
+import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { setLocalStorage } from '@/utils/xLocalStorage'
 import { DownOutlined, MenuOutlined, MoonOutlined, SearchOutlined, ShoppingCartOutlined, SunOutlined, UserOutlined } from '@ant-design/icons'
 import { ActionType, ModalForm, ProFormInstance } from '@ant-design/pro-components'
@@ -255,7 +255,7 @@ const Navbar = () => {
 					<Input className={styles.input} prefix={<SearchOutlined />} placeholder="Filled" variant="filled" />
 					<div className={styles.userContainer}>
 						<SearchOutlined className={styles.smallInput} />
-						{isLoggedIn && userCart?.length > 0 && !pathname.includes("/checkout") && memoizedCartButton}
+						{isLoggedIn && userCart?.length > 0 && !pathname.includes('/checkout') && memoizedCartButton}
 						{isLoggedIn ? (
 							<Dropdown menu={{ items }} placement="bottom" trigger={['click']}>
 								<UserOutlined onClick={e => e.preventDefault()} />

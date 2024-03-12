@@ -4,7 +4,7 @@ import { InfoItem, checkout, getDeliveryInfo } from '@/api'
 import isAuth from '@/components/isAuth'
 import DeliveryInfo from '@/components/reusable/deliveryInfo'
 import Order from '@/components/reusable/order'
-import { useAppSelector } from '@/redux/store'
+import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { ArrowRightOutlined, PercentageOutlined, RightOutlined } from '@ant-design/icons'
 import { ModalForm } from '@ant-design/pro-components'
 import { Divider, Input, Radio } from 'antd'
@@ -15,6 +15,7 @@ import { motion } from 'framer-motion'
 import { scaleSize } from '@/constants'
 import { messageHelper } from '@/constants/antd'
 import { useRouter } from 'next/navigation'
+import { setCart } from '@/redux/features/userSlice'
 
 const Content = () => {
 	const router = useRouter()
@@ -24,12 +25,13 @@ const Content = () => {
 	const [deliveryInfo, setDeliveryInfo] = useState<InfoItem[]>([])
 	const [infoID, setInfoID] = useState('')
 	const [paymentMethod, setPaymentMethod] = useState(1)
+	const dispatch = useAppDispatch()
 
 	const fetchDeliveryDetails = async () => {
 		const res = await getDeliveryInfo({ user_id: id })
 
 		setDeliveryInfo(res?.data)
-		setInfoID(res?.data.find(q => q?.address_type === 1)?.id)
+		setInfoID(res?.data?.[0]?.id)
 	}
 
 	const selectAddress = () => {
@@ -47,7 +49,8 @@ const Content = () => {
 							</motion.span>
 						</div>
 					)
-				}}>
+				}}
+			>
 				<div className={styles.addressWrapper}>
 					<div className={styles.addressDetails}>
 						{deliveryInfo?.map(q => (
@@ -67,56 +70,67 @@ const Content = () => {
 	}
 
 	const checkoutItems = async () => {
-		const res = await checkout({})
-		if (!res?.success){
+		const res = await checkout({
+			checkout_ids: userCart?.map(q => q.checkout_id),
+			delivery_id: infoID,
+			payment_method: paymentMethod
+		})
+		if (!res?.success) {
 			messageHelper(res)
 			return
 		}
 
-		router.push("/account")
+		messageHelper(res)
+		dispatch(setCart([]))
+		router.push('/account')
 	}
 
 	useEffect(() => {
 		fetchDeliveryDetails()
 	}, [id])
 
+	useEffect(() => {
+		!!!userCart?.length && router.push('/products')
+	}, [])
+
 	return (
-		<div className={styles.cartWrapper}>
-			<div className={styles.productCategory}>
-				<span>Home</span>
-				<RightOutlined />
-				<span>Checkout</span>
-			</div>
-			<div className={styles.header}>your cart</div>
-			<div className={styles.mainWrapper}>
-				<div className={styles.cartContainer}>
-					{userCart &&
-						(userCart?.length > 1
-							? userCart.slice(0, -1).map(q => <Order data={q} key={q?.checkout_id} />)
-							: userCart.map(q => <Order data={q} key={q?.checkout_id} divider={false} />))}
-					{userCart?.length > 1 && <Order data={userCart?.findLast(q => q)} divider={false} />}
+		!!userCart?.length && (
+			<div className={styles.cartWrapper}>
+				<div className={styles.productCategory}>
+					<span>Home</span>
+					<RightOutlined />
+					<span>Checkout</span>
 				</div>
-				<div className={styles.orderSummaryContainer}>
-					<div className={styles.header}>Order Summary</div>
-					<div className="flex justify-between items-center">
-						<DeliveryInfo data={deliveryInfo?.find(q => q?.id === infoID)} />
-						{selectAddress()}
+				<div className={styles.header}>your cart</div>
+				<div className={styles.mainWrapper}>
+					<div className={styles.cartContainer}>
+						{userCart &&
+							(userCart?.length > 1
+								? userCart.slice(0, -1).map(q => <Order data={q} key={q?.checkout_id} />)
+								: userCart.map(q => <Order data={q} key={q?.checkout_id} divider={false} />))}
+						{userCart?.length > 1 && <Order data={userCart?.findLast(q => q)} divider={false} />}
 					</div>
-					<Divider />
-					<div className={classNames(styles.paymentMethod)}>
-						<span>Payment Method</span>
-						<Radio.Group value={paymentMethod} onChange={(e) => setPaymentMethod(e?.target.value)}>
-							<Radio value={1}>COD</Radio>
-							<Radio value={2}>Bank Transfer</Radio>
-							<Radio value={3}>GCash</Radio>
-						</Radio.Group>
-					</div>
-					<Divider />
-					<div className={styles.subContent}>
-						<span>Subtotal</span>
-						<span>₱{userCart?.reduce((acc, curr) => acc + curr.price, 0)}</span>
-					</div>
-					{/* <div className={classNames(styles.subContent, styles.discount)}>
+					<div className={styles.orderSummaryContainer}>
+						<div className={styles.header}>Order Summary</div>
+						<div className="flex justify-between items-center">
+							<DeliveryInfo data={deliveryInfo?.find(q => q?.id === infoID)} />
+							{selectAddress()}
+						</div>
+						<Divider />
+						<div className={classNames(styles.paymentMethod)}>
+							<span>Payment Method</span>
+							<Radio.Group value={paymentMethod} onChange={e => setPaymentMethod(e?.target.value)}>
+								<Radio value={1}>COD</Radio>
+								{/* <Radio value={2}>Bank Transfer</Radio>
+							<Radio value={3}>GCash</Radio> */}
+							</Radio.Group>
+						</div>
+						<Divider />
+						<div className={styles.subContent}>
+							<span>Subtotal</span>
+							<span>₱{userCart?.reduce((acc, curr) => acc + curr.price, 0)}</span>
+						</div>
+						{/* <div className={classNames(styles.subContent, styles.discount)}>
 						<span>Discount (-20%)</span>
 						<span>- $113</span>
 					</div>
@@ -124,21 +138,22 @@ const Content = () => {
 						<span>Delivery Fee</span>
 						<span>$15</span>
 					</div> */}
-					<Divider />
-					<div className={classNames(styles.subContent, styles.total)}>
-						<span>Total</span>
-						<span>₱{userCart?.reduce((acc, curr) => acc + curr.price, 0)}</span>
+						<Divider />
+						<div className={classNames(styles.subContent, styles.total)}>
+							<span>Total</span>
+							<span>₱{userCart?.reduce((acc, curr) => acc + curr.price, 0)}</span>
+						</div>
+						<div className={classNames(styles.subContent, styles.promoCode)}>
+							<Input placeholder="Add promo Code" prefix={<PercentageOutlined />} />
+							<div>Apply </div>
+						</div>
+						<motion.div whileTap={scaleSize} className={styles.checkout} onClick={checkoutItems}>
+							Checkout <ArrowRightOutlined />
+						</motion.div>
 					</div>
-					<div className={classNames(styles.subContent, styles.promoCode)}>
-						<Input placeholder="Add promo Code" prefix={<PercentageOutlined />} />
-						<div>Apply </div>
-					</div>
-					<motion.div whileTap={scaleSize} className={styles.checkout} onClick={checkoutItems}>
-						Checkout <ArrowRightOutlined />
-					</motion.div>
 				</div>
 			</div>
-		</div>
+		)
 	)
 }
 

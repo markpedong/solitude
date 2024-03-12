@@ -37,6 +37,7 @@ export type TProduct = {
 	variations: TVariations[]
 	rating: number
 	discount: number
+	discount_price: number
 }
 
 export const getProducts = params => post<TProduct[]>('/users/products', params)
@@ -106,6 +107,8 @@ export type CartItem = {
 	product_id: string
 	product_name: string
 	seller_id: string
+	discount: number
+	discount_price: number
 	variations: {
 		id: string
 		product_id: string
@@ -143,4 +146,4 @@ export const getDeliveryInfo = params => post<InfoItem[]>('/api/getDeliveryInfo'
 export const deleteDeliveryInfo = params => post<InfoItem[]>('/api/deleteDeliveryInfo', params)
 
 // /api/checkout
-export const checkout = params => post("/api/checkout", params)
+export const checkout = params => post('/api/checkout', params)

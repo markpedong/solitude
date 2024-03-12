@@ -42,14 +42,18 @@ type Product struct {
 	Deleted       gorm.DeletedAt      `json:"-"`
 }
 type JSONProduct struct {
-	ProductID   string              `json:"product_id"`
-	SellerID    string              `json:"seller_id" `
-	ProductName string              `json:"product_name" `
-	Price       float64             `json:"price" `
-	Image       pq.StringArray      `json:"image" `
-	Variations  []ProductVariations `json:"variations" `
-	CheckoutID  string              `json:"checkout_id"`
-	Quantity    int                 `json:"quantity"`
+	ProductID     string              `json:"product_id"`
+	SellerID      string              `json:"seller_id" `
+	ProductName   string              `json:"product_name" `
+	Price         float64             `json:"price" `
+	Image         pq.StringArray      `json:"image" `
+	Variations    []ProductVariations `json:"variations" `
+	CheckoutID    string              `json:"checkout_id"`
+	Quantity      int                 `json:"quantity"`
+	Discount      int                 `json:"discount"`
+	DiscountPrice int                 `json:"discount_price"`
+	Rating        int                 `json:"rating"`
+	Description   string              `json:"description" validate:"required"`
 }
 
 type DeliveryInfoPayload struct {

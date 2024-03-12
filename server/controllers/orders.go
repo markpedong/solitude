@@ -14,7 +14,6 @@ func CheckoutOrder(ctx *gin.Context) {
 		CheckoutIDs   []string `json:"checkout_ids" validate:"required"`
 		DeliveryID    string   `json:"delivery_id" vaidate:"required"`
 		PaymentMethod int      `json:"payment_method" validate:"required"`
-		Discount      *int     `json:"discount"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
@@ -54,7 +53,7 @@ func CheckoutOrder(ctx *gin.Context) {
 			Price:           int(currProd.Price * float64(v.Quantity)),
 			SelectedAddress: body.DeliveryID,
 			PaymentMethod:   body.PaymentMethod,
-			Discount:        body.Discount,
+			Discount:        &currProd.Discount,
 			Quantity:        v.Quantity,
 		}
 
@@ -119,12 +118,14 @@ func GetOrders(ctx *gin.Context) {
 		// product.Variations = variations
 		// product.CheckoutID = cart.ID
 		productRes := models.JSONProduct{
-			ProductID:   product.ProductID,
-			SellerID:    product.SellerID,
-			ProductName: product.ProductName,
-			Price:       product.Price,
-			Image:       product.Image,
-			Variations:  variations,
+			ProductID:     product.ProductID,
+			SellerID:      product.SellerID,
+			ProductName:   product.ProductName,
+			Price:         product.Price,
+			Image:         product.Image,
+			Variations:    variations,
+			Discount:      product.Discount,
+			DiscountPrice: product.DiscountPrice,
 		}
 		productsWithVariations = append(productsWithVariations, productRes)
 	}

@@ -57,7 +57,8 @@ export const ReviewComp: FC<ReviewProps> = ({ product }) => {
 				<CheckOutlined />
 			</div>
 			<span className={styles.comment}>
-				"I'm blown away by the quality and style of the clothes I received from Shop.co. From casual wear to elegant dresses, every piece I've bought has exceeded my expectations.”
+				"I'm blown away by the quality and style of the clothes I received from Shop.co. From casual wear to elegant dresses, every piece I've bought has exceeded my
+				expectations.”
 			</span>
 		</div>
 	)

@@ -118,9 +118,9 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 					<span className={styles.productTitle}>{data?.product_name}</span>
 					{memoizedRateContainer}
 					<div className={styles.priceContainer}>
-						<span>₱{data?.price}</span>
-						<span>₱{data?.price}</span>
-						{data?.discount && <span>-40%</span>}
+						{!!!data?.discount_price ? <span>₱{data?.price}</span> : <span>₱{data?.discount_price}</span>}
+						{!!data?.discount_price && <span>₱{data?.price}</span>}
+						{!!data?.discount && <span>-{data?.discount}%</span>}
 					</div>
 					<div className={styles.variationWrapper}>
 						<Divider />
