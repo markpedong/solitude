@@ -6,39 +6,47 @@
 
     img {
         @apply p-[1rem] w-auto rounded-md;
-        height: toRem(100);
-        background-color: var(--bg-secondary);
+        height: toRem(80);
+        background-color: white;
+        border: toRem(1) solid rgba(0, 0, 0, 0.2)
     }
 }
 
 .orderDescription {
     @apply flex flex-col flex-1;
 
-    span:nth-child(1) {
+    .orderName {
         font-weight: 600;
     }
 }
 
-.priceContainer {
-    @apply flex items-center gap-2 pt-2;
+.extraWrapper {
+    @apply flex flex-col items-end gap-1;
 
-    font-size: toRem(16);
+    font-size: toRem(12);
     color: var(--color-primary);
 
-    :nth-child(1) {
-        font-weight: 700;
+    .status {
+        font-weight: 600;
+        color: orange
     }
 
-    :nth-child(2) {
-        @apply opacity-50 line-through;
+    .price {
+        @apply pl-1;
         font-weight: 700;
     }
+}
 
-    :nth-child(3) {
-        @apply text-red-600 flex justify-center items-center rounded-full;
-        background-color: #ff33333d;
-        width: toRem(45);
-        height: toRem(20);
-        font-size: toRem(10);
+.orderHeader {
+    span:nth-child(1) {
+        @apply flex items-center gap-2;
+        font-size: toRem(14);
+        font-weight: 500;
     }
+}
+
+.rateBtn {
+    @apply p-1 px-2 rounded-md;
+    background-color: var(--color-primary);
+    color: var(--white-color);
 }

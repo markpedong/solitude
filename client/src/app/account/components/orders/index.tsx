@@ -6,6 +6,7 @@ import { useAppSelector } from '@/redux/store'
 import { OrderItem, getOrders } from '@/api'
 import { messageHelper } from '@/constants/antd'
 import Order from '@/components/reusable/order'
+import styles from '../styles.module.scss'
 
 type Props = {}
 
@@ -26,7 +27,7 @@ const Orders: FC<Props> = () => {
 	}, [id])
 
 	return (
-		<div className="flex flex-col w-full">
+		<div className={styles.orderWrapper}>
 			{orders?.map(q => (
 				<Order data={q} key={q?.product_id} />
 			))}
