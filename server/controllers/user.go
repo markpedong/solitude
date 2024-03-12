@@ -21,7 +21,7 @@ func GetUserData(ctx *gin.Context) {
 	}
 
 	var foundUser models.User
-	if err := database.DB.Where("id = ?", body.ID).First(&foundUser).Error; err != nil {
+	if err := database.DB.Unscoped().Where("id = ?", body.ID).First(&foundUser).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "user not found")
 		return
 	}
@@ -50,7 +50,7 @@ func UserUpdate(ctx *gin.Context) {
 		return
 	}
 	var existingUser models.User
-	if err := database.DB.Model(&existingUser).Where("id = ?", body.ID).First(&existingUser).Error; err != nil {
+	if err := database.DB.Unscoped().Model(&existingUser).Where("id = ?", body.ID).First(&existingUser).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -68,7 +68,7 @@ func UserUpdate(ctx *gin.Context) {
 		return
 	}
 
-	if err := database.DB.Model(&models.User{}).Where("id = ?", body.ID).Updates(map[string]interface{}{
+	if err := database.DB.Unscoped().Model(&models.User{}).Where("id = ?", body.ID).Updates(map[string]interface{}{
 		"first_name": body.FirstName,
 		"last_name":  body.LastName,
 		"username":   body.Username,
@@ -120,7 +120,7 @@ func UserSignup(ctx *gin.Context) {
 		Birthday:  body.Birthday,
 	}
 
-	if err := database.DB.Create(&newUser).Error; err != nil {
+	if err := database.DB.Unscoped().Create(&newUser).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "Failed to create user")
 		return
 	}
@@ -145,7 +145,7 @@ func UserLogin(ctx *gin.Context) {
 	}
 
 	var existingUser models.User
-	if err := database.DB.First(&existingUser, "email = ?", body.Email).Error; err != nil {
+	if err := database.DB.Unscoped().First(&existingUser, "email = ?", body.Email).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}

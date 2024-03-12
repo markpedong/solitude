@@ -3,7 +3,7 @@
 import { InfoItem, checkout, getDeliveryInfo } from '@/api'
 import isAuth from '@/components/isAuth'
 import DeliveryInfo from '@/components/reusable/deliveryInfo'
-import Order from '@/components/reusable/order'
+import Cart from '@/components/reusable/cart'
 import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { ArrowRightOutlined, PercentageOutlined, RightOutlined } from '@ant-design/icons'
 import { ModalForm } from '@ant-design/pro-components'
@@ -106,9 +106,9 @@ const Content = () => {
 					<div className={styles.cartContainer}>
 						{userCart &&
 							(userCart?.length > 1
-								? userCart.slice(0, -1).map(q => <Order data={q} key={q?.checkout_id} />)
-								: userCart.map(q => <Order data={q} key={q?.checkout_id} divider={false} />))}
-						{userCart?.length > 1 && <Order data={userCart?.findLast(q => q)} divider={false} />}
+								? userCart.slice(0, -1).map(q => <Cart data={q} key={q?.checkout_id} />)
+								: userCart.map(q => <Cart data={q} key={q?.checkout_id} divider={false} />))}
+						{userCart?.length > 1 && <Cart data={userCart?.findLast(q => q)} divider={false} />}
 					</div>
 					<div className={styles.orderSummaryContainer}>
 						<div className={styles.header}>Order Summary</div>

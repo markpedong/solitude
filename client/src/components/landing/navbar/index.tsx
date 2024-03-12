@@ -1,11 +1,11 @@
 'use client'
 
-import { sellerLogin, sellerSignup, userLogin, userSignup } from '@/api'
+import { checkCart, sellerLogin, sellerSignup, userLogin, userSignup } from '@/api'
 import Profile from '@/components/profile'
 import { USER_TYPES, scaleSize } from '@/constants'
 import { afterModalformFinish } from '@/constants/helper'
 import { setActiveLoginForm, setDarkMode, setIsBannerHidden, setLoginModalOpen } from '@/redux/features/booleanSlice'
-import { resetUserData, setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
+import { resetUserData, setCart, setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { setLocalStorage } from '@/utils/xLocalStorage'
 import { DownOutlined, MenuOutlined, MoonOutlined, SearchOutlined, ShoppingCartOutlined, SunOutlined, UserOutlined } from '@ant-design/icons'
@@ -19,7 +19,7 @@ import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import LoginModal from './loginModal'
 import styles from './styles.module.scss'
-import Order from '@/components/reusable/order'
+import Cart from '@/components/reusable/cart'
 import { Jost } from 'next/font/google'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -41,7 +41,7 @@ const Navbar = () => {
 	const { isLoggedIn, type } = useAppSelector(state => state.userData)
 	const { activeLoginForm, darkMode, isLoginModalOpen } = useAppSelector(state => state.boolean)
 	const {
-		userData: { userCart }
+		userData: { userCart, id }
 	} = useAppSelector(s => s.userData)
 	const [open, setOpen] = useState(false)
 	const [cartModal, setCartModal] = useState(false)
@@ -144,10 +144,16 @@ const Navbar = () => {
 
 	const renderCart = () => (
 		<ModalForm
-			// when adding to cart, it automatically pops up if length is less than 1 fix it.
 			open={!!!userCart?.length ? false : cartModal}
 			modalProps={{
 				closeIcon: false
+			}}
+			onOpenChange={async visible => {
+				if (visible) {
+					const res = await checkCart({ user_id: id })
+
+					dispatch(setCart(res?.data ?? []))
+				}
 			}}
 			submitter={{
 				render: props => (
@@ -183,9 +189,9 @@ const Navbar = () => {
 			<div className={styles.orderContainer}>
 				{userCart &&
 					(userCart?.length > 1
-						? userCart.slice(0, -1).map(q => <Order data={q} key={q?.checkout_id} />)
-						: userCart.map(q => <Order data={q} key={q?.checkout_id} divider={false} />))}
-				{userCart?.length > 1 && <Order data={userCart?.findLast(q => q)} divider={false} />}
+						? userCart.slice(0, -1).map(q => <Cart data={q} key={q?.checkout_id} />)
+						: userCart.map(q => <Cart data={q} key={q?.checkout_id} divider={false} />))}
+				{userCart?.length > 1 && <Cart data={userCart?.findLast(q => q)} divider={false} />}
 			</div>
 		</ModalForm>
 	)

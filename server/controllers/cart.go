@@ -21,19 +21,19 @@ func AddToCart(ctx *gin.Context) {
 	}
 
 	var foundUser models.User
-	if err := database.DB.First(&foundUser, "id = ?", cartItem.UserID).Error; err != nil {
+	if err := database.DB.Unscoped().First(&foundUser, "id = ?", cartItem.UserID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, err.Error())
 		return
 	}
 
 	var selectedProduct models.Product
-	if err := database.DB.Preload("Variations.Value").First(&selectedProduct, "product_id = ?", cartItem.ProductID).Error; err != nil {
+	if err := database.DB.Unscoped().Preload("Variations.Value").First(&selectedProduct, "product_id = ?", cartItem.ProductID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "product not found")
 		return
 	}
 
 	var selectedVariations []models.VariationValue
-	if err := database.DB.
+	if err := database.DB.Unscoped().
 		Where("id IN ?", cartItem.VariationIDs).
 		Find(&selectedVariations).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "variation not found")
@@ -48,7 +48,7 @@ func AddToCart(ctx *gin.Context) {
 		Quantity:     cartItem.Quantity,
 	}
 
-	if err := database.DB.Create(&newCartItem).Error; err != nil {
+	if err := database.DB.Unscoped().Create(&newCartItem).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -66,12 +66,12 @@ func RemoveItemFromCart(ctx *gin.Context) {
 	}
 
 	var userCart []models.Carts
-	if err := database.DB.Find(&userCart, "user_id = ? ", body.UserID).Error; err != nil {
+	if err := database.DB.Unscoped().Find(&userCart, "user_id = ? ", body.UserID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	if err := database.DB.Delete(&models.Carts{}, "id = ?", body.CheckoutID).Error; err != nil {
+	if err := database.DB.Unscoped().Delete(&models.Carts{}, "id = ?", body.CheckoutID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -88,7 +88,7 @@ func GetItemsFromCart(ctx *gin.Context) {
 	}
 
 	var userCart []models.Carts
-	if err := database.DB.Order("created_at DESC").Find(&userCart, "user_id = ? ", body.UserID).Error; err != nil {
+	if err := database.DB.Unscoped().Order("created_at DESC").Find(&userCart, "user_id = ? ", body.UserID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -96,13 +96,13 @@ func GetItemsFromCart(ctx *gin.Context) {
 	var productsWithVariations []models.JSONProduct
 	for _, cart := range userCart {
 		var product models.Product
-		if err := database.DB.Find(&product, "product_id = ?", cart.ProductID).Error; err != nil {
+		if err := database.DB.Unscoped().Find(&product, "product_id = ?", cart.ProductID).Error; err != nil {
 			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 			return
 		}
 
 		var variations []models.ProductVariations
-		if err := database.DB.Find(&variations, "product_id = ?", product.ProductID).Error; err != nil {
+		if err := database.DB.Unscoped().Find(&variations, "product_id = ?", product.ProductID).Error; err != nil {
 			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 			return
 		}
@@ -111,7 +111,7 @@ func GetItemsFromCart(ctx *gin.Context) {
 			var values []models.VariationValue
 			for _, variationID := range cart.VariationIDs {
 				var value models.VariationValue
-				if err := database.DB.Find(&value, "id = ? AND variation_id = ?", variationID, variation.ID).Error; err != nil {
+				if err := database.DB.Unscoped().Find(&value, "id = ? AND variation_id = ?", variationID, variation.ID).Error; err != nil {
 					helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 					return
 				}

@@ -1,25 +1,35 @@
 'use client'
 
 import Image from 'next/image'
-import { FC } from 'react'
-import styles from './styles.module.scss'
+import { FC, useEffect, useState } from 'react'
+import { useAppSelector } from '@/redux/store'
+import { OrderItem, getOrders } from '@/api'
+import { messageHelper } from '@/constants/antd'
+import Order from '@/components/reusable/order'
 
 type Props = {}
 
 const Orders: FC<Props> = () => {
+	const {
+		userData: { id }
+	} = useAppSelector(s => s.userData)
+	const [orders, setOrders] = useState<OrderItem[]>([])
+
+	const fetchOrders = async () => {
+		const res = await getOrders({ id })
+
+		setOrders(res?.data ?? [])
+	}
+
+	useEffect(() => {
+		fetchOrders()
+	}, [id])
+
 	return (
-		<div className={styles.orderWrapper}>
-			{/* {new Array(5).fill('').map(() => (
-				<div className={styles.orderContainer}>
-					<Image src="/assets/pen.png" alt="order" width={1000} height={1000} />
-					<div className={styles.orderDescription}>
-						<span>Cat Litter Box With Scoop Kitten Litter Box Cat Toilet</span>
-						<span>Variation: Green, L: {`[48X40X14CM]`}</span>
-						<span>x1</span>
-					</div>
-					<span>₱459</span>
-				</div>
-			))} */}
+		<div className="flex flex-col w-full">
+			{orders?.map(q => (
+				<Order data={q} key={q?.product_id} />
+			))}
 		</div>
 	)
 }

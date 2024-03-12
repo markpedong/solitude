@@ -147,3 +147,24 @@ export const deleteDeliveryInfo = params => post<InfoItem[]>('/api/deleteDeliver
 
 // /api/checkout
 export const checkout = params => post('/api/checkout', params)
+
+// /api/getOrders
+export type OrderItem = {
+	product_id: string
+	seller_id: string
+	product_name: string
+	price: number
+	image: string[]
+	discount: number
+	discount_price: number
+	rating: number
+	description: string
+	quantity: string
+	variations: {
+		id: string
+		product_id: string
+		label: string
+		value: { value: string }[]
+	}[]
+}
+export const getOrders = params => post<OrderItem[]>('/api/getOrders', params)

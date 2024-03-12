@@ -52,4 +52,5 @@ require (
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/postgres v1.5.4
+	gorm.io/plugin/soft_delete v1.2.1
 )

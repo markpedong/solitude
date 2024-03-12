@@ -10,11 +10,11 @@ type Props = {
 const ProductID = async (props: Props) => {
 	const data = await getProductData({ product_id: props.params.id })
 	const products = await getProducts({})
-	const sellerData = await getSellerData({seller_id: data?.data.seller_id})
+	const sellerData = await getSellerData({ seller_id: data?.data?.seller_id })
 
 	return (
 		<div>
-			<Content data={data?.data} products={products?.data} seller={sellerData?.data}/>
+			<Content data={data?.data} products={products?.data} seller={sellerData?.data} />
 		</div>
 	)
 }
