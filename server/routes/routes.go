@@ -50,6 +50,14 @@ func UserRoutes(r *gin.Engine) {
 		delivery.POST("/delete", controllers.DeleteDeliveryInfo)
 	}
 
+	rating := r.Group("/rating")
+	{
+		rating.POST("/get", controllers.GetProductRating)
+		rating.POST("/update", controllers.UpdateProductRating)
+		rating.POST("/delete", controllers.DeleteProductRating)
+		rating.POST("/add", controllers.AddProductRating)
+	}
+
 	seller := r.Group("/seller")
 	seller.Use(middleware.Authentication)
 	{

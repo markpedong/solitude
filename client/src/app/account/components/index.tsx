@@ -21,18 +21,8 @@ type Props = {
 }
 
 const Account: FC<Props> = () => {
-	const dispatch = useAppDispatch()
 	const { userData, type, sellerData } = useAppSelector(state => state.userData)
 	const seller = type === USER_TYPES.SELLER
-
-	const fetchCart = async () => {
-		const res = await checkCart({ user_id: userData?.id })
-
-		dispatch(setCart(res?.data))
-	}
-	useEffect(() => {
-		fetchCart()
-	}, [])
 
 	return (
 		<>
