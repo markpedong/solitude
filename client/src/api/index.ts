@@ -166,6 +166,8 @@ export type OrderItem = {
 		label: string
 		value: { value: string }[]
 	}[]
+	status: number
+	seller_name: string
 }
 export const getOrders = params => post<OrderItem[]>('/api/getOrders', params)
 

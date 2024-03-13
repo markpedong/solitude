@@ -54,6 +54,8 @@ type JSONProduct struct {
 	DiscountPrice int                 `json:"discount_price"`
 	Rating        int                 `json:"rating"`
 	Description   string              `json:"description" validate:"required"`
+	Status        int                 `json:"status"`
+	SellerName    string              `json:"seller_name"`
 }
 
 type DeliveryInfoPayload struct {
@@ -98,6 +100,7 @@ type Seller struct {
 	CreatedAt  int                   `json:"created_at" gorm:"autoCreateTime:milli"`
 	UpdatedAt  int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DeletedAt  soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
+	Orders     []Orders              `json:"orders" gorm:"foreignKey:SellerID"`
 }
 type JSONSeller struct {
 	SellerID   string `json:"seller_id"`
@@ -151,7 +154,6 @@ type Orders struct {
 	ProductID       string                `json:"product_id"`
 	UserID          string                `json:"user_id"`
 	VariationIDs    pq.StringArray        `json:"variation_ids" gorm:"type:text[]"`
-	OrderedAt       int                   `json:"ordered_at" gorm:"autoCreateTime:milli"`
 	Price           int                   `json:"price"`
 	Discount        *int                  `json:"discount"`
 	PaymentMethod   int                   `json:"payment_method"`
@@ -160,4 +162,7 @@ type Orders struct {
 	UpdatedAt       int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DeletedAt       soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
 	Quantity        int                   `json:"quantity"`
+	Status          int                   `json:"status"`
+	SellerID        string                `json:"seller_id"`
+	SellerName      string                `json:"seller_name"`
 }

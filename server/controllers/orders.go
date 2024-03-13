@@ -44,6 +44,11 @@ func CheckoutOrder(ctx *gin.Context) {
 			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 			return
 		}
+		var sellerData models.Seller
+		if err := database.DB.Find(&sellerData, "seller_id = ?", currProd.SellerID).Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
 
 		newOrder := models.Orders{
 			OrderID:         helpers.NewUUID(),
@@ -55,6 +60,9 @@ func CheckoutOrder(ctx *gin.Context) {
 			PaymentMethod:   body.PaymentMethod,
 			Discount:        &currProd.Discount,
 			Quantity:        v.Quantity,
+			Status:          1,
+			SellerName:      sellerData.SellerName,
+			SellerID:        sellerData.SellerID,
 		}
 
 		currProd.Stock = currProd.Stock - 1
@@ -72,7 +80,7 @@ func CheckoutOrder(ctx *gin.Context) {
 		return
 	}
 
-	helpers.JSONResponse(ctx, "ordered successfully")
+	helpers.JSONResponse(ctx, "ordered successfully", helpers.DataHelper(currOrder))
 }
 
 func GetOrders(ctx *gin.Context) {
@@ -132,6 +140,8 @@ func GetOrders(ctx *gin.Context) {
 			Discount:      product.Discount,
 			DiscountPrice: product.DiscountPrice,
 			Quantity:      cart.Quantity,
+			Status:        cart.Status,
+			SellerName:    cart.SellerName,
 		}
 		productsWithVariations = append(productsWithVariations, productRes)
 	}

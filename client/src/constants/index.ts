@@ -81,3 +81,17 @@ export const ADDRESS_TYPE = [
 	{ label: 'Pickup Address', value: 2 },
 	{ label: 'Return Address', value: 3 }
 ]
+
+export const ORDER_STATUS = {
+	1: "PENDING",
+	2: "PROCESSING",
+	3: "ON DELIVERY",
+	4: "COMPLETED"
+}
+
+export const COLOR_STATUS = {
+	1: "rgba(153, 153, 153, 1)",
+	2: "rgba(251, 142, 41, 1)",
+	3: "rgba(255, 221, 134, 1)",
+	4:"rgba(20, 225, 62, 1)"
+}

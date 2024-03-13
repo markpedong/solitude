@@ -124,7 +124,7 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 					</div>
 					<div className={styles.variationWrapper}>
 						<Divider />
-						{data?.variations.map(q => (
+						{data?.variations?.map(q => (
 							<div key={q.id}>
 								<div className={styles.variationContainer}>
 									<span className={styles.label}>{capFrstLtr(q?.label)}:</span>
