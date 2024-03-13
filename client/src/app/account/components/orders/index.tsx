@@ -29,7 +29,7 @@ const Orders: FC<Props> = () => {
 	return (
 		<div className={styles.orderWrapper}>
 			{orders?.map(q => (
-				<Order data={q} key={q?.product_id} />
+				<Order data={q} key={q?.order_id} />
 			))}
 		</div>
 	)

@@ -81,7 +81,8 @@ const Address: FC = () => {
 					setInfo(info?.data)
 
 					return afterModalformFinish(actionRef, res?.message, res?.success, formRef)
-				}}>
+				}}
+			>
 				<ProFormText colProps={{ span: 12 }} label="First Name" name="first_name" rules={[...REQUIRED]} placeholder="eg: John" />
 				<ProFormText colProps={{ span: 12 }} label="Last Name" name="last_name" rules={[...REQUIRED]} placeholder="eg: Smith" />
 				<ProFormText colProps={{ span: 12 }} label="Phone Number" name="phone" rules={[...REQUIRED]} placeholder="eg: +639798161248" />
@@ -110,7 +111,7 @@ const Address: FC = () => {
 	}, [])
 	return (
 		<div>
-			{renderAddEditInfo('ADD')}
+			{info?.length < 3 && renderAddEditInfo('ADD')}
 			{info.map(q => (
 				<div className={styles.addressContainer} key={q?.id}>
 					<DeliveryInfo data={q} />

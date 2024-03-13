@@ -154,6 +154,7 @@ export const checkout = params => post('/cart/checkout', params)
 // /cart/orders
 export type OrderItem = {
 	product_id: string
+	order_id: number
 	seller_id: string
 	product_name: string
 	price: number
