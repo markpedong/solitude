@@ -168,3 +168,6 @@ export type OrderItem = {
 	}[]
 }
 export const getOrders = params => post<OrderItem[]>('/api/getOrders', params)
+
+// /api/editDeliveryInfo
+export const editDeliveryInfo = params => post('/api/editDeliveryInfo', params)

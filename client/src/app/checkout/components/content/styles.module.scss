@@ -153,3 +153,12 @@
         font-family: "Satoshi";
     }
 }
+
+.addInfoBtn{
+    @apply px-5 py-2 rounded-md cursor-pointer max-w-[7rem];
+    background-color: var(--color-primary);
+    color: var(--white-color);
+    font-family: "Satoshi";
+    font-size: toRem(12);
+    user-select: none;
+}

@@ -53,12 +53,12 @@ func DataHelper(data interface{}) map[string]interface{} {
 
 func ExistingFields(field string, value interface{}) bool {
 	var user models.User
-	if err := database.DB.Unscoped().Where(field+" = ?", value).First(&user).Error; err == nil {
+	if err := database.DB.Where(field+" = ?", value).First(&user).Error; err == nil {
 		return true
 	}
 
 	var seller models.Seller
-	if err := database.DB.Unscoped().Where(field+" = ?", value).First(&seller).Error; err == nil {
+	if err := database.DB.Where(field+" = ?", value).First(&seller).Error; err == nil {
 		return true
 	}
 

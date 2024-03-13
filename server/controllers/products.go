@@ -31,7 +31,7 @@ func AddProducts(ctx *gin.Context) {
 		Variations:  body.Variations,
 	}
 
-	if err := database.DB.Unscoped().Create(&product).Error; err != nil {
+	if err := database.DB.Create(&product).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -43,7 +43,7 @@ func AddProducts(ctx *gin.Context) {
 			Value:     body.Variations[i].Value,
 		}
 
-		if err := database.DB.Unscoped().Create(variant).Error; err != nil {
+		if err := database.DB.Create(variant).Error; err != nil {
 			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 			return
 		}
@@ -64,7 +64,7 @@ func GetAllProducts(ctx *gin.Context) {
 		return
 	}
 
-	var query = database.DB.Unscoped().Order("created_at DESC")
+	var query = database.DB.Order("created_at DESC")
 	if body.Material != "" {
 		query = query.Where("material = ?", body.Material)
 	}
@@ -117,7 +117,7 @@ func GetProductsByID(ctx *gin.Context) {
 	}
 
 	var product models.Product
-	if err := database.DB.Unscoped().Preload("Variations.Value").Where("product_id = ?", body.ID).First(&product).Error; err != nil {
+	if err := database.DB.Preload("Variations.Value").Where("product_id = ?", body.ID).First(&product).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -157,7 +157,7 @@ func SearchProductByQuery(ctx *gin.Context) {
 	}
 
 	var product models.Product
-	if err := database.DB.Unscoped().First(&product, "product_id = ?", body.ProductID).Error; err != nil {
+	if err := database.DB.First(&product, "product_id = ?", body.ProductID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "something went wrong when fetching data")
 	}
 

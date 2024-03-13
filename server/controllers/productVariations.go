@@ -25,7 +25,7 @@ func GetVariationsByID(ctx *gin.Context) {
 	}
 
 	var existingProduct models.Product
-	if err := database.DB.Unscoped().Preload("Variations.Value").Find(&existingProduct, "product_id = ?", body.ProductID).Error; err != nil {
+	if err := database.DB.Preload("Variations.Value").Find(&existingProduct, "product_id = ?", body.ProductID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -54,7 +54,7 @@ func AddVariation(ctx *gin.Context) {
 	}
 
 	var currSeller models.Seller
-	if err := database.DB.Unscoped().
+	if err := database.DB.
 		Preload("Products").
 		Find(&currSeller, "seller_id = ?", body.SellerID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
@@ -75,7 +75,7 @@ func AddVariation(ctx *gin.Context) {
 	}
 
 	var currProd models.Product
-	if err := database.DB.Unscoped().
+	if err := database.DB.
 		Preload("Variations").
 		Where("product_id = ?", body.ProductID).
 		First(&currProd).
@@ -85,7 +85,7 @@ func AddVariation(ctx *gin.Context) {
 	}
 
 	var newVar []models.ProductVariations
-	tx := database.DB.Unscoped().Begin()
+	tx := database.DB.Begin()
 	for _, v := range body.Variation {
 		newVarInstance := models.ProductVariations{
 			ID:        helpers.NewUUID(),
@@ -128,7 +128,7 @@ func AddVariation(ctx *gin.Context) {
 		return
 	}
 
-	if err := database.DB.Unscoped().Model(&currProd).Association("Variations").Append(newVar); err != nil {
+	if err := database.DB.Model(&currProd).Association("Variations").Append(newVar); err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -145,14 +145,14 @@ func DeleteVariation(ctx *gin.Context) {
 	}
 
 	var currVariations models.ProductVariations
-	if err := database.DB.Unscoped().Preload("Value").First(&currVariations, "id = ?", body.VarID).Error; err != nil {
+	if err := database.DB.Preload("Value").First(&currVariations, "id = ?", body.VarID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 	for _, v := range currVariations.Value {
-		database.DB.Unscoped().Delete(v)
+		database.DB.Delete(v)
 	}
-	if err := database.DB.Unscoped().Delete(&currVariations).Error; err != nil {
+	if err := database.DB.Delete(&currVariations).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -173,12 +173,12 @@ func UpdateVariation(ctx *gin.Context) {
 	}
 
 	var currVariations models.ProductVariations
-	if err := database.DB.Unscoped().Preload("Value").First(&currVariations, "id = ?", body.VarID).Error; err != nil {
+	if err := database.DB.Preload("Value").First(&currVariations, "id = ?", body.VarID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	if err := database.DB.Unscoped().Model(&currVariations).Updates(models.ProductVariations{
+	if err := database.DB.Model(&currVariations).Updates(models.ProductVariations{
 		Label: body.Variation.Label,
 	}).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
@@ -195,7 +195,7 @@ func UpdateVariation(ctx *gin.Context) {
 
 		newValues = append(newValues, valInstance)
 	}
-	if err := database.DB.Unscoped().
+	if err := database.DB.
 		Model(&currVariations).
 		Association("Value").
 		Replace(newValues); err != nil {

@@ -35,6 +35,7 @@ func UserRoutes(r *gin.Engine) {
 		api.POST("/checkout", controllers.CheckoutOrder)
 		api.POST("/getOrders", controllers.GetOrders)
 		api.POST("/addDeliveryInfo", controllers.AddDeliveryInfo)
+		api.POST("/editDeliveryInfo", controllers.EditDeliveryInfo)
 		api.POST("/getDeliveryInfo", controllers.GetDeliveryInfo)
 		api.POST("/deleteDeliveryInfo", controllers.DeleteDeliveryInfo)
 		// api.GET("/instant-buy", controllers.InstantBuy)

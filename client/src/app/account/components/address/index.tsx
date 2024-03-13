@@ -6,7 +6,7 @@ import { Popconfirm } from 'antd'
 import { motion } from 'framer-motion'
 import { useAppSelector } from '@/redux/store'
 import { REQUIRED, afterModalformFinish } from '@/constants/helper'
-import { InfoItem, addDeliveryInfo, deleteDeliveryInfo, getDeliveryInfo } from '@/api'
+import { InfoItem, addDeliveryInfo, deleteDeliveryInfo, editDeliveryInfo, getDeliveryInfo } from '@/api'
 import { messageHelper } from '@/constants/antd'
 import DeliveryInfo from '@/components/reusable/deliveryInfo'
 
@@ -31,7 +31,7 @@ const Address: FC = () => {
 		const info = await getDeliveryInfo({ user_id: userData?.id })
 		setInfo(info?.data)
 	}
-	
+
 	const renderDeleteInfo = (q: InfoItem) => {
 		return (
 			<Popconfirm title="Delete" description="Are you sure to delete this address?" onConfirm={() => handleDeleteInfo(q)} okText="Yes" cancelText="No">
@@ -44,7 +44,7 @@ const Address: FC = () => {
 		const isEdit = type === 'EDIT'
 		return (
 			<ModalForm
-				title={isEdit ? <span>Edit Address</span> : <span className={styles.addModalTitle}>add address</span>}
+				title={isEdit ? <span className={styles.addModalTitle}>Edit Address</span> : <span className={styles.addModalTitle}>add address</span>}
 				trigger={
 					isEdit ? (
 						<span className={styles.addressTrigger}>Edit</span>
@@ -72,7 +72,7 @@ const Address: FC = () => {
 					let res
 
 					if (isEdit) {
-						// res = await
+						res = await editDeliveryInfo({ ...params, delivery_id: q?.id, user_id: userData?.id })
 					} else {
 						res = await addDeliveryInfo({ ...params, user_id: userData?.id })
 					}

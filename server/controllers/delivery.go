@@ -18,13 +18,13 @@ func GetDeliveryInfo(ctx *gin.Context) {
 	}
 
 	var user models.User
-	if err := database.DB.Unscoped().Where("id = ?", body.UserID).First(&user).Error; err != nil {
+	if err := database.DB.Where("id = ?", body.UserID).First(&user).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	var existingDeliveryInfo []models.DeliveryInformation
-	if err := database.DB.Unscoped().Model(&user).Association("DeliveryInformation").Find(&existingDeliveryInfo); err != nil {
+	if err := database.DB.Model(&user).Association("DeliveryInformation").Find(&existingDeliveryInfo); err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -38,13 +38,13 @@ func AddDeliveryInfo(ctx *gin.Context) {
 		return
 	}
 	var user models.User
-	if err := database.DB.Unscoped().Where("id = ?", body.UserID).First(&user).Error; err != nil {
+	if err := database.DB.Where("id = ?", body.UserID).First(&user).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	var existingDeliveryInfo []models.DeliveryInformation
-	if err := database.DB.Unscoped().Model(&user).Association("DeliveryInformation").Find(&existingDeliveryInfo); err != nil {
+	if err := database.DB.Model(&user).Association("DeliveryInformation").Find(&existingDeliveryInfo); err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -67,7 +67,7 @@ func AddDeliveryInfo(ctx *gin.Context) {
 		Phone:       body.Phone,
 	}
 
-	if err := database.DB.Unscoped().Model(&user).Association("DeliveryInformation").Append(&newDeliveryInfo); err != nil {
+	if err := database.DB.Model(&user).Association("DeliveryInformation").Append(&newDeliveryInfo); err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -75,47 +75,31 @@ func AddDeliveryInfo(ctx *gin.Context) {
 	helpers.JSONResponse(ctx, "addded info successfully!")
 }
 
-func EditHomeAddress(ctx *gin.Context) {
+func EditDeliveryInfo(ctx *gin.Context) {
 	var body struct {
 		models.DeliveryInfoPayload
-		DeliveryInfoID string `json:"id"`
+		DeliveryInfoID string `json:"delivery_id"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
-	var user models.User
-	if err := database.DB.Unscoped().Preload("DeliveryInformation").First(&user, "id = ?", body.UserID).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-		return
-	}
-
-	var found bool
-	for _, v := range user.DeliveryInformation {
-		if body.DeliveryInfoID == v.ID {
-			found = true
-			break
-		}
-	}
-
-	if !found {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "check delivery_id")
-		return
-	}
-
 	var editDeliveryInfo models.DeliveryInformation
-	if err := database.DB.Unscoped().First(&editDeliveryInfo, "id = ?", body.DeliveryInfoID).Error; err != nil {
+	if err := database.DB.First(&editDeliveryInfo, "id = ?", body.DeliveryInfoID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	editDeliveryInfo = models.DeliveryInformation{
-		City:    body.City,
-		House:   body.House,
-		Pincode: body.Pincode,
-		Street:  body.Street,
+	updatedDeliveryInfo := models.DeliveryInformation{
+		City:      body.City,
+		House:     body.House,
+		Pincode:   body.Pincode,
+		Street:    body.Street,
+		FirstName: body.FirstName,
+		LastName:  body.LastName,
+		Phone:     body.Phone,
 	}
-	if err := database.DB.Unscoped().Save(&editDeliveryInfo).Error; err != nil {
+	if err := database.DB.Model(&editDeliveryInfo).Updates(&updatedDeliveryInfo).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -133,7 +117,7 @@ func DeleteDeliveryInfo(ctx *gin.Context) {
 	}
 
 	var user models.User
-	if err := database.DB.Unscoped().Preload("DeliveryInformation").First(&user, "id = ?", body.UserID).Error; err != nil {
+	if err := database.DB.Preload("DeliveryInformation").First(&user, "id = ?", body.UserID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -151,7 +135,7 @@ func DeleteDeliveryInfo(ctx *gin.Context) {
 		return
 	}
 
-	if err := database.DB.Unscoped().Where("id = ?", body.DeliveryID).Delete(&models.DeliveryInformation{}).Error; err != nil {
+	if err := database.DB.Where("id = ?", body.DeliveryID).Delete(&models.DeliveryInformation{}).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}

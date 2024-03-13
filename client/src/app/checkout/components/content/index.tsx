@@ -22,6 +22,8 @@ const Content = () => {
 	const {
 		userData: { userCart, id }
 	} = useAppSelector(s => s.userData)
+	const discount = userCart?.reduce((acc, cur) => acc + cur?.discount, 0)
+	const discountPrice = userCart?.reduce((acc, cur) => acc + cur?.discount_price, 0)
 	const [deliveryInfo, setDeliveryInfo] = useState<InfoItem[]>([])
 	const [infoID, setInfoID] = useState('')
 	const [paymentMethod, setPaymentMethod] = useState(1)
@@ -49,8 +51,7 @@ const Content = () => {
 							</motion.span>
 						</div>
 					)
-				}}
-			>
+				}}>
 				<div className={styles.addressWrapper}>
 					<div className={styles.addressDetails}>
 						{deliveryInfo?.map(q => (
@@ -91,6 +92,7 @@ const Content = () => {
 
 	useEffect(() => {
 		!!!userCart?.length && router.push('/products')
+		console.log(userCart?.reduce((acc, cur) => acc + cur.discount, 0))
 	}, [])
 
 	return (
@@ -112,17 +114,24 @@ const Content = () => {
 					</div>
 					<div className={styles.orderSummaryContainer}>
 						<div className={styles.header}>Order Summary</div>
-						<div className="flex justify-between items-center">
-							<DeliveryInfo data={deliveryInfo?.find(q => q?.id === infoID)} />
-							{selectAddress()}
-						</div>
+						{!!deliveryInfo?.length && (
+							<div className="flex justify-between items-center">
+								<DeliveryInfo data={deliveryInfo?.find(q => q?.id === infoID)} />
+								{selectAddress()}
+							</div>
+						)}
+						{!!!deliveryInfo?.length && (
+							<motion.div whileTap={scaleSize} className={styles.addInfoBtn} onClick={() => router.push("/account")}>
+								Add Address
+							</motion.div>
+						)}
 						<Divider />
 						<div className={classNames(styles.paymentMethod)}>
 							<span>Payment Method</span>
 							<Radio.Group value={paymentMethod} onChange={e => setPaymentMethod(e?.target.value)}>
 								<Radio value={1}>COD</Radio>
-								{/* <Radio value={2}>Bank Transfer</Radio>
-							<Radio value={3}>GCash</Radio> */}
+								<Radio value={2}>Bank Transfer</Radio>
+								<Radio value={3}>GCash</Radio>
 							</Radio.Group>
 						</div>
 						<Divider />
@@ -130,14 +139,14 @@ const Content = () => {
 							<span>Subtotal</span>
 							<span>₱{userCart?.reduce((acc, curr) => acc + curr.price, 0)}</span>
 						</div>
-						{/* <div className={classNames(styles.subContent, styles.discount)}>
-						<span>Discount (-20%)</span>
-						<span>- $113</span>
-					</div>
-					<div className={styles.subContent}>
-						<span>Delivery Fee</span>
-						<span>$15</span>
-					</div> */}
+						<div className={classNames(styles.subContent, styles.discount)}>
+							{!!discount && <span>Discount (-{discount}%)</span>}
+							{!!discountPrice && <span>- ₱{discountPrice}</span>}
+						</div>
+						{/* <div className={styles.subContent}>
+							<span>Delivery Fee</span>
+							<span>$15</span>
+						</div> */}
 						<Divider />
 						<div className={classNames(styles.subContent, styles.total)}>
 							<span>Total</span>

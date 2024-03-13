@@ -12,7 +12,7 @@ import (
 func GetAllCollections(ctx *gin.Context) {
 	var products []models.Product
 
-	if database.DB.Unscoped().
+	if database.DB.
 		Find(&products).
 		Order("created_at DESC").
 		Select("description, image, product_name, id, created_at").
@@ -52,7 +52,7 @@ func AddCollection(ctx *gin.Context) {
 		Description: body.Description,
 		Image:       body.Image,
 	}
-	if err := database.DB.Unscoped().Create(&blog).Error; err != nil {
+	if err := database.DB.Create(&blog).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": err.Error(),
 			"status":  http.StatusInternalServerError,

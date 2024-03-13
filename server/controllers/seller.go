@@ -21,11 +21,11 @@ func GetSellerData(ctx *gin.Context) {
 	var foundSeller models.JSONSeller
 	var productCount int64
 
-	if err := database.DB.Unscoped().Table("seller").Where("seller_id = ?", body.SellerID).First(&foundSeller).Error; err != nil {
+	if err := database.DB.Table("seller").Where("seller_id = ?", body.SellerID).First(&foundSeller).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "seller not found")
 		return
 	}
-	if err := database.DB.Unscoped().Model(&models.Product{}).Where("seller_id = ?", foundSeller.SellerID).Count(&productCount).Error; err != nil {
+	if err := database.DB.Model(&models.Product{}).Where("seller_id = ?", foundSeller.SellerID).Count(&productCount).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
@@ -46,7 +46,7 @@ func SellerUpdate(ctx *gin.Context) {
 	}
 
 	var existingSeller models.Seller
-	if err := database.DB.Unscoped().Model(&existingSeller).Where("seller_id = ?", body.SellerID).First(&existingSeller).Error; err != nil {
+	if err := database.DB.Model(&existingSeller).Where("seller_id = ?", body.SellerID).First(&existingSeller).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -64,7 +64,7 @@ func SellerUpdate(ctx *gin.Context) {
 		return
 	}
 
-	if err := database.DB.Unscoped().Model(&existingSeller).Where("seller_id = ?", body.SellerID).Updates(map[string]interface{}{
+	if err := database.DB.Model(&existingSeller).Where("seller_id = ?", body.SellerID).Updates(map[string]interface{}{
 		"seller_name": body.SellerName,
 		"username":    body.Username,
 		"email":       body.Email,
@@ -116,7 +116,7 @@ func SellerSignup(ctx *gin.Context) {
 		Avatar:     body.Avatar,
 	}
 
-	if err := database.DB.Unscoped().Model(&models.Seller{}).Create(&newSeller).Error; err != nil {
+	if err := database.DB.Model(&models.Seller{}).Create(&newSeller).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -140,7 +140,7 @@ func SellerLogin(ctx *gin.Context) {
 	}
 
 	var existingSeller models.Seller
-	if err := database.DB.Unscoped().First(&existingSeller, "email = ?", body.Email).Error; err != nil {
+	if err := database.DB.First(&existingSeller, "email = ?", body.Email).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
@@ -176,7 +176,7 @@ func GetAllProductsBySellerID(ctx *gin.Context) {
 	}
 
 	var existingSeller models.Seller
-	if err := database.DB.Unscoped().Preload("Products").Where("seller_id = ?", body.SellerID).First(&existingSeller).Error; err != nil {
+	if err := database.DB.Preload("Products").Where("seller_id = ?", body.SellerID).First(&existingSeller).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
