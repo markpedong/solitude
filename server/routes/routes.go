@@ -53,9 +53,9 @@ func UserRoutes(r *gin.Engine) {
 	variations := r.Group("/variations")
 	variations.Use(middleware.Authentication)
 	{
-		variations.POST("/addVariations", controllers.AddVariation)
-		variations.POST("/getVariations", controllers.GetVariationsByID)
-		variations.POST("/deleteVariations", controllers.DeleteVariation)
-		variations.POST("/updateVariations", controllers.UpdateVariation)
+		variations.POST("/add", controllers.AddVariation)
+		variations.POST("/get", controllers.GetVariationsByID)
+		variations.POST("/delete", controllers.DeleteVariation)
+		variations.POST("/update", controllers.UpdateVariation)
 	}
 }
