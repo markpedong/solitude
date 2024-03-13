@@ -7,14 +7,14 @@ import Cart from '@/components/reusable/cart'
 import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { ArrowRightOutlined, PercentageOutlined, RightOutlined } from '@ant-design/icons'
 import { ModalForm } from '@ant-design/pro-components'
-import { Divider, Input, Radio } from 'antd'
+import { Divider, Input, Radio, message } from 'antd'
 import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { motion } from 'framer-motion'
 import { scaleSize } from '@/constants'
 import { messageHelper } from '@/constants/antd'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { setCart } from '@/redux/features/userSlice'
 
 const Content = () => {
@@ -27,6 +27,7 @@ const Content = () => {
 	const [deliveryInfo, setDeliveryInfo] = useState<InfoItem[]>([])
 	const [infoID, setInfoID] = useState('')
 	const [paymentMethod, setPaymentMethod] = useState(1)
+	const pathname = usePathname()
 	const dispatch = useAppDispatch()
 
 	const fetchDeliveryDetails = async () => {
@@ -51,7 +52,8 @@ const Content = () => {
 							</motion.span>
 						</div>
 					)
-				}}>
+				}}
+			>
 				<div className={styles.addressWrapper}>
 					<div className={styles.addressDetails}>
 						{deliveryInfo?.map(q => (
@@ -71,6 +73,11 @@ const Content = () => {
 	}
 
 	const checkoutItems = async () => {
+		if (!!!deliveryInfo?.length) {
+			message.error('add address to checkout')
+			return
+		}
+
 		const res = await checkout({
 			checkout_ids: userCart?.map(q => q.checkout_id),
 			delivery_id: infoID,
@@ -91,7 +98,7 @@ const Content = () => {
 	}, [id])
 
 	useEffect(() => {
-		!!!userCart?.length && router.push('/products')
+		!!!userCart?.length && pathname !== '/checkout' && router.push('/products')
 	}, [userCart?.length])
 
 	return (
@@ -155,9 +162,14 @@ const Content = () => {
 							<Input placeholder="Add promo Code" prefix={<PercentageOutlined />} />
 							<div>Apply </div>
 						</div>
-						<motion.div whileTap={scaleSize} className={styles.checkout} onClick={checkoutItems}>
+						<motion.button
+							whileTap={!!deliveryInfo?.length && scaleSize}
+							className={styles.checkout}
+							style={{ background: !!!deliveryInfo?.length ? 'gray' : '' }}
+							onClick={checkoutItems}
+						>
 							Checkout <ArrowRightOutlined />
-						</motion.div>
+						</motion.button>
 					</div>
 				</div>
 			</div>

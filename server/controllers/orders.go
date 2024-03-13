@@ -92,7 +92,7 @@ func GetOrders(ctx *gin.Context) {
 	}
 
 	var currOrders []models.Orders
-	if err := database.DB.Where("user_id = ?", body.ID).Find(&currOrders).Error; err != nil {
+	if err := database.DB.Order("created_at DESC").Where("user_id = ?", body.ID).Find(&currOrders).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}

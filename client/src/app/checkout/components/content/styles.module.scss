@@ -95,7 +95,7 @@
 }
 
 .checkout {
-    @apply flex justify-center items-center p-2 rounded-full mb-5 gap-3 cursor-pointer;
+    @apply flex justify-center items-center p-2 rounded-full mb-5 gap-3 cursor-pointer w-full;
     user-select: none;
     font-size: toRem(14);
     background-color: var(--color-primary);
@@ -154,7 +154,7 @@
     }
 }
 
-.addInfoBtn{
+.addInfoBtn {
     @apply px-5 py-2 rounded-md cursor-pointer max-w-[7rem];
     background-color: var(--color-primary);
     color: var(--white-color);

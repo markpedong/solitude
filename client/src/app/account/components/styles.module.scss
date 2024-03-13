@@ -29,7 +29,8 @@
     :global {
         .ant-tabs-tab-btn {
             letter-spacing: toRem(1);
-            font-family: "Satoshi";
+            font-family: "Integral";
+            font-size: toRem(12);
             color: var(--color-primary);
         }
     }
