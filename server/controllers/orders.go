@@ -80,7 +80,7 @@ func CheckoutOrder(ctx *gin.Context) {
 		return
 	}
 
-	helpers.JSONResponse(ctx, "ordered successfully", helpers.DataHelper(currOrder))
+	helpers.JSONResponse(ctx, "ordered successfully")
 }
 
 func GetOrders(ctx *gin.Context) {
@@ -97,7 +97,7 @@ func GetOrders(ctx *gin.Context) {
 		return
 	}
 
-	var productsWithVariations []models.JSONProduct
+	var productsWithVariations []models.OrderReponse
 	for _, cart := range currOrders {
 		var product models.Product
 		if err := database.DB.Find(&product, "product_id = ?", cart.ProductID).Error; err != nil {
@@ -130,14 +130,15 @@ func GetOrders(ctx *gin.Context) {
 
 		// product.Variations = variations
 		// product.CheckoutID = cart.ID
-		productRes := models.JSONProduct{
+		productRes := models.OrderReponse{
+			OrderID:       cart.OrderID,
 			ProductID:     product.ProductID,
 			SellerID:      product.SellerID,
 			ProductName:   product.ProductName,
-			Price:         product.Price,
+			Price:         int(product.Price),
 			Image:         product.Image,
 			Variations:    variations,
-			Discount:      product.Discount,
+			Discount:      &product.Discount,
 			DiscountPrice: product.DiscountPrice,
 			Quantity:      cart.Quantity,
 			Status:        cart.Status,

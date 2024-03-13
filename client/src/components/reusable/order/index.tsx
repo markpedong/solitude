@@ -22,7 +22,7 @@ const Order: FC<Props> = ({ data }) => {
 						{data?.seller_name}
 					</span>
 				</div>
-				<span className={styles.orderName}>{data?.product_name}</span>
+				<span className={styles.orderName} onClick={() => router.push(`/products/${data?.product_id}`)}>{data?.product_name}</span>
 				<div>Variation: {data?.variations?.filter(q => !!q?.value).map(q => `${q.label}:${q?.value?.[0]?.value}, `)}</div>
 				<span>x{data?.quantity}</span>
 			</div>
