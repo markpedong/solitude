@@ -92,8 +92,7 @@ const Content = () => {
 
 	useEffect(() => {
 		!!!userCart?.length && router.push('/products')
-		console.log(userCart?.reduce((acc, cur) => acc + cur.discount, 0))
-	}, [])
+	}, [userCart?.length])
 
 	return (
 		!!userCart?.length && (
@@ -121,7 +120,7 @@ const Content = () => {
 							</div>
 						)}
 						{!!!deliveryInfo?.length && (
-							<motion.div whileTap={scaleSize} className={styles.addInfoBtn} onClick={() => router.push("/account")}>
+							<motion.div whileTap={scaleSize} className={styles.addInfoBtn} onClick={() => router.push('/account')}>
 								Add Address
 							</motion.div>
 						)}
