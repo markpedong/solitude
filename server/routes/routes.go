@@ -25,28 +25,37 @@ func UserRoutes(r *gin.Engine) {
 	api := r.Group("/api")
 	api.Use(middleware.Authentication)
 	{
-		api.POST("/getCart", controllers.GetItemsFromCart)
-		api.POST("/addToCart", controllers.AddToCart)
-		api.POST("/removeFromCart", controllers.RemoveItemFromCart)
-		api.POST("/addVariations", controllers.AddVariation)
-		api.POST("/getVariations", controllers.GetVariationsByID)
-		api.POST("/deleteVariations", controllers.DeleteVariation)
-		api.POST("/updateVariations", controllers.UpdateVariation)
 		api.POST("/checkout", controllers.CheckoutOrder)
-		api.POST("/getOrders", controllers.GetOrders)
-		api.POST("/addDeliveryInfo", controllers.AddDeliveryInfo)
-		api.POST("/editDeliveryInfo", controllers.EditDeliveryInfo)
-		api.POST("/getDeliveryInfo", controllers.GetDeliveryInfo)
-		api.POST("/deleteDeliveryInfo", controllers.DeleteDeliveryInfo)
-		// api.GET("/instant-buy", controllers.InstantBuy)
-		// api.POST("/search", controllers.SearchProductByQuery)
 		api.POST("/add-product", controllers.AddProducts)
-		// api.POST("/add-blog", controllers.AddBlog)
-		// api.GET("/blogs", controllers.GetAllBlog)
 		api.POST("/uploadImage", controllers.UploadImage)
-		// api.POST("/checkToken", controllers.CheckToken)
 		api.POST("/updateUser", controllers.UserUpdate)
 		api.POST("/updateSeller", controllers.SellerUpdate)
-		// api.GET("/image/:id", controllers.GetImage)
+	}
+
+	cart := r.Group("/cart")
+	cart.Use(middleware.Authentication)
+	{
+		cart.POST("/get", controllers.GetItemsFromCart)
+		cart.POST("/add", controllers.AddToCart)
+		cart.POST("/remove", controllers.RemoveItemFromCart)
+		api.POST("/orders", controllers.GetOrders)
+	}
+
+	delivery := r.Group("/delivery")
+	delivery.Use(middleware.Authentication)
+	{
+		delivery.POST("/add", controllers.AddDeliveryInfo)
+		delivery.POST("/edit", controllers.EditDeliveryInfo)
+		delivery.POST("/get", controllers.GetDeliveryInfo)
+		delivery.POST("/delete", controllers.DeleteDeliveryInfo)
+	}
+
+	variations := r.Group("/variations")
+	variations.Use(middleware.Authentication)
+	{
+		variations.POST("/addVariations", controllers.AddVariation)
+		variations.POST("/getVariations", controllers.GetVariationsByID)
+		variations.POST("/deleteVariations", controllers.DeleteVariation)
+		variations.POST("/updateVariations", controllers.UpdateVariation)
 	}
 }

@@ -46,7 +46,7 @@
 }
 
 .rateBtn {
-    @apply p-1 px-2 rounded-md;
+    @apply p-1 px-2 rounded-md cursor-pointer;
     background-color: var(--color-primary);
     color: var(--white-color);
 }

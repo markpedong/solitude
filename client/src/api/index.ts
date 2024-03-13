@@ -87,19 +87,19 @@ export const addProduct = params => post('/api/add-product', params)
 // /api/getAllProductsByID
 export const getProductsData = params => post<TProduct[]>('/users/getAllProductsByID', params)
 
-// /users/getVariations
+// /variations/get
 export type TVariations = {
 	id: string
 	product_id: string
 	label: string
 	value: { value: string; id: string }[]
 }
-export const getVariations = params => post('/users/getVariations', params)
+export const getVariations = params => post('/variations/get', params)
 
-// /api/addToCart
-export const addToCart = params => post('/api/addToCart', params)
+// /cart/add
+export const addToCart = params => post('/cart/add', params)
 
-// /api/checkCart
+// /cart/get
 export type CartItem = {
 	checkout_id: string
 	image: string[]
@@ -117,15 +117,15 @@ export type CartItem = {
 	}[]
 	quantity: number
 }
-export const checkCart = params => post<CartItem[]>('/api/getCart', params)
+export const checkCart = params => post<CartItem[]>('/cart/get', params)
 
-// /api/removeFromCart
-export const removeCart = params => post('/api/removeFromCart', params)
+// /cart/remove
+export const removeCart = params => post('/cart/remove', params)
 
-// /api/addDeliveryInfo
-export const addDeliveryInfo = params => post('/api/addDeliveryInfo', params)
+// /delivery/add
+export const addDeliveryInfo = params => post('/delivery/add', params)
 
-// /api/getDeliveryInfo
+// /delivery/get
 export type InfoItem = {
 	address_type: number
 	city: string
@@ -140,15 +140,18 @@ export type InfoItem = {
 	updated_at: number
 	user_id: string
 }
-export const getDeliveryInfo = params => post<InfoItem[]>('/api/getDeliveryInfo', params)
+export const getDeliveryInfo = params => post<InfoItem[]>('/delivery/get', params)
 
-// /api/deleteDeliveryInfo
-export const deleteDeliveryInfo = params => post<InfoItem[]>('/api/deleteDeliveryInfo', params)
+// /delivery/edit
+export const editDeliveryInfo = params => post('/delivery/edit', params)
+
+// /delivery/delete
+export const deleteDeliveryInfo = params => post<InfoItem[]>('/delivery/delete', params)
 
 // /api/checkout
 export const checkout = params => post('/api/checkout', params)
 
-// /api/getOrders
+// /cart/orders
 export type OrderItem = {
 	product_id: string
 	seller_id: string
@@ -169,7 +172,4 @@ export type OrderItem = {
 	status: number
 	seller_name: string
 }
-export const getOrders = params => post<OrderItem[]>('/api/getOrders', params)
-
-// /api/editDeliveryInfo
-export const editDeliveryInfo = params => post('/api/editDeliveryInfo', params)
+export const getOrders = params => post<OrderItem[]>('/cart/orders', params)
