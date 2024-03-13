@@ -54,7 +54,7 @@ const post = async <T>(url: string, data = {}, client = true): Promise<ApiRespon
 	//prettier-ignore
 	const response = await apiResponse.json() as ApiResponse<T>
 
-	if (response?.status !== 200 && client) {
+	if (response?.status !== 200) {
 		if (response?.status === 401) {
 			clearUserData()
 		}

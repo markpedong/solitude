@@ -21,6 +21,7 @@ import LoginModal from './loginModal'
 import styles from './styles.module.scss'
 import Cart from '@/components/reusable/cart'
 import { Jost } from 'next/font/google'
+import { messageHelper } from '@/constants/antd'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -113,26 +114,29 @@ const Navbar = () => {
 			dispatch(setType(USER_TYPES.SELLER))
 		}
 
-		if (res?.success) {
-			if (create && type === USER_TYPES.USER) {
-				await dispatch(setUserData(res?.data))
-			} else {
-				await dispatch(setSellerData(res?.data))
-			}
-			if (user) {
-				await dispatch(setUserData(res?.data))
-			} else {
-				await dispatch(setSellerData(res?.data))
-			}
-			await dispatch(setUserToken(res?.token))
-			await dispatch(setIsBannerHidden(true))
+		if (!!!res?.success) {
+			messageHelper(res)
+			return
+		}
 
-			setLocalStorage('token', res?.token)
-			formRef?.current?.resetFields()
+		if (create && type === USER_TYPES.USER) {
+			await dispatch(setUserData(res?.data))
+		} else {
+			await dispatch(setSellerData(res?.data))
+		}
+		if (user) {
+			await dispatch(setUserData(res?.data))
+		} else {
+			await dispatch(setSellerData(res?.data))
+		}
+		await dispatch(setUserToken(res?.token))
+		await dispatch(setIsBannerHidden(true))
 
-			if (pathname === '/') {
-				router.push('/account')
-			}
+		setLocalStorage('token', res?.token)
+		formRef?.current?.resetFields()
+
+		if (pathname === '/') {
+			router.push('/account')
 		}
 
 		return afterModalformFinish(actionRef, res?.message, res?.success)
@@ -264,7 +268,7 @@ const Navbar = () => {
 						{isLoggedIn && userCart?.length > 0 && !pathname.includes('/checkout') && memoizedCartButton}
 						{isLoggedIn ? (
 							<Dropdown menu={{ items }} placement="bottom" trigger={['click']}>
-								<UserOutlined onClick={e => e.preventDefault()} />
+								<UserOutlined className="cursor-pointer" onClick={e => e.preventDefault()} />
 							</Dropdown>
 						) : (
 							<UserOutlined onClick={() => dispatch(setLoginModalOpen(true))} />

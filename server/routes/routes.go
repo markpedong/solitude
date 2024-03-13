@@ -9,6 +9,7 @@ import (
 
 func UserRoutes(r *gin.Engine) {
 	r.POST("/seller/products", controllers.GetAllProductsBySellerID)
+	r.POST("/seller/getInfo", controllers.GetSellerData)
 	r.POST("/product/getDetails", controllers.GetProductsDetailsByID)
 
 	public := r.Group("/public")
@@ -57,13 +58,6 @@ func UserRoutes(r *gin.Engine) {
 		rating.POST("/update", controllers.UpdateProductRating)
 		rating.POST("/delete", controllers.DeleteProductRating)
 		rating.POST("/add", controllers.AddProductRating)
-	}
-
-	seller := r.Group("/seller")
-	seller.Use(middleware.Authentication)
-	{
-		seller.POST("/getInfo", controllers.GetSellerData)
-
 	}
 
 	user := r.Group("/user")
