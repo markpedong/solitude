@@ -8,24 +8,22 @@ import (
 )
 
 func UserRoutes(r *gin.Engine) {
-	users := r.Group("/users")
+	r.POST("/seller/products", controllers.GetAllProductsBySellerID)
+	r.POST("/product/getDetails", controllers.GetProductsDetailsByID)
+
+	public := r.Group("/public")
 	{
-		users.POST("/signup", controllers.UserSignup)
-		users.POST("/login", controllers.UserLogin)
-		users.POST("/loginSeller", controllers.SellerLogin)
-		users.POST("/signupSeller", controllers.SellerSignup)
-		users.POST("/products", controllers.GetAllProducts)
-		users.GET("/collections", controllers.GetAllCollections)
-		users.POST("/getUserData", controllers.GetUserData)
-		users.POST("/getSellerData", controllers.GetSellerData)
-		users.POST("/getProductData", controllers.GetProductsByID)
-		users.POST("/getAllProductsByID", controllers.GetAllProductsBySellerID)
+		public.POST("/signup", controllers.UserSignup)
+		public.POST("/login", controllers.UserLogin)
+		public.POST("/loginSeller", controllers.SellerLogin)
+		public.POST("/signupSeller", controllers.SellerSignup)
+		public.POST("/products", controllers.GetAllProducts)
+		// users.GET("/collections", controllers.GetAllCollections)
 	}
 
 	api := r.Group("/api")
 	api.Use(middleware.Authentication)
 	{
-		api.POST("/checkout", controllers.CheckoutOrder)
 		api.POST("/add-product", controllers.AddProducts)
 		api.POST("/uploadImage", controllers.UploadImage)
 		api.POST("/updateUser", controllers.UserUpdate)
@@ -38,7 +36,9 @@ func UserRoutes(r *gin.Engine) {
 		cart.POST("/get", controllers.GetItemsFromCart)
 		cart.POST("/add", controllers.AddToCart)
 		cart.POST("/remove", controllers.RemoveItemFromCart)
-		api.POST("/orders", controllers.GetOrders)
+		cart.POST("/orders", controllers.GetOrders)
+		cart.POST("/checkout", controllers.CheckoutOrder)
+
 	}
 
 	delivery := r.Group("/delivery")
@@ -48,6 +48,19 @@ func UserRoutes(r *gin.Engine) {
 		delivery.POST("/edit", controllers.EditDeliveryInfo)
 		delivery.POST("/get", controllers.GetDeliveryInfo)
 		delivery.POST("/delete", controllers.DeleteDeliveryInfo)
+	}
+
+	seller := r.Group("/seller")
+	seller.Use(middleware.Authentication)
+	{
+		seller.POST("/getInfo", controllers.GetSellerData)
+
+	}
+
+	user := r.Group("/user")
+	user.Use(middleware.Authentication)
+	{
+		user.POST("/getInfo", controllers.GetUserData)
 	}
 
 	variations := r.Group("/variations")

@@ -108,7 +108,7 @@ func GetAllProducts(ctx *gin.Context) {
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(products))
 }
 
-func GetProductsByID(ctx *gin.Context) {
+func GetProductsDetailsByID(ctx *gin.Context) {
 	var body struct {
 		ID string `json:"product_id"`
 	}

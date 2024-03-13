@@ -1,4 +1,4 @@
-import { TProduct, getProductsData } from '@/api'
+import { TProduct, getProductsData as getSellerProducts } from '@/api'
 import { useAppSelector } from '@/redux/store'
 import { FC, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
@@ -42,7 +42,7 @@ const ProductsAdded: FC<Props> = () => {
 	}
 
 	const fetchProducts = async () => {
-		const data = await getProductsData({ seller_id: sellerData?.seller_id })
+		const data = await getSellerProducts({ seller_id: sellerData?.seller_id })
 
 		setProducts(data.data)
 	}

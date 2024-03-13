@@ -11,19 +11,19 @@ export type UserData = {
 	email: string
 }
 
-// /users/signup
-export const userSignup = params => post('/users/signup', params)
+// /public/signup
+export const userSignup = params => post('/public/signup', params)
 
-// /users/login
-export const userLogin = params => post<UserData>('/users/login', params)
+// /public/login
+export const userLogin = params => post<UserData>('/public/login', params)
 
-// /users/loginSeller
-export const sellerLogin = params => post('/users/loginSeller', params)
+// /public/loginSeller
+export const sellerLogin = params => post('/public/loginSeller', params)
 
-// /users/signupSeller
-export const sellerSignup = params => post('/users/signupSeller', params)
+// /public/signupSeller
+export const sellerSignup = params => post('/public/signupSeller', params)
 
-// /users/products
+// /public/products
 export type TProduct = {
 	seller_id: string
 	categories: string[]
@@ -40,19 +40,19 @@ export type TProduct = {
 	discount_price: number
 }
 
-export const getProducts = params => post<TProduct[]>('/users/products', params)
+export const getProducts = params => post<TProduct[]>('/public/products', params)
 
-// /api/collections
-export type TCollection = {
-	image: string
-	title: string
-	description: string
-	link: string
-}
-export const getCollections = () => get<TCollection[]>('/users/collections')
+// // /api/collections
+// export type TCollection = {
+// 	image: string
+// 	title: string
+// 	description: string
+// 	link: string
+// }
+// export const getCollections = () => get<TCollection[]>('/users/collections')
 
-// /users/getProductData
-export const getProductData = (params, client = true) => post<TProduct>(`/users/getProductData`, params, client)
+// /product/getDetails
+export const getProductData = (params, client = true) => post<TProduct>(`/product/getDetails`, params, client)
 
 // /api/updateUser
 export const updateUserData = params => post('/api/updateUser', params)
@@ -60,10 +60,10 @@ export const updateUserData = params => post('/api/updateUser', params)
 // /api/updateSeller
 export const updateSellerData = params => post('/api/updateSeller', params)
 
-// /api/getUserData
-export const getUserData = params => post('/users/getUserData', params)
+// /user/getInfo
+export const getUserData = params => post('/user/getInfo', params)
 
-// /users/getSellerData
+// /seller/getInfo
 export type SellerData = {
 	seller_id: string
 	created_at: string
@@ -76,7 +76,7 @@ export type SellerData = {
 	rating: number
 	followers: number
 }
-export const getSellerData = params => post<SellerData>('/users/getSellerData', params)
+export const getSellerData = params => post<SellerData>('/seller/getInfo', params)
 
 // /api/uploadImage
 export const uploadImages = params => upload<any>('/api/uploadImage', params)
@@ -84,8 +84,8 @@ export const uploadImages = params => upload<any>('/api/uploadImage', params)
 // /api/addProduct
 export const addProduct = params => post('/api/add-product', params)
 
-// /api/getAllProductsByID
-export const getProductsData = params => post<TProduct[]>('/users/getAllProductsByID', params)
+// /seller/products
+export const getProductsData = params => post<TProduct[]>('/seller/products', params)
 
 // /variations/get
 export type TVariations = {
@@ -148,8 +148,8 @@ export const editDeliveryInfo = params => post('/delivery/edit', params)
 // /delivery/delete
 export const deleteDeliveryInfo = params => post<InfoItem[]>('/delivery/delete', params)
 
-// /api/checkout
-export const checkout = params => post('/api/checkout', params)
+// /cart/checkout
+export const checkout = params => post('/cart/checkout', params)
 
 // /cart/orders
 export type OrderItem = {
