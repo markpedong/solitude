@@ -73,6 +73,7 @@ type Seller struct {
 	UpdatedAt  int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DeletedAt  soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
 	Orders     []Orders              `json:"orders" gorm:"foreignKey:SellerID"`
+	Ratings    []Rating              `json:"ratings" gorm:"foreignKey:ProductID"`
 }
 
 type VariationValue struct {
@@ -123,4 +124,12 @@ type Orders struct {
 	Status          int                   `json:"status"`
 	SellerID        string                `json:"seller_id"`
 	SellerName      string                `json:"seller_name"`
+}
+
+type Rating struct {
+	RatingID    string  `json:"id" gorm:"primaryKey"`
+	ProductID   string  `json:"-" validate:"required"`
+	Title       string  `json:"title" validate:"required"`
+	Description string  `json:"description" validate:"required"`
+	Rate        float64 `json:"rating" validate:"required"`
 }
