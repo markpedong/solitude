@@ -143,14 +143,3 @@ func GetItemsFromCart(ctx *gin.Context) {
 
 	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(productsWithVariations))
 }
-
-func SetDefaultInfo(ctx *gin.Context) {
-	var body struct {
-		DeliveryID string `json:"delivery_id" validate:"required"`
-		UserID     string `json:"user_id" validate:"required"`
-	}
-	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
-		return
-	}
-
-}

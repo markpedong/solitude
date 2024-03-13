@@ -6,7 +6,7 @@ import { Popconfirm } from 'antd'
 import { motion } from 'framer-motion'
 import { useAppSelector } from '@/redux/store'
 import { REQUIRED, afterModalformFinish } from '@/constants/helper'
-import { InfoItem, addDeliveryInfo, deleteDeliveryInfo, editDeliveryInfo, getDeliveryInfo } from '@/api'
+import { InfoItem, addDeliveryInfo, deleteDeliveryInfo, editDeliveryInfo, getDeliveryInfo, setDefault } from '@/api'
 import { messageHelper } from '@/constants/antd'
 import DeliveryInfo from '@/components/reusable/deliveryInfo'
 
@@ -16,9 +16,26 @@ const Address: FC = () => {
 	const actionRef = useRef<ActionType>()
 	const [info, setInfo] = useState<InfoItem[]>([])
 
+	const handleSetDefault = async (q: InfoItem) => {
+		const res = await setDefault({ delivery_id: q?.id })
+
+		if (!!!res?.success) {
+			messageHelper(res)
+			return
+		}
+
+		const info = await getDeliveryInfo({ user_id: userData?.id })
+		setInfo(info?.data)
+	}
 	const renderSetDefault = (q: InfoItem) => {
 		return (
-			<Popconfirm title="Default" description="Are you sure to set this as a default address?" onConfirm={() => console.log('default')} okText="Yes" cancelText="No">
+			<Popconfirm
+				title={<span className={styles.defaultDesc}>Default</span>}
+				description={<span className={styles.defaultDesc}>Are you sure to set this as a default address?</span>}
+				onConfirm={() => handleSetDefault(q)}
+				okText={<span className={styles.defaultDesc}>Yes</span>}
+				cancelText={<span className={styles.defaultDesc}>No</span>}
+			>
 				<span className={styles.addressTrigger}>Set as Default</span>
 			</Popconfirm>
 		)
@@ -34,7 +51,13 @@ const Address: FC = () => {
 
 	const renderDeleteInfo = (q: InfoItem) => {
 		return (
-			<Popconfirm title="Delete" description="Are you sure to delete this address?" onConfirm={() => handleDeleteInfo(q)} okText="Yes" cancelText="No">
+			<Popconfirm
+				title={<span className={styles.defaultDesc}>Delete</span>}
+				description={<span className={styles.defaultDesc}>Are you sure to delete this address?</span>}
+				onConfirm={() => handleDeleteInfo(q)}
+				okText={<span className={styles.defaultDesc}>Yes</span>}
+				cancelText={<span className={styles.defaultDesc}>No</span>}
+			>
 				<span className={styles.addressTrigger}>Delete</span>
 			</Popconfirm>
 		)
@@ -54,7 +77,7 @@ const Address: FC = () => {
 						</motion.span>
 					)
 				}
-				initialValues={isEdit && q}
+				initialValues={isEdit && { ...q, address_type: q?.address_type === 0 ? '' : q?.address_type }}
 				grid
 				submitter={{
 					render: props => (
@@ -75,6 +98,11 @@ const Address: FC = () => {
 						res = await editDeliveryInfo({ ...params, delivery_id: q?.id, user_id: userData?.id })
 					} else {
 						res = await addDeliveryInfo({ ...params, user_id: userData?.id })
+					}
+
+					if (!!!res?.success) {
+						messageHelper(res)
+						return
 					}
 
 					const info = await getDeliveryInfo({ user_id: userData?.id })
@@ -106,12 +134,13 @@ const Address: FC = () => {
 
 		setInfo(res?.data)
 	}
+
 	useEffect(() => {
 		fetchInfo()
 	}, [])
 	return (
 		<div>
-			{info?.length < 3 && renderAddEditInfo('ADD')}
+			{info?.length <= 5 && renderAddEditInfo('ADD')}
 			{info.map(q => (
 				<div className={styles.addressContainer} key={q?.id}>
 					<DeliveryInfo data={q} />

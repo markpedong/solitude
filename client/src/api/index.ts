@@ -174,3 +174,6 @@ export type OrderItem = {
 	seller_name: string
 }
 export const getOrders = params => post<OrderItem[]>('/cart/orders', params)
+
+// /delivery/setDefault
+export const setDefault = params => post('/delivery/setDefault', params)

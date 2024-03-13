@@ -51,7 +51,7 @@ type DeliveryInformation struct {
 	Street      string                `json:"street" validate:"required"`
 	City        string                `json:"city"`
 	Pincode     string                `json:"pin_code" validate:"required"`
-	AddressType int                   `json:"address_type" validate:"required"`
+	AddressType int                   `json:"address_type"`
 	FirstName   string                `json:"first_name" validate:"max=30, required"`
 	LastName    string                `json:"last_name" validate:"max=30, required"`
 	Phone       string                `json:"phone" validate:"required"`

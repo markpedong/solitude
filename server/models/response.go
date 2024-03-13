@@ -10,7 +10,7 @@ type DeliveryInfoPayload struct {
 	Street      string `json:"street" validate:"required"`
 	City        string `json:"city" validate:"required"`
 	Pincode     string `json:"pin_code" validate:"required"`
-	AddressType int    `json:"address_type" validate:"required"`
+	AddressType int    `json:"address_type"`
 	FirstName   string `json:"first_name" validate:"required"`
 	LastName    string `json:"last_name" validate:"required"`
 	Phone       string `json:"phone" validate:"required"`

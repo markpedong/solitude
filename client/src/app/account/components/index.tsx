@@ -39,7 +39,13 @@ const Account: FC<Props> = () => {
 						{ key: 'products', label: 'ADD PRODUCT', children: <AddProduct /> },
 						{ key: 'listed_products', label: 'PRODUCTS ADDED', children: <ProductsAdded /> },
 						{ key: 'address', label: 'ADDRESS', children: <Address /> }
-					].filter(item => !(item.key === 'products' && !seller) && !(item.key === 'orders' && seller) && !(item.key === 'address' && seller) && !(item.key === 'listed_products' && !seller))}
+					].filter(
+						item =>
+							!(item.key === 'products' && !seller) &&
+							!(item.key === 'orders' && seller) &&
+							!(item.key === 'address' && seller) &&
+							!(item.key === 'listed_products' && !seller)
+					)}
 				/>
 			</div>
 		</>
