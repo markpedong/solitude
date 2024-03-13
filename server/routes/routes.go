@@ -48,6 +48,7 @@ func UserRoutes(r *gin.Engine) {
 		delivery.POST("/edit", controllers.EditDeliveryInfo)
 		delivery.POST("/get", controllers.GetDeliveryInfo)
 		delivery.POST("/delete", controllers.DeleteDeliveryInfo)
+		delivery.POST("/setDefault", controllers.SetDefaultInfo)
 	}
 
 	rating := r.Group("/rating")

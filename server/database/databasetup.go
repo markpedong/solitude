@@ -39,7 +39,8 @@ func DBSet() {
 		&models.VariationValue{},
 		&models.Carts{},
 		&models.Orders{},
-		&models.Rating{},
+		&models.ProductReviews{},
+		&models.SellerReviews{},
 	)
 	if err != nil {
 		log.Fatal(err.Error())

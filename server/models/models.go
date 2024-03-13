@@ -11,6 +11,8 @@ type User struct {
 	UpdatedAt           int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DeliveryInformation []DeliveryInformation `json:"delivery_information" gorm:"foreignKey:UserID"`
 	Orders              []Orders              `json:"orders" gorm:"foreignKey:UserID"`
+	ProductReview       []ProductReviews      `json:"product_review" gorm:"foreignKey:UserID"`
+	SellerReviews       []SellerReviews       `json:"seller_review" gorm:"foreignKey:UserID"`
 	FirstName           string                `json:"first_name" validate:"max=30"`
 	LastName            string                `json:"last_name" validate:"max=30"`
 	Password            string                `json:"password" validate:"required,min=6"`
@@ -33,6 +35,7 @@ type Product struct {
 	Description   string                `json:"description" validate:"required"`
 	Stock         int                   `json:"stock" validate:"required"`
 	Variations    []ProductVariations   `json:"variations" gorm:"foreignkey:ProductID"`
+	Reviews       []ProductReviews      `json:"reviews" gorm:"foreignKey:ProductID"`
 	Category      pq.StringArray        `json:"categories" gorm:"type:text[]"`
 	CheckoutID    string                `json:"checkout_id"`
 	CreatedAt     int                   `json:"created_at" gorm:"autoCreateTime:milli"`
@@ -73,7 +76,7 @@ type Seller struct {
 	UpdatedAt  int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DeletedAt  soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
 	Orders     []Orders              `json:"orders" gorm:"foreignKey:SellerID"`
-	Ratings    []Rating              `json:"ratings" gorm:"foreignKey:ProductID"`
+	Reviews    []SellerReviews       `json:"seller_review" gorm:"foreignKey:SellerID"`
 }
 
 type VariationValue struct {
@@ -126,10 +129,26 @@ type Orders struct {
 	SellerName      string                `json:"seller_name"`
 }
 
-type Rating struct {
-	RatingID    string  `json:"id" gorm:"primaryKey"`
-	ProductID   string  `json:"-" validate:"required"`
-	Title       string  `json:"title" validate:"required"`
-	Description string  `json:"description" validate:"required"`
-	Rate        float64 `json:"rating" validate:"required"`
+type ProductReviews struct {
+	ID          string                `json:"id" gorm:"primaryKey"`
+	Title       string                `json:"title" validate:"required"`
+	Description string                `json:"description" validate:"required"`
+	Rate        float64               `json:"rating" validate:"required"`
+	CreatedAt   int                   `json:"created_at" gorm:"autoCreateTime:milli"`
+	UpdatedAt   int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
+	DeletedAt   soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
+	ProductID   string                `json:"-"`
+	UserID      string                `json:"-"`
+}
+
+type SellerReviews struct {
+	ID          string                `json:"id" gorm:"primaryKey"`
+	Title       string                `json:"title" validate:"required"`
+	Description string                `json:"description" validate:"required"`
+	Rate        float64               `json:"rating" validate:"required"`
+	CreatedAt   int                   `json:"created_at" gorm:"autoCreateTime:milli"`
+	UpdatedAt   int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
+	DeletedAt   soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
+	SellerID    string                `json:"-"`
+	UserID      string                `json:"-"`
 }
