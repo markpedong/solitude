@@ -172,6 +172,10 @@ export type OrderItem = {
 	}[]
 	status: number
 	seller_name: string
+	shipped_at: number
+	delivered_at: number
+	completed_at: number
+	created_at: number
 }
 export const getOrders = params => post<OrderItem[]>('/orders/getOrders', params)
 

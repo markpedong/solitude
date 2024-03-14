@@ -7,7 +7,7 @@ import (
 
 type User struct {
 	ID                  string                `json:"id" gorm:"primaryKey"`
-	CreatedAt           int                   `json:"created_at" gorm:"autoCreateTime:milli"`
+	CreatedAt           int                   `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt           int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DeliveryInformation []DeliveryInformation `json:"delivery_information" gorm:"foreignKey:UserID"`
 	Orders              []Orders              `json:"orders" gorm:"foreignKey:UserID"`
@@ -38,7 +38,7 @@ type Product struct {
 	Reviews       []ProductReviews      `json:"reviews" gorm:"foreignKey:ProductID"`
 	Category      pq.StringArray        `json:"categories" gorm:"type:text[]"`
 	CheckoutID    string                `json:"checkout_id"`
-	CreatedAt     int                   `json:"created_at" gorm:"autoCreateTime:milli"`
+	CreatedAt     int                   `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt     int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	Discount      int                   `json:"discount"`
 	DiscountPrice int                   `json:"discount_price"`
@@ -55,7 +55,7 @@ type DeliveryInformation struct {
 	FirstName   string                `json:"first_name" validate:"max=30, required"`
 	LastName    string                `json:"last_name" validate:"max=30, required"`
 	Phone       string                `json:"phone" validate:"required"`
-	CreatedAt   int                   `json:"created_at" gorm:"autoCreateTime:milli"`
+	CreatedAt   int                   `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt   int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DeletedAt   soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
 }
@@ -72,7 +72,7 @@ type Seller struct {
 	Avatar     string                `json:"avatar"`
 	Rating     int                   `json:"rating"`
 	Followers  int                   `json:"followers"`
-	CreatedAt  int                   `json:"created_at" gorm:"autoCreateTime:milli"`
+	CreatedAt  int                   `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt  int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DeletedAt  soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
 	Orders     []Orders              `json:"orders" gorm:"foreignKey:SellerID"`
@@ -98,7 +98,7 @@ type Collections struct {
 	Title       string `json:"title" validate:"required"`
 	Description string `json:"description" validate:"required"`
 	Image       string `json:"image" validate:"required"`
-	CreatedAt   int    `json:"created_at" gorm:"autoCreateTime:milli"`
+	CreatedAt   int    `json:"created_at" gorm:"autoCreateTime"`
 }
 
 type Carts struct {
@@ -107,7 +107,7 @@ type Carts struct {
 	UserID       string                `json:"user_id" validate:"required"`
 	VariationIDs pq.StringArray        `json:"variation_ids" gorm:"type:text[]"`
 	Quantity     int                   `json:"quantity"`
-	CreatedAt    int                   `json:"created_at" gorm:"autoCreateTime:milli"`
+	CreatedAt    int                   `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt    int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DeletedAt    soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
 }
@@ -121,7 +121,7 @@ type Orders struct {
 	Discount        *int           `json:"discount"`
 	PaymentMethod   int            `json:"payment_method"`
 	SelectedAddress string         `json:"address" validate:"required"`
-	CreatedAt       int            `json:"created_at" gorm:"autoCreateTime:milli"`
+	CreatedAt       int            `json:"created_at" gorm:"autoCreateTime"`
 	// will need to create another endpoint for updating the orders status
 	ShippedAt   int                   `json:"shipped_at"`
 	DeliveredAt int                   `json:"delivered_at"`
@@ -139,7 +139,7 @@ type ProductReviews struct {
 	Title       string                `json:"title" validate:"required"`
 	Description string                `json:"description" validate:"required"`
 	Rate        float64               `json:"rating" validate:"required"`
-	CreatedAt   int                   `json:"created_at" gorm:"autoCreateTime:milli"`
+	CreatedAt   int                   `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt   int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DeletedAt   soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
 	ProductID   string                `json:"-"`
@@ -151,7 +151,7 @@ type SellerReviews struct {
 	Title       string                `json:"title" validate:"required"`
 	Description string                `json:"description" validate:"required"`
 	Rate        float64               `json:"rating" validate:"required"`
-	CreatedAt   int                   `json:"created_at" gorm:"autoCreateTime:milli"`
+	CreatedAt   int                   `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt   int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DeletedAt   soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
 	SellerID    string                `json:"-"`

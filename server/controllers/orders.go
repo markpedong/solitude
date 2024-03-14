@@ -170,6 +170,7 @@ func GetOrders(ctx *gin.Context) {
 				ShippedAt:     foundOrder.ShippedAt,
 				DeliveredAt:   foundOrder.DeliveredAt,
 				CompletedAt:   foundOrder.CompletedAt,
+				CreatedAt:     foundOrder.CreatedAt,
 			}
 
 			helpers.JSONResponse(ctx, "", helpers.DataHelper(singleOrderResponse))

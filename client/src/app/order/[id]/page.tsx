@@ -1,17 +1,44 @@
 'use client'
 
-import { useParams, useSearchParams } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import styles from './styles.module.scss'
-import { FaCheckCircle } from 'react-icons/fa'
 import { Timeline } from 'antd'
-import { getOrders } from '@/api'
+import { OrderItem, getOrders } from '@/api'
 import { useAppSelector } from '@/redux/store'
+import { dateParser } from '@/constants/helper'
 
 const OrderedItem = () => {
 	const { id: order_id } = useParams()
 	const { userData } = useAppSelector(s => s.userData)
-	const [orderedData, setOrderedData] = useState()
+	const [orderedData, setOrderedData] = useState<OrderItem>()
+
+	const renderTimelineItems = () =>
+		[
+			{
+				children: <span className={styles.timelineTitle}>Order Created at {dateParser(orderedData?.created_at)}</span>,
+				color: '#123123',
+				key: 1
+			},
+			{
+				children: <span className={styles.timelineTitle}>Pending</span>,
+				color: '#123123',
+				key: 2
+			},
+			{
+				children: <span className={styles.timelineTitle}>Shipping</span>,
+				key: 3
+			},
+			{
+				children: <span className={styles.timelineTitle}>Out for Delivery</span>,
+				key: 4
+			},
+			{
+				children: <span className={styles.timelineTitle}>Order Delivered at {dateParser(orderedData?.delivered_at)}</span>,
+				color: 'rgba(20, 225, 62, 1)',
+				key: 5
+			}
+		].filter(q => q.key <= orderedData?.status)
 
 	const fetchOrderInfo = async () => {
 		const res = await getOrders({ id: userData?.id, order_id })
@@ -30,38 +57,7 @@ const OrderedItem = () => {
 				<div className={styles.orderHeader}>Order Details</div>
 				<div className={styles.detailsWrapper}>
 					<div>
-						<Timeline
-							items={[
-								{
-									children: `Order Created`,
-									color: '#123123',
-									dot: <FaCheckCircle className="size-6" />,
-									key: '0'
-								},
-								{
-									children: 'Pending',
-									color: '#123123',
-									dot: <FaCheckCircle className="size-6" />,
-									key: '1'
-								},
-								{
-									children: 'Shipping',
-									dot: <FaCheckCircle className="size-6" />,
-									key: '2'
-								},
-								{
-									children: 'Out for Delivery',
-									dot: <FaCheckCircle className="size-6" />,
-									key: '3'
-								},
-								{
-									children: 'Order Completed',
-									color: 'rgba(20, 225, 62, 1)',
-									dot: <FaCheckCircle className="size-6" />,
-									key: '4'
-								}
-							]}
-						/>
+						<Timeline items={renderTimelineItems()} />
 					</div>
 					<div>2</div>
 				</div>

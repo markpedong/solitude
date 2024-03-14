@@ -68,4 +68,5 @@ type SingleOrderResponse struct {
 	ShippedAt   int `json:"shipped_at"`
 	DeliveredAt int `json:"delivered_at"`
 	CompletedAt int `json:"completed_at"`
+	CreatedAt   int `json:"created_at"`
 }

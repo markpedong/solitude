@@ -13,16 +13,11 @@
 .detailsWrapper{
     @apply grid mt-16;
     grid-template-columns: 1fr 2fr;
+}
 
-    :global {
-        // .ant-timeline{
-        //     li {
-        //     padding-bottom: toRem(20);
-        //     }
-        // }
-        // .ant-timeline-item-content{
-        //     font-size: toRem(12);
-        //     line-height: toRem(12);
-        // }
-    }
+.timelineTitle{
+    font-size: toRem(14);
+    line-height: toRem(14);
+    font-family: "Satoshi";
+    color: var(--color-primary);
 }
