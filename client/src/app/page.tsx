@@ -8,7 +8,6 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
 const Page = async () => {
 	const products = await getProducts({})
-
 	return (
 		<>
 			<div className={styles.mainWrapper}>

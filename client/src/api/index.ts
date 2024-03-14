@@ -52,7 +52,7 @@ export const getProducts = params => post<TProduct[]>('/public/products', params
 // export const getCollections = () => get<TCollection[]>('/users/collections')
 
 // /product/getDetails
-export const getProductData = (params, client = true) => post<TProduct>(`/product/getDetails`, params, client)
+export const getProductData = (params) => post<TProduct>(`/product/getDetails`, params)
 
 // /api/updateUser
 export const updateUserData = params => post('/api/updateUser', params)
@@ -151,7 +151,7 @@ export const deleteDeliveryInfo = params => post<InfoItem[]>('/delivery/delete',
 // /cart/checkout
 export const checkout = params => post('/cart/checkout', params)
 
-// /cart/orders
+// /orders/getAll
 export type OrderItem = {
 	product_id: string
 	order_id: number
@@ -173,7 +173,10 @@ export type OrderItem = {
 	status: number
 	seller_name: string
 }
-export const getOrders = params => post<OrderItem[]>('/cart/orders', params)
+export const getOrders = params => post<OrderItem[]>('/orders/getAll', params)
 
 // /delivery/setDefault
 export const setDefault = params => post('/delivery/setDefault', params)
+
+// /orders/get
+export const getOrderByID = params => post("/orders/get", params)

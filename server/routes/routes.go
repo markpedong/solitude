@@ -37,7 +37,6 @@ func UserRoutes(r *gin.Engine) {
 		cart.POST("/get", controllers.GetItemsFromCart)
 		cart.POST("/add", controllers.AddToCart)
 		cart.POST("/remove", controllers.RemoveItemFromCart)
-		cart.POST("/orders", controllers.GetOrders)
 		cart.POST("/checkout", controllers.CheckoutOrder)
 
 	}
@@ -50,6 +49,13 @@ func UserRoutes(r *gin.Engine) {
 		delivery.POST("/get", controllers.GetDeliveryInfo)
 		delivery.POST("/delete", controllers.DeleteDeliveryInfo)
 		delivery.POST("/setDefault", controllers.SetDefaultInfo)
+	}
+
+	orders := r.Group("/orders")
+	orders.Use(middleware.Authentication)
+	{
+		orders.POST("/getAll", controllers.GetOrders)
+		orders.POST("/get", controllers.GetOrderByID)
 	}
 
 	rating := r.Group("/rating")

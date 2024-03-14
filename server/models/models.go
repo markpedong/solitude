@@ -112,21 +112,25 @@ type Carts struct {
 }
 
 type Orders struct {
-	OrderID         string                `json:"id" gorm:"primaryKey"`
-	ProductID       string                `json:"product_id"`
-	UserID          string                `json:"user_id"`
-	VariationIDs    pq.StringArray        `json:"variation_ids" gorm:"type:text[]"`
-	Price           int                   `json:"price"`
-	Discount        *int                  `json:"discount"`
-	PaymentMethod   int                   `json:"payment_method"`
-	SelectedAddress string                `json:"address" validate:"required"`
-	CreatedAt       int                   `json:"created_at" gorm:"autoCreateTime:milli"`
-	UpdatedAt       int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
-	DeletedAt       soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
-	Quantity        int                   `json:"quantity"`
-	Status          int                   `json:"status"`
-	SellerID        string                `json:"seller_id"`
-	SellerName      string                `json:"seller_name"`
+	OrderID         string         `json:"id" gorm:"primaryKey"`
+	ProductID       string         `json:"product_id"`
+	UserID          string         `json:"user_id"`
+	VariationIDs    pq.StringArray `json:"variation_ids" gorm:"type:text[]"`
+	Price           int            `json:"price"`
+	Discount        *int           `json:"discount"`
+	PaymentMethod   int            `json:"payment_method"`
+	SelectedAddress string         `json:"address" validate:"required"`
+	CreatedAt       int            `json:"created_at" gorm:"autoCreateTime:milli"`
+	// will need to create another endpoint for updating the orders status
+	ShippedAt   int                   `json:"shipped_at"`
+	DeliveredAt int                   `json:"delivered_at"`
+	CompletedAt int                   `json:"completed_at"`
+	UpdatedAt   int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
+	DeletedAt   soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
+	Quantity    int                   `json:"quantity"`
+	Status      int                   `json:"status"`
+	SellerID    string                `json:"seller_id"`
+	SellerName  string                `json:"seller_name"`
 }
 
 type ProductReviews struct {

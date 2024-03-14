@@ -149,3 +149,20 @@ func GetOrders(ctx *gin.Context) {
 
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(productsWithVariations))
 }
+
+func GetOrderByID(ctx *gin.Context) {
+	var body struct {
+		ID string `json:"order_id" validate:"required"`
+	}
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
+		return
+	}
+
+	var currOrder models.Orders
+	if err := database.DB.First(&currOrder, "order_id = ?", body.ID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(currOrder))
+}

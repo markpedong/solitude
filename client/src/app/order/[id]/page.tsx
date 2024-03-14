@@ -1,17 +1,18 @@
-import { useParams } from 'next/navigation'
 import React from 'react'
-import Content from '../components/content'
+import Content from './components/content'
+import { getOrderByID } from '@/api'
 
 type Props = {
 	params: any
 }
 
-const OrderedItem = (props: Props) => {
-	console.log("id", props.params.id)
-	
+const OrderedItem = async (props: Props) => {
+	const data = await getOrderByID({ order_id: props.params.id })
+	console.log("PPPPP", data)
+
 	return (
 		<div className="max-w-6xl mx-auto my-10 px-5">
-			<Content />
+			<Content data={data} />
 		</div>
 	)
 }

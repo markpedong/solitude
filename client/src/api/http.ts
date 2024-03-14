@@ -1,8 +1,8 @@
 import { stringify } from 'qs'
 import { throttle } from 'lodash'
-import { message } from 'antd'
 import { getLocalStorage } from '@/utils/xLocalStorage'
 import { clearUserData } from '@/constants/helper'
+import { redirect } from 'next/navigation'
 
 type ApiResponse<T> = {
 	data?: T
@@ -55,12 +55,12 @@ const post = async <T>(url: string, data = {}, client = true): Promise<ApiRespon
 	const response = await apiResponse.json() as ApiResponse<T>
 
 	if (response?.status !== 200) {
-		if (response?.status === 401) {
-			clearUserData()
-		}
+		throttleAlert(response.message)
 
-		throttleAlert(response?.message)
-		return response
+		if (response?.status === 401) {
+			redirect('/unauthorized')
+		}
+		return
 	}
 
 	return response as ApiResponse<T>
@@ -76,10 +76,14 @@ const get = async <T>(url: string, data = {}, client = true): Promise<ApiRespons
 	})
 	//prettier-ignore
 	const response = await apiResponse.json() as ApiResponse<T>
-	if (response?.status !== 200 && client) {
+	
+	if (response?.status !== 200) {
+		throttleAlert(response.message)
+
 		if (response?.status === 401) {
-			clearUserData()
+			redirect('/unauthorized')
 		}
+		return
 	}
 
 	return response as ApiResponse<T>

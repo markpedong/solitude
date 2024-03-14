@@ -84,7 +84,7 @@ export const ADDRESS_TYPE = [
 
 export const ORDER_STATUS = {
 	1: "PENDING",
-	2: "PROCESSING",
+	2: "SHIPPING",
 	3: "ON DELIVERY",
 	4: "COMPLETED"
 }
