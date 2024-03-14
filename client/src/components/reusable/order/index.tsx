@@ -32,7 +32,7 @@ const Order: FC<Props> = ({ data }) => {
 					<span>Order Total:</span>
 					{!!!data?.discount_price ? <span className={styles.price}>₱{data?.price}</span> : <span className={styles.price}>₱{data?.discount_price}</span>}
 				</div>
-				{data?.status === 4 && <span className={styles.rateBtn}>Rate Product</span>}
+				<span className={styles.rateBtn} onClick={() => router.push(`/order/${data?.order_id}`)}>Show Details</span>
 			</div>
 		</div>
 	)

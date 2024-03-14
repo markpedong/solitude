@@ -169,12 +169,11 @@ func SetDefaultInfo(ctx *gin.Context) {
 			v.AddressType = 0
 			database.DB.Save(&v)
 		} else {
-			// No need to update AddressType if it's not equal to 1
 			continue
 		}
 	}
 
 	currInfo.AddressType = 1
 	database.DB.Save(&currInfo)
-	helpers.JSONResponse(ctx, "", helpers.DataHelper(currInfo))
+	helpers.JSONResponse(ctx, "")
 }

@@ -32,9 +32,19 @@ const Content = () => {
 
 	const fetchDeliveryDetails = async () => {
 		const res = await getDeliveryInfo({ user_id: id })
+		const data = res?.data
+		let idToUse
 
-		setDeliveryInfo(res?.data)
-		setInfoID(res?.data?.[0]?.id)
+		setDeliveryInfo(data ?? [])
+
+		if (data) {
+			const hasAddressType1 = data.some(q => q?.address_type === 1)
+			const addressType1Item = data.find(q => q?.address_type === 1)
+
+			idToUse = hasAddressType1 ? addressType1Item?.id : data[0]?.id
+		}
+
+		setInfoID(idToUse)
 	}
 
 	const selectAddress = () => {
@@ -52,8 +62,7 @@ const Content = () => {
 							</motion.span>
 						</div>
 					)
-				}}
-			>
+				}}>
 				<div className={styles.addressWrapper}>
 					<div className={styles.addressDetails}>
 						{deliveryInfo?.map(q => (
@@ -166,8 +175,7 @@ const Content = () => {
 							whileTap={!!deliveryInfo?.length && scaleSize}
 							className={styles.checkout}
 							style={{ background: !!!deliveryInfo?.length ? 'gray' : '' }}
-							onClick={checkoutItems}
-						>
+							onClick={checkoutItems}>
 							Checkout <ArrowRightOutlined />
 						</motion.button>
 					</div>
