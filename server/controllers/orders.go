@@ -85,7 +85,8 @@ func CheckoutOrder(ctx *gin.Context) {
 
 func GetOrders(ctx *gin.Context) {
 	var body struct {
-		ID string `json:"id"`
+		ID      string `json:"id" validate:"required"`
+		OrderID string `json:"order_id"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
@@ -97,7 +98,7 @@ func GetOrders(ctx *gin.Context) {
 		return
 	}
 
-	var productsWithVariations []models.OrderReponse
+	var productsWithVariations []models.OrderResponse
 	for _, cart := range currOrders {
 		var product models.Product
 		if err := database.DB.Find(&product, "product_id = ?", cart.ProductID).Error; err != nil {
@@ -125,12 +126,10 @@ func GetOrders(ctx *gin.Context) {
 				}
 
 			}
-			variations[i].Value = values
+			variations[i].SelectedValue = values[0].Value
 		}
 
-		// product.Variations = variations
-		// product.CheckoutID = cart.ID
-		productRes := models.OrderReponse{
+		productRes := models.OrderResponse{
 			OrderID:       cart.OrderID,
 			ProductID:     product.ProductID,
 			SellerID:      product.SellerID,
@@ -147,22 +146,36 @@ func GetOrders(ctx *gin.Context) {
 		productsWithVariations = append(productsWithVariations, productRes)
 	}
 
-	helpers.JSONResponse(ctx, "", helpers.DataHelper(productsWithVariations))
-}
+	if body.OrderID != "" {
+		var foundOrder models.Orders
+		var foundProduct models.OrderResponse
 
-func GetOrderByID(ctx *gin.Context) {
-	var body struct {
-		ID string `json:"order_id" validate:"required"`
-	}
-	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
-		return
-	}
+		for _, order := range currOrders {
+			if order.OrderID == body.OrderID {
+				foundOrder = order
+				break
+			}
+		}
 
-	var currOrder models.Orders
-	if err := database.DB.First(&currOrder, "order_id = ?", body.ID).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-		return
-	}
+		for _, product := range productsWithVariations {
+			if product.OrderID == body.OrderID {
+				foundProduct = product
+				break
+			}
+		}
 
-	helpers.JSONResponse(ctx, "", helpers.DataHelper(currOrder))
+		if foundOrder.OrderID == body.OrderID && foundProduct.OrderID == body.OrderID {
+			singleOrderResponse := models.SingleOrderResponse{
+				OrderResponse: foundProduct,
+				ShippedAt:     foundOrder.ShippedAt,
+				DeliveredAt:   foundOrder.DeliveredAt,
+				CompletedAt:   foundOrder.CompletedAt,
+			}
+
+			helpers.JSONResponse(ctx, "", helpers.DataHelper(singleOrderResponse))
+			return
+		}
+	} else {
+		helpers.JSONResponse(ctx, "", helpers.DataHelper(productsWithVariations))
+	}
 }

@@ -41,7 +41,7 @@ const upload = async <T>(url: string, data): Promise<ApiResponse<T>> => {
 	return result as ApiResponse<T>
 }
 
-const post = async <T>(url: string, data = {}, client = true): Promise<ApiResponse<T>> => {
+const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
 	const token = getLocalStorage('token')
 	const apiResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`, {
 		method: 'POST',

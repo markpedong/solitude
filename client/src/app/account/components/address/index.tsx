@@ -141,7 +141,7 @@ const Address: FC = () => {
 	return (
 		<div>
 			{info?.length <= 5 && renderAddEditInfo('ADD')}
-			{info.map(q => (
+			{info?.map(q => (
 				<div className={styles.addressContainer} key={q?.id}>
 					<DeliveryInfo data={q} />
 					<div className={styles.addressOperators}>

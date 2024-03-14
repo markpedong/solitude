@@ -3,8 +3,8 @@
 import { checkCart, sellerLogin, sellerSignup, userLogin, userSignup } from '@/api'
 import Profile from '@/components/profile'
 import { USER_TYPES, scaleSize } from '@/constants'
-import { afterModalformFinish } from '@/constants/helper'
-import { setActiveLoginForm, setDarkMode, setIsBannerHidden, setLoginModalOpen } from '@/redux/features/booleanSlice'
+import { afterModalformFinish, clearUserData } from '@/constants/helper'
+import { resetBooleanData, setActiveLoginForm, setDarkMode, setIsBannerHidden, setLoginModalOpen } from '@/redux/features/booleanSlice'
 import { resetUserData, setCart, setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { setLocalStorage } from '@/utils/xLocalStorage'
@@ -79,12 +79,12 @@ const Navbar = () => {
 				<Typography.Link
 					className={styles.menuItems}
 					onClick={async () => {
-						await dispatch(resetUserData())
-						localStorage.clear()
+						clearUserData()
+						dispatch(resetUserData())
+						dispatch(resetBooleanData())
 						router.push('/')
 					}}
-					type="danger"
-				>
+					type="danger">
 					LOGOUT
 				</Typography.Link>
 			)
@@ -135,7 +135,7 @@ const Navbar = () => {
 		setLocalStorage('token', res?.token)
 		formRef?.current?.resetFields()
 
-		if (pathname === '/') {
+		if (pathname === '/' || '/unauthorized') {
 			router.push('/account')
 		}
 
@@ -167,8 +167,7 @@ const Navbar = () => {
 							className={styles.cancelBtn}
 							onClick={() => {
 								setCartModal(false)
-							}}
-						>
+							}}>
 							Cancel
 						</motion.div>
 						{!!userCart?.length && (
@@ -179,8 +178,7 @@ const Navbar = () => {
 									onClick={() => {
 										router.push('/checkout')
 										setCartModal(false)
-									}}
-								>
+									}}>
 									Checkout
 								</motion.div>
 							</div>
@@ -188,8 +186,7 @@ const Navbar = () => {
 					</div>
 				)
 			}}
-			title={<div className={styles.header}>your cart</div>}
-		>
+			title={<div className={styles.header}>your cart</div>}>
 			<div className={styles.orderContainer}>
 				{userCart &&
 					(userCart?.length > 1
@@ -227,8 +224,7 @@ const Navbar = () => {
 						dispatch(setLoginModalOpen(false))
 					}
 				}}
-				onFinish={handleFinish}
-			>
+				onFinish={handleFinish}>
 				<LoginModal formRef={formRef} />
 			</ModalForm>
 		)

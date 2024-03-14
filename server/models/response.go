@@ -48,7 +48,7 @@ type JSONSeller struct {
 	Followers  int    `json:"followers"`
 }
 
-type OrderReponse struct {
+type OrderResponse struct {
 	OrderID       string              `json:"order_id"`
 	Discount      *int                `json:"discount"`
 	DiscountPrice int                 `json:"discount_price"`
@@ -61,4 +61,11 @@ type OrderReponse struct {
 	SellerName    string              `json:"seller_name"`
 	Status        int                 `json:"status"`
 	Variations    []ProductVariations `json:"variations"`
+}
+
+type SingleOrderResponse struct {
+	OrderResponse
+	ShippedAt   int `json:"shipped_at"`
+	DeliveredAt int `json:"delivered_at"`
+	CompletedAt int `json:"completed_at"`
 }

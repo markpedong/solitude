@@ -22,17 +22,23 @@ const Order: FC<Props> = ({ data }) => {
 						{data?.seller_name}
 					</span>
 				</div>
-				<span className={styles.orderName} onClick={() => router.push(`/products/${data?.product_id}`)}>{data?.product_name}</span>
-				<div>Variation: {data?.variations?.filter(q => !!q?.value).map(q => `${q.label}:${q?.value?.[0]?.value}, `)}</div>
+				<span className={styles.orderName} onClick={() => router.push(`/products/${data?.product_id}`)}>
+					{data?.product_name}
+				</span>
+				<div>Variation: {data?.variations?.map(q => `${q.label}:${q?.selected_value}, `)}</div>
 				<span>x{data?.quantity}</span>
 			</div>
 			<div className={styles.extraWrapper}>
-				<span className={styles.status} style={{color: COLOR_STATUS[data?.status]}}>{ORDER_STATUS[data?.status]}</span>
+				<span className={styles.status} style={{ color: COLOR_STATUS[data?.status] }}>
+					{ORDER_STATUS[data?.status]}
+				</span>
 				<div className={styles.priceContainer}>
 					<span>Order Total:</span>
 					{!!!data?.discount_price ? <span className={styles.price}>₱{data?.price}</span> : <span className={styles.price}>₱{data?.discount_price}</span>}
 				</div>
-				<span className={styles.rateBtn} onClick={() => router.push(`/order/${data?.order_id}`)}>Show Details</span>
+				<span className={styles.rateBtn} onClick={() => router.push(`/order/${data?.order_id}`)}>
+					Show Details
+				</span>
 			</div>
 		</div>
 	)
