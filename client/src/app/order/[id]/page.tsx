@@ -7,6 +7,7 @@ import { Timeline } from 'antd'
 import { OrderItem, getOrders } from '@/api'
 import { useAppSelector } from '@/redux/store'
 import { dateParser } from '@/constants/helper'
+import Image from 'next/image'
 
 const OrderedItem = () => {
 	const { id: order_id } = useParams()
@@ -43,8 +44,7 @@ const OrderedItem = () => {
 	const fetchOrderInfo = async () => {
 		const res = await getOrders({ id: userData?.id, order_id })
 
-		//@ts-ignore
-		setOrderedData(res?.data)
+		setOrderedData(res?.data as OrderItem)
 	}
 
 	useEffect(() => {
@@ -59,7 +59,9 @@ const OrderedItem = () => {
 					<div>
 						<Timeline items={renderTimelineItems()} />
 					</div>
-					<div>2</div>
+					<div>
+						<Image className={styles.orderImage} src={orderedData?.image?.[0]} width={50} height={50} alt={orderedData?.product_name}/>
+					</div>
 				</div>
 			</div>
 		</div>

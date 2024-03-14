@@ -19,7 +19,7 @@ const Orders: FC<Props> = () => {
 	const fetchOrders = async () => {
 		const res = await getOrders({ id })
 
-		setOrders(res?.data ?? [])
+		setOrders((res?.data as OrderItem[]) ?? [])
 	}
 
 	useEffect(() => {
