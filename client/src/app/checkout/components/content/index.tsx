@@ -62,7 +62,8 @@ const Content = () => {
 							</motion.span>
 						</div>
 					)
-				}}>
+				}}
+			>
 				<div className={styles.addressWrapper}>
 					<div className={styles.addressDetails}>
 						{deliveryInfo?.map(q => (
@@ -175,7 +176,8 @@ const Content = () => {
 							whileTap={!!deliveryInfo?.length && scaleSize}
 							className={styles.checkout}
 							style={{ background: !!!deliveryInfo?.length ? 'gray' : '' }}
-							onClick={checkoutItems}>
+							onClick={checkoutItems}
+						>
 							Checkout <ArrowRightOutlined />
 						</motion.button>
 					</div>
