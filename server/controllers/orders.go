@@ -126,7 +126,12 @@ func GetOrders(ctx *gin.Context) {
 				}
 
 			}
-			variations[i].SelectedValue = values[0].Value
+
+			if len(values) > 0 {
+				variations[i].SelectedValue = values[0].Value
+			} else {
+				variations[i].SelectedValue = ""
+			}
 		}
 
 		productRes := models.OrderResponse{
