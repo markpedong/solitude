@@ -9,7 +9,7 @@ import { useAppSelector } from '@/redux/store'
 import { dateParser } from '@/constants/helper'
 import Image from 'next/image'
 import DeliveryInfo from '@/components/reusable/deliveryInfo'
-import { IoInformationCircle } from 'react-icons/io5'
+import { FaStore } from 'react-icons/fa'
 
 const OrderedItem = () => {
 	const { id: order_id } = useParams()
@@ -66,6 +66,11 @@ const OrderedItem = () => {
 						<DeliveryInfo data={orderedData?.delivery_info} />
 					</div>
 					<div className={styles.textContainer}>
+						<div className={styles.sellerData}>
+							<FaStore />
+							<span>{orderedData?.seller_name}</span>
+							<span>View Shop</span>
+						</div>
 						<div className={styles.orderContainer}>
 							<Image className={styles.orderImage} src={orderedData?.image?.[0]} width={50} height={50} alt={orderedData?.product_name} />
 							<div className={styles.detailsContainer}>
@@ -101,7 +106,11 @@ const OrderedItem = () => {
 								<span>₱38</span>
 							</div>
 						</div>
-						<Divider />
+						<div className={styles.reviewRateContainer}>
+							<span>Rate Product</span>
+							<span>Rate Seller</span>
+							<span>Complete Order</span>
+						</div>
 					</div>
 				</div>
 			</div>
