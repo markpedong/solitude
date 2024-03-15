@@ -275,6 +275,7 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 					<Select
 						className={styles.input}
 						placeholder="Search for a product"
+						mode="multiple"
 						suffixIcon={<IoSearch />}
 						options={options}
 						autoClearSearchValue
