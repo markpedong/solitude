@@ -83,6 +83,7 @@ func CheckoutOrder(ctx *gin.Context) {
 	helpers.JSONResponse(ctx, "ordered successfully")
 }
 
+// if user order different product at the same time then filter it and store it in array. Same with single order
 func GetOrders(ctx *gin.Context) {
 	var body struct {
 		ID      string `json:"id" validate:"required"`
