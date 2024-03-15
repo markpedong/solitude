@@ -56,9 +56,10 @@ func AddProducts(ctx *gin.Context) {
 
 func GetAllProducts(ctx *gin.Context) {
 	var body struct {
-		Material string `json:"material"`
-		Price    int    `json:"price"`
-		Gender   string `json:"gender"`
+		Material     string `json:"material"`
+		Price        int    `json:"price"`
+		Gender       string `json:"gender"`
+		SearchParams string `json:"search"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
@@ -80,6 +81,13 @@ func GetAllProducts(ctx *gin.Context) {
 			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid Gender! Please check")
 			return
 		}
+	}
+	if body.SearchParams != "" {
+		// ARRAY[?]::text[] converts the single value "pants" into an array of strings, so that it can be compared to
+		// the categories array.
+		// @>checks if the array in the categories column contains the array "pants".
+		// Convert the search parameter into a single-element array
+		query = query.Where("category && ARRAY[?]", []string{body.SearchParams})
 	}
 
 	var productModels []models.Product

@@ -272,26 +272,29 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 						<div onClick={() => router.push('/products')}>new arrivals</div>
 						<div>brands</div>
 					</div>
-					<Select
+					<Input
 						className={styles.input}
 						placeholder="Search for a product"
-						mode="multiple"
-						suffixIcon={<IoSearch />}
-						options={options}
-						autoClearSearchValue
+						prefix={<IoSearch />}
+						// options={options}
+						// autoClearSearchValue
 						ref={selectRef}
 						autoFocus={false}
-						onChange={e => {
-							window.location.replace(`/products/${e}`)
+						allowClear
+						onPressEnter={e => {
+							router.push(`/products?search=${e?.currentTarget?.value}`)
 						}}
-						optionRender={option => {
-							return (
-								<Space>
-									<Image src={option?.data?.image} width={20} height={20} alt={String(option?.value)} />
-									{option?.data?.label}
-								</Space>
-							)
-						}}
+						// onChange={e => {
+						// 	router.push(`/products/${e}`)
+						// }}
+						// optionRender={option => {
+						// 	return (
+						// 		<Space>
+						// 			<Image src={option?.data?.image} width={20} height={20} alt={String(option?.value)} />
+						// 			{option?.data?.label}
+						// 		</Space>
+						// 	)
+						// }}
 					/>
 					<div className={styles.userContainer}>
 						<SearchOutlined className={styles.smallInput} />
