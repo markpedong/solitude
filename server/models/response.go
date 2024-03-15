@@ -65,8 +65,9 @@ type OrderResponse struct {
 
 type SingleOrderResponse struct {
 	OrderResponse
-	ShippedAt   int `json:"shipped_at"`
-	DeliveredAt int `json:"delivered_at"`
-	CompletedAt int `json:"completed_at"`
-	CreatedAt   int `json:"created_at"`
+	DeliveryInfo DeliveryInformation `json:"delivery_info"`
+	ShippedAt    int                 `json:"shipped_at"`
+	DeliveredAt  int                 `json:"delivered_at"`
+	CompletedAt  int                 `json:"completed_at"`
+	CreatedAt    int                 `json:"created_at"`
 }

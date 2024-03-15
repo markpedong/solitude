@@ -143,8 +143,22 @@ const Profile: FC = () => {
 						</>
 					) : (
 						<>
-							<ProFormText name="seller_name" placeholder="YOUR STORE NAME" label="Store Name" fieldProps={{ maxLength: 30 }} colProps={{ span: 21 }} rules={[...REQUIRED]} />
-							<ProFormText name="location" placeholder="eg: Cavite, Laguna" label="Store Location" fieldProps={{ maxLength: 30 }} colProps={{ span: 21 }} rules={[...REQUIRED]} />
+							<ProFormText
+								name="seller_name"
+								placeholder="YOUR STORE NAME"
+								label="Store Name"
+								fieldProps={{ maxLength: 30 }}
+								colProps={{ span: 21 }}
+								rules={[...REQUIRED]}
+							/>
+							<ProFormText
+								name="location"
+								placeholder="eg: Cavite, Laguna"
+								label="Store Location"
+								fieldProps={{ maxLength: 30 }}
+								colProps={{ span: 21 }}
+								rules={[...REQUIRED]}
+							/>
 						</>
 					)}
 					<ProFormText label="Phone Number" required name="phone" colProps={{ span: 21 }} />
@@ -156,7 +170,14 @@ const Profile: FC = () => {
 				<ProFormText label="Username" name="username" placeholder="Your Username" colProps={{ span: 12 }} />
 			</ProForm.Group>
 			<ProForm.Group>
-				<ProFormText.Password name="password" placeholder="Enter Password" label="Password" fieldProps={{ prefix: <LockOutlined /> }} colProps={{ span: 12 }} rules={[...REQUIRED, ...INPUT_NOSPACE, { min: 6 }]} />
+				<ProFormText.Password
+					name="password"
+					placeholder="Enter Password"
+					label="Password"
+					fieldProps={{ prefix: <LockOutlined /> }}
+					colProps={{ span: 12 }}
+					rules={[...REQUIRED, ...INPUT_NOSPACE, { min: 6 }]}
+				/>
 				<ProFormText.Password
 					name="confirm_password"
 					placeholder="Re-enter Password"

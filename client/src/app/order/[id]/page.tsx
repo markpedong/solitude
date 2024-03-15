@@ -3,11 +3,13 @@
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import styles from './styles.module.scss'
-import { Timeline } from 'antd'
+import { Divider, Timeline, Tooltip } from 'antd'
 import { OrderItem, getOrders } from '@/api'
 import { useAppSelector } from '@/redux/store'
 import { dateParser } from '@/constants/helper'
 import Image from 'next/image'
+import DeliveryInfo from '@/components/reusable/deliveryInfo'
+import { IoInformationCircle } from 'react-icons/io5'
 
 const OrderedItem = () => {
 	const { id: order_id } = useParams()
@@ -56,11 +58,50 @@ const OrderedItem = () => {
 			<div>
 				<div className={styles.orderHeader}>Order Details</div>
 				<div className={styles.detailsWrapper}>
-					<div>
+					<div className={styles.timeContainer}>
 						<Timeline items={renderTimelineItems()} />
+						<Divider />
+						<span className={styles.deliveryHeader}>Delivery Address</span>
+						<div className={styles.deliveryInfo}>{/* <span>{orderedData?}</span> */}</div>
+						<DeliveryInfo data={orderedData?.delivery_info} />
 					</div>
-					<div>
-						<Image className={styles.orderImage} src={orderedData?.image?.[0]} width={50} height={50} alt={orderedData?.product_name}/>
+					<div className={styles.textContainer}>
+						<div className={styles.orderContainer}>
+							<Image className={styles.orderImage} src={orderedData?.image?.[0]} width={50} height={50} alt={orderedData?.product_name} />
+							<div className={styles.detailsContainer}>
+								<span className={styles.detailHeader}>{orderedData?.product_name}</span>
+								<div>Variation: {orderedData?.variations?.map(q => `${q.label}:${q?.selected_value}, `)}</div>
+								<span>Quantity: {orderedData?.quantity}</span>
+								<div className={styles.priceContainer}>
+									{!!!orderedData?.discount_price ? <span>₱{orderedData?.price}</span> : <span>₱{orderedData?.discount_price}</span>}
+									{!!orderedData?.discount_price && <span>₱{orderedData?.price}</span>}
+									{!!orderedData?.discount && <span>-{orderedData?.discount}%</span>}
+								</div>
+							</div>
+						</div>
+						<Divider />
+						<div className={styles.orderTotal}>
+							<span className={styles.deliveryHeader}>Order Total</span>
+							<div className="mt-3">
+								<span>Merchandise Total</span>
+								<span>₱{orderedData?.price}</span>
+							</div>
+							<div>
+								<span>Shipping Fee</span>
+								<span>₱38</span>
+							</div>
+							<div>
+								<span>
+									<Tooltip title="Free Shipping Voucher applied">Shipping Discount Subtotal</Tooltip>
+								</span>
+								<span>₱38</span>
+							</div>
+							<div>
+								<span>Order Total</span>
+								<span>₱38</span>
+							</div>
+						</div>
+						<Divider />
 					</div>
 				</div>
 			</div>

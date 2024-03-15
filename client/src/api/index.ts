@@ -176,8 +176,9 @@ export type OrderItem = {
 	delivered_at: number
 	completed_at: number
 	created_at: number
+	delivery_info: InfoItem
 }
-export const getOrders = params => post<OrderItem[]|OrderItem>('/orders/getOrders', params)
+export const getOrders = params => post<OrderItem[] | OrderItem>('/orders/getOrders', params)
 
 // /delivery/setDefault
 export const setDefault = params => post('/delivery/setDefault', params)

@@ -169,9 +169,16 @@ func GetOrders(ctx *gin.Context) {
 			}
 		}
 
+		var deliveryInfo models.DeliveryInformation
+		if err := database.DB.First(&deliveryInfo, "id = ?", foundOrder.SelectedAddress).Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
+
 		if foundOrder.OrderID == body.OrderID && foundProduct.OrderID == body.OrderID {
 			singleOrderResponse := models.SingleOrderResponse{
 				OrderResponse: foundProduct,
+				DeliveryInfo:  deliveryInfo,
 				ShippedAt:     foundOrder.ShippedAt,
 				DeliveredAt:   foundOrder.DeliveredAt,
 				CompletedAt:   foundOrder.CompletedAt,
