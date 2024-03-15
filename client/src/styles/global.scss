@@ -37,11 +37,8 @@ body {
 
 
 .ant-select-dropdown {
-    font-family: 'Jost' !important;
-    text-transform: uppercase;
-    letter-spacing: toRem(1);
-    inline-size: auto !important;
-
+    font-family: 'Satoshi' !important;
+    letter-spacing: toRem(0.5);
 
     .ant-select-item-option-selected {
         gap: toRem(10);

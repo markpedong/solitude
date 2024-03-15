@@ -35,7 +35,7 @@ const Page = async () => {
 					</div>
 				</div>
 				<div className={styles.imageContainer}>
-					<Image src="/assets/landing/landingCover.png" alt="landing_cover" width={300} height={500} />
+					<Image src="/assets/landing/landingCover.png" alt="landing_cover" width={300} height={500} priority />
 					<Image src="/assets/landing/star1.png" alt="landing_cover" width={100} height={100} />
 					<Image src="/assets/landing/star2.png" alt="landing_cover" width={100} height={100} />
 				</div>

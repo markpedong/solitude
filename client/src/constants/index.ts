@@ -83,17 +83,17 @@ export const ADDRESS_TYPE = [
 ]
 
 export const ORDER_STATUS = {
-	1: "CREATED",
-	2: "PENDING",
-	3: "SHIPPING",
-	4: "ON DELIVERY",
-	5: "COMPLETED"
+	1: 'CREATED',
+	2: 'PENDING',
+	3: 'SHIPPING',
+	4: 'ON DELIVERY',
+	5: 'COMPLETED'
 }
 
 export const COLOR_STATUS = {
-	1: "red",
-	2: "rgba(153, 153, 153, 1)",
-	3: "rgba(251, 142, 41, 1)",
-	4: "rgba(255, 221, 134, 1)",
-	5:"rgba(20, 225, 62, 1)"
+	1: 'rgba(108, 122, 137, 1)',
+	2: 'rgba(153, 153, 153, 1)',
+	3: 'rgba(251, 142, 41, 1)',
+	4: 'rgba(255, 221, 134, 1)',
+	5: 'rgba(20, 225, 62, 1)'
 }

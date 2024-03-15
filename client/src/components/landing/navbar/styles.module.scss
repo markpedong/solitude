@@ -56,7 +56,7 @@
     }
 
     .input {
-        @apply ml-10;
+        @apply ml-10 w-full;
         width: toRem(400);
         color: var(--color-primary);
 
@@ -276,7 +276,7 @@
     }
 }
 
-.cartLength{
+.cartLength {
     @apply absolute bottom-4 left-3 h-[1.2rem] w-[1.2rem] flex justify-center items-center rounded-full;
     background-color: var(--color-primary);
     color: var(--white-color);
