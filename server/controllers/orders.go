@@ -168,17 +168,19 @@ func GetOrders(ctx *gin.Context) {
 
 	// Create a new struct to hold the grouped orders and their count
 	type GroupedOrderResponse struct {
-		models.OrderResponse
-		Count int `json:"count"`
+		GroupID string                 `json:"group_id"`
+		Orders  []models.OrderResponse `json:"orders"`
+		Count   int                    `json:"count"`
 	}
 
 	var groupedOrderResponses []GroupedOrderResponse
 
 	// Populate the new struct with the grouped orders and their count
-	for _, orders := range groupedOrders {
+	for groupID, orders := range groupedOrders {
 		groupedOrderResponses = append(groupedOrderResponses, GroupedOrderResponse{
-			OrderResponse: orders[0],
-			Count:         len(orders),
+			GroupID: groupID,
+			Orders:  orders,
+			Count:   len(orders),
 		})
 	}
 
