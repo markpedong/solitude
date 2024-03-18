@@ -88,7 +88,7 @@ func CheckoutOrder(ctx *gin.Context) {
 func GetOrders(ctx *gin.Context) {
 	var body struct {
 		ID      string `json:"id" validate:"required"`
-		GroupID string `json:"group_id"`
+		OrderID string `json:"order_id"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
@@ -100,9 +100,7 @@ func GetOrders(ctx *gin.Context) {
 		return
 	}
 
-	// Group orders based on group_id
-	orderGroups := make(map[string][]models.OrderResponse)
-
+	var productsWithVariations []models.OrderResponse
 	for _, cart := range currOrders {
 		var product models.Product
 		if err := database.DB.Find(&product, "product_id = ?", cart.ProductID).Error; err != nil {
@@ -151,30 +149,9 @@ func GetOrders(ctx *gin.Context) {
 			Quantity:      cart.Quantity,
 			Status:        cart.Status,
 			SellerName:    cart.SellerName,
-			GroupID:       cart.GroupID,
 		}
-
-		// If group_id is specified in the payload, only return orders that match that group_id
-		if body.GroupID != "" {
-			if cart.GroupID == body.GroupID {
-				orderGroups[cart.GroupID] = append(orderGroups[cart.GroupID], productRes)
-			}
-		} else {
-			// If no group_id is specified, only return the first element for each group
-			if _, exists := orderGroups[cart.GroupID]; !exists {
-				orderGroups[cart.GroupID] = []models.OrderResponse{productRes}
-			}
-		}
+		productsWithVariations = append(productsWithVariations, productRes)
 	}
 
-	// Convert map to array of objects
-	var groupedOrders []map[string]interface{}
-	for groupID, orders := range orderGroups {
-		groupedOrders = append(groupedOrders, map[string]interface{}{
-			"group_id": groupID,
-			"orders":   orders,
-		})
-	}
-
-	helpers.JSONResponse(ctx, "", helpers.DataHelper(groupedOrders))
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(productsWithVariations))
 }
