@@ -153,7 +153,7 @@ const Content = () => {
 						<Divider />
 						<div className={styles.subContent}>
 							<span>Subtotal</span>
-							<span>₱{userCart?.reduce((acc, curr) => acc + curr.price, 0)}</span>
+							<span>₱{userCart?.reduce((acc, curr) => acc + curr.price, 0)?.toFixed(2)}</span>
 						</div>
 						<div className={classNames(styles.subContent, styles.discount)}>
 							{!!discount && <span>Discount (-{discount}%)</span>}
@@ -166,7 +166,7 @@ const Content = () => {
 						<Divider />
 						<div className={classNames(styles.subContent, styles.total)}>
 							<span>Total</span>
-							<span>₱{userCart?.reduce((acc, curr) => acc + curr.price, 0)}</span>
+							<span>₱{userCart?.reduce((acc, curr) => acc + curr.price, 0)?.toFixed(2)}</span>
 						</div>
 						<div className={classNames(styles.subContent, styles.promoCode)}>
 							<Input placeholder="Add promo Code" prefix={<PercentageOutlined />} />
