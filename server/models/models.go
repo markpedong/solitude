@@ -132,6 +132,7 @@ type Orders struct {
 	Status      int                   `json:"status"`
 	SellerID    string                `json:"seller_id"`
 	SellerName  string                `json:"seller_name"`
+	GroupID     string                `json:"group_id"`
 }
 
 type ProductReviews struct {

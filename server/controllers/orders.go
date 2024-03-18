@@ -38,6 +38,7 @@ func CheckoutOrder(ctx *gin.Context) {
 	}
 
 	var orderArr []models.Orders
+	groupID := helpers.NewUUID()
 	for _, v := range currOrder {
 		var currProd models.Product
 		if err := database.DB.Find(&currProd, "product_id = ?", v.ProductID).Error; err != nil {
@@ -63,6 +64,7 @@ func CheckoutOrder(ctx *gin.Context) {
 			Status:          1,
 			SellerName:      sellerData.SellerName,
 			SellerID:        sellerData.SellerID,
+			GroupID:         groupID,
 		}
 
 		currProd.Stock = currProd.Stock - 1
@@ -75,7 +77,7 @@ func CheckoutOrder(ctx *gin.Context) {
 		return
 	}
 
-	if err := database.DB.Delete(&currOrder, "id = ?", body.CheckoutIDs).Error; err != nil {
+	if err := database.DB.Delete(&currOrder, body.CheckoutIDs).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}

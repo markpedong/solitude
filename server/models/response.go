@@ -61,6 +61,7 @@ type OrderResponse struct {
 	SellerName    string              `json:"seller_name"`
 	Status        int                 `json:"status"`
 	Variations    []ProductVariations `json:"variations"`
+	GroupID       string              `json:"group_id"`
 }
 
 type SingleOrderResponse struct {
