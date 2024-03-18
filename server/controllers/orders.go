@@ -85,11 +85,10 @@ func CheckoutOrder(ctx *gin.Context) {
 	helpers.JSONResponse(ctx, "ordered successfully")
 }
 
-// if user order different product at the same time then filter it and store it in array. Same with single order
 func GetOrders(ctx *gin.Context) {
 	var body struct {
 		ID      string `json:"id" validate:"required"`
-		OrderID string `json:"order_id"`
+		GroupID string `json:"group_id"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
@@ -101,7 +100,9 @@ func GetOrders(ctx *gin.Context) {
 		return
 	}
 
-	var productsWithVariations []models.OrderResponse
+	// Group orders based on group_id
+	orderGroups := make(map[string][]models.OrderResponse)
+
 	for _, cart := range currOrders {
 		var product models.Product
 		if err := database.DB.Find(&product, "product_id = ?", cart.ProductID).Error; err != nil {
@@ -150,48 +151,27 @@ func GetOrders(ctx *gin.Context) {
 			Quantity:      cart.Quantity,
 			Status:        cart.Status,
 			SellerName:    cart.SellerName,
+			GroupID:       cart.GroupID,
 		}
-		productsWithVariations = append(productsWithVariations, productRes)
+
+		// If group_id is specified in the payload, only return orders that match that group_id
+		if body.GroupID != "" {
+			if cart.GroupID == body.GroupID {
+				orderGroups[cart.GroupID] = append(orderGroups[cart.GroupID], productRes)
+			}
+		} else {
+			// If no group_id is specified, only return the first element for each group
+			if _, exists := orderGroups[cart.GroupID]; !exists {
+				orderGroups[cart.GroupID] = []models.OrderResponse{productRes}
+			}
+		}
 	}
 
-	if body.OrderID != "" {
-		var foundOrder models.Orders
-		var foundProduct models.OrderResponse
-
-		for _, order := range currOrders {
-			if order.OrderID == body.OrderID {
-				foundOrder = order
-				break
-			}
-		}
-
-		for _, product := range productsWithVariations {
-			if product.OrderID == body.OrderID {
-				foundProduct = product
-				break
-			}
-		}
-
-		var deliveryInfo models.DeliveryInformation
-		if err := database.DB.First(&deliveryInfo, "id = ?", foundOrder.SelectedAddress).Error; err != nil {
-			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-			return
-		}
-
-		if foundOrder.OrderID == body.OrderID && foundProduct.OrderID == body.OrderID {
-			singleOrderResponse := models.SingleOrderResponse{
-				OrderResponse: foundProduct,
-				DeliveryInfo:  deliveryInfo,
-				ShippedAt:     foundOrder.ShippedAt,
-				DeliveredAt:   foundOrder.DeliveredAt,
-				CompletedAt:   foundOrder.CompletedAt,
-				CreatedAt:     foundOrder.CreatedAt,
-			}
-
-			helpers.JSONResponse(ctx, "", helpers.DataHelper(singleOrderResponse))
-			return
-		}
-	} else {
-		helpers.JSONResponse(ctx, "", helpers.DataHelper(productsWithVariations))
+	// Convert map to array of objects
+	var groupedOrders []models.OrderResponse
+	for _, orders := range orderGroups {
+		groupedOrders = append(groupedOrders, orders[0])
 	}
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(groupedOrders))
 }
