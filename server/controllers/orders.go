@@ -20,7 +20,7 @@ func CheckoutOrder(ctx *gin.Context) {
 	}
 
 	var currOrder []models.Carts
-	if err := database.DB.Find(&currOrder, "id = ?", body.CheckoutIDs).Error; err != nil {
+	if err := database.DB.Where("id IN ?", body.CheckoutIDs).Find(&currOrder).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
