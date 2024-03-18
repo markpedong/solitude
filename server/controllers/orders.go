@@ -168,9 +168,12 @@ func GetOrders(ctx *gin.Context) {
 	}
 
 	// Convert map to array of objects
-	var groupedOrders []models.OrderResponse
-	for _, orders := range orderGroups {
-		groupedOrders = append(groupedOrders, orders[0])
+	var groupedOrders []map[string]interface{}
+	for groupID, orders := range orderGroups {
+		groupedOrders = append(groupedOrders, map[string]interface{}{
+			"group_id": groupID,
+			"orders":   orders,
+		})
 	}
 
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(groupedOrders))
