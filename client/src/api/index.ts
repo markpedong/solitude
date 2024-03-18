@@ -177,6 +177,7 @@ export type OrderItem = {
 	completed_at: number
 	created_at: number
 	delivery_info: InfoItem
+	group_id: string
 }
 export const getOrders = params => post<OrderItem[] | OrderItem>('/orders/getOrders', params)
 
