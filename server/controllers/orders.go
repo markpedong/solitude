@@ -102,6 +102,11 @@ func GetOrders(ctx *gin.Context) {
 
 	var productsWithVariations []models.OrderResponse
 	for _, cart := range currOrders {
+		// If a group_id is passed and it doesn't match the current order's group_id, skip this order
+		if body.GroupID != "" && body.GroupID != cart.GroupID {
+			continue
+		}
+
 		var product models.Product
 		if err := database.DB.Find(&product, "product_id = ?", cart.ProductID).Error; err != nil {
 			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
@@ -154,5 +159,29 @@ func GetOrders(ctx *gin.Context) {
 		productsWithVariations = append(productsWithVariations, productRes)
 	}
 
-	helpers.JSONResponse(ctx, "", helpers.DataHelper(productsWithVariations))
+	// Create a map to group the orders by GroupID
+	groupedOrders := make(map[string][]models.OrderResponse)
+
+	for _, productRes := range productsWithVariations {
+		groupedOrders[productRes.GroupID] = append(groupedOrders[productRes.GroupID], productRes)
+	}
+
+	// Create a new struct to hold the grouped orders and their count
+	type GroupedOrderResponse struct {
+		models.OrderResponse
+		Count int `json:"count"`
+	}
+
+	var groupedOrderResponses []GroupedOrderResponse
+
+	// Populate the new struct with the grouped orders and their count
+	for _, orders := range groupedOrders {
+		groupedOrderResponses = append(groupedOrderResponses, GroupedOrderResponse{
+			OrderResponse: orders[0],
+			Count:         len(orders),
+		})
+	}
+
+	// Return the grouped orders
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(groupedOrderResponses))
 }

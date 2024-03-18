@@ -15,7 +15,7 @@ import { MODAL_FORM_PROPS } from '@/constants'
 
 const OrderedItem = () => {
 	const formRef = useRef<ProFormInstance>()
-	const { id: order_id } = useParams()
+	const { id: group_id } = useParams()
 	const { userData } = useAppSelector(s => s.userData)
 	const [orderedData, setOrderedData] = useState<OrderItem>()
 	const [uploadedImages, setUploadedImages] = useState<UploadFile<any>[]>([])
@@ -49,7 +49,7 @@ const OrderedItem = () => {
 		].filter(q => q.key <= orderedData?.status)
 
 	const fetchOrderInfo = async () => {
-		const res = await getOrders({ id: userData?.id, order_id })
+		const res = await getOrders({ id: userData?.id, group_id })
 
 		setOrderedData(res?.data as OrderItem)
 	}
