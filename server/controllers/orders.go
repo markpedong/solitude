@@ -88,7 +88,7 @@ func CheckoutOrder(ctx *gin.Context) {
 func GetOrders(ctx *gin.Context) {
 	var body struct {
 		ID      string `json:"id" validate:"required"`
-		OrderID string `json:"order_id"`
+		GroupID string `json:"group_id"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
@@ -149,6 +149,7 @@ func GetOrders(ctx *gin.Context) {
 			Quantity:      cart.Quantity,
 			Status:        cart.Status,
 			SellerName:    cart.SellerName,
+			GroupID:       cart.GroupID,
 		}
 		productsWithVariations = append(productsWithVariations, productRes)
 	}
