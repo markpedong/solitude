@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { MdDelete } from 'react-icons/md'
 import { CartItem, checkCart, removeCart } from '@/api'
 import { LuMinus, LuPlus } from 'react-icons/lu'
-import { capFrstLtr } from '@/constants/helper'
+import { capFrstLtr, numComma, numSuffix } from '@/constants/helper'
 import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { messageHelper } from '@/constants/antd'
 import { setCart } from '@/redux/features/userSlice'
@@ -53,9 +53,9 @@ const Cart: FC<Props> = ({ divider = true, data }) => {
 					{ !!data?.variations?.length && <div>Variation: {data?.variations?.map(q => `${q.label}:${q?.selected_value}, `)}</div>}
 					<span className={styles.qty}>Quantity: {data?.quantity}</span>
 					<div className={styles.price}>
-						{!!!data?.discount_price ? <span>₱{data?.price}</span> : <span>₱{data?.discount_price}</span>}
-						{!!data?.discount_price && <span>₱{data?.price}</span>}
-						{!!data?.discount && <span>-{data?.discount}%</span>}
+						{!!!data?.discount_price ? <span>₱{numComma(data?.price)}</span> : <span>₱{numComma(data?.discount_price)}</span>}
+						{!!data?.discount_price && <span>₱{numComma(data?.price)}</span>}
+						{!!data?.discount && <span>-{numComma(data?.discount)}%</span>}
 						{/* <div className={styles.addItemContainer}>
 							<LuMinus />
 							<span>1</span>

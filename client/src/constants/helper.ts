@@ -59,3 +59,5 @@ export const capFrstLtr = (str: string) => str?.charAt(0).toUpperCase() + str?.s
 export const dateParser = (date: number, format: string = 'MM/DD/YYYY') => date ? dayjs.unix(date).format(format) : ""
 
 export const numSuffix = (n: number) => numeral(n).format('0.0a')
+
+export const numComma = (n: number) => numeral(n).format('0,0')

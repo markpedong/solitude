@@ -16,14 +16,15 @@ import { scaleSize } from '@/constants'
 import { messageHelper } from '@/constants/antd'
 import { usePathname, useRouter } from 'next/navigation'
 import { setCart } from '@/redux/features/userSlice'
+import { numComma } from '@/constants/helper'
 
 const Content = () => {
 	const router = useRouter()
 	const {
 		userData: { userCart, id }
 	} = useAppSelector(s => s.userData)
-	const discount = userCart?.reduce((acc, cur) => acc + cur?.discount, 0)
-	const discountPrice = userCart?.reduce((acc, cur) => acc + cur?.discount_price, 0)
+	const discount = userCart?.flatMap(q => q.products)?.reduce((acc, cur) => acc + cur?.discount, 0)
+	const discountPrice = userCart?.flatMap(q => q.products)?.reduce((acc, cur) => acc + cur?.discount_price, 0)
 	const [deliveryInfo, setDeliveryInfo] = useState<InfoItem[]>([])
 	const [infoID, setInfoID] = useState('')
 	const [paymentMethod, setPaymentMethod] = useState(1)
@@ -89,7 +90,7 @@ const Content = () => {
 		}
 
 		const res = await checkout({
-			checkout_ids: userCart?.map(q => q.checkout_id),
+			checkout_ids: userCart?.flatMap(q => q.products)?.map(q => q.checkout_id),
 			delivery_id: infoID,
 			payment_method: paymentMethod
 		})
@@ -122,11 +123,16 @@ const Content = () => {
 				<div className={styles.header}>your cart</div>
 				<div className={styles.mainWrapper}>
 					<div className={styles.cartContainer}>
-						{userCart &&
-							(userCart?.length > 1
-								? userCart.slice(0, -1).map(q => <Cart data={q} key={q?.checkout_id} />)
-								: userCart.map(q => <Cart data={q} key={q?.checkout_id} divider={false} />))}
-						{userCart?.length > 1 && <Cart data={userCart?.findLast(q => q)} divider={false} />}
+						{userCart?.map(q => (
+							<>
+								<div className={styles.sellerName}>{q?.seller_name}</div>
+								{q.products &&
+									(q.products?.length > 1
+										? q.products.slice(0, -1).map(q => <Cart data={q} key={q?.checkout_id} />)
+										: q.products.map(q => <Cart data={q} key={q?.checkout_id} divider={false} />))}
+								{q.products?.length > 1 && <Cart data={q.products?.findLast(q => q)} divider={false} />}
+							</>
+						))}
 					</div>
 					<div className={styles.orderSummaryContainer}>
 						<div className={styles.header}>Order Summary</div>
@@ -153,7 +159,7 @@ const Content = () => {
 						<Divider />
 						<div className={styles.subContent}>
 							<span>Subtotal</span>
-							<span>₱{userCart?.reduce((acc, curr) => acc + curr.price, 0)?.toFixed(2)}</span>
+							<span>₱{numComma(userCart?.flatMap(q => q.products)?.reduce((acc, curr) => acc + curr.price, 0))}</span>
 						</div>
 						<div className={classNames(styles.subContent, styles.discount)}>
 							{!!discount && <span>Discount (-{discount}%)</span>}
@@ -166,7 +172,7 @@ const Content = () => {
 						<Divider />
 						<div className={classNames(styles.subContent, styles.total)}>
 							<span>Total</span>
-							<span>₱{userCart?.reduce((acc, curr) => acc + curr.price, 0)?.toFixed(2)}</span>
+							<span>₱{numComma(userCart?.flatMap(q => q.products)?.reduce((acc, curr) => acc + curr.price, 0))}</span>
 						</div>
 						<div className={classNames(styles.subContent, styles.promoCode)}>
 							<Input placeholder="Add promo Code" prefix={<PercentageOutlined />} />
