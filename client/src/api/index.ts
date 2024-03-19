@@ -114,6 +114,7 @@ export type CartItem = {
 		product_id: string
 		label: string
 		value: { value: string }[]
+		selected_value: string
 	}[]
 	quantity: number
 }

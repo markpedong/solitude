@@ -50,6 +50,7 @@ const Cart: FC<Props> = ({ divider = true, data }) => {
 							)
 						})}
 					</div>
+					{ !!data?.variations?.length && <div>Variation: {data?.variations?.map(q => `${q.label}:${q?.selected_value}, `)}</div>}
 					<span className={styles.qty}>Quantity: {data?.quantity}</span>
 					<div className={styles.price}>
 						{!!!data?.discount_price ? <span>₱{data?.price}</span> : <span>₱{data?.discount_price}</span>}

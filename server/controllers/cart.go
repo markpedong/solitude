@@ -101,9 +101,14 @@ func GetItemsFromCart(ctx *gin.Context) {
 			return
 		}
 
+		var seller models.Seller
+		if err := database.DB.Find(&seller, "seller_id = ?", product.SellerID).Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
+
 		var variations []models.ProductVariations
 		if err := database.DB.Find(&variations, "product_id = ?", product.ProductID).Error; err != nil {
-			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 			return
 		}
 
@@ -112,20 +117,21 @@ func GetItemsFromCart(ctx *gin.Context) {
 			for _, variationID := range cart.VariationIDs {
 				var value models.VariationValue
 				if err := database.DB.Find(&value, "id = ? AND variation_id = ?", variationID, variation.ID).Error; err != nil {
-					helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 					return
 				}
 
 				if value.ID != "" {
 					values = append(values, value)
 				}
-
 			}
-			variations[i].Value = values
+
+			if len(values) > 0 {
+				variations[i].SelectedValue = values[0].Value
+			} else {
+				variations[i].SelectedValue = ""
+			}
 		}
 
-		// product.Variations = variations
-		// product.CheckoutID = cart.ID
 		productRes := models.JSONProduct{
 			ProductID:     product.ProductID,
 			SellerID:      product.SellerID,
@@ -137,6 +143,7 @@ func GetItemsFromCart(ctx *gin.Context) {
 			Quantity:      cart.Quantity,
 			Discount:      product.Discount,
 			DiscountPrice: product.DiscountPrice,
+			SellerName:    seller.SellerName,
 		}
 		productsWithVariations = append(productsWithVariations, productRes)
 	}
