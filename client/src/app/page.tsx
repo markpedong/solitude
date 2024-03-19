@@ -12,7 +12,7 @@ const Page = async () => {
 		<>
 			<div className={styles.mainWrapper}>
 				<div className={styles.textContainer}>
-					<span className={styles.mainText}>FIND CLOTHES THAT MATCHES YOUR STYLE</span>
+					<span className={styles.mainText}>FIND PRODUCTS THAT MATCHES YOUR NEEDS</span>
 					<span className={styles.extraText}>
 						Browse through our diverse range of meticulously crafted garments, designed to bring out your individuality and cater to your sense of style.
 					</span>
