@@ -38,19 +38,7 @@ const Cart: FC<Props> = ({ divider = true, data }) => {
 						<span onClick={() => router.push(`/products/${data?.product_id}`)}>{data?.product_name}</span>
 						<MdDelete onClick={handleRemoveCart} className="cursor-pointer" />
 					</div>
-					<div className={styles.variant}>
-						{data?.variations?.map(q => {
-							const fst = q?.value?.[0].value
-							return (
-								fst && (
-									<span key={q.id}>
-										{capFrstLtr(q?.label)}: <p>{q?.value?.[0].value}</p>
-									</span>
-								)
-							)
-						})}
-					</div>
-					{ !!data?.variations?.length && <div>Variation: {data?.variations?.map(q => `${q.label}:${q?.selected_value}, `)}</div>}
+					{!!data?.variations?.length && <div>Variation: {data?.variations?.map(q => `${q.label}:${q?.value}, `)}</div>}
 					<span className={styles.qty}>Quantity: {data?.quantity}</span>
 					<div className={styles.price}>
 						{!!!data?.discount_price ? <span>₱{numComma(data?.price)}</span> : <span>₱{numComma(data?.discount_price)}</span>}

@@ -13,7 +13,7 @@ import (
 )
 
 func AddProducts(ctx *gin.Context) {
-	var body models.Product
+	var body models.JSONAddProduct
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
@@ -26,32 +26,55 @@ func AddProducts(ctx *gin.Context) {
 		Image:       pq.StringArray(body.Image),
 		Description: body.Description,
 		Stock:       body.Stock,
-		Rating:      body.Rating,
-		Category:    pq.StringArray(body.Category),
-		Variations:  body.Variations,
+		Category:    pq.StringArray(body.Categories),
 	}
 
 	if err := database.DB.Create(&product).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
-	for i := range body.Variations {
-		variant := &models.ProductVariations{
+
+	var variationArr []models.ProductVariations
+	for _, v := range body.Variations {
+		variation := models.ProductVariations{
 			ID:        helpers.NewUUID(),
 			ProductID: product.ProductID,
-			Label:     body.Variations[i].Label,
-			Value:     body.Variations[i].Value,
+			Label:     v.Label,
 		}
-
-		if err := database.DB.Create(variant).Error; err != nil {
+		if err := database.DB.Create(&variation).Error; err != nil {
 			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 			return
 		}
+		var variationValueArr []models.VariationValue
+		for _, v := range v.Value {
+			variationValue := models.VariationValue{
+				ID:          helpers.NewUUID(),
+				VariationID: variation.ID,
+				Value:       v,
+			}
+			if err := database.DB.Create(&variationValue).Error; err != nil {
+				helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+				return
+			}
 
-		product.Variations = append(product.Variations, *variant)
+			variationValueArr = append(variationValueArr, variationValue)
+		}
+
+		variation.Value = variationValueArr
+		if err := database.DB.Save(&variation).Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
+		variationArr = append(variationArr, variation)
+
+	}
+	product.Variations = variationArr
+	if err := database.DB.Save(&product).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
 	}
 
-	helpers.JSONResponse(ctx, "successfully added product", helpers.DataHelper(product))
+	helpers.JSONResponse(ctx, "successfully added product")
 }
 
 func GetAllProducts(ctx *gin.Context) {

@@ -111,11 +111,8 @@ export type CartItem = {
 	discount: number
 	discount_price: number
 	variations: {
-		id: string
-		product_id: string
 		label: string
-		value: { value: string }[]
-		selected_value: string
+		value: string
 	}[]
 	quantity: number
 }
