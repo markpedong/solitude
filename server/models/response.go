@@ -64,11 +64,7 @@ type OrderResponse struct {
 	GroupID       string              `json:"group_id"`
 }
 
-type SingleOrderResponse struct {
+type GroupedOrderResponse struct {
 	OrderResponse
-	DeliveryInfo DeliveryInformation `json:"delivery_info"`
-	ShippedAt    int                 `json:"shipped_at"`
-	DeliveredAt  int                 `json:"delivered_at"`
-	CompletedAt  int                 `json:"completed_at"`
-	CreatedAt    int                 `json:"created_at"`
+	Count int `json:"count"`
 }
