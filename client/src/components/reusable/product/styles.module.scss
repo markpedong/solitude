@@ -6,12 +6,12 @@
     font-family: 'Satoshi';
 
     .imageContainer {
-        @apply rounded-3xl flex items-center justify-center object-cover object-center mb-5 px-[0.5rem];
+        @apply rounded-xl flex items-center justify-center object-cover object-center mb-5 p-[0.5rem];
         background-color: #F0EEED;
         height: toRem(180);
 
         img {
-            @apply w-auto h-20;
+            @apply w-auto h-full rounded-sm;
         }
     }
 
