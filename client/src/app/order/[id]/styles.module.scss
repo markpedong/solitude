@@ -31,14 +31,14 @@
 
 
 .detailsContainer {
-    @apply flex flex-col gap-[0.5rem] pt-2 w-full;
+    @apply flex flex-col gap-0 pt-1 w-full;
     font-size: toRem(12);
     line-height: toRem(12);
 
     .detailHeader {
-        @apply mb-4;
+        @apply mb-2;
         font-family: "Jost";
-        font-size: toRem(16);
+        font-size: toRem(14);
         font-weight: 600;
     }
 }
@@ -90,17 +90,17 @@
 }
 
 .orderContainer {
-    @apply flex items-center gap-3;
+    @apply flex items-center gap-3 pb-2;
 
     .orderImage {
-        @apply object-cover size-[8rem] p-2 rounded-[1.375rem];
+        @apply object-cover size-[5rem] p-1 rounded-md;
         border: toRem(1) solid var(--color-secondary);
     }
 
     .priceContainer {
         @apply flex gap-2 items-center pt-[1rem];
 
-        font-size: toRem(16);
+        font-size: toRem(14);
         font-family: 'Satoshi';
         font-weight: 700;
         color: var(--color-primary);
@@ -122,18 +122,18 @@
 }
 
 .sellerData {
-    @apply flex gap-3 items-center py-3 px-2 rounded-lg mb-3;
+    @apply flex gap-3 items-center py-1 px-2 rounded-lg mb-3;
     color: var(--bg-secondary);
     background-color: var(--color-primary);
-    font-size: toRem(14);
+    font-size: toRem(12);
 
     span:nth-child(2) {
         @apply flex-1
     }
 
     span:nth-child(3) {
-        @apply mr-3 p-1 px-3 rounded-md;
-        font-size: toRem(12);
+        @apply mr-1 p-1 px-3 rounded-md;
+        font-size: toRem(10);
         background-color: var(--bg-secondary);
         color: var(--color-primary);
     }
@@ -156,7 +156,7 @@
     }
 }
 
-.reviewProdTitle{
+.reviewProdTitle {
     font-family: "Integral";
     font-size: toRem(20);
 }

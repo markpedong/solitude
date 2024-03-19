@@ -93,7 +93,6 @@ func GetItemsFromCart(ctx *gin.Context) {
 		return
 	}
 
-	productMap := make(map[string][]models.JSONProductCart)
 	var cartResponse []models.CartResponse
 	for _, cart := range userCart {
 		var product models.Product
@@ -159,12 +158,11 @@ func GetItemsFromCart(ctx *gin.Context) {
 			DiscountPrice: product.DiscountPrice,
 		}
 
-		productMap[seller.SellerName] = append(productMap[seller.SellerName], productRes)
-		var found bool
+		found := false
 		for i, v := range cartResponse {
 			if v.SellerID == seller.SellerID {
 				found = true
-				cartResponse[i].Products = append(cartResponse[i].Products, productMap[seller.SellerName]...)
+				cartResponse[i].Products = append(cartResponse[i].Products, productRes)
 				break
 			}
 		}
@@ -174,12 +172,9 @@ func GetItemsFromCart(ctx *gin.Context) {
 			cartResponse = append(cartResponse, models.CartResponse{
 				SellerName: seller.SellerName,
 				SellerID:   seller.SellerID,
-				Products:   productMap[seller.SellerName],
+				Products:   []models.JSONProductCart{productRes},
 			})
 		}
-	}
-	for i, v := range cartResponse {
-		cartResponse[i].Products = productMap[v.SellerName]
 	}
 
 	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(cartResponse))

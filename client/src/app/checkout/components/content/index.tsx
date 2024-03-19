@@ -91,7 +91,7 @@ const Content = () => {
 		}
 
 		const res = await checkout({
-			checkout_ids: products?.map(q => q.checkout_id),
+			user_id: id,
 			delivery_id: infoID,
 			payment_method: paymentMethod
 		})

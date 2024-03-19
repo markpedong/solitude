@@ -21,7 +21,7 @@ const OrderedItem = () => {
 	const [uploadedImages, setUploadedImages] = useState<UploadFile<any>[]>([])
 	const [uploading, setUploading] = useState(false)
 	const status = orderedData?.time
-	const total = orderedData?.product?.reduce((acc, cur) => acc + cur.price, 0)
+	const total = orderedData?.products?.flatMap(q => q.products).reduce((acc, cur) => acc + cur.price, 0)
 
 	const renderTimelineItems = () =>
 		[
@@ -51,9 +51,11 @@ const OrderedItem = () => {
 		].filter(q => q.key <= orderedData?.status)
 
 	const fetchOrderInfo = async () => {
-		const res = await getOrdersByID({ id: userData?.id, group_id })
+		const res = await getOrdersByID({ group_id })
 
 		setOrderedData(res?.data)
+
+		console.log(orderedData)
 	}
 
 	const reviewProd = () => {
@@ -137,27 +139,29 @@ const OrderedItem = () => {
 						<DeliveryInfo data={orderedData?.address} />
 					</div>
 					<div className={styles.textContainer}>
-						{orderedData?.product.map(q => (
-							<>
+						{orderedData?.products?.map(q => (
+							<div className="pb-6" key={q?.seller_id}>
 								<div className={styles.sellerData}>
 									<FaStore />
 									<span>{q?.seller_name}</span>
 									<span>View Shop</span>
 								</div>
-								<div className={styles.orderContainer}>
-									<Image className={styles.orderImage} src={q?.image} width={50} height={50} alt={q?.product_name} />
-									<div className={styles.detailsContainer}>
-										<span className={styles.detailHeader}>{q?.product_name}</span>
-										<div>Variation: {q?.variations?.map(q => `${q.label}:${q?.value}, `)}</div>
-										<span>Quantity: {q?.quantity}</span>
-										<div className={styles.priceContainer}>
-											{!!!q?.discount_price ? <span>₱{q?.price}</span> : <span>₱{q?.discount_price}</span>}
-											{!!q?.discount_price && <span>₱{q?.price}</span>}
-											{!!q?.discount && <span>-{q?.discount}%</span>}
+								{q?.products.map((w, i) => (
+									<div className={styles.orderContainer} key={i}>
+										<Image className={styles.orderImage} src={w?.image} width={50} height={50} alt={w?.product_name} />
+										<div className={styles.detailsContainer}>
+											<span className={styles.detailHeader}>{w?.product_name}</span>
+											<div>Variation: {w?.variations?.map(e => `${e.label}:${e?.value}, `)}</div>
+											<span>Quantity: {w?.quantity}</span>
+											<div className={styles.priceContainer}>
+												{!!!w?.discount_price ? <span>₱{w?.price}</span> : <span>₱{w?.discount_price}</span>}
+												{!!w?.discount_price && <span>₱{w?.price}</span>}
+												{!!w?.discount && <span>-{w?.discount}%</span>}
+											</div>
 										</div>
 									</div>
-								</div>
-							</>
+								))}
+							</div>
 						))}
 						<Divider />
 						<div className={styles.orderTotal}>
@@ -178,7 +182,7 @@ const OrderedItem = () => {
 							</div>
 							<div>
 								<span>Order Total</span>
-								<span>₱38</span>
+								<span>₱{total}</span>
 							</div>
 						</div>
 						<div className={styles.reviewRateContainer}>

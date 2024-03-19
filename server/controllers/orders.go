@@ -128,26 +128,51 @@ func GetOrdersByGroupID(ctx *gin.Context) {
 		return
 	}
 
-	// productsWithVariations, err := GetProductsWithVariations(currOrderGroup.Orders)
-	// if err != nil {
-	// 	helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-	// 	return
-	// }
+	productsWithVariations, err := GetProductsWithVariations(currOrderGroup.Orders)
+	if err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+	productMap := GroupProductsBySeller(productsWithVariations)
+	resp := map[string]interface{}{
+		"products":       productMap,
+		"address":        info,
+		"payment_method": currOrderGroup.PaymentMethod,
+		"time": map[string]interface{}{
+			"shipped_at":   currOrderGroup.ShippedAt,
+			"delivered_at": currOrderGroup.DeliveredAt,
+			"completed_at": currOrderGroup.CompletedAt,
+			"created_at":   currOrderGroup.CreatedAt,
+		},
+		"status": currOrderGroup.Status,
+	}
 
-	// resp := map[string]interface{}{
-	// 	"product":        productsWithVariations,
-	// 	"address":        info,
-	// 	"payment_method": currOrderGroup.PaymentMethod,
-	// 	"time": map[string]interface{}{
-	// 		"shipped_at":   currOrderGroup.ShippedAt,
-	// 		"delivered_at": currOrderGroup.DeliveredAt,
-	// 		"completed_at": currOrderGroup.CompletedAt,
-	// 		"created_at":   currOrderGroup.CreatedAt,
-	// 	},
-	// 	"status": currOrderGroup.Status,
-	// }
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(resp))
+}
 
-	helpers.JSONResponse(ctx, "", helpers.DataHelper(currOrderGroup))
+// Group products with variations by seller into an array of objects
+func GroupProductsBySeller(productsWithVariations []models.OrderResponse) []map[string]interface{} {
+	productMap := make(map[string][]models.OrderResponse)
+
+	// Group products by seller
+	for _, product := range productsWithVariations {
+		sellerName := product.SellerName
+		productMap[sellerName] = append(productMap[sellerName], product)
+	}
+
+	// Convert map to array of objects
+	var result []map[string]interface{}
+	for sellerName, products := range productMap {
+		sellerID := products[0].SellerID // Assuming all products from the same seller have the same ID
+		sellerProducts := map[string]interface{}{
+			"seller_name": sellerName,
+			"seller_id":   sellerID,
+			"products":    products,
+		}
+		result = append(result, sellerProducts)
+	}
+
+	return result
 }
 
 func GetProductsWithVariations(currOrders []models.Orders) ([]models.OrderResponse, error) {

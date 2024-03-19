@@ -82,7 +82,7 @@ export const getSellerData = params => post<SellerData>('/seller/getInfo', param
 export const uploadImages = params => upload<any>('/api/uploadImage', params)
 
 // /api/addProduct
-export const addProduct = params => post('/api/add-product', params)
+export const addProduct = params => post('/api/addProduct', params)
 
 // /seller/products
 export const getProductsData = params => post<TProduct[]>('/seller/products', params)
@@ -119,6 +119,7 @@ export type CartItem = {
 export type CartResponse = {
 	products: CartItem[]
 	seller_name: string
+	seller_id: string
 }
 export const checkCart = params => post<CartResponse[]>('/cart/get', params)
 
@@ -184,7 +185,7 @@ export type OrderItem = {
 export type OrderResponse = {
 	address: InfoItem
 	payment_method: number
-	product: OrderItem[]
+	products: CartResponse[]
 	time: {
 		created_at: number
 		completed_at: number

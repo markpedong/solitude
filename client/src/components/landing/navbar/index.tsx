@@ -62,12 +62,6 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 		setOpen(false)
 	}
 
-	const options: SelectProps['options'] = products?.map(q => ({
-		label: capFrstLtr(q?.product_name),
-		image: q?.image?.[0],
-		value: q?.product_id
-	}))
-
 	const items: MenuProps['items'] = [
 		{
 			key: 'account',
@@ -201,15 +195,10 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 			title={<div className={styles.header}>your cart</div>}
 		>
 			<div className={styles.orderContainer}>
-				{/* {userCart &&
-					(userCart?.length > 1
-						? userCart.slice(0, -1).map(q => <Cart data={q} key={q?.checkout_id} />)
-						: userCart.map(q => <Cart data={q} key={q?.checkout_id} divider={false} />))}
-				{userCart?.length > 1 && <Cart data={userCart?.findLast(q => q)} divider={false} />} */}
 				{userCart?.map(q => (
 					<>
 						<div className={styles.sellerName}>{q?.seller_name}</div>
-						{q.products &&
+						{!!q?.products?.length &&
 							(q.products?.length > 1
 								? q.products.slice(0, -1).map(q => <Cart data={q} key={q?.checkout_id} />)
 								: q.products.map(q => <Cart data={q} key={q?.checkout_id} divider={false} />))}
@@ -247,7 +236,7 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 	const memoizedCartButton = useMemo(
 		() => (
 			<motion.div whileTap={scaleSize} onClick={() => setCartModal(true)} className="relative">
-				<span className={styles.cartLength}>{userCart?.length}</span>
+				<span className={styles.cartLength}>{userCart?.flatMap(q => q?.products).length}</span>
 				<ShoppingCartOutlined className="cursor-pointer" />
 			</motion.div>
 		),
