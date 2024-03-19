@@ -7,7 +7,7 @@ import { getProducts } from '@/api'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
 const Page = async () => {
-	const products = await getProducts({})
+	const products = await getProducts({ search: '' })
 	return (
 		<>
 			<div className={styles.mainWrapper}>
