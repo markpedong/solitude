@@ -23,8 +23,9 @@ const Content = () => {
 	const {
 		userData: { userCart, id }
 	} = useAppSelector(s => s.userData)
-	const discount = userCart?.flatMap(q => q.products)?.reduce((acc, cur) => acc + cur?.discount, 0)
-	const discountPrice = userCart?.flatMap(q => q.products)?.reduce((acc, cur) => acc + cur?.discount_price, 0)
+	const products = userCart?.flatMap(q => q.products)
+	const discount = products?.reduce((acc, cur) => acc + cur?.discount, 0)
+	const discountPrice = products?.reduce((acc, cur) => acc + cur?.discount_price, 0)
 	const [deliveryInfo, setDeliveryInfo] = useState<InfoItem[]>([])
 	const [infoID, setInfoID] = useState('')
 	const [paymentMethod, setPaymentMethod] = useState(1)
@@ -90,7 +91,7 @@ const Content = () => {
 		}
 
 		const res = await checkout({
-			checkout_ids: userCart?.flatMap(q => q.products)?.map(q => q.checkout_id),
+			checkout_ids: products?.map(q => q.checkout_id),
 			delivery_id: infoID,
 			payment_method: paymentMethod
 		})
@@ -159,7 +160,7 @@ const Content = () => {
 						<Divider />
 						<div className={styles.subContent}>
 							<span>Subtotal</span>
-							<span>₱{numComma(userCart?.flatMap(q => q.products)?.reduce((acc, curr) => acc + curr.price, 0))}</span>
+							<span>₱{numComma(products?.reduce((acc, curr) => acc + curr.price, 0))}</span>
 						</div>
 						<div className={classNames(styles.subContent, styles.discount)}>
 							{!!discount && <span>Discount (-{discount}%)</span>}
@@ -172,7 +173,7 @@ const Content = () => {
 						<Divider />
 						<div className={classNames(styles.subContent, styles.total)}>
 							<span>Total</span>
-							<span>₱{numComma(userCart?.flatMap(q => q.products)?.reduce((acc, curr) => acc + curr.price, 0))}</span>
+							<span>₱{numComma(products?.reduce((acc, curr) => acc + curr.price, 0))}</span>
 						</div>
 						<div className={classNames(styles.subContent, styles.promoCode)}>
 							<Input placeholder="Add promo Code" prefix={<PercentageOutlined />} />
