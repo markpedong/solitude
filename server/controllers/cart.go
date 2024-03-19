@@ -93,7 +93,8 @@ func GetItemsFromCart(ctx *gin.Context) {
 		return
 	}
 
-	productMap := make(map[string][]models.JSONProduct)
+	productMap := make(map[string][]models.JSONProductCart)
+	var cartResponse []models.CartResponse
 	for _, cart := range userCart {
 		var product models.Product
 		if err := database.DB.Find(&product, "product_id = ?", cart.ProductID).Error; err != nil {
@@ -132,29 +133,53 @@ func GetItemsFromCart(ctx *gin.Context) {
 			}
 		}
 
-		productRes := models.JSONProduct{
+		var labVal []models.LabVal
+		for _, v := range variations {
+			var q models.LabVal
+
+			q.Label = v.Label
+			q.Value = v.SelectedValue
+
+			if v.SelectedValue == "" {
+				continue
+			}
+
+			labVal = append(labVal, q)
+		}
+
+		productRes := models.JSONProductCart{
 			ProductID:     product.ProductID,
-			SellerID:      product.SellerID,
 			ProductName:   product.ProductName,
 			Price:         product.Price * float64(cart.Quantity),
-			Image:         product.Image,
-			Variations:    variations,
+			Image:         product.Image[0],
+			Variations:    labVal,
 			CheckoutID:    cart.ID,
 			Quantity:      cart.Quantity,
 			Discount:      product.Discount,
 			DiscountPrice: product.DiscountPrice,
-			SellerName:    seller.SellerName,
 		}
 
 		productMap[seller.SellerName] = append(productMap[seller.SellerName], productRes)
-	}
+		var found bool
+		for i, v := range cartResponse {
+			if v.SellerID == seller.SellerID {
+				found = true
+				cartResponse[i].Products = append(cartResponse[i].Products, productMap[seller.SellerName]...)
+				break
+			}
+		}
 
-	var cartResponse []models.CartResponse
-	for sellerName, products := range productMap {
-		cartResponse = append(cartResponse, models.CartResponse{
-			Products:   products,
-			SellerName: sellerName,
-		})
+		// If seller not found, create a new entry in cartResponse
+		if !found {
+			cartResponse = append(cartResponse, models.CartResponse{
+				SellerName: seller.SellerName,
+				SellerID:   seller.SellerID,
+				Products:   productMap[seller.SellerName],
+			})
+		}
+	}
+	for i, v := range cartResponse {
+		cartResponse[i].Products = productMap[v.SellerName]
 	}
 
 	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(cartResponse))

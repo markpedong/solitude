@@ -33,6 +33,23 @@ type JSONProduct struct {
 	SellerName    string              `json:"seller_name"`
 }
 
+type LabVal struct {
+	Label string `json:"label"`
+	Value string `json:"value"`
+}
+
+type JSONProductCart struct {
+	ProductID     string   `json:"product_id"`
+	ProductName   string   `json:"product_name" `
+	Price         float64  `json:"price" `
+	Image         string   `json:"image"`
+	Variations    []LabVal `json:"variations" `
+	CheckoutID    string   `json:"checkout_id"`
+	Quantity      int      `json:"quantity"`
+	Discount      int      `json:"discount"`
+	DiscountPrice int      `json:"discount_price"`
+}
+
 type JSONSeller struct {
 	SellerID   string `json:"seller_id"`
 	CreatedAt  int    `json:"created_at"`
@@ -49,24 +66,24 @@ type JSONSeller struct {
 }
 
 type OrderResponse struct {
-	OrderID       string              `json:"order_id"`
-	Discount      *int                `json:"discount"`
-	DiscountPrice int                 `json:"discount_price"`
-	Image         pq.StringArray      `json:"image" gorm:"type:text[]"`
-	Price         int                 `json:"price"`
-	ProductID     string              `json:"product_id"`
-	ProductName   string              `json:"product_name" `
-	Quantity      int                 `json:"quantity"`
-	SellerID      string              `json:"seller_id"`
-	SellerName    string              `json:"seller_name"`
-	Status        int                 `json:"status"`
-	Variations    []ProductVariations `json:"variations"`
-	GroupID       string              `json:"group_id"`
+	OrderID       string   `json:"order_id"`
+	Discount      *int     `json:"discount"`
+	DiscountPrice int      `json:"discount_price"`
+	Image         string   `json:"image"`
+	Price         int      `json:"price"`
+	ProductID     string   `json:"product_id"`
+	ProductName   string   `json:"product_name" `
+	Quantity      int      `json:"quantity"`
+	SellerID      string   `json:"seller_id"`
+	SellerName    string   `json:"seller_name"`
+	Variations    []LabVal `json:"variations"`
+	GroupID       string   `json:"group_id"`
 }
 
 type CartResponse struct {
-	Products   []JSONProduct `json:"products"`
-	SellerName string        `json:"seller_name"`
+	Products   []JSONProductCart `json:"products"`
+	SellerName string            `json:"seller_name"`
+	SellerID   string            `json:"seller_id"`
 }
 
 type GroupedOrderResponse struct {

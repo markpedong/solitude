@@ -13,6 +13,7 @@ type User struct {
 	Orders              []Orders              `json:"orders" gorm:"foreignKey:UserID"`
 	ProductReview       []ProductReviews      `json:"product_review" gorm:"foreignKey:UserID"`
 	SellerReviews       []SellerReviews       `json:"seller_review" gorm:"foreignKey:UserID"`
+	Carts               []Carts               `json:"cart" gorm:"foreignKey:UserID"`
 	FirstName           string                `json:"first_name" validate:"max=30"`
 	LastName            string                `json:"last_name" validate:"max=30"`
 	Password            string                `json:"password" validate:"required,min=6"`
@@ -113,26 +114,29 @@ type Carts struct {
 }
 
 type Orders struct {
-	OrderID         string         `json:"id" gorm:"primaryKey"`
-	ProductID       string         `json:"product_id"`
-	UserID          string         `json:"user_id"`
-	VariationIDs    pq.StringArray `json:"variation_ids" gorm:"type:text[]"`
-	Price           int            `json:"price"`
-	Discount        *int           `json:"discount"`
-	PaymentMethod   int            `json:"payment_method"`
-	SelectedAddress string         `json:"address" validate:"required"`
-	CreatedAt       int            `json:"created_at" gorm:"autoCreateTime"`
-	// will need to create another endpoint for updating the orders status
-	ShippedAt   int                   `json:"shipped_at"`
-	DeliveredAt int                   `json:"delivered_at"`
-	CompletedAt int                   `json:"completed_at"`
-	UpdatedAt   int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
-	DeletedAt   soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
-	Quantity    int                   `json:"quantity"`
-	Status      int                   `json:"status"`
-	SellerID    string                `json:"seller_id"`
-	SellerName  string                `json:"seller_name"`
-	GroupID     string                `json:"group_id"`
+	OrderID      string         `json:"id" gorm:"primaryKey"`
+	ProductID    string         `json:"product_id"`
+	UserID       string         `json:"user_id"`
+	VariationIDs pq.StringArray `json:"variation_ids" gorm:"type:text[]"`
+	Price        int            `json:"price"`
+	Discount     *int           `json:"discount"`
+	CreatedAt    int            `json:"created_at" gorm:"autoCreateTime"`
+	Quantity     int            `json:"quantity"`
+	SellerID     string         `json:"seller_id"`
+	SellerName   string         `json:"seller_name"`
+	GroupID      string         `json:"group_id"`
+}
+
+type OrderGroup struct {
+	ID              string                `json:"id" gorm:"primaryKey"`
+	Orders          []Orders              `json:"orders" gorm:"foreignKey:GroupID"`
+	PaymentMethod   int                   `json:"payment_method"`
+	SelectedAddress string                `json:"delivery_info" validate:"required"`
+	ShippedAt       int                   `json:"shipped_at"`
+	DeliveredAt     int                   `json:"delivered_at"`
+	CompletedAt     int                   `json:"completed_at"`
+	UpdatedAt       int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
+	DeletedAt       soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
 }
 
 type ProductReviews struct {

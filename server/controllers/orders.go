@@ -11,35 +11,23 @@ import (
 
 func CheckoutOrder(ctx *gin.Context) {
 	var body struct {
-		CheckoutIDs   []string `json:"checkout_ids" validate:"required"`
-		DeliveryID    string   `json:"delivery_id" vaidate:"required"`
-		PaymentMethod int      `json:"payment_method" validate:"required"`
+		UserID        string `json:"user_id" validate:"required"`
+		DeliveryID    string `json:"delivery_id" vaidate:"required"`
+		PaymentMethod int    `json:"payment_method" validate:"required"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
-	var currOrder []models.Carts
-	if err := database.DB.Where("id IN ?", body.CheckoutIDs).Find(&currOrder).Error; err != nil {
+	var user models.User
+	if err := database.DB.Preload("Carts").First(&user, "id = ?", body.UserID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	existingIDs := make(map[string]bool)
-	for _, q := range currOrder {
-		existingIDs[q.ID] = true
-	}
-
-	for _, v := range body.CheckoutIDs {
-		if _, ok := existingIDs[v]; !ok {
-			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "check ids passed")
-			return
-		}
-	}
-
-	var orderArr []models.Orders
-	groupID := helpers.NewUUID()
-	for _, v := range currOrder {
+	var orderGroup models.OrderGroup
+	orderGroup.ID = helpers.NewUUID()
+	for _, v := range user.Carts {
 		var currProd models.Product
 		if err := database.DB.Find(&currProd, "product_id = ?", v.ProductID).Error; err != nil {
 			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
@@ -52,32 +40,28 @@ func CheckoutOrder(ctx *gin.Context) {
 		}
 
 		newOrder := models.Orders{
-			OrderID:         helpers.NewUUID(),
-			ProductID:       v.ProductID,
-			UserID:          v.UserID,
-			VariationIDs:    v.VariationIDs,
-			Price:           int(currProd.Price * float64(v.Quantity)),
-			SelectedAddress: body.DeliveryID,
-			PaymentMethod:   body.PaymentMethod,
-			Discount:        &currProd.Discount,
-			Quantity:        v.Quantity,
-			Status:          1,
-			SellerName:      sellerData.SellerName,
-			SellerID:        sellerData.SellerID,
-			GroupID:         groupID,
+			OrderID:      helpers.NewUUID(),
+			ProductID:    v.ProductID,
+			UserID:       v.UserID,
+			VariationIDs: v.VariationIDs,
+			Price:        int(currProd.Price * float64(v.Quantity)),
+			Discount:     &currProd.Discount,
+			Quantity:     v.Quantity,
+			SellerName:   sellerData.SellerName,
+			SellerID:     sellerData.SellerID,
+			GroupID:      orderGroup.ID,
 		}
 
 		currProd.Stock = currProd.Stock - 1
 		database.DB.Save(&currProd)
-		orderArr = append(orderArr, newOrder)
+		orderGroup.Orders = append(orderGroup.Orders, newOrder)
 	}
-
-	if err := database.DB.Create(&orderArr).Error; err != nil {
+	if err := database.DB.Create(&orderGroup).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	if err := database.DB.Delete(&currOrder, body.CheckoutIDs).Error; err != nil {
+	if err := database.DB.Delete(&user.Carts).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -178,18 +162,31 @@ func GetProductsWithVariations(currOrders []models.Orders) ([]models.OrderRespon
 			}
 		}
 
+		var labVal []models.LabVal
+		for _, v := range variations {
+			var q models.LabVal
+
+			q.Label = v.Label
+			q.Value = v.SelectedValue
+
+			if v.SelectedValue == "" {
+				continue
+			}
+
+			labVal = append(labVal, q)
+		}
+
 		productRes := models.OrderResponse{
 			OrderID:       cart.OrderID,
 			ProductID:     product.ProductID,
 			SellerID:      product.SellerID,
 			ProductName:   product.ProductName,
 			Price:         int(product.Price),
-			Image:         product.Image,
-			Variations:    variations,
+			Image:         product.Image[0],
+			Variations:    labVal,
 			Discount:      &product.Discount,
 			DiscountPrice: product.DiscountPrice,
 			Quantity:      cart.Quantity,
-			Status:        cart.Status,
 			SellerName:    cart.SellerName,
 			GroupID:       cart.GroupID,
 		}
