@@ -192,7 +192,7 @@
 }
 
 .orderContainer {
-    @apply p-5 rounded-3xl;
+    @apply rounded-3xl;
     border: toRem(1) solid var(--border-color);
     color: var(--color-primary);
     background-color: var(--white-color);
@@ -282,4 +282,10 @@
     color: var(--white-color);
     font-size: toRem(10);
     line-height: toRem(10);
+}
+
+.sellerName{
+    @apply p-1 rounded-md pl-3;
+    background-color: var(--color-primary);
+    color: var(--white-color);
 }

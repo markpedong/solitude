@@ -201,11 +201,21 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 			title={<div className={styles.header}>your cart</div>}
 		>
 			<div className={styles.orderContainer}>
-				{userCart &&
+				{/* {userCart &&
 					(userCart?.length > 1
 						? userCart.slice(0, -1).map(q => <Cart data={q} key={q?.checkout_id} />)
 						: userCart.map(q => <Cart data={q} key={q?.checkout_id} divider={false} />))}
-				{userCart?.length > 1 && <Cart data={userCart?.findLast(q => q)} divider={false} />}
+				{userCart?.length > 1 && <Cart data={userCart?.findLast(q => q)} divider={false} />} */}
+				{userCart?.map(q => (
+					<>
+						<div className={styles.sellerName}>{q?.seller_name}</div>
+						{q.products &&
+							(q.products?.length > 1
+								? q.products.slice(0, -1).map(q => <Cart data={q} key={q?.checkout_id} />)
+								: q.products.map(q => <Cart data={q} key={q?.checkout_id} divider={false} />))}
+						{q.products?.length > 1 && <Cart data={q.products?.findLast(q => q)} divider={false} />}
+					</>
+				))}
 			</div>
 		</ModalForm>
 	)
@@ -244,9 +254,19 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 		[userCart?.length]
 	)
 
+	const fetchCart = async () => {
+		const cart = await checkCart({ user_id: id })
+
+		dispatch(setCart(cart?.data))
+	}
+
 	useEffect(() => {
 		document.documentElement.classList.toggle('dark', darkMode)
 	}, [darkMode])
+
+	useEffect(() => {
+		!!id && fetchCart()
+	}, [])
 
 	return (
 		<>

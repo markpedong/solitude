@@ -1,4 +1,4 @@
-import { CartItem } from '@/api'
+import { CartItem, CartResponse } from '@/api'
 import { createSlice } from '@reduxjs/toolkit'
 
 type InitialSlice = {
@@ -13,7 +13,7 @@ type InitialSlice = {
 		first_name: string
 		birthday: string
 		username: string
-		userCart: CartItem[]
+		userCart: CartResponse[]
 	}
 	sellerData: {
 		seller_id: string

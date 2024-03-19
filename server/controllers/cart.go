@@ -93,7 +93,7 @@ func GetItemsFromCart(ctx *gin.Context) {
 		return
 	}
 
-	var productsWithVariations []models.JSONProduct
+	productMap := make(map[string][]models.JSONProduct)
 	for _, cart := range userCart {
 		var product models.Product
 		if err := database.DB.Find(&product, "product_id = ?", cart.ProductID).Error; err != nil {
@@ -145,8 +145,17 @@ func GetItemsFromCart(ctx *gin.Context) {
 			DiscountPrice: product.DiscountPrice,
 			SellerName:    seller.SellerName,
 		}
-		productsWithVariations = append(productsWithVariations, productRes)
+
+		productMap[seller.SellerName] = append(productMap[seller.SellerName], productRes)
 	}
 
-	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(productsWithVariations))
+	var cartResponse []models.CartResponse
+	for sellerName, products := range productMap {
+		cartResponse = append(cartResponse, models.CartResponse{
+			Products:   products,
+			SellerName: sellerName,
+		})
+	}
+
+	helpers.JSONResponse(ctx, "fetched items from cart", helpers.DataHelper(cartResponse))
 }

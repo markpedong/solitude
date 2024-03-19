@@ -64,6 +64,11 @@ type OrderResponse struct {
 	GroupID       string              `json:"group_id"`
 }
 
+type CartResponse struct {
+	Products   []JSONProduct `json:"products"`
+	SellerName string        `json:"seller_name"`
+}
+
 type GroupedOrderResponse struct {
 	OrderResponse
 	Count int `json:"count"`

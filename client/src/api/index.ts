@@ -107,6 +107,7 @@ export type CartItem = {
 	product_id: string
 	product_name: string
 	seller_id: string
+	seller_name: string
 	discount: number
 	discount_price: number
 	variations: {
@@ -118,7 +119,11 @@ export type CartItem = {
 	}[]
 	quantity: number
 }
-export const checkCart = params => post<CartItem[]>('/cart/get', params)
+export type CartResponse = {
+	products: CartItem[]
+	seller_name: string
+}
+export const checkCart = params => post<CartResponse[]>('/cart/get', params)
 
 // /cart/remove
 export const removeCart = params => post('/cart/remove', params)
@@ -183,8 +188,7 @@ export type OrderItem = {
 export const getOrders = params => post<OrderItem[]>('/orders/getOrders', params)
 
 // /orders/getOrdersByID
-export const getOrdersByID = params => post<OrderItem[]>("/orders/getOrdersByID", params)
+export const getOrdersByID = params => post<OrderItem[]>('/orders/getOrdersByID', params)
 
 // /delivery/setDefault
 export const setDefault = params => post('/delivery/setDefault', params)
-
