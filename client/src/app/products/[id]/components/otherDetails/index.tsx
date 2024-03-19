@@ -41,7 +41,7 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 				</div>
 			</div>
 			<div className={styles.specsHeader}>Product Description</div>
-			<span>{data?.description}</span>
+			<span className='break-words'>{data?.description}</span>
 			<Divider />
 			<div className={styles.specsHeader}>Seller Info</div>
 			<div className={styles.sellerInfoWrapper}>
