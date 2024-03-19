@@ -164,17 +164,15 @@ export type OrderItem = {
 	seller_id: string
 	product_name: string
 	price: number
-	image: string[]
+	image: string
 	discount: number
 	discount_price: number
 	rating: number
 	description: string
 	quantity: string
 	variations: {
-		id: string
-		product_id: string
 		label: string
-		selected_value: string
+		value: string
 	}[]
 	status: number
 	seller_name: string
@@ -185,10 +183,23 @@ export type OrderItem = {
 	delivery_info: InfoItem
 	group_id: string
 }
+
+export type OrderResponse = {
+	address: InfoItem
+	payment_method: number
+	product: OrderItem[]
+	time: {
+		created_at: number
+		completed_at: number
+		shipped_at: number
+		delivered_at: number
+	}
+	status: number
+}
 export const getOrders = params => post<OrderItem[]>('/orders/getOrders', params)
 
 // /orders/getOrdersByID
-export const getOrdersByID = params => post<OrderItem[]>('/orders/getOrdersByID', params)
+export const getOrdersByID = params => post<OrderResponse>('/orders/getOrdersByID', params)
 
 // /delivery/setDefault
 export const setDefault = params => post('/delivery/setDefault', params)

@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import { Divider, Flex, Rate, Spin, Timeline, Tooltip, UploadFile } from 'antd'
-import { OrderItem, getOrders, uploadImages } from '@/api'
+import { OrderResponse, getOrdersByID, uploadImages } from '@/api'
 import { useAppSelector } from '@/redux/store'
 import { dateParser } from '@/constants/helper'
 import Image from 'next/image'
@@ -17,14 +17,16 @@ const OrderedItem = () => {
 	const formRef = useRef<ProFormInstance>()
 	const { id: group_id } = useParams()
 	const { userData } = useAppSelector(s => s.userData)
-	const [orderedData, setOrderedData] = useState<OrderItem>()
+	const [orderedData, setOrderedData] = useState<OrderResponse>()
 	const [uploadedImages, setUploadedImages] = useState<UploadFile<any>[]>([])
 	const [uploading, setUploading] = useState(false)
+	const status = orderedData?.time
+	const total = orderedData?.product?.reduce((acc, cur) => acc + cur.price, 0)
 
 	const renderTimelineItems = () =>
 		[
 			{
-				children: <span className={styles.timelineTitle}>Order Created at {dateParser(orderedData?.created_at)}</span>,
+				children: <span className={styles.timelineTitle}>Order Created at {dateParser(status?.created_at)}</span>,
 				color: '#123123',
 				key: 1
 			},
@@ -42,16 +44,16 @@ const OrderedItem = () => {
 				key: 4
 			},
 			{
-				children: <span className={styles.timelineTitle}>Order Delivered at {dateParser(orderedData?.delivered_at)}</span>,
+				children: <span className={styles.timelineTitle}>Order Delivered at {dateParser(status?.delivered_at)}</span>,
 				color: 'rgba(20, 225, 62, 1)',
 				key: 5
 			}
 		].filter(q => q.key <= orderedData?.status)
 
 	const fetchOrderInfo = async () => {
-		const res = await getOrders({ id: userData?.id, group_id })
+		const res = await getOrdersByID({ id: userData?.id, group_id })
 
-		setOrderedData(res?.data as OrderItem)
+		setOrderedData(res?.data)
 	}
 
 	const reviewProd = () => {
@@ -132,33 +134,37 @@ const OrderedItem = () => {
 						<Divider />
 						<span className={styles.deliveryHeader}>Delivery Address</span>
 						<div className={styles.deliveryInfo}>{/* <span>{orderedData?}</span> */}</div>
-						<DeliveryInfo data={orderedData?.delivery_info} />
+						<DeliveryInfo data={orderedData?.address} />
 					</div>
 					<div className={styles.textContainer}>
-						<div className={styles.sellerData}>
-							<FaStore />
-							<span>{orderedData?.seller_name}</span>
-							<span>View Shop</span>
-						</div>
-						<div className={styles.orderContainer}>
-							<Image className={styles.orderImage} src={orderedData?.image?.[0]} width={50} height={50} alt={orderedData?.product_name} />
-							<div className={styles.detailsContainer}>
-								<span className={styles.detailHeader}>{orderedData?.product_name}</span>
-								<div>Variation: {orderedData?.variations?.map(q => `${q.label}:${q?.selected_value}, `)}</div>
-								<span>Quantity: {orderedData?.quantity}</span>
-								<div className={styles.priceContainer}>
-									{!!!orderedData?.discount_price ? <span>₱{orderedData?.price}</span> : <span>₱{orderedData?.discount_price}</span>}
-									{!!orderedData?.discount_price && <span>₱{orderedData?.price}</span>}
-									{!!orderedData?.discount && <span>-{orderedData?.discount}%</span>}
+						{orderedData?.product.map(q => (
+							<>
+								<div className={styles.sellerData}>
+									<FaStore />
+									<span>{q?.seller_name}</span>
+									<span>View Shop</span>
 								</div>
-							</div>
-						</div>
+								<div className={styles.orderContainer}>
+									<Image className={styles.orderImage} src={q?.image} width={50} height={50} alt={q?.product_name} />
+									<div className={styles.detailsContainer}>
+										<span className={styles.detailHeader}>{q?.product_name}</span>
+										<div>Variation: {q?.variations?.map(q => `${q.label}:${q?.value}, `)}</div>
+										<span>Quantity: {q?.quantity}</span>
+										<div className={styles.priceContainer}>
+											{!!!q?.discount_price ? <span>₱{q?.price}</span> : <span>₱{q?.discount_price}</span>}
+											{!!q?.discount_price && <span>₱{q?.price}</span>}
+											{!!q?.discount && <span>-{q?.discount}%</span>}
+										</div>
+									</div>
+								</div>
+							</>
+						))}
 						<Divider />
 						<div className={styles.orderTotal}>
 							<span className={styles.deliveryHeader}>Order Total</span>
 							<div className="mt-3">
 								<span>Merchandise Total</span>
-								<span>₱{orderedData?.price}</span>
+								<span>₱{total}</span>
 							</div>
 							<div>
 								<span>Shipping Fee</span>

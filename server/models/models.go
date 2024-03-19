@@ -133,10 +133,12 @@ type OrderGroup struct {
 	PaymentMethod   int                   `json:"payment_method"`
 	SelectedAddress string                `json:"delivery_info" validate:"required"`
 	ShippedAt       int                   `json:"shipped_at"`
+	CreatedAt       int                   `json:"created_at" gorm:"autoCreateTime"`
 	DeliveredAt     int                   `json:"delivered_at"`
 	CompletedAt     int                   `json:"completed_at"`
 	UpdatedAt       int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DeletedAt       soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
+	Status          int                   `json:"status"`
 }
 
 type ProductReviews struct {

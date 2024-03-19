@@ -14,7 +14,7 @@ const Order: FC<Props> = ({ data }) => {
 	const router = useRouter()
 	return (
 		<div className={styles.orderContainer}>
-			<Image src={data?.image?.[0]} alt="order" width={1000} height={1000} />
+			<Image src={data?.image} alt="order" width={1000} height={1000} />
 			<div className={styles.orderDescription}>
 				<div className={styles.orderHeader}>
 					<span onClick={() => router.push(`/brands/${data?.seller_id}`)}>
@@ -25,7 +25,7 @@ const Order: FC<Props> = ({ data }) => {
 				<span className={styles.orderName} onClick={() => router.push(`/products/${data?.product_id}`)}>
 					{data?.product_name}
 				</span>
-				<div>Variation: {data?.variations?.map(q => `${q.label}:${q?.selected_value}, `)}</div>
+				<div>Variation: {data?.variations?.map(q => `${q.label}:${q?.value}, `)}</div>
 				<span>x{data?.quantity}</span>
 			</div>
 			<div className={styles.extraWrapper}>

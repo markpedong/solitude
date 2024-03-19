@@ -32,7 +32,7 @@ const Cart: FC<Props> = ({ divider = true, data }) => {
 	return (
 		<>
 			<div className={styles.orderWrapper}>
-				<Image className={styles.image} src={data?.image?.[0]} alt="image" width={100} height={100} />
+				<Image className={styles.image} src={data?.image} alt="image" width={100} height={100} />
 				<div className={styles.textContainer}>
 					<div className={styles.title}>
 						<span onClick={() => router.push(`/products/${data?.product_id}`)}>{data?.product_name}</span>

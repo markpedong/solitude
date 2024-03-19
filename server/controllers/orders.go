@@ -27,6 +27,9 @@ func CheckoutOrder(ctx *gin.Context) {
 
 	var orderGroup models.OrderGroup
 	orderGroup.ID = helpers.NewUUID()
+	orderGroup.SelectedAddress = body.DeliveryID
+	orderGroup.PaymentMethod = body.PaymentMethod
+	orderGroup.Status = 1
 	for _, v := range user.Carts {
 		var currProd models.Product
 		if err := database.DB.Find(&currProd, "product_id = ?", v.ProductID).Error; err != nil {
@@ -113,19 +116,38 @@ func GetOrdersByGroupID(ctx *gin.Context) {
 		return
 	}
 
-	var currOrders []models.Orders
-	if err := database.DB.Where("group_id = ?", body.GroupID).Find(&currOrders).Error; err != nil {
+	var currOrderGroup models.OrderGroup
+	if err := database.DB.Preload("Orders").Where("id = ?", body.GroupID).Find(&currOrderGroup).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	productsWithVariations, err := GetProductsWithVariations(currOrders)
-	if err != nil {
+	var info models.DeliveryInformation
+	if err := database.DB.First(&info, "id = ?", currOrderGroup.SelectedAddress).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	helpers.JSONResponse(ctx, "", helpers.DataHelper(productsWithVariations))
+	// productsWithVariations, err := GetProductsWithVariations(currOrderGroup.Orders)
+	// if err != nil {
+	// 	helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+	// 	return
+	// }
+
+	// resp := map[string]interface{}{
+	// 	"product":        productsWithVariations,
+	// 	"address":        info,
+	// 	"payment_method": currOrderGroup.PaymentMethod,
+	// 	"time": map[string]interface{}{
+	// 		"shipped_at":   currOrderGroup.ShippedAt,
+	// 		"delivered_at": currOrderGroup.DeliveredAt,
+	// 		"completed_at": currOrderGroup.CompletedAt,
+	// 		"created_at":   currOrderGroup.CreatedAt,
+	// 	},
+	// 	"status": currOrderGroup.Status,
+	// }
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(currOrderGroup))
 }
 
 func GetProductsWithVariations(currOrders []models.Orders) ([]models.OrderResponse, error) {
