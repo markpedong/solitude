@@ -55,6 +55,7 @@ func UserRoutes(r *gin.Engine) {
 	orders.Use(middleware.Authentication)
 	{
 		orders.POST("/getOrders", controllers.GetOrders)
+		orders.POST("/getOrdersByID", controllers.GetOrdersByGroupID)
 	}
 
 	rating := r.Group("/rating")

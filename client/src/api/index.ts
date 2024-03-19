@@ -179,7 +179,11 @@ export type OrderItem = {
 	delivery_info: InfoItem
 	group_id: string
 }
-export const getOrders = params => post<OrderItem[] | OrderItem>('/orders/getOrders', params)
+export const getOrders = params => post<OrderItem[]>('/orders/getOrders', params)
+
+// /orders/getOrdersByID
+export const getOrdersByID = params => post<OrderItem[]>("/orders/getOrdersByID", params)
 
 // /delivery/setDefault
 export const setDefault = params => post('/delivery/setDefault', params)
+

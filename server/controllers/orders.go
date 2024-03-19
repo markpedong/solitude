@@ -128,6 +128,20 @@ func GetOrdersByGroupID(ctx *gin.Context) {
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
+
+	var currOrders []models.Orders
+	if err := database.DB.Where("group_id = ?", body.GroupID).Find(&currOrders).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	productsWithVariations, err := GetProductsWithVariations(currOrders)
+	if err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(productsWithVariations))
 }
 
 func GetProductsWithVariations(currOrders []models.Orders) ([]models.OrderResponse, error) {
