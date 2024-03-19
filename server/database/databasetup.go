@@ -38,6 +38,7 @@ func DBSet() {
 		&models.ProductVariations{},
 		&models.VariationValue{},
 		&models.Carts{},
+		&models.OrderGroup{},
 		&models.Orders{},
 		&models.ProductReviews{},
 		&models.SellerReviews{},
