@@ -170,7 +170,7 @@ const OrderedItem = () => {
 								<span>Merchandise Total</span>
 								<span>₱{total}</span>
 							</div>
-							<div>
+							{/* <div>
 								<span>Shipping Fee</span>
 								<span>₱38</span>
 							</div>
@@ -183,11 +183,11 @@ const OrderedItem = () => {
 							<div>
 								<span>Order Total</span>
 								<span>₱{total}</span>
-							</div>
+							</div> */}
 						</div>
 						<div className={styles.reviewRateContainer}>
-							{reviewProd()}
-							<span>Rate Seller</span>
+							{/* {reviewProd()}
+							<span>Rate Seller</span> */}
 							<span>Complete Order</span>
 						</div>
 					</div>

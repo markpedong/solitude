@@ -26,6 +26,7 @@ func UserRoutes(r *gin.Engine) {
 	api.Use(middleware.Authentication)
 	{
 		api.POST("/addProduct", controllers.AddProducts)
+		api.POST("/editProduct", controllers.EditProducts)
 		api.POST("/uploadImage", controllers.UploadImage)
 		api.POST("/updateUser", controllers.UserUpdate)
 		api.POST("/updateSeller", controllers.SellerUpdate)

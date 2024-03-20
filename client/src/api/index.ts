@@ -84,6 +84,9 @@ export const uploadImages = params => upload<any>('/api/uploadImage', params)
 // /api/addProduct
 export const addProduct = params => post('/api/addProduct', params)
 
+// /api/editProduct
+export const editProduct = params => post('/api/editProduct', params)
+
 // /seller/products
 export const getProductsData = params => post<TProduct[]>('/seller/products', params)
 

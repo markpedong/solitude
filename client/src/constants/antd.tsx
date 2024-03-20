@@ -8,7 +8,7 @@ export const messageHelper = (res: any) => {
 		return
 	}
 
-	if (!res?.success){
+	if (!!!res?.success){
 		message.error(res?.message)
 		return
 	}

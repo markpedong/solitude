@@ -6,7 +6,7 @@
     grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 0;
     grid-row-gap: 0;
-    margin-bottom: toRem(20);
+    margin-bottom: toRem(10);
     padding: toRem(5);
     border-radius: toRem(15);
 
@@ -18,7 +18,7 @@
         grid-area: 1 / 2 / 2 / 5;
 
         span {
-            font-size: toRem(20);
+            font-size: toRem(15);
         }
     }
 
@@ -49,4 +49,10 @@
 .description {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.modalTitle {
+    font-family: "Integral";
+    font-size: toRem(20);
+    color: var(--color-primary);
 }

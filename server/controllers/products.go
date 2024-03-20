@@ -77,6 +77,19 @@ func AddProducts(ctx *gin.Context) {
 	helpers.JSONResponse(ctx, "successfully added product")
 }
 
+func EditProducts(ctx *gin.Context) {
+	var body models.Product
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
+		return
+	}
+
+	if err := database.DB.Updates(&body).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	helpers.JSONResponse(ctx, "successfully edited product")
+}
 func GetAllProducts(ctx *gin.Context) {
 	var body struct {
 		Material     string `json:"material"`

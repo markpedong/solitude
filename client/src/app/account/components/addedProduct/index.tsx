@@ -27,7 +27,7 @@ const ProductsAdded: FC<Props> = () => {
 	const renderEditProduct = (product: TProduct) => {
 		return (
 			<ModalForm
-				title="Product Details:"
+				title={<span className={styles.modalTitle}>Product Details:</span>}
 				initialValues={product}
 				submitter={false}
 				trigger={
@@ -55,8 +55,8 @@ const ProductsAdded: FC<Props> = () => {
 		<div>
 			{products?.map((q, i) => (
 				<div className={styles.addProductContainer} style={{ background: i % 2 !== 0 ? '#F4F4F2' : '' }} key={q.product_id}>
-					<Flex justify="center" align="center" style={{ paddingRight: '1rem' }}>
-						<Image src={q?.image?.[0]} alt="product" width={100} height={100} />
+					<Flex justify="center" align="center">
+						<Image src={q?.image?.[0]} alt="product" width={70} height={70} />
 					</Flex>
 					<div className={jostHeavy.className}>
 						<span onClick={() => router.push(`/products/${q.product_id}`)} style={{ cursor: 'pointer', textTransform: 'capitalize' }}>
