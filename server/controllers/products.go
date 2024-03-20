@@ -34,41 +34,11 @@ func AddProducts(ctx *gin.Context) {
 		return
 	}
 
-	var variationArr []models.ProductVariations
-	for _, v := range body.Variations {
-		variation := models.ProductVariations{
-			ID:        helpers.NewUUID(),
-			ProductID: product.ProductID,
-			Label:     v.Label,
-		}
-		if err := database.DB.Create(&variation).Error; err != nil {
-			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-			return
-		}
-		var variationValueArr []models.VariationValue
-		for _, v := range v.Value {
-			variationValue := models.VariationValue{
-				ID:          helpers.NewUUID(),
-				VariationID: variation.ID,
-				Value:       v,
-			}
-			if err := database.DB.Create(&variationValue).Error; err != nil {
-				helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-				return
-			}
-
-			variationValueArr = append(variationValueArr, variationValue)
-		}
-
-		variation.Value = variationValueArr
-		if err := database.DB.Save(&variation).Error; err != nil {
-			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-			return
-		}
-		variationArr = append(variationArr, variation)
-
+	arr, err := CreateVariationArr(body.Variations, product.ProductID)
+	if err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 	}
-	product.Variations = variationArr
+	product.Variations = arr
 	if err := database.DB.Save(&product).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
@@ -78,20 +48,55 @@ func AddProducts(ctx *gin.Context) {
 }
 
 func EditProducts(ctx *gin.Context) {
-	var body models.Product
+	var body struct {
+		models.JSONAddProduct
+		ProductID     string                     `json:"product_id"`
+		Discount      int                        `json:"discount"`
+		CurrVariation []models.ProductVariations `json:"current_variations"`
+	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
 	var product models.Product
-	if err := database.DB.Preload("Variations.Value").First(&product).Error; err != nil {
+	if err := database.DB.
+		Preload("Variations.Value").
+		First(&product, "product_id = ?", body.ProductID).
+		Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+	for _, v := range product.Variations {
+		if err := database.DB.
+			Delete(&v.Value).
+			Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		if err := database.DB.
+			Delete(&v).
+			Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
+	}
+
+	arr, err := CreateVariationArr(body.Variations, product.ProductID)
+	if err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	// validate if the body variations is the same with product variations, if not then create new
+	product.Variations = arr
+	product.Stock = body.Stock
+	product.Category = body.Categories
+	if err := database.DB.Save(&product).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
 
-	helpers.JSONResponse(ctx, "successfully edited product", helpers.DataHelper(product))
+	helpers.JSONResponse(ctx, "successfully edited product")
 }
 
 func GetAllProducts(ctx *gin.Context) {
@@ -210,4 +215,38 @@ func SearchProductByQuery(ctx *gin.Context) {
 	}
 
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(product))
+}
+
+func CreateVariationArr(variationArr []models.Variation, productID string) ([]models.ProductVariations, error) {
+	var productVariationArr []models.ProductVariations
+	for _, v := range variationArr {
+		variation := models.ProductVariations{
+			ID:        helpers.NewUUID(),
+			ProductID: productID,
+			Label:     v.Label,
+		}
+		if err := database.DB.Create(&variation).Error; err != nil {
+			return nil, err
+		}
+		var variationValueArr []models.VariationValue
+		for _, v := range v.Value {
+			variationValue := models.VariationValue{
+				ID:          helpers.NewUUID(),
+				VariationID: variation.ID,
+				Value:       v,
+			}
+			if err := database.DB.Create(&variationValue).Error; err != nil {
+				return nil, err
+			}
+
+			variationValueArr = append(variationValueArr, variationValue)
+		}
+
+		variation.Value = variationValueArr
+		if err := database.DB.Save(&variation).Error; err != nil {
+			return nil, err
+		}
+		productVariationArr = append(productVariationArr, variation)
+	}
+	return productVariationArr, nil
 }

@@ -6,7 +6,7 @@ import { useAppSelector } from '@/redux/store'
 import { ActionType, ProForm, ProFormDigit, ProFormInstance, ProFormList, ProFormSelect, ProFormText, ProFormTextArea, ProFormUploadButton } from '@ant-design/pro-components'
 import { Button, Flex, Spin, UploadFile } from 'antd'
 import { motion } from 'framer-motion'
-import { FC, useRef, useState } from 'react'
+import { FC, SetStateAction, memo, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import { omit } from 'lodash'
 import { scaleSize } from '@/constants'
@@ -34,21 +34,20 @@ const AddProduct: FC<Props> = ({ product }) => {
 				onFinish={async params => {
 					let res
 
-					console.log({
-						...product,
-						discount: +params.discount,
-						image: uploadedImages?.map(q => q.url)
-					})
-
 					if (!!product?.product_id) {
+						const variations = (params?.variations || []).map(q => ({
+							label: q?.label,
+							value: q?.value.map(w => (w?.value ? w?.value : w))
+						}))
+
 						res = await editProduct(
 							omit(
 								{
 									...params,
 									product_id: product.product_id,
-									seller_id: product.seller_id,
 									discount: +params.discount,
-									image: uploadedImages?.map(q => q.url)
+									image: uploadedImages?.map(q => q.url),
+									variations
 								},
 								'upload'
 							)
@@ -69,7 +68,6 @@ const AddProduct: FC<Props> = ({ product }) => {
 						setUploadedImages([])
 					}
 
-					// window.location.reload()
 					return afterModalformFinish(actionRef, res?.message, res?.success, formRef)
 				}}
 			>
@@ -125,7 +123,14 @@ const AddProduct: FC<Props> = ({ product }) => {
 							}}
 							rules={[...REQUIRED]}
 						/>
-						<ProFormDigit label="Amount in Stock" name="stock" placeholder="in Stock" colProps={{ span: 12 }} rules={[...REQUIRED]} />
+						<ProFormDigit
+							label="Amount in Stock"
+							name="stock"
+							placeholder="in Stock"
+							colProps={{ span: 12 }}
+							fieldProps={{ min: 1, defaultValue: 1 }}
+							rules={[...REQUIRED]}
+						/>
 					</ProForm.Group>
 					<ProFormSelect
 						label="Category"
@@ -166,4 +171,4 @@ const AddProduct: FC<Props> = ({ product }) => {
 	)
 }
 
-export default AddProduct
+export default memo(AddProduct)

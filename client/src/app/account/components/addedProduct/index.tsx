@@ -60,8 +60,8 @@ const ProductsAdded: FC<Props> = () => {
 					<div className={styles.imgContainer}>
 						<Image src={q?.image?.[0]} alt="product" width={70} height={70} />
 					</div>
-					<div className={styles.productHeader} >
-						<span  className={jostHeavy.className} onClick={() => router.push(`/products/${q.product_id}`)} style={{ cursor: 'pointer', textTransform: 'capitalize' }}>
+					<div className={styles.productHeader}>
+						<span className={jostHeavy.className} onClick={() => router.push(`/products/${q.product_id}`)} style={{ cursor: 'pointer', textTransform: 'capitalize' }}>
 							{q.product_name}
 						</span>
 						<span className={styles.description}>{q.description}</span>

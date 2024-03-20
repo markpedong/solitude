@@ -90,7 +90,7 @@ type ProductVariations struct {
 	ID            string           `json:"id" gorm:"primaryKey"`
 	ProductID     string           `json:"product_id"`
 	Label         string           `json:"label" validate:"required"`
-	Value         []VariationValue `json:"value" gorm:"foreignKey:VariationID"`
+	Value         []VariationValue `json:"value" gorm:"foreignKey:VariationID; constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	SelectedValue string           `json:"selected_value" gorm:"-"`
 }
 
