@@ -68,6 +68,7 @@ const AddProduct: FC<Props> = ({ product }) => {
 						setUploadedImages([])
 					}
 
+					window.location.reload()
 					return afterModalformFinish(actionRef, res?.message, res?.success, formRef)
 				}}
 			>

@@ -88,7 +88,7 @@ export const addProduct = params => post('/api/addProduct', params)
 export const editProduct = params => post('/api/editProduct', params)
 
 // /seller/products
-export const getProductsData = params => post<TProduct[]>('/seller/products', params)
+export const getSellerProducts = params => post<TProduct[]>('/seller/products', params)
 
 // /variations/get
 export type TVariations = {

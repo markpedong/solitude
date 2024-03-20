@@ -1,6 +1,6 @@
-import { TProduct, getProductsData as getSellerProducts } from '@/api'
+import { TProduct, getSellerProducts } from '@/api'
 import { useAppSelector } from '@/redux/store'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import styles from './styles.module.scss'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import { motion } from 'framer-motion'
