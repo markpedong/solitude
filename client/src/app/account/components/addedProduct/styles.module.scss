@@ -43,11 +43,11 @@
             }
 
             :nth-child(3) {
-                @apply text-red-600 flex justify-center items-center rounded-full;
+                @apply text-red-600 flex justify-center items-center rounded-full py-1;
                 background-color: #ff33333d;
-                width: toRem(45);
-                height: toRem(20);
-                font-size: toRem(10);
+                width: toRem(55);
+                font-size: toRem(15);
+                line-height: toRem(15);
             }
         }
     }
