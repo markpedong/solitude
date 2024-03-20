@@ -46,6 +46,7 @@ const AddProduct: FC<Props> = ({ product }) => {
 								{
 									...params,
 									product_id: product.product_id,
+									seller_id: product.seller_id,
 									discount: +params.discount,
 									image: uploadedImages?.map(q => q.url)
 								},

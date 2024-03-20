@@ -78,16 +78,13 @@ func AddProducts(ctx *gin.Context) {
 }
 
 func EditProducts(ctx *gin.Context) {
-	var body struct {
-		models.JSONAddProduct
-		ProductID string `json:"product_id"`
-	}
+	var body models.Product
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
 	var product models.Product
-	if err := database.DB.Preload("Variations.Value").First(&product, "product_id = ?", body.ProductID).Error; err != nil {
+	if err := database.DB.Preload("Variations.Value").First(&product).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
