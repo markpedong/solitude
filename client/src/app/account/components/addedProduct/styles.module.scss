@@ -15,7 +15,7 @@
     }
 
     .productHeader {
-        @apply h-auto flex flex-col pb-3;
+        @apply h-auto flex flex-col;
         grid-area: 1 / 2 / 2 / 12;
 
         span {
@@ -60,8 +60,8 @@
         gap: toRem(15);
 
         svg {
-            width: toRem(15);
-            height: toRem(15);
+            width: toRem(20);
+            height: toRem(20);
         }
 
         :nth-child(2) {
