@@ -19,7 +19,13 @@
         grid-area: 1 / 2 / 2 / 12;
 
         span {
-            font-size: toRem(15);
+            &:first-child {
+                font-size: toRem(12);
+            }
+
+            &:last-child {
+                font-size: toRem(10);
+            }
         }
     }
 
@@ -30,7 +36,7 @@
         .priceContainer {
             @apply flex items-center gap-2;
 
-            font-size: toRem(20);
+            font-size: toRem(15);
             color: var(--color-primary);
 
             :nth-child(1) {
@@ -45,9 +51,9 @@
             :nth-child(3) {
                 @apply text-red-600 flex justify-center items-center rounded-full py-1;
                 background-color: #ff33333d;
-                width: toRem(55);
-                font-size: toRem(15);
-                line-height: toRem(15);
+                width: toRem(40);
+                font-size: toRem(12);
+                line-height: toRem(12);
             }
         }
     }
@@ -60,8 +66,8 @@
         gap: toRem(15);
 
         svg {
-            width: toRem(20);
-            height: toRem(20);
+            width: toRem(15);
+            height: toRem(15);
         }
 
         :nth-child(2) {
