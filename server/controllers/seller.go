@@ -175,11 +175,11 @@ func GetAllProductsBySellerID(ctx *gin.Context) {
 		return
 	}
 
-	var existingSeller models.Seller
-	if err := database.DB.Preload("Products").Where("seller_id = ?", body.SellerID).First(&existingSeller).Error; err != nil {
+	var currProduct []models.Product
+	if err := database.DB.Order("created_at DESC").Preload("Variations.Value").Find(&currProduct, "seller_id = ?", body.SellerID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	helpers.JSONResponse(ctx, "", helpers.DataHelper(existingSeller.Products))
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(currProduct))
 }

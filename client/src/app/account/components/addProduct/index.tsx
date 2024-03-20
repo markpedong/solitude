@@ -4,9 +4,9 @@ import { TProduct, addProduct, editProduct, uploadImages } from '@/api'
 import { INPUT_NOSPACE, REQUIRED, afterModalformFinish } from '@/constants/helper'
 import { useAppSelector } from '@/redux/store'
 import { ActionType, ProForm, ProFormDigit, ProFormInstance, ProFormList, ProFormSelect, ProFormText, ProFormTextArea, ProFormUploadButton } from '@ant-design/pro-components'
-import { Button, Col, Flex, Spin, UploadFile } from 'antd'
+import { Button, Flex, Spin, UploadFile } from 'antd'
 import { motion } from 'framer-motion'
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import { omit } from 'lodash'
 import { scaleSize } from '@/constants'
@@ -22,7 +22,6 @@ const AddProduct: FC<Props> = ({ product }) => {
 	const [uploadedImages, setUploadedImages] = useState(product?.image.map(q => ({ url: q })))
 	const formRef = useRef<ProFormInstance>()
 	const actionRef = useRef<ActionType>()
-	const router = useRouter()
 
 	return (
 		<div className={styles.addProductWrapper}>
@@ -35,16 +34,22 @@ const AddProduct: FC<Props> = ({ product }) => {
 				onFinish={async params => {
 					let res
 
+					console.log({
+						...product,
+						discount: +params.discount,
+						image: uploadedImages?.map(q => q.url)
+					})
+
 					if (!!product?.product_id) {
 						res = await editProduct(
 							omit(
 								{
-									...product,
 									...params,
+									product_id: product.product_id,
 									discount: +params.discount,
 									image: uploadedImages?.map(q => q.url)
 								},
-								['upload', 'checkout_id']
+								'upload'
 							)
 						)
 					} else {
@@ -63,7 +68,7 @@ const AddProduct: FC<Props> = ({ product }) => {
 						setUploadedImages([])
 					}
 
-					router.refresh()
+					// window.location.reload()
 					return afterModalformFinish(actionRef, res?.message, res?.success, formRef)
 				}}
 			>
