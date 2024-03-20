@@ -89,6 +89,8 @@ func EditProducts(ctx *gin.Context) {
 		return
 	}
 
+	// validate if the body variations is the same with product variations, if not then create new
+
 	helpers.JSONResponse(ctx, "successfully edited product", helpers.DataHelper(product))
 }
 
