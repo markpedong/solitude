@@ -106,7 +106,7 @@ export const addToCart = params => post('/cart/add', params)
 export type CartItem = {
 	checkout_id: string
 	image: string
-	price: 129
+	price: number
 	product_id: string
 	product_name: string
 	seller_id: string
