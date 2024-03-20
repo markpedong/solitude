@@ -1,21 +1,22 @@
 @import '@/styles/_helpers.scss';
 
 .addProductContainer {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 0;
-    grid-row-gap: 0;
+    @apply grid grid-cols-12 grid-rows-2;
     margin-bottom: toRem(10);
-    padding: toRem(5);
     border-radius: toRem(15);
 
-    div:nth-of-type(1) {
+    .imgContainer {
+        @apply flex items-center justify-center;
         grid-area: 1 / 1 / 3 / 2;
+
+        img {
+            @apply h-auto w-16;
+        }
     }
 
-    div:nth-of-type(2) {
-        grid-area: 1 / 2 / 2 / 5;
+    .productHeader {
+        @apply h-auto flex flex-col pb-3;
+        grid-area: 1 / 2 / 2 / 12;
 
         span {
             font-size: toRem(15);
@@ -23,12 +24,36 @@
     }
 
     div:nth-of-type(3) {
-        grid-area: 2 / 2 / 3 / 5;
-        align-self: flex-start;
+        grid-area: 2 / 2 / 3 / 12;
+        align-self: center;
+
+        .priceContainer {
+            @apply flex items-center gap-2;
+
+            font-size: toRem(20);
+            color: var(--color-primary);
+
+            :nth-child(1) {
+                font-weight: 700;
+            }
+
+            :nth-child(2) {
+                @apply opacity-50 line-through;
+                font-weight: 700;
+            }
+
+            :nth-child(3) {
+                @apply text-red-600 flex justify-center items-center rounded-full;
+                background-color: #ff33333d;
+                width: toRem(45);
+                height: toRem(20);
+                font-size: toRem(10);
+            }
+        }
     }
 
     div:nth-of-type(4) {
-        grid-area: 1 / 5 / 3 / 6;
+        grid-area: 1 / 12 / 3 / 13;
         display: flex;
         justify-content: center;
         align-items: center;

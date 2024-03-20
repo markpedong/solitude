@@ -41,6 +41,7 @@ const AddProduct: FC<Props> = ({ product }) => {
 								{
 									...product,
 									...params,
+									discount: +params.discount,
 									image: uploadedImages?.map(q => q.url)
 								},
 								['upload', 'checkout_id']
@@ -61,8 +62,8 @@ const AddProduct: FC<Props> = ({ product }) => {
 
 						setUploadedImages([])
 					}
-					 
-					router.refresh() 
+
+					router.refresh()
 					return afterModalformFinish(actionRef, res?.message, res?.success, formRef)
 				}}
 			>
@@ -103,12 +104,21 @@ const AddProduct: FC<Props> = ({ product }) => {
 						)}
 					</Flex>
 				</ProFormText>
-				<Col span={1} />
 				<ProFormText colProps={{ span: 13 }}>
 					<ProFormText label="Name" name="product_name" placeholder="Product Name" colProps={{ span: 24 }} rules={[...REQUIRED]} />
 					<ProFormTextArea label="Description" name="description" placeholder="Description" colProps={{ span: 24 }} rules={[...REQUIRED]} />
 					<ProForm.Group>
 						<ProFormText label="Price" name="price" placeholder="Price" colProps={{ span: 12 }} rules={[...REQUIRED]} />
+						<ProFormDigit
+							label="Discount"
+							name="discount"
+							placeholder="Discount"
+							colProps={{ span: 12 }}
+							fieldProps={{
+								formatter: value => `${value}%`
+							}}
+							rules={[...REQUIRED]}
+						/>
 						<ProFormDigit label="Amount in Stock" name="stock" placeholder="in Stock" colProps={{ span: 12 }} rules={[...REQUIRED]} />
 					</ProForm.Group>
 					<ProFormSelect

@@ -12,6 +12,7 @@ import { ModalForm, ProForm, ProFormDigit, ProFormText, ProFormTextArea } from '
 import { REQUIRED } from '@/constants/helper'
 import AddProduct from '../addProduct'
 import { scaleSize } from '@/constants'
+import classNames from 'classnames'
 
 const cormorant = Cormorant({ weight: 'variable', subsets: ['latin'] })
 const jost = Jost({ weight: '400', subsets: ['latin'] })
@@ -30,6 +31,7 @@ const ProductsAdded: FC<Props> = () => {
 				title={<span className={styles.modalTitle}>Product Details:</span>}
 				initialValues={product}
 				submitter={false}
+				width={1200}
 				trigger={
 					<motion.div whileTap={scaleSize}>
 						<EditOutlined style={{ cursor: 'pointer' }} />
@@ -55,17 +57,21 @@ const ProductsAdded: FC<Props> = () => {
 		<div>
 			{products?.map((q, i) => (
 				<div className={styles.addProductContainer} style={{ background: i % 2 !== 0 ? '#F4F4F2' : '' }} key={q.product_id}>
-					<Flex justify="center" align="center">
+					<div className={styles.imgContainer}>
 						<Image src={q?.image?.[0]} alt="product" width={70} height={70} />
-					</Flex>
-					<div className={jostHeavy.className}>
-						<span onClick={() => router.push(`/products/${q.product_id}`)} style={{ cursor: 'pointer', textTransform: 'capitalize' }}>
+					</div>
+					<div className={styles.productHeader} >
+						<span  className={jostHeavy.className} onClick={() => router.push(`/products/${q.product_id}`)} style={{ cursor: 'pointer', textTransform: 'capitalize' }}>
 							{q.product_name}
 						</span>
-					</div>
-					<Flex className={jost.className} vertical>
 						<span className={styles.description}>{q.description}</span>
-						<span>₱ {q.price?.toFixed(2)}</span>
+					</div>
+					<Flex className={classNames(jost.className, styles.priceContainer)} vertical>
+						<div className={styles.priceContainer}>
+							{!!!q?.discount_price ? <span className={styles.price}>₱{q?.price}</span> : <span className={styles.price}>₱{q?.discount_price}</span>}
+							{!!q?.discount_price && <span className={styles.price}>₱{q?.price}</span>}
+							{!!q?.discount && <span className={styles.price}>-{q?.discount}%</span>}
+						</div>
 					</Flex>
 					<div>
 						{renderEditProduct(q)}
