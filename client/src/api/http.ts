@@ -60,7 +60,7 @@ const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
 		if (response?.status === 401) {
 			redirect('/unauthorized')
 		}
-		return
+		return response
 	}
 
 	return response as ApiResponse<T>

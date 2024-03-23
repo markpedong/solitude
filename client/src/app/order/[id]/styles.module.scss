@@ -153,10 +153,19 @@
             color: var(--white-color);
             background-color: var(--color-primary);
         }
+
+        &.rateProduct{
+            color: var(--white-color);
+            background-color: var(--color-primary);
+        }
     }
 }
 
 .reviewProdTitle {
     font-family: "Integral";
     font-size: toRem(20);
+}
+
+.productWrapper{
+    @apply flex flex-col
 }

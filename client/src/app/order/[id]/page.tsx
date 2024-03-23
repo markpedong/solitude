@@ -12,16 +12,17 @@ import DeliveryInfo from '@/components/reusable/deliveryInfo'
 import { FaStore } from 'react-icons/fa'
 import { ModalForm, ProFormInstance, ProFormText, ProFormTextArea, ProFormUploadButton } from '@ant-design/pro-components'
 import { MODAL_FORM_PROPS } from '@/constants'
+import MainContent from './components/mainContent'
+import RateProducts from './components/rateProducts'
 
 const OrderedItem = () => {
 	const formRef = useRef<ProFormInstance>()
 	const { id: group_id } = useParams()
-	const { userData } = useAppSelector(s => s.userData)
+	const [orderState, setOrderState] = useState(1)
 	const [orderedData, setOrderedData] = useState<OrderResponse>()
 	const [uploadedImages, setUploadedImages] = useState<UploadFile<any>[]>([])
 	const [uploading, setUploading] = useState(false)
 	const status = orderedData?.time
-	const total = orderedData?.products?.flatMap(q => q.products).reduce((acc, cur) => acc + cur.price, 0)
 
 	const renderTimelineItems = () =>
 		[
@@ -54,8 +55,6 @@ const OrderedItem = () => {
 		const res = await getOrdersByID({ group_id })
 
 		setOrderedData(res?.data)
-
-		console.log(orderedData)
 	}
 
 	const reviewProd = () => {
@@ -127,8 +126,8 @@ const OrderedItem = () => {
 	}, [])
 
 	return (
-		<div className="max-w-6xl mx-auto my-10 px-5">
-			<div>
+		<>
+			<div className="max-w-6xl mx-auto my-10 px-5">
 				<div className={styles.orderHeader}>Order Details</div>
 				<div className={styles.detailsWrapper}>
 					<div className={styles.timeContainer}>
@@ -138,62 +137,11 @@ const OrderedItem = () => {
 						<div className={styles.deliveryInfo}>{/* <span>{orderedData?}</span> */}</div>
 						<DeliveryInfo data={orderedData?.address} />
 					</div>
-					<div className={styles.textContainer}>
-						{orderedData?.products?.map(q => (
-							<div className="pb-6" key={q?.seller_id}>
-								<div className={styles.sellerData}>
-									<FaStore />
-									<span>{q?.seller_name}</span>
-									<span>View Shop</span>
-								</div>
-								{q?.products.map((w, i) => (
-									<div className={styles.orderContainer} key={i}>
-										<Image className={styles.orderImage} src={w?.image} width={50} height={50} alt={w?.product_name} />
-										<div className={styles.detailsContainer}>
-											<span className={styles.detailHeader}>{w?.product_name}</span>
-											<div>Variation: {w?.variations?.map(e => `${e.label}:${e?.value}, `)}</div>
-											<span>Quantity: {w?.quantity}</span>
-											<div className={styles.priceContainer}>
-												{!!!w?.discount_price ? <span>₱{w?.price}</span> : <span>₱{w?.discount_price}</span>}
-												{!!w?.discount_price && <span>₱{w?.price}</span>}
-												{!!w?.discount && <span>-{w?.discount}%</span>}
-											</div>
-										</div>
-									</div>
-								))}
-							</div>
-						))}
-						<Divider />
-						<div className={styles.orderTotal}>
-							<span className={styles.deliveryHeader}>Order Total</span>
-							<div className="mt-3">
-								<span>Merchandise Total</span>
-								<span>₱{total}</span>
-							</div>
-							{/* <div>
-								<span>Shipping Fee</span>
-								<span>₱38</span>
-							</div>
-							<div>
-								<span>
-									<Tooltip title="Free Shipping Voucher applied">Shipping Discount Subtotal</Tooltip>
-								</span>
-								<span>₱38</span>
-							</div>
-							<div>
-								<span>Order Total</span>
-								<span>₱{total}</span>
-							</div> */}
-						</div>
-						<div className={styles.reviewRateContainer}>
-							{/* {reviewProd()}
-							<span>Rate Seller</span> */}
-							<span>Complete Order</span>
-						</div>
-					</div>
+					{orderState === 1 && <MainContent data={orderedData} s={setOrderState} />}
+					{orderState === 2 && <RateProducts products={orderedData?.products?.flatMap(q => q?.products)} s={setOrderState} />}
 				</div>
 			</div>
-		</div>
+		</>
 	)
 }
 

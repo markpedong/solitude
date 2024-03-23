@@ -23,9 +23,9 @@ const DeliveryInfo: FC<Props> = ({ data, ...props }) => {
 				{data?.city}, {data?.pin_code}
 			</div>
 			<div>
-				<span className={data?.address_type === 1 && styles.activeAddress}>Default</span>
-				<span className={data?.address_type === 2 && styles.activeAddress}>Pickup Address</span>
-				<span className={data?.address_type === 3 && styles.activeAddress}>Return Address</span>
+				<span className={data?.address_type === 1 ? styles.activeAddress : ''}>Default</span>
+				<span className={data?.address_type === 2 ? styles.activeAddress : ''}>Pickup Address</span>
+				<span className={data?.address_type === 3 ? styles.activeAddress : ''}>Return Address</span>
 			</div>
 		</div>
 	)
