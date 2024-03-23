@@ -12,7 +12,6 @@ type Props = {
 
 const MainContent: FC<Props> = ({ data: orderedData, s }) => {
 	const total = orderedData?.products?.flatMap(q => q.products).reduce((acc, cur) => acc + cur.price, 0)
-	
 
 	return (
 		<div className={styles.textContainer}>
@@ -65,8 +64,12 @@ const MainContent: FC<Props> = ({ data: orderedData, s }) => {
 			<div className={styles.reviewRateContainer}>
 				{/* {reviewProd()}
                     <span>Rate Seller</span> */}
-				<span className={styles.rateProduct} onClick={() => s(2)}>Rate Products</span>
-				<span>Complete Order</span>
+				{orderedData?.reviewed === 0 && (
+					<span className={styles.rateProduct} onClick={() => s(2)}>
+						Rate Products
+					</span>
+				)}
+				{orderedData?.status === 5 && <span>Complete Order</span>}
 			</div>
 		</div>
 	)

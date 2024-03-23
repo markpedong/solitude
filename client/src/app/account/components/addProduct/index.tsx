@@ -4,7 +4,7 @@ import { TProduct, addProduct, editProduct, uploadImages } from '@/api'
 import { INPUT_NOSPACE, REQUIRED, afterModalformFinish } from '@/constants/helper'
 import { useAppSelector } from '@/redux/store'
 import { ActionType, ProForm, ProFormDigit, ProFormInstance, ProFormList, ProFormSelect, ProFormText, ProFormTextArea, ProFormUploadButton } from '@ant-design/pro-components'
-import { Button, Flex, Spin, UploadFile } from 'antd'
+import { Button, Flex, Spin, UploadFile, message } from 'antd'
 import { motion } from 'framer-motion'
 import { FC, SetStateAction, memo, useRef, useState } from 'react'
 import styles from './styles.module.scss'
@@ -90,6 +90,19 @@ const AddProduct: FC<Props> = ({ product }) => {
 									},
 									fileList: uploadedImages as UploadFile<any>[],
 									action: async e => {
+										const isJpgOrPng = e.type === 'image/jpeg' || e.type === 'image/png'
+										const isLt10M = e.size / 1024 / 1024 < 10
+
+										if (!isJpgOrPng) {
+											message.error('You can only upload JPG/PNG file!')
+											return
+										}
+
+										if (!isLt10M) {
+											message.error('Image must be smaller than 10MB!')
+											return
+										}
+
 										setUploading(true)
 										if (!!!product?.image.length) {
 											setUploadedImages([])

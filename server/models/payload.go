@@ -15,3 +15,10 @@ type Variation struct {
 	Label string   `json:"label"`
 	Value []string `json:"value"`
 }
+
+type ReviewItem struct {
+	Title       string `json:"title"`
+	Rating      int    `json:"rating" validate:"required"`
+	Description string `json:"description"`
+	ProductID   string `json:"product_id" validate:"required"`
+}

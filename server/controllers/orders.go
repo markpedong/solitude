@@ -30,6 +30,7 @@ func CheckoutOrder(ctx *gin.Context) {
 	orderGroup.SelectedAddress = body.DeliveryID
 	orderGroup.PaymentMethod = body.PaymentMethod
 	orderGroup.Status = 1
+	orderGroup.Reviewed = 0
 	for _, v := range user.Carts {
 		var currProd models.Product
 		if err := database.DB.Find(&currProd, "product_id = ?", v.ProductID).Error; err != nil {
@@ -144,7 +145,8 @@ func GetOrdersByGroupID(ctx *gin.Context) {
 			"completed_at": currOrderGroup.CompletedAt,
 			"created_at":   currOrderGroup.CreatedAt,
 		},
-		"status": currOrderGroup.Status,
+		"status":   currOrderGroup.Status,
+		"reviewed": currOrderGroup.Reviewed,
 	}
 
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(resp))

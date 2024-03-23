@@ -155,6 +155,7 @@
         }
 
         &.rateProduct {
+            @apply cursor-pointer;
             color: var(--white-color);
             background-color: var(--color-primary);
         }
@@ -171,27 +172,74 @@
 }
 
 .productContainer {
-    @apply py-3 px-1 grid grid-cols-12 grid-rows-1 items-center;
+    @apply py-3 px-1 grid gap-3 grid-cols-12 grid-rows-1 items-center;
     border-top: toRem(1) solid var(--border-color);
 
     img {
-        @apply justify-self-center rounded-md;
+        @apply justify-self-center rounded-md w-[100%] h-auto;
         grid-area: 1 / 1 / 2 / 3;
-        height: toRem(60);
-        width: toRem(60)
     }
 
     .productDetails {
         @apply flex flex-col gap-0;
         grid-area: 1 / 3 / 2 / 13;
 
-        :nth-child(1) {
-            @apply mb-3 pb-1;
+        .productT {
+            @apply mb-3 pb-3;
             border-bottom: toRem(1) solid var(--border-color);
             font-family: "Satoshi";
             font-size: toRem(14);
             line-height: toRem(14);
             font-weight: 700;
+        }
+    }
+}
+
+.backContainer {
+    @apply flex justify-start gap-2 items-center cursor-pointer;
+
+    :nth-child(2) {
+        color: var(--color-primary);
+        font-size: toRem(14);
+        line-height: toRem(14);
+    }
+}
+
+.rateWrapper {
+    @apply flex items-center gap-3 pb-3;
+
+    span {
+        font-size: toRem(15);
+        line-height: toRem(15);
+    }
+
+    .rateH {
+        color: var(--color-primary);
+        font-size: toRem(12);
+        line-height: toRem(12);
+    }
+}
+
+.inputContainer {
+    @apply flex gap-3 flex-col pb-3;
+}
+
+.btnContainer {
+    @apply flex justify-end items-center gap-3;
+
+    span {
+        @apply cursor-pointer p-3 px-5 rounded-md;
+        font-size: toRem(12);
+        line-height: toRem(12);
+
+        &:nth-child(1) {
+            color: var(--color-primary);
+            background-color: var(--bg-secondary);
+        }
+
+        &:nth-child(2) {
+            color: var(--white-color);
+            background-color: var(--color-primary);
         }
     }
 }

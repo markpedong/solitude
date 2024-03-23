@@ -139,6 +139,7 @@ type OrderGroup struct {
 	UpdatedAt       int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DeletedAt       soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
 	Status          int                   `json:"status"`
+	Reviewed        int                   `json:"reviewed"`
 }
 
 type ProductReviews struct {
