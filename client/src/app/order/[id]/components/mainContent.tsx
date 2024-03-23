@@ -4,6 +4,8 @@ import Image from 'next/image'
 import React, { FC, SetStateAction } from 'react'
 import { FaStore } from 'react-icons/fa'
 import styles from '../styles.module.scss'
+import { ModalForm, ProFormRate, ProFormText, ProFormTextArea } from '@ant-design/pro-components'
+import { MODAL_FORM_PROPS } from '@/constants'
 
 type Props = {
 	data: OrderResponse
@@ -13,6 +15,15 @@ type Props = {
 const MainContent: FC<Props> = ({ data: orderedData, s }) => {
 	const total = orderedData?.products?.flatMap(q => q.products).reduce((acc, cur) => acc + cur.price, 0)
 
+	const renderRateSeller = () => {
+		return (
+			<ModalForm {...MODAL_FORM_PROPS} title="Rate Seller" trigger={<span>Rate Seller</span>}>
+				<ProFormText label="Title" name="title" />
+				<ProFormTextArea label="Description" name="description" />
+				<ProFormRate label="Rating" name="rating" />
+			</ModalForm>
+		)
+	}
 	return (
 		<div className={styles.textContainer}>
 			{orderedData?.products?.map(q => (
@@ -62,8 +73,7 @@ const MainContent: FC<Props> = ({ data: orderedData, s }) => {
                     </div> */}
 			</div>
 			<div className={styles.reviewRateContainer}>
-				{/* {reviewProd()}
-                    <span>Rate Seller</span> */}
+				{renderRateSeller()}
 				{orderedData?.reviewed === 0 && (
 					<span className={styles.rateProduct} onClick={() => s(2)}>
 						Rate Products

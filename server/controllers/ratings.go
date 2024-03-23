@@ -11,6 +11,17 @@ import (
 
 func GetProductRating(ctx *gin.Context) {}
 
+func AddSellerRating(ctx *gin.Context) {
+	var body struct {
+		RatingArr models.ReviewItem `json:"rating"`
+		UserID    string            `json:"user_id"`
+	}
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
+		return
+	}
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(body))
+}
 func AddProductRating(ctx *gin.Context) {
 	var body struct {
 		RatingArr []models.ReviewItem `json:"ratings"`
