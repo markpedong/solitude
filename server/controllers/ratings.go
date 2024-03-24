@@ -114,7 +114,6 @@ func AddProductRating(ctx *gin.Context) {
 			return
 		}
 
-		seller.Rating = seller.Rating + 1
 		database.DB.Save(&seller)
 	}
 

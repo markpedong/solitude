@@ -71,7 +71,6 @@ type Seller struct {
 	Location   string                `json:"location"`
 	Products   *[]Product            `json:"products" gorm:"foreignKey:SellerID"`
 	Avatar     string                `json:"avatar"`
-	Rating     int                   `json:"rating"`
 	Followers  int                   `json:"followers"`
 	CreatedAt  int                   `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt  int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
