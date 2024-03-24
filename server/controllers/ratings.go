@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"solitude/database"
 	"solitude/helpers"
@@ -9,7 +10,35 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetProductRating(ctx *gin.Context) {}
+func GetProductRating(ctx *gin.Context) {
+	var body struct {
+		ID string `json:"product_id"`
+	}
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
+		return
+	}
+
+	var reviews []models.ProductReviews
+	if err := database.DB.Where("product_id = ?", body.ID).Find(&reviews).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+	var transformed []models.ProductReviewResponse
+	for _, v := range reviews {
+		var user models.User
+		if err := database.DB.First(&user, "id = ?", v.UserID).Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		transformed = append(transformed, models.ProductReviewResponse{
+			ProductReviews: v,
+			Name:           fmt.Sprintf("%v %v", user.FirstName, user.LastName),
+		})
+	}
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(transformed))
+}
 
 func AddSellerRating(ctx *gin.Context) {
 	var body struct {

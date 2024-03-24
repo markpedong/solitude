@@ -24,9 +24,10 @@ type Props = {
 	data: TProduct
 	products: TProduct[]
 	seller: SellerData
+	reviews: any
 }
 
-const ProductDetails: FC<Props> = ({ data, products, seller }) => {
+const ProductDetails: FC<Props> = ({ data, products, seller, reviews }) => {
 	const { token, userData } = useAppSelector(s => s.userData)
 	const { darkMode } = useAppSelector(s => s.boolean)
 	const [qty, setQty] = useState<number>(1)
@@ -40,6 +41,7 @@ const ProductDetails: FC<Props> = ({ data, products, seller }) => {
 		console.log(key)
 	}
 
+	console.log("@@@@",reviews)
 	const items: TabsProps['items'] = [
 		{
 			key: '1',

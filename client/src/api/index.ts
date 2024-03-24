@@ -212,3 +212,6 @@ export const addRating = params => post('/rating/add', params)
 
 // /rating/rateSeller
 export const addSellerRating = params => post('/rating/rateSeller', params)
+
+// /rating/getReviews
+export const getReviews = params =>post("/rating/getReviews", params)

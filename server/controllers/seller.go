@@ -18,10 +18,11 @@ func GetSellerData(ctx *gin.Context) {
 		return
 	}
 
-	var foundSeller models.JSONSeller
+	var foundSeller models.Seller
 	var productCount int64
+	var sellerReview int64
 
-	if err := database.DB.Table("seller").Where("seller_id = ?", body.SellerID).First(&foundSeller).Error; err != nil {
+	if err := database.DB.Where("seller_id = ?", body.SellerID).First(&foundSeller).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "seller not found")
 		return
 	}
@@ -29,8 +30,26 @@ func GetSellerData(ctx *gin.Context) {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
-	foundSeller.Products = productCount
-	helpers.JSONResponse(ctx, "", helpers.DataHelper(foundSeller))
+	if err := database.DB.Model(&models.SellerReviews{}).Where("seller_id = ?", foundSeller.SellerID).Count(&sellerReview).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+	response := models.JSONSeller{
+		SellerID:   foundSeller.SellerID,
+		CreatedAt:  foundSeller.CreatedAt,
+		UpdatedAt:  foundSeller.UpdatedAt,
+		SellerName: foundSeller.SellerName,
+		Phone:      foundSeller.Phone,
+		Location:   foundSeller.Location,
+		Rating:     int(sellerReview),
+		Avatar:     foundSeller.Avatar,
+		Email:      foundSeller.Email,
+		Products:   productCount,
+		Username:   foundSeller.Username,
+		Followers:  foundSeller.Followers,
+	}
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(response))
 }
 
 func SellerUpdate(ctx *gin.Context) {

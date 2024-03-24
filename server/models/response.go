@@ -91,3 +91,8 @@ type GroupedOrderResponse struct {
 	OrderResponse
 	Count int `json:"count"`
 }
+
+type ProductReviewResponse struct {
+	ProductReviews
+	Name string `json:"name"`
+}

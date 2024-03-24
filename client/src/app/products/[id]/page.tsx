@@ -1,4 +1,4 @@
-import { getProductData, getProducts, getSellerData } from '@/api'
+import { getProductData, getProducts, getReviews, getSellerData } from '@/api'
 import Content from './components/content'
 
 type Props = {
@@ -11,10 +11,10 @@ const ProductID = async (props: Props) => {
 	const data = await getProductData({ product_id: props.params.id })
 	const products = await getProducts({})
 	const sellerData = await getSellerData({ seller_id: data?.data?.seller_id })
-
+	const reviews = await getReviews({ product_id: props.params.id })
 	return (
 		<div>
-			<Content data={data?.data} products={products?.data} seller={sellerData?.data} />
+			<Content data={data?.data} reviews={reviews?.data} products={products?.data} seller={sellerData?.data} />
 		</div>
 	)
 }
