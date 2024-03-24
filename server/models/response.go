@@ -78,6 +78,7 @@ type OrderResponse struct {
 	SellerName    string   `json:"seller_name"`
 	Variations    []LabVal `json:"variations"`
 	GroupID       string   `json:"group_id"`
+	CreatedAt     int      `json:"created_at"`
 }
 
 type CartResponse struct {

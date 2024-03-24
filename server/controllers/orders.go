@@ -5,6 +5,7 @@ import (
 	"solitude/database"
 	"solitude/helpers"
 	"solitude/models"
+	"sort"
 
 	"github.com/gin-gonic/gin"
 )
@@ -83,7 +84,7 @@ func GetOrders(ctx *gin.Context) {
 	}
 
 	var currOrders []models.Orders
-	if err := database.DB.Order("created_at DESC").Where("user_id = ?", body.ID).Find(&currOrders).Error; err != nil {
+	if err := database.DB.Order("created_at desc").Find(&currOrders, "user_id = ?", body.ID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -106,6 +107,10 @@ func GetOrders(ctx *gin.Context) {
 			Count:         len(orders),
 		})
 	}
+
+	sort.SliceStable(groupedOrderResponses, func(i, j int) bool {
+		return groupedOrderResponses[i].OrderResponse.CreatedAt > groupedOrderResponses[j].OrderResponse.CreatedAt
+	})
 
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(groupedOrderResponses))
 }
@@ -135,6 +140,10 @@ func GetOrdersByGroupID(ctx *gin.Context) {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
+	sort.SliceStable(productsWithVariations, func(i, j int) bool {
+		return productsWithVariations[i].CreatedAt > productsWithVariations[j].CreatedAt
+	})
+
 	productMap := GroupProductsBySeller(productsWithVariations)
 	resp := map[string]interface{}{
 		"products":       productMap,
@@ -240,6 +249,7 @@ func GetProductsWithVariations(currOrders []models.Orders) ([]models.OrderRespon
 			Quantity:      cart.Quantity,
 			SellerName:    cart.SellerName,
 			GroupID:       cart.GroupID,
+			CreatedAt:     cart.CreatedAt,
 		}
 		productsWithVariations = append(productsWithVariations, productRes)
 	}
