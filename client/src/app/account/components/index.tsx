@@ -13,6 +13,7 @@ import Address from './address'
 import Orders from './orders'
 import styles from './styles.module.scss'
 import { setCart } from '@/redux/features/userSlice'
+import Ratings from './ratings'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -38,7 +39,8 @@ const Account: FC<Props> = () => {
 						{ key: 'orders', label: 'ORDERS', children: <Orders /> },
 						{ key: 'products', label: 'ADD PRODUCT', children: <AddProduct /> },
 						{ key: 'listed_products', label: 'PRODUCTS ADDED', children: <ProductsAdded /> },
-						{ key: 'address', label: 'ADDRESS', children: <Address /> }
+						{ key: 'address', label: 'ADDRESS', children: <Address /> },
+						{ key: 'reviews', label: 'REVIEWS', children: <Ratings /> }
 					].filter(
 						item =>
 							!(item.key === 'products' && !seller) &&

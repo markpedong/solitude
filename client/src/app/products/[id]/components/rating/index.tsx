@@ -14,24 +14,23 @@ type RatingProps = { products: TProduct[]; curr: string; rating: RatingItem[] }
 const Rating: FC<RatingProps> = ({ products, curr, rating }) => {
 	const [sort, setSort] = useState(1)
 	const handleClickSort = e => setSort(e.key)
-	console.log('@@@', rating)
-	const items: MenuProps['items'] = [
-		{
-			key: 1,
-			label: <span>Most Popular</span>,
-			onClick: handleClickSort
-		},
-		{
-			key: 2,
-			label: <span>Top Selling</span>,
-			onClick: handleClickSort
-		},
-		{
-			key: 3,
-			label: <span>Relevance</span>,
-			onClick: handleClickSort
-		}
-	]
+	// const items: MenuProps['items'] = [
+	// 	{
+	// 		key: 1,
+	// 		label: <span>Most Popular</span>,
+	// 		onClick: handleClickSort
+	// 	},
+	// 	{
+	// 		key: 2,
+	// 		label: <span>Top Selling</span>,
+	// 		onClick: handleClickSort
+	// 	},
+	// 	{
+	// 		key: 3,
+	// 		label: <span>Relevance</span>,
+	// 		onClick: handleClickSort
+	// 	}
+	// ]
 
 	const reviewComponent = useMemo(
 		() => (

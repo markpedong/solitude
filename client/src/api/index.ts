@@ -222,5 +222,9 @@ export type RatingItem = {
 	name: string
 	rating: number
 	updated_at: number
+	product_name: string
 }
 export const getReviews = params => post<RatingItem[]>('/rating/getReviews', params)
+
+// /rating/deleteReview
+export const deleteReview = params => post('/rating/deleteReview', params)

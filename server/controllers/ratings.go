@@ -12,14 +12,23 @@ import (
 
 func GetProductRating(ctx *gin.Context) {
 	var body struct {
-		ID string `json:"product_id"`
+		ProductID string `json:"product_id"`
+		UserID    string `json:"user_id"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
+	query := database.DB
+	if body.ProductID != "" {
+		query = query.Where("product_id = ?", body.ProductID)
+	}
+	if body.UserID != "" {
+		query = query.Where("user_id = ?", body.UserID)
+	}
+
 	var reviews []models.ProductReviews
-	if err := database.DB.Where("product_id = ?", body.ID).Find(&reviews).Error; err != nil {
+	if err := query.Find(&reviews).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -30,10 +39,16 @@ func GetProductRating(ctx *gin.Context) {
 			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 			return
 		}
+		var product models.Product
+		if err := database.DB.First(&product, "product_id = ?", v.ProductID).Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
 
 		transformed = append(transformed, models.ProductReviewResponse{
 			ProductReviews: v,
 			Name:           fmt.Sprintf("%v %v", user.FirstName, user.LastName),
+			ProductName:    product.ProductName,
 		})
 	}
 

@@ -94,5 +94,6 @@ type GroupedOrderResponse struct {
 
 type ProductReviewResponse struct {
 	ProductReviews
-	Name string `json:"name"`
+	Name        string `json:"name"`
+	ProductName string `json:"product_name"`
 }
