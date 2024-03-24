@@ -3,11 +3,12 @@ import Image from 'next/image'
 import styles from './styles.module.scss'
 import Link from 'next/link'
 import CategoryEl from '@/components/landing/category'
-import { getProducts } from '@/api'
+import { getProducts, getReviews } from '@/api'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
 const Page = async () => {
 	const products = await getProducts({ search: '' })
+
 	return (
 		<>
 			<div className={styles.mainWrapper}>
@@ -55,7 +56,7 @@ const Page = async () => {
 				<PageHeader title="browse by dress style" />
 				<CategoryEl />
 			</div>
-			<div className={styles.reviewWrapper}>
+			{/* <div className={styles.reviewWrapper}>
 				<div className={styles.reviewContainer}>
 					<span className={styles.header}>our happy customers</span>
 					<div className={styles.arrowContainer}>
@@ -64,13 +65,11 @@ const Page = async () => {
 					</div>
 				</div>
 				<div className={styles.reviewsContainer}>
-					<ReviewComp />
-					<ReviewComp />
-					<ReviewComp />
-					<ReviewComp />
-					<ReviewComp />
+					{sliceReview?.map(q => (
+						<ReviewComp data={q} />
+					))}
 				</div>
-			</div>
+			</div> */}
 		</>
 	)
 }
