@@ -31,6 +31,7 @@ func CheckoutOrder(ctx *gin.Context) {
 	orderGroup.PaymentMethod = body.PaymentMethod
 	orderGroup.Status = 1
 	orderGroup.Reviewed = 0
+	orderGroup.ReviewedSeller = 0
 	for _, v := range user.Carts {
 		var currProd models.Product
 		if err := database.DB.Find(&currProd, "product_id = ?", v.ProductID).Error; err != nil {
