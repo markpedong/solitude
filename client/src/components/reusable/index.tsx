@@ -62,11 +62,11 @@ export const ReviewComp: FC<ReviewProps> = ({ product, data, user }) => {
 		<div className={styles.reviewContainer} style={product ? { maxWidth: '20rem', width: '100%' } : {}}>
 			<div className="flex justify-between">
 				<Rate value={data?.rating} disabled />
-				{user && (
+				{/* {user && (
 					<Popconfirm title="Are you sure to delete this review item?" onConfirm={handleDeleteReviewItem}>
 						<IoTrashOutline className="cursor-pointer" color="red" />
 					</Popconfirm>
-				)}
+				)} */}
 			</div>
 			<div className={styles.nameContainer}>
 				<span>{user ? data?.product_name : data?.name}</span>

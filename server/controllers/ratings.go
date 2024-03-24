@@ -14,6 +14,7 @@ func GetProductRating(ctx *gin.Context) {
 	var body struct {
 		ProductID string `json:"product_id"`
 		UserID    string `json:"user_id"`
+		SellerID  string `json:"seller_id"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
@@ -25,6 +26,10 @@ func GetProductRating(ctx *gin.Context) {
 	}
 	if body.UserID != "" {
 		query = query.Where("user_id = ?", body.UserID)
+	}
+	if body.UserID == "" && body.ProductID == "" && body.SellerID == "" {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "check payload")
+		return
 	}
 
 	var reviews []models.ProductReviews

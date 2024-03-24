@@ -3,15 +3,28 @@ import styles from './styles.module.scss'
 import { RatingItem, getReviews } from '@/api'
 import { useAppSelector } from '@/redux/store'
 import { ReviewComp } from '@/components/reusable'
+import { messageHelper } from '@/constants/antd'
+import { isEmpty, isNil, omit, omitBy } from 'lodash'
 
 const Ratings = () => {
-	const { userData } = useAppSelector(s => s.userData)
+	const { userData, sellerData } = useAppSelector(s => s.userData)
 	const [reviewItems, setReviewItems] = useState<RatingItem[]>([])
 
 	const fetchReviews = async () => {
-		const res = await getReviews({ user_id: userData?.id })
+		const res = await getReviews(
+			omitBy(
+				{
+					user_id: userData?.id,
+					seller_id: sellerData?.seller_id
+				},
+				isEmpty
+			)
+		)
 
-		setReviewItems(res?.data)
+		messageHelper(res)
+		if (res?.success) {
+			setReviewItems(res?.data ?? [])
+		}
 	}
 
 	useEffect(() => {
@@ -21,7 +34,7 @@ const Ratings = () => {
 	return (
 		<div className="grid grid-cols-3 gap-5">
 			{reviewItems?.map(q => (
-				<ReviewComp data={q} key={q?.id} user />
+				<ReviewComp data={q} key={q?.id} />
 			))}
 		</div>
 	)
