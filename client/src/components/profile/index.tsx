@@ -1,7 +1,7 @@
 'use client'
 
 import { USER_TYPES } from '@/constants'
-import { INPUT_NOSPACE, INPUT_NUMBERS, REQUIRED, afterModalformFinish } from '@/constants/helper'
+import { INPUT_LETTERS, INPUT_NUMBER, INPUT_TRIM, REQUIRED, afterModalformFinish } from '@/constants/helper'
 import { useAppSelector } from '@/redux/store'
 import { ActionType, ModalForm, ProForm, ProFormDatePicker, ProFormInstance, ProFormRadio, ProFormText } from '@ant-design/pro-components'
 import { Button, Flex, Upload, message } from 'antd'
@@ -138,8 +138,8 @@ const Profile: FC = () => {
 				<ProForm.Group>
 					{type === USER_TYPES.USER ? (
 						<>
-							<ProFormText label="First Name" name="first_name" placeholder="eg: John" rules={[...INPUT_NOSPACE, ...REQUIRED]} colProps={{ span: 21 }} />
-							<ProFormText label="Last Name" name="last_name" placeholder="eg: Smith" rules={[...INPUT_NOSPACE, ...REQUIRED]} colProps={{ span: 21 }} />
+							<ProFormText {...INPUT_LETTERS} label="First Name" name="first_name" placeholder="eg: John" rules={[...REQUIRED]} colProps={{ span: 21 }} />
+							<ProFormText {...INPUT_LETTERS} label="Last Name" name="last_name" placeholder="eg: Smith" rules={[...REQUIRED]} colProps={{ span: 21 }} />
 						</>
 					) : (
 						<>
@@ -162,32 +162,34 @@ const Profile: FC = () => {
 						</>
 					)}
 					<ProFormText
+						{...INPUT_NUMBER}
 						label="Phone Number"
-						rules={[...REQUIRED, ...INPUT_NUMBERS]}
-						getValueProps={e => {
-							return e?.trim()
-						}}
-						required
+						rules={[...REQUIRED]}
 						name="phone"
 						colProps={{ span: 21 }}
+						fieldProps={{
+							maxLength: 12
+						}}
 					/>
 				</ProForm.Group>
 			</Flex>
 
 			<ProForm.Group>
-				<ProFormText label="Email Address" name="email" placeholder="your@email.com" colProps={{ span: 12 }} rules={[...REQUIRED, ...INPUT_NOSPACE]} />
-				<ProFormText label="Username" name="username" placeholder="Your Username" colProps={{ span: 12 }} />
+				<ProFormText {...INPUT_TRIM} label="Email Address" name="email" placeholder="your@email.com" colProps={{ span: 12 }} rules={[...REQUIRED]} />
+				<ProFormText {...INPUT_TRIM} label="Username" name="username" placeholder="Your Username" colProps={{ span: 12 }} />
 			</ProForm.Group>
 			<ProForm.Group>
 				<ProFormText.Password
+					{...INPUT_LETTERS}
 					name="password"
 					placeholder="Enter Password"
 					label="Password"
 					fieldProps={{ prefix: <LockOutlined /> }}
 					colProps={{ span: 12 }}
-					rules={[...REQUIRED, ...INPUT_NOSPACE, { min: 6 }]}
+					rules={[...REQUIRED, { min: 6 }]}
 				/>
 				<ProFormText.Password
+					{...INPUT_LETTERS}
 					name="confirm_password"
 					placeholder="Re-enter Password"
 					label="Confirm Password"
@@ -195,7 +197,6 @@ const Profile: FC = () => {
 					dependencies={['password']}
 					rules={[
 						...REQUIRED,
-						...INPUT_NOSPACE,
 						{ min: 6 },
 						({ getFieldValue }) => ({
 							validator(_, value) {

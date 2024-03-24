@@ -1,5 +1,5 @@
 import { USER_TYPES } from '@/constants'
-import { INPUT_NOSPACE, INPUT_NUMBERS, REQUIRED } from '@/constants/helper'
+import { INPUT_LETTERS, REQUIRED } from '@/constants/helper'
 import forgotModalCover from '../../../../../public/assets/forgotModalCover.webp'
 import loginModalCover from '../../../../../public/assets/loginModalCover.webp'
 import logo from '../../../../../public/assets/logo.webp'
@@ -143,7 +143,7 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 								name="phone"
 								placeholder="+63 9*********"
 								label="Phone Number"
-								rules={[...REQUIRED, ...INPUT_NUMBERS]}
+								rules={[...REQUIRED]}
 								fieldProps={{ prefix: <PhoneOutlined /> }}
 								colProps={{ span: 8 }}
 							/>
@@ -153,15 +153,17 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 					{!forgot && (
 						<ProForm.Group>
 							<ProFormText.Password
+								{...INPUT_LETTERS}
 								name="password"
 								placeholder="Enter Password"
 								label="Password"
 								fieldProps={{ prefix: <LockOutlined /> }}
 								colProps={create ? { span: 12 } : {}}
-								rules={[...REQUIRED, ...INPUT_NOSPACE, { min: 6 }]}
+								rules={[...REQUIRED, { min: 6 }]}
 							/>
 							{create && (
 								<ProFormText.Password
+									{...INPUT_LETTERS}
 									name="confirm_password"
 									placeholder="Re-enter Password"
 									label="Confirm Password"
@@ -169,7 +171,6 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 									dependencies={['password']}
 									rules={[
 										...REQUIRED,
-										...INPUT_NOSPACE,
 										{ min: 6 },
 										({ getFieldValue }) => ({
 											validator(_, value) {

@@ -10,20 +10,25 @@ export const REQUIRED = [
 	}
 ]
 
-export const INPUT_NOSPACE = [
-	{
-		validator: (_, value) => (!value?.includes(' ') ? Promise.resolve() : Promise.reject(new Error('No spaces allowed')))
-	}
-]
+export const INPUT_TRIM = {
+	getValueFromEvent: e => e?.target.value?.trim()
+}
 
-export const INPUT_NUMBERS = [
-	{
-		validator: (_, value) => {
-			const onlyNumbersRegex = /^[0-9]+$/
-			return onlyNumbersRegex.test(value) ? Promise.resolve() : Promise.reject(new Error('Only numbers allowed'))
-		}
+export const INPUT_LETTERS = {
+	getValueFromEvent: e => {
+		const trimmedValue = e?.target.value?.trim()
+		const nonNumericValue = trimmedValue.replace(/[0-9]/g, '')
+		return nonNumericValue
 	}
-]
+}
+
+export const INPUT_NUMBER = {
+	getValueFromEvent: e => {
+		const trimmedValue = e?.target.value?.trim()
+		const numericValue = trimmedValue.replace(/\D/g, '') // Allow only numeric characters
+		return numericValue
+	}
+}
 
 export const afterModalformFinish = (actionRef: MutableRefObject<ActionType>, msg: string, success: boolean, formRef?: MutableRefObject<ProFormInstance>) => {
 	if (actionRef) {
