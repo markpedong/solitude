@@ -224,6 +224,7 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 						formRef?.current?.resetFields()
 						dispatch(setActiveLoginForm('user'))
 						dispatch(setLoginModalOpen(false))
+						dispatch(setType(1))
 					}
 				}}
 				onFinish={handleFinish}
@@ -255,6 +256,7 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 
 	useEffect(() => {
 		!!id && fetchCart()
+		dispatch(setLoginModalOpen(false))
 	}, [])
 
 	return (

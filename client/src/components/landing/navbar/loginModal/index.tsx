@@ -10,15 +10,11 @@ import { setType } from '@/redux/features/userSlice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { LockOutlined, PhoneOutlined, RightOutlined, UserOutlined } from '@ant-design/icons'
 import { ProForm, ProFormInstance, ProFormSelect, ProFormText } from '@ant-design/pro-components'
-import { Button, Flex, Typography } from 'antd'
-import { Cormorant, Jost } from 'next/font/google'
+import { Flex } from 'antd'
 import Image from 'next/image'
-import { FC, MutableRefObject } from 'react'
+import { FC, MutableRefObject, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styles from '../styles.module.scss'
-
-const jost = Jost({ weight: '400', subsets: ['latin'] })
-const cormorant = Cormorant({ weight: '400', subsets: ['latin'] })
 
 type Props = {
 	formRef: MutableRefObject<ProFormInstance>
@@ -44,6 +40,10 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 		}
 	}
 
+	useEffect(() => {
+		console.log(type)
+	}, [type])
+
 	return (
 		<Flex className={styles.loginContainer} justify="space-between" gap={20}>
 			<div className={styles.loginImage}>
@@ -56,7 +56,15 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 				</Flex>
 				<Flex className={styles.loginHeaderText} justify="center" vertical>
 					<h1>{create ? 'Create an Account' : forgot ? 'Forgotten your Password?' : seller ? 'Got any products? Post it Here!' : `Hello, Let's Sign In`}</h1>
-					<span>{create ? 'Register New Solitude Account' : forgot ? 'Enter your email to recover your Account!' : seller ? 'Login as a Seller' : 'Please register or sign in'}</span>
+					<span>
+						{create
+							? 'Register New Solitude Account'
+							: forgot
+							? 'Enter your email to recover your Account!'
+							: seller
+							? 'Login as a Seller'
+							: 'Please register or sign in'}
+					</span>
 				</Flex>
 				<div
 					className={styles.formContainer}
@@ -112,10 +120,24 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 										colProps={{ span: 8 }}
 										rules={[...REQUIRED]}
 									/>
-									<ProFormText name="last_name" placeholder="eg: Smith" label="Last Name" colProps={{ span: 8 }} fieldProps={{ maxLength: 10 }} rules={[...REQUIRED]} />
+									<ProFormText
+										name="last_name"
+										placeholder="eg: Smith"
+										label="Last Name"
+										colProps={{ span: 8 }}
+										fieldProps={{ maxLength: 10 }}
+										rules={[...REQUIRED]}
+									/>
 								</>
 							) : (
-								<ProFormText name="seller_name" placeholder="YOUR STORE NAME" label="Store Name" colProps={{ span: 8 }} fieldProps={{ maxLength: 30 }} rules={[...REQUIRED]} />
+								<ProFormText
+									name="seller_name"
+									placeholder="YOUR STORE NAME"
+									label="Store Name"
+									colProps={{ span: 8 }}
+									fieldProps={{ maxLength: 30 }}
+									rules={[...REQUIRED]}
+								/>
 							)}
 							<ProFormText name="phone" placeholder="+63 9*********" label="Phone Number" fieldProps={{ prefix: <PhoneOutlined /> }} colProps={{ span: 8 }} />
 						</ProForm.Group>
