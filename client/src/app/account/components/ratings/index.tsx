@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styles from './styles.module.scss'
 import { RatingItem, getReviews } from '@/api'
 import { useAppSelector } from '@/redux/store'
@@ -21,23 +21,20 @@ const Ratings = () => {
 			)
 		)
 
-		messageHelper(res)
 		if (res?.success) {
 			setReviewItems(res?.data ?? [])
 		}
 	}
 
+	const memoizedReviews = useMemo(() => {
+		return <div className="grid grid-cols-3 gap-5">{reviewItems ? reviewItems.map(q => <ReviewComp data={q} key={q?.id} />) : null}</div>
+	}, [reviewItems])
+
 	useEffect(() => {
 		fetchReviews()
 	}, [])
 
-	return (
-		<div className="grid grid-cols-3 gap-5">
-			{reviewItems?.map(q => (
-				<ReviewComp data={q} key={q?.id} />
-			))}
-		</div>
-	)
+	return memoizedReviews
 }
 
 export default Ratings

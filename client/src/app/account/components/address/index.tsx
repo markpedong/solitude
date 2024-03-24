@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import { ActionType, ModalForm, ProFormInstance, ProFormSelect, ProFormText } from '@ant-design/pro-components'
 import { ADDRESS_TYPE, MODAL_FORM_PROPS, scaleSize, scaleSizeSm } from '@/constants'
@@ -135,24 +135,29 @@ const Address: FC = () => {
 		setInfo(res?.data)
 	}
 
+	const memoizedAddress = useMemo(() => {
+		return (
+			<div>
+				{info?.length <= 5 && renderAddEditInfo('ADD')}
+				{info?.map(q => (
+					<div className={styles.addressContainer} key={q?.id}>
+						<DeliveryInfo data={q} />
+						<div className={styles.addressOperators}>
+							{renderAddEditInfo('EDIT', q)}
+							{renderDeleteInfo(q)}
+							{renderSetDefault(q)}
+						</div>
+					</div>
+				))}
+			</div>
+		)
+	}, [info])
+
 	useEffect(() => {
 		fetchInfo()
 	}, [])
-	return (
-		<div>
-			{info?.length <= 5 && renderAddEditInfo('ADD')}
-			{info?.map(q => (
-				<div className={styles.addressContainer} key={q?.id}>
-					<DeliveryInfo data={q} />
-					<div className={styles.addressOperators}>
-						{renderAddEditInfo('EDIT', q)}
-						{renderDeleteInfo(q)}
-						{renderSetDefault(q)}
-					</div>
-				</div>
-			))}
-		</div>
-	)
+
+	return memoizedAddress
 }
 
 export default Address

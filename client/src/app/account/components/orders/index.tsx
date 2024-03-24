@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { useAppSelector } from '@/redux/store'
 import { OrderItem, getOrders } from '@/api'
 import { messageHelper } from '@/constants/antd'
@@ -16,6 +16,16 @@ const Orders: FC<Props> = () => {
 	} = useAppSelector(s => s.userData)
 	const [orders, setOrders] = useState<OrderItem[]>([])
 
+	const memoizedOrders = useMemo(() => {
+		return (
+			<div className={styles.orderWrapper}>
+				{orders?.map(q => (
+					<Order data={q} key={q?.order_id} />
+				))}
+			</div>
+		)
+	}, [orders])
+
 	const fetchOrders = async () => {
 		const res = await getOrders({ id })
 
@@ -26,13 +36,7 @@ const Orders: FC<Props> = () => {
 		fetchOrders()
 	}, [id])
 
-	return (
-		<div className={styles.orderWrapper}>
-			{orders?.map(q => (
-				<Order data={q} key={q?.order_id} />
-			))}
-		</div>
-	)
+	return memoizedOrders
 }
 
 export default Orders

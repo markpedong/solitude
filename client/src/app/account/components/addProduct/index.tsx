@@ -1,7 +1,7 @@
 'use client'
 
 import { TProduct, addProduct, editProduct, uploadImages } from '@/api'
-import { INPUT_NOSPACE, REQUIRED, afterModalformFinish } from '@/constants/helper'
+import { INPUT_TRIM, REQUIRED, afterModalformFinish } from '@/constants/helper'
 import { useAppSelector } from '@/redux/store'
 import { ActionType, ProForm, ProFormDigit, ProFormInstance, ProFormList, ProFormSelect, ProFormText, ProFormTextArea, ProFormUploadButton } from '@ant-design/pro-components'
 import { Button, Flex, Spin, UploadFile, message } from 'antd'
@@ -147,6 +147,7 @@ const AddProduct: FC<Props> = ({ product }) => {
 						/>
 					</ProForm.Group>
 					<ProFormSelect
+						{...INPUT_TRIM}
 						label="Category"
 						name="categories"
 						mode="tags"
@@ -154,20 +155,21 @@ const AddProduct: FC<Props> = ({ product }) => {
 						colProps={{ span: 24 }}
 						allowClear={false}
 						showSearch={false}
-						rules={[...REQUIRED, ...INPUT_NOSPACE]}
+						rules={[...REQUIRED]}
 						getValueFromEvent={(e: string[]) => e?.map(q => q?.replaceAll(/\s/g, ''))}
 					/>
 					<ProFormList name="variations" label="Add a variant: " copyIconProps={false} required className={styles.prolistContainer}>
 						<ProForm.Group key="group">
-							<ProFormText name="label" colProps={{ span: 8 }} rules={[...REQUIRED, ...INPUT_NOSPACE]} placeholder="eg: color" />
+							<ProFormText {...INPUT_TRIM} name="label" colProps={{ span: 8 }} rules={[...REQUIRED]} placeholder="eg: color" />
 							<ProFormSelect
+								{...INPUT_TRIM}
 								name="value"
 								mode="tags"
 								placeholder="black, red, blue"
 								allowClear={false}
 								showSearch={false}
 								colProps={{ span: 16 }}
-								rules={[...REQUIRED, ...INPUT_NOSPACE]}
+								rules={[...REQUIRED]}
 								getValueFromEvent={(e: string[]) => e?.map(q => q?.replaceAll(/\s/g, ''))}
 							/>
 						</ProForm.Group>
