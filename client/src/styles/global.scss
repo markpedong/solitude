@@ -58,9 +58,10 @@ body {
 }
 
 label.ant-form-item-required {
-    @apply relative ml-2;
+    @apply relative pl-2;
+
     &::before {
-        @apply absolute top-[0.8rem] left-[-0.5rem];
+        @apply absolute top-[0.35rem] left-[0rem];
         // align-self: flex-end !important;
     }
 }

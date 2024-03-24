@@ -16,6 +16,15 @@ export const INPUT_NOSPACE = [
 	}
 ]
 
+export const INPUT_NUMBERS = [
+	{
+		validator: (_, value) => {
+			const onlyNumbersRegex = /^[0-9]+$/
+			return onlyNumbersRegex.test(value) ? Promise.resolve() : Promise.reject(new Error('Only numbers allowed'))
+		}
+	}
+]
+
 export const afterModalformFinish = (actionRef: MutableRefObject<ActionType>, msg: string, success: boolean, formRef?: MutableRefObject<ProFormInstance>) => {
 	if (actionRef) {
 		actionRef?.current?.reload()
@@ -56,7 +65,7 @@ export const clearUserData = () => {
 
 export const capFrstLtr = (str: string) => str?.charAt(0).toUpperCase() + str?.slice(1)
 
-export const dateParser = (date: number, format: string = 'MM/DD/YYYY') => date ? dayjs.unix(date).format(format) : ""
+export const dateParser = (date: number, format: string = 'MM/DD/YYYY') => (date ? dayjs.unix(date).format(format) : '')
 
 export const numSuffix = (n: number) => numeral(n).format('0.0a')
 

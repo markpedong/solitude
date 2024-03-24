@@ -1,7 +1,7 @@
 'use client'
 
 import { USER_TYPES } from '@/constants'
-import { INPUT_NOSPACE, REQUIRED, afterModalformFinish } from '@/constants/helper'
+import { INPUT_NOSPACE, INPUT_NUMBERS, REQUIRED, afterModalformFinish } from '@/constants/helper'
 import { useAppSelector } from '@/redux/store'
 import { ActionType, ModalForm, ProForm, ProFormDatePicker, ProFormInstance, ProFormRadio, ProFormText } from '@ant-design/pro-components'
 import { Button, Flex, Upload, message } from 'antd'
@@ -88,7 +88,7 @@ const Profile: FC = () => {
 					: { ...sellerData }
 			}
 			trigger={<a className={classNames(styles.linkItem, jost.className)}>ACCOUNT</a>}
-			title={<span className={classNames(jost.className, styles.profileTitle)}>Your Information</span>}
+			title={<span className={styles.profileTitle}>Your Information</span>}
 			submitter={{
 				resetButtonProps: false,
 				render: () => [
@@ -138,8 +138,8 @@ const Profile: FC = () => {
 				<ProForm.Group>
 					{type === USER_TYPES.USER ? (
 						<>
-							<ProFormText label="First Name" name="first_name" placeholder="eg: John" rules={[...INPUT_NOSPACE]} colProps={{ span: 21 }} />
-							<ProFormText label="Last Name" name="last_name" placeholder="eg: Smith" rules={[...INPUT_NOSPACE]} colProps={{ span: 21 }} />
+							<ProFormText label="First Name" name="first_name" placeholder="eg: John" rules={[...INPUT_NOSPACE, ...REQUIRED]} colProps={{ span: 21 }} />
+							<ProFormText label="Last Name" name="last_name" placeholder="eg: Smith" rules={[...INPUT_NOSPACE, ...REQUIRED]} colProps={{ span: 21 }} />
 						</>
 					) : (
 						<>
@@ -161,7 +161,16 @@ const Profile: FC = () => {
 							/>
 						</>
 					)}
-					<ProFormText label="Phone Number" required name="phone" colProps={{ span: 21 }} />
+					<ProFormText
+						label="Phone Number"
+						rules={[...REQUIRED, ...INPUT_NUMBERS]}
+						getValueProps={e => {
+							return e?.trim()
+						}}
+						required
+						name="phone"
+						colProps={{ span: 21 }}
+					/>
 				</ProForm.Group>
 			</Flex>
 

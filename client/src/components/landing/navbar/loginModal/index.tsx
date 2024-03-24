@@ -1,5 +1,5 @@
 import { USER_TYPES } from '@/constants'
-import { INPUT_NOSPACE, REQUIRED } from '@/constants/helper'
+import { INPUT_NOSPACE, INPUT_NUMBERS, REQUIRED } from '@/constants/helper'
 import forgotModalCover from '../../../../../public/assets/forgotModalCover.webp'
 import loginModalCover from '../../../../../public/assets/loginModalCover.webp'
 import logo from '../../../../../public/assets/logo.webp'
@@ -103,7 +103,7 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 								}
 							]}
 						/>
-						{create && <ProFormText name="username" placeholder="eg: johnsmith" label="Username" colProps={{ span: 12 }} />}
+						{create && <ProFormText name="username" placeholder="eg: johnsmith" label="Username" colProps={{ span: 12 }} rules={[...REQUIRED]} />}
 					</ProForm.Group>
 					{create && (
 						<ProForm.Group>
@@ -139,7 +139,14 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 									rules={[...REQUIRED]}
 								/>
 							)}
-							<ProFormText name="phone" placeholder="+63 9*********" label="Phone Number" fieldProps={{ prefix: <PhoneOutlined /> }} colProps={{ span: 8 }} />
+							<ProFormText
+								name="phone"
+								placeholder="+63 9*********"
+								label="Phone Number"
+								rules={[...REQUIRED, ...INPUT_NUMBERS]}
+								fieldProps={{ prefix: <PhoneOutlined /> }}
+								colProps={{ span: 8 }}
+							/>
 						</ProForm.Group>
 					)}
 
