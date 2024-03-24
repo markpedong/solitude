@@ -1,10 +1,11 @@
 import { OrderResponse } from '@/api'
 import { Divider } from 'antd'
 import Image from 'next/image'
-import React, { FC, SetStateAction } from 'react'
+import React, { FC, SetStateAction, useRef } from 'react'
 import { FaStore } from 'react-icons/fa'
 import styles from '../styles.module.scss'
-import { ModalForm, ProFormRate, ProFormText, ProFormTextArea } from '@ant-design/pro-components'
+import { ModalForm, ProFormInstance, ProFormRate, ProFormText, ProFormTextArea } from '@ant-design/pro-components'
+import { REQUIRED } from '@/constants/helper'
 import { MODAL_FORM_PROPS } from '@/constants'
 
 type Props = {
@@ -14,16 +15,25 @@ type Props = {
 
 const MainContent: FC<Props> = ({ data: orderedData, s }) => {
 	const total = orderedData?.products?.flatMap(q => q.products).reduce((acc, cur) => acc + cur.price, 0)
+	const formRef = useRef<ProFormInstance>()
 
-	const renderRateSeller = () => {
-		return (
-			<ModalForm {...MODAL_FORM_PROPS} title="Rate Seller" trigger={<span>Rate Seller</span>}>
-				<ProFormText label="Title" name="title" />
-				<ProFormTextArea label="Description" name="description" />
-				<ProFormRate label="Rating" name="rating" />
-			</ModalForm>
-		)
-	}
+	const renderRateSeller = () => (
+		<ModalForm
+			{...MODAL_FORM_PROPS}
+			formRef={formRef}
+			labelCol={{ flex: '70px' }}
+			title={<span className={styles.modalTitle}>Rate Seller</span>}
+			trigger={<span>Rate Seller</span>}
+			onFinish={async params => {
+				console.log('@@@@', params)
+			}}
+		>
+			<ProFormText label="Title" name="title" rules={[...REQUIRED]} />
+			<ProFormTextArea label="Description" name="description" rules={[...REQUIRED]} />
+			<ProFormRate label="Rating" name="rating" rules={[...REQUIRED]} />
+		</ModalForm>
+	)
+
 	return (
 		<div className={styles.textContainer}>
 			{orderedData?.products?.map(q => (
@@ -73,7 +83,7 @@ const MainContent: FC<Props> = ({ data: orderedData, s }) => {
                     </div> */}
 			</div>
 			<div className={styles.reviewRateContainer}>
-				{renderRateSeller()}
+				{orderedData?.reviewed_seller === 0 && <span onClick={() => s(3)}>Rate Seller</span>}
 				{orderedData?.reviewed === 0 && (
 					<span className={styles.rateProduct} onClick={() => s(2)}>
 						Rate Products

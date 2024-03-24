@@ -197,6 +197,7 @@ export type OrderResponse = {
 	}
 	status: number
 	reviewed: number
+	reviewed_seller: number
 }
 export const getOrders = params => post<OrderItem[]>('/orders/getOrders', params)
 
@@ -208,3 +209,6 @@ export const setDefault = params => post('/delivery/setDefault', params)
 
 // /rating/add
 export const addRating = params => post('/rating/add', params)
+
+// /rating/rateSeller
+export const addSellerRating = params => post('/rating/rateSeller', params)

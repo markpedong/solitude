@@ -145,8 +145,9 @@ func GetOrdersByGroupID(ctx *gin.Context) {
 			"completed_at": currOrderGroup.CompletedAt,
 			"created_at":   currOrderGroup.CreatedAt,
 		},
-		"status":   currOrderGroup.Status,
-		"reviewed": currOrderGroup.Reviewed,
+		"status":          currOrderGroup.Status,
+		"reviewed":        currOrderGroup.Reviewed,
+		"reviewed_seller": currOrderGroup.ReviewedSeller,
 	}
 
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(resp))

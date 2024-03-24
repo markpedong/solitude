@@ -65,6 +65,7 @@ func UserRoutes(r *gin.Engine) {
 		rating.POST("/update", controllers.UpdateProductRating)
 		rating.POST("/delete", controllers.DeleteProductRating)
 		rating.POST("/add", controllers.AddProductRating)
+		rating.POST("/rateSeller", controllers.AddSellerRating)
 	}
 
 	user := r.Group("/user")

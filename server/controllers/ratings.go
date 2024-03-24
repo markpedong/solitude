@@ -13,15 +13,40 @@ func GetProductRating(ctx *gin.Context) {}
 
 func AddSellerRating(ctx *gin.Context) {
 	var body struct {
-		RatingArr models.ReviewItem `json:"rating"`
-		UserID    string            `json:"user_id"`
+		RatingArr []models.SellerReviews `json:"ratings"`
+		UserID    string                 `json:"user_id"`
+		GroupID   string                 `json:"group_id"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
-	helpers.JSONResponse(ctx, "", helpers.DataHelper(body))
+	var currOrderGroup models.OrderGroup
+	if err := database.DB.Preload("Orders").First(&currOrderGroup, "id = ?", body.GroupID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	for _, v := range body.RatingArr {
+		rating := &models.SellerReviews{
+			ID:          helpers.NewUUID(),
+			Description: v.Description,
+			Rate:        v.Rate,
+			UserID:      body.UserID,
+			SellerID:    v.SellerID,
+		}
+		if err := database.DB.Create(&rating).Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
+	}
+
+	currOrderGroup.ReviewedSeller = 1
+	database.DB.Save(&currOrderGroup)
+
+	helpers.JSONResponse(ctx, "successfully added review")
 }
+
 func AddProductRating(ctx *gin.Context) {
 	var body struct {
 		RatingArr []models.ReviewItem `json:"ratings"`
@@ -41,9 +66,8 @@ func AddProductRating(ctx *gin.Context) {
 	for _, v := range body.RatingArr {
 		rating := &models.ProductReviews{
 			ID:          helpers.NewUUID(),
-			Title:       v.Title,
 			Description: v.Description,
-			Rate:        float64(v.Rating),
+			Rate:        v.Rating,
 			ProductID:   v.ProductID,
 			UserID:      body.UserID,
 		}
@@ -56,7 +80,7 @@ func AddProductRating(ctx *gin.Context) {
 	currOrderGroup.Reviewed = 1
 	database.DB.Save(&currOrderGroup)
 
-	helpers.JSONResponse(ctx, "successfully added review", helpers.DataHelper(body))
+	helpers.JSONResponse(ctx, "successfully added review")
 }
 
 func UpdateProductRating(ctx *gin.Context) {}

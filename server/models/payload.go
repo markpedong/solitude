@@ -17,8 +17,7 @@ type Variation struct {
 }
 
 type ReviewItem struct {
-	Title       string `json:"title"`
-	Rating      int    `json:"rating" validate:"required"`
-	Description string `json:"description"`
-	ProductID   string `json:"product_id" validate:"required"`
+	Rating      float64 `json:"rating" validate:"required"`
+	Description string  `json:"description"`
+	ProductID   string  `json:"product_id" validate:"required"`
 }

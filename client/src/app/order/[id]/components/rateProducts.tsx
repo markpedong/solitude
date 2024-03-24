@@ -102,6 +102,7 @@ const RateProducts: FC<Props> = ({ products: q, s }) => {
 		const res = await addRating({ ratings: reviews, user_id: userData?.id, group_id })
 		messageHelper(res)
 		setReviews([])
+		s(1)
 	}
 
 	return (
@@ -126,10 +127,7 @@ const RateProducts: FC<Props> = ({ products: q, s }) => {
 								</div>
 								{openContainers.includes(i) && (
 									<>
-										<div className={styles.inputContainer}>
-											<Input name="title" placeholder="Review Title" onChange={e => handleInputChange(i, e)} />
-											<Input.TextArea name="description" rows={3} placeholder="Review Description" onChange={e => handleInputChange(i, e)} />
-										</div>
+										<Input.TextArea className="pb-3" name="description" rows={3} placeholder="Review Description" onChange={e => handleInputChange(i, e)} />
 										{uploading ? (
 											<Spin />
 										) : (
@@ -161,7 +159,7 @@ const RateProducts: FC<Props> = ({ products: q, s }) => {
 				<motion.span whileTap={scaleSize} onClick={() => s(1)}>
 					Cancel
 				</motion.span>
-				<motion.span whileTap={scaleSize} className={`!${reviewLength ? 'bg-gray-400' : ''}`} onClick={submitReview}>
+				<motion.span whileTap={scaleSize} className={`${reviewLength ? '!bg-gray-400' : ''}`} onClick={submitReview}>
 					Submit
 				</motion.span>
 			</div>

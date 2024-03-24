@@ -1,27 +1,20 @@
 'use client'
 
-import { useParams } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
-import styles from './styles.module.scss'
-import { Divider, Flex, Rate, Spin, Timeline, Tooltip, UploadFile } from 'antd'
-import { OrderResponse, getOrdersByID, uploadImages } from '@/api'
-import { useAppSelector } from '@/redux/store'
-import { dateParser } from '@/constants/helper'
-import Image from 'next/image'
+import { OrderResponse, getOrdersByID } from '@/api'
 import DeliveryInfo from '@/components/reusable/deliveryInfo'
-import { FaStore } from 'react-icons/fa'
-import { ModalForm, ProFormInstance, ProFormText, ProFormTextArea, ProFormUploadButton } from '@ant-design/pro-components'
-import { MODAL_FORM_PROPS } from '@/constants'
+import { dateParser } from '@/constants/helper'
+import { Divider, Timeline } from 'antd'
+import { useParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import MainContent from './components/mainContent'
 import RateProducts from './components/rateProducts'
+import styles from './styles.module.scss'
+import RateSeller from './components/rateSeller'
 
 const OrderedItem = () => {
-	const formRef = useRef<ProFormInstance>()
 	const { id: group_id } = useParams()
 	const [orderState, setOrderState] = useState(1)
 	const [orderedData, setOrderedData] = useState<OrderResponse>()
-	const [uploadedImages, setUploadedImages] = useState<UploadFile<any>[]>([])
-	const [uploading, setUploading] = useState(false)
 	const status = orderedData?.time
 
 	const renderTimelineItems = () =>
@@ -57,70 +50,6 @@ const OrderedItem = () => {
 		setOrderedData(res?.data)
 	}
 
-	const reviewProd = () => {
-		return (
-			<ModalForm
-				{...MODAL_FORM_PROPS}
-				formRef={formRef}
-				labelCol={{ flex: '75px' }}
-				trigger={<span>Rate Product</span>}
-				title={<span className={styles.reviewProdTitle}>Rate Product</span>}
-				onFinish={async params => {
-					console.log(params)
-				}}
-				onOpenChange={visible => {
-					if (!visible) {
-						formRef?.current.resetFields()
-					}
-				}}
-			>
-				<ProFormText label="Images">
-					<Flex className={styles.galleryContainer}>
-						{uploading ? (
-							<Spin />
-						) : (
-							<ProFormUploadButton
-								name="upload"
-								title="UPLOAD YOUR IMAGE"
-								fieldProps={{
-									name: 'files',
-									listType: 'picture-card',
-									accept: 'image/*',
-									multiple: true,
-									fileList: uploadedImages,
-									action: async e => {
-										setUploading(true)
-										setUploadedImages([])
-
-										try {
-											const res = await uploadImages(e)
-											setUploadedImages(state => [...state, res.data])
-
-											return ''
-										} finally {
-											setUploading(false)
-										}
-									}
-								}}
-							/>
-						)}
-					</Flex>
-				</ProFormText>
-				<ProFormText label="Rating" name="rating">
-					<Rate allowHalf defaultValue={2.5} onChange={e => e} />
-				</ProFormText>
-				<ProFormText label="Title" name="title" />
-				<ProFormTextArea
-					label="Description"
-					name="description"
-					fieldProps={{
-						autoSize: { minRows: 3, maxRows: 5 }
-					}}
-				/>
-			</ModalForm>
-		)
-	}
-
 	useEffect(() => {
 		fetchOrderInfo()
 	}, [])
@@ -139,6 +68,7 @@ const OrderedItem = () => {
 					</div>
 					{orderState === 1 && <MainContent data={orderedData} s={setOrderState} />}
 					{orderState === 2 && <RateProducts products={orderedData?.products?.flatMap(q => q?.products)} s={setOrderState} />}
+					{orderState === 3 && <RateSeller data={orderedData} s={setOrderState} />}
 				</div>
 			</div>
 		</>

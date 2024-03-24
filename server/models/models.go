@@ -140,11 +140,11 @@ type OrderGroup struct {
 	DeletedAt       soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
 	Status          int                   `json:"status"`
 	Reviewed        int                   `json:"reviewed"`
+	ReviewedSeller  int                   `json:"reviewed_seller"`
 }
 
 type ProductReviews struct {
 	ID          string                `json:"id" gorm:"primaryKey"`
-	Title       string                `json:"title" validate:"required"`
 	Description string                `json:"description" validate:"required"`
 	Rate        float64               `json:"rating" validate:"required"`
 	CreatedAt   int                   `json:"created_at" gorm:"autoCreateTime"`
@@ -156,7 +156,6 @@ type ProductReviews struct {
 
 type SellerReviews struct {
 	ID          string                `json:"id" gorm:"primaryKey"`
-	Title       string                `json:"title" validate:"required"`
 	Description string                `json:"description" validate:"required"`
 	Rate        float64               `json:"rating" validate:"required"`
 	CreatedAt   int                   `json:"created_at" gorm:"autoCreateTime"`

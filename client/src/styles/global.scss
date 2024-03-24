@@ -57,8 +57,12 @@ body {
     }
 }
 
-label.ant-form-item-required::before {
-    align-self: flex-end !important;
+label.ant-form-item-required {
+    @apply relative ml-2;
+    &::before {
+        @apply absolute top-[0.8rem] left-[-0.5rem];
+        // align-self: flex-end !important;
+    }
 }
 
 .ant-form-item-explain-error {
