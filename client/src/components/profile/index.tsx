@@ -180,7 +180,7 @@ const Profile: FC = () => {
 			</ProForm.Group>
 			<ProForm.Group>
 				<ProFormText.Password
-					{...INPUT_LETTERS}
+					{...INPUT_TRIM}
 					name="password"
 					placeholder="Enter Password"
 					label="Password"
@@ -189,7 +189,7 @@ const Profile: FC = () => {
 					rules={[...REQUIRED, { min: 6 }]}
 				/>
 				<ProFormText.Password
-					{...INPUT_LETTERS}
+					{...INPUT_TRIM}
 					name="confirm_password"
 					placeholder="Re-enter Password"
 					label="Confirm Password"

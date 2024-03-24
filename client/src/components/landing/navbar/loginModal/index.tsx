@@ -1,5 +1,5 @@
 import { USER_TYPES } from '@/constants'
-import { INPUT_LETTERS, REQUIRED } from '@/constants/helper'
+import { INPUT_LETTERS, INPUT_TRIM, REQUIRED } from '@/constants/helper'
 import forgotModalCover from '../../../../../public/assets/forgotModalCover.webp'
 import loginModalCover from '../../../../../public/assets/loginModalCover.webp'
 import logo from '../../../../../public/assets/logo.webp'
@@ -153,7 +153,7 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 					{!forgot && (
 						<ProForm.Group>
 							<ProFormText.Password
-								{...INPUT_LETTERS}
+								{...INPUT_TRIM}
 								name="password"
 								placeholder="Enter Password"
 								label="Password"
@@ -163,7 +163,7 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 							/>
 							{create && (
 								<ProFormText.Password
-									{...INPUT_LETTERS}
+									{...INPUT_TRIM}
 									name="confirm_password"
 									placeholder="Re-enter Password"
 									label="Confirm Password"
