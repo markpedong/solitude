@@ -7,14 +7,14 @@ import { Dropdown, Flex, Result } from 'antd'
 import type { MenuProps } from 'antd'
 import { FILTER } from '@/constants'
 import { motion } from 'framer-motion'
-import { TProduct } from '@/api'
+import { RatingItem, TProduct } from '@/api'
 
-type RatingProps = { products: TProduct[]; curr: string; rating: any[]  }
+type RatingProps = { products: TProduct[]; curr: string; rating: RatingItem[] }
 
 const Rating: FC<RatingProps> = ({ products, curr, rating }) => {
 	const [sort, setSort] = useState(1)
 	const handleClickSort = e => setSort(e.key)
-
+	console.log('@@@', rating)
 	const items: MenuProps['items'] = [
 		{
 			key: 1,
@@ -36,12 +36,9 @@ const Rating: FC<RatingProps> = ({ products, curr, rating }) => {
 	const reviewComponent = useMemo(
 		() => (
 			<div className={styles.reviewWrapper}>
-				<ReviewComp product={true} />
-				<ReviewComp product={true} />
-				<ReviewComp product={true} />
-				<ReviewComp product={true} />
-				<ReviewComp product={true} />
-				<ReviewComp product={true} />
+				{rating?.map(q => (
+					<ReviewComp data={q} product={true} />
+				))}
 			</div>
 		),
 		[]
@@ -56,16 +53,7 @@ const Rating: FC<RatingProps> = ({ products, curr, rating }) => {
 							<span>All Reviews</span>
 							{/* <span>{'(451)'}</span> */}
 						</div>
-						<Result
-							status="404"
-							style={{
-								height: '100%',
-								background: '#fff'
-							}}
-							title="Hello World"
-							subTitle="Sorry, you are not authorized to access this page."
-						/>
-						<div>
+						{/* <div>
 							<ControlOutlined className={styles.filter} />
 							<Dropdown className={styles.latest} menu={{ items }} trigger={['click']} placement="bottom">
 								<Flex justify="center" gap={5}>
@@ -74,12 +62,12 @@ const Rating: FC<RatingProps> = ({ products, curr, rating }) => {
 								</Flex>
 							</Dropdown>
 							<span className={styles.review}>Write a Review</span>
-						</div>
+						</div> */}
 					</div>
 					{reviewComponent}
-					<motion.div whileTap={{ scale: 0.9 }} className={styles.loadMoreReview}>
+					{/* <motion.div whileTap={{ scale: 0.9 }} className={styles.loadMoreReview}>
 						Load more Review
-					</motion.div>
+					</motion.div> */}
 					<PageHeader title="you might also like" />
 					<div className={styles.productWrapper}>
 						{products

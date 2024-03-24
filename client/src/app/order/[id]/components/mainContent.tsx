@@ -17,23 +17,6 @@ const MainContent: FC<Props> = ({ data: orderedData, s }) => {
 	const total = orderedData?.products?.flatMap(q => q.products).reduce((acc, cur) => acc + cur.price, 0)
 	const formRef = useRef<ProFormInstance>()
 
-	const renderRateSeller = () => (
-		<ModalForm
-			{...MODAL_FORM_PROPS}
-			formRef={formRef}
-			labelCol={{ flex: '70px' }}
-			title={<span className={styles.modalTitle}>Rate Seller</span>}
-			trigger={<span>Rate Seller</span>}
-			onFinish={async params => {
-				console.log('@@@@', params)
-			}}
-		>
-			<ProFormText label="Title" name="title" rules={[...REQUIRED]} />
-			<ProFormTextArea label="Description" name="description" rules={[...REQUIRED]} />
-			<ProFormRate label="Rating" name="rating" rules={[...REQUIRED]} />
-		</ModalForm>
-	)
-
 	return (
 		<div className={styles.textContainer}>
 			{orderedData?.products?.map(q => (

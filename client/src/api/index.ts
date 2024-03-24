@@ -214,4 +214,13 @@ export const addRating = params => post('/rating/add', params)
 export const addSellerRating = params => post('/rating/rateSeller', params)
 
 // /rating/getReviews
-export const getReviews = params =>post("/rating/getReviews", params)
+export type RatingItem = {
+	created_at: number
+	description: string
+	id: string
+	image: string[]
+	name: string
+	rating: number
+	updated_at: number
+}
+export const getReviews = params => post<RatingItem[]>('/rating/getReviews', params)

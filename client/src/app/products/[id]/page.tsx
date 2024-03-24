@@ -12,6 +12,7 @@ const ProductID = async (props: Props) => {
 	const products = await getProducts({})
 	const sellerData = await getSellerData({ seller_id: data?.data?.seller_id })
 	const reviews = await getReviews({ product_id: props.params.id })
+
 	return (
 		<div>
 			<Content data={data?.data} reviews={reviews?.data} products={products?.data} seller={sellerData?.data} />

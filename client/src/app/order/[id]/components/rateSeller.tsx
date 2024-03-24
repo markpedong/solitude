@@ -72,7 +72,7 @@ const RateSeller: FC<Props> = ({ data, s }) => {
 						</div>
 						<div className={styles.sellerRate} onClick={() => openContainer(i)}>
 							<span className={styles.sellerH}>Seller Performance:</span>
-							<Rate allowClear={false} allowHalf defaultValue={1} onChange={value => handleRateChange(i, value)} />
+							<Rate allowClear={false} allowHalf defaultValue={0} onChange={value => handleRateChange(i, value)} />
 						</div>
 						{openContainers.includes(i) && <Input.TextArea rows={3} placeholder="Give Description........" onChange={e => handleInputChange(i, e)} />}
 					</div>

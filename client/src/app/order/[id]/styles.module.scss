@@ -128,7 +128,8 @@
     font-size: toRem(12);
 
     span:nth-child(2) {
-        @apply flex-1
+        @apply flex-1;
+        font-family: "Satoshi";
     }
 
     span:nth-child(3) {
@@ -145,7 +146,7 @@
     border-top: toRem(1) solid var(--bg-secondary);
 
     span {
-        @apply px-3 py-2 rounded-md;
+        @apply px-3 py-2 rounded-md cursor-pointer;
         background-color: var(--bg-secondary);
         color: var(--color-primary);
 
@@ -246,19 +247,19 @@
     color: var(--color-primary);
 }
 
-.rateSellerWrapper{
+.rateSellerWrapper {
     @apply my-10;
 }
 
-.rateSellerContainer{
+.rateSellerContainer {
     @apply pb-5;
 }
 
-.sellerRate{
+.sellerRate {
     @apply my-2 flex gap-3 w-full;
 }
 
-.sellerH{
+.sellerH {
     font-family: "Satoshi";
-    font-size: toRem(15);
+    font-size: toRem(12);
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { FC, useEffect, useMemo, useState } from 'react'
+import React, { FC, useMemo, useState } from 'react'
 import styles from './styles.module.scss'
 import { MinusOutlined, PlusOutlined, RightOutlined } from '@ant-design/icons'
 import Image from 'next/image'
@@ -33,7 +33,6 @@ const ProductDetails: FC<Props> = ({ data, products, seller, reviews }) => {
 	const [qty, setQty] = useState<number>(1)
 	const [firstImage, setFirstImage] = useState(data?.image?.[0])
 	const [selectedVariations, setSelectedVariations] = useState({})
-	const router = useRouter()
 	const params = useParams()
 	const dispatch = useDispatch()
 
@@ -41,7 +40,6 @@ const ProductDetails: FC<Props> = ({ data, products, seller, reviews }) => {
 		console.log(key)
 	}
 
-	console.log("@@@@",reviews)
 	const items: TabsProps['items'] = [
 		{
 			key: '1',
@@ -51,7 +49,7 @@ const ProductDetails: FC<Props> = ({ data, products, seller, reviews }) => {
 		{
 			key: '2',
 			label: 'Rating & Reviews',
-			children: <Rating products={products} curr={params.id as string} rating={[]} />
+			children: <Rating products={products} curr={params.id as string} rating={reviews} />
 		}
 		// {
 		// 	key: '3',

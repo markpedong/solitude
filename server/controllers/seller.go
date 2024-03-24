@@ -21,7 +21,6 @@ func GetSellerData(ctx *gin.Context) {
 	var foundSeller models.Seller
 	var productCount int64
 	var sellerReview int64
-
 	if err := database.DB.Where("seller_id = ?", body.SellerID).First(&foundSeller).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "seller not found")
 		return

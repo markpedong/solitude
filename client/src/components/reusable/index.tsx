@@ -7,7 +7,7 @@ import styles from './styles.module.scss'
 import Product from './product'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { TProduct } from '@/api'
+import { RatingItem, TProduct } from '@/api'
 import { scaleSizeBig } from '@/constants'
 
 type Props = {
@@ -21,6 +21,7 @@ type LandingProps = {
 
 type ReviewProps = {
 	product?: boolean
+	data: RatingItem
 }
 
 export const PageHeader: FC<Props> = ({ title }) => {
@@ -48,18 +49,15 @@ export const LandingContent: FC<LandingProps> = ({ title, products }) => {
 	)
 }
 
-export const ReviewComp: FC<ReviewProps> = ({ product }) => {
+export const ReviewComp: FC<ReviewProps> = ({ product, data }) => {
 	return (
 		<div className={styles.reviewContainer} style={product ? { maxWidth: '20rem', width: '100%' } : {}}>
-			{/* <Rate value={product?.rating} disabled /> */}
+			<Rate value={data?.rating} disabled />
 			<div className={styles.nameContainer}>
-				<span>Sarah M.</span>
+				<span>{data?.name}</span>
 				<CheckOutlined />
 			</div>
-			<span className={styles.comment}>
-				"I'm blown away by the quality and style of the clothes I received from Shop.co. From casual wear to elegant dresses, every piece I've bought has exceeded my
-				expectations.”
-			</span>
+			{!!data?.description && <span className={styles.comment}>{data?.description}</span>}
 		</div>
 	)
 }

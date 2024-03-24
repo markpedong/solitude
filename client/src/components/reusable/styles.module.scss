@@ -41,8 +41,8 @@
     width: toRem(300);
     font-family: 'Satoshi';
     border: toRem(1) solid var(--border-color);
-    color: var(--white-color);
-    background-color: var(--color-primary);
+    color: var(--color-primary);
+    background-color: var(--bg-secondary);
 
     .nameContainer {
         @apply flex items-center gap-3 pt-1 pb-2;
@@ -56,7 +56,7 @@
             width: toRem(15);
             height: toRem(15);
             border-radius: 50%;
-            color: var(--bg-secondary);
+            color: var(--color-primary);
             background-color: #01AB31;
             padding: toRem(2);
         }
@@ -65,7 +65,7 @@
     .comment {
         font-size: toRem(11);
         line-height: toRem(11);
-        color: var(--white-color);
+        color: var(--color-primary);
     }
 
     :global {
