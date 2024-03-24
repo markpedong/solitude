@@ -13,9 +13,9 @@ func GetProductRating(ctx *gin.Context) {}
 
 func AddSellerRating(ctx *gin.Context) {
 	var body struct {
-		RatingArr []models.SellerReviews `json:"ratings"`
-		UserID    string                 `json:"user_id"`
-		GroupID   string                 `json:"group_id"`
+		RatingArr []models.SellerReviews `json:"reviews"`
+		UserID    string                 `json:"user_id" validate:"required"`
+		GroupID   string                 `json:"group_id" validate:"required"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
@@ -70,6 +70,7 @@ func AddProductRating(ctx *gin.Context) {
 			Rate:        v.Rating,
 			ProductID:   v.ProductID,
 			UserID:      body.UserID,
+			Image:       v.Image,
 		}
 		if err := database.DB.Create(&rating).Error; err != nil {
 			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())

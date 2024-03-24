@@ -150,6 +150,7 @@ type ProductReviews struct {
 	CreatedAt   int                   `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt   int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DeletedAt   soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
+	Image       pq.StringArray        `json:"image" gorm:"type:text[]"`
 	ProductID   string                `json:"-"`
 	UserID      string                `json:"-"`
 }

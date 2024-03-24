@@ -52,7 +52,7 @@ const OrderedItem = () => {
 
 	useEffect(() => {
 		fetchOrderInfo()
-	}, [])
+	}, [orderState])
 
 	return (
 		<>

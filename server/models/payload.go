@@ -1,5 +1,7 @@
 package models
 
+import "github.com/lib/pq"
+
 type JSONAddProduct struct {
 	ProductName string      `json:"product_name"`
 	Description string      `json:"description"`
@@ -17,7 +19,8 @@ type Variation struct {
 }
 
 type ReviewItem struct {
-	Rating      float64 `json:"rating" validate:"required"`
-	Description string  `json:"description"`
-	ProductID   string  `json:"product_id" validate:"required"`
+	Rating      float64        `json:"rating" validate:"required"`
+	Description string         `json:"description"`
+	ProductID   string         `json:"product_id" validate:"required"`
+	Image       pq.StringArray `json:"image" gorm:"type:text[]"`
 }
