@@ -78,6 +78,17 @@ func AddProductRating(ctx *gin.Context) {
 		}
 	}
 
+	for _, v := range currOrderGroup.Orders {
+		var seller models.Seller
+		if err := database.DB.First(&seller, "id = ?", v.SellerID).Error; err != nil {
+			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		seller.Rating = seller.Rating + 1
+		database.DB.Save(&seller)
+	}
+
 	currOrderGroup.Reviewed = 1
 	database.DB.Save(&currOrderGroup)
 

@@ -29,7 +29,6 @@ func GetSellerData(ctx *gin.Context) {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
-
 	foundSeller.Products = productCount
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(foundSeller))
 }
