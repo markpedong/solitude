@@ -76,7 +76,7 @@ export const ReviewComp: FC<ReviewProps> = ({ product, data, user }) => {
 			</div>
 			<div className="flex flex-col gap-3">
 				{!!data?.description && <span className={styles.comment}>{data?.description}</span>}
-				<div className="flex gap-3">{!!data?.images.length && data?.images.map(q => <Image src={q} alt="review_image" width={50} height={50} />)}</div>
+				<div className="flex gap-3">{!!data?.images?.length && data?.images.map(q => <Image src={q} alt="review_image" width={50} height={50} />)}</div>
 			</div>
 		</div>
 	)

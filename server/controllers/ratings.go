@@ -28,8 +28,7 @@ func GetRatings(ctx *gin.Context) {
 		query = query.Where("user_id = ?", body.UserID)
 	}
 	if body.UserID == "" && body.ProductID == "" && body.SellerID == "" {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "check payload")
-		return
+		query = query.Order("created_at desc").Limit(10)
 	}
 
 	var reviews []models.ProductReviews

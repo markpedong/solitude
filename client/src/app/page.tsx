@@ -8,6 +8,7 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
 const Page = async () => {
 	const products = await getProducts({ search: '' })
+	const reviews = await getReviews({})
 
 	return (
 		<>
@@ -56,20 +57,22 @@ const Page = async () => {
 				<PageHeader title="browse by dress style" />
 				<CategoryEl />
 			</div>
-			{/* <div className={styles.reviewWrapper}>
+			<div className={styles.reviewWrapper}>
 				<div className={styles.reviewContainer}>
 					<span className={styles.header}>our happy customers</span>
-					<div className={styles.arrowContainer}>
-						<FaArrowLeft />
-						<FaArrowRight />
-					</div>
+					{reviews?.data.length > 6 && (
+						<div className={styles.arrowContainer}>
+							<FaArrowLeft />
+							<FaArrowRight />
+						</div>
+					)}
 				</div>
 				<div className={styles.reviewsContainer}>
-					{sliceReview?.map(q => (
+					{reviews?.data?.map(q => (
 						<ReviewComp data={q} />
 					))}
 				</div>
-			</div> */}
+			</div>
 		</>
 	)
 }
