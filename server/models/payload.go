@@ -20,5 +20,5 @@ type ReviewItem struct {
 	Rating      float64  `json:"rating" validate:"required"`
 	Description string   `json:"description"`
 	ProductID   string   `json:"product_id" validate:"required"`
-	Image       []string `json:"image"`
+	Images      []string `json:"images"`
 }

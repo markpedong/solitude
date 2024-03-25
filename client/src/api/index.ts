@@ -218,7 +218,7 @@ export type RatingItem = {
 	created_at: number
 	description: string
 	id: string
-	image: string[]
+	images: string[]
 	name: string
 	rating: number
 	updated_at: number

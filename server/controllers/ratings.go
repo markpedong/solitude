@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetProductRating(ctx *gin.Context) {
+func GetRatings(ctx *gin.Context) {
 	var body struct {
 		ProductID string `json:"product_id"`
 		UserID    string `json:"user_id"`
@@ -107,7 +107,7 @@ func AddProductRating(ctx *gin.Context) {
 	}
 
 	var currOrderGroup models.OrderGroup
-	if err := database.DB.Preload("Orders").Where("id = ?", body.GroupID).Find(&currOrderGroup).Error; err != nil {
+	if err := database.DB.Preload("Orders").First(&currOrderGroup, "id = ?", body.GroupID).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -119,7 +119,7 @@ func AddProductRating(ctx *gin.Context) {
 			Rate:        v.Rating,
 			ProductID:   v.ProductID,
 			UserID:      body.UserID,
-			Image:       v.Image,
+			Images:      v.Images,
 		}
 		if err := database.DB.Create(&rating).Error; err != nil {
 			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
@@ -129,7 +129,7 @@ func AddProductRating(ctx *gin.Context) {
 
 	for _, v := range currOrderGroup.Orders {
 		var seller models.Seller
-		if err := database.DB.First(&seller, "id = ?", v.SellerID).Error; err != nil {
+		if err := database.DB.First(&seller, "seller_id = ?", v.SellerID).Error; err != nil {
 			helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 			return
 		}

@@ -101,8 +101,11 @@ const RateProducts: FC<Props> = ({ products: q, s }) => {
 
 		const res = await addRating({ ratings: reviews, user_id: userData?.id, group_id })
 		messageHelper(res)
-		setReviews([])
-		s(1)
+	
+		if (res?.success){
+			setReviews([])
+			s(1)
+		}
 	}
 
 	return (

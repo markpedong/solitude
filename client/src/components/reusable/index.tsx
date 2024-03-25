@@ -1,7 +1,7 @@
 'use client'
 
 import { CheckOutlined } from '@ant-design/icons'
-import { Divider, Popconfirm, Rate } from 'antd'
+import { Divider, Image, Popconfirm, Rate } from 'antd'
 import { FC } from 'react'
 import styles from './styles.module.scss'
 import Product from './product'
@@ -58,6 +58,8 @@ export const ReviewComp: FC<ReviewProps> = ({ product, data, user }) => {
 
 		messageHelper(res)
 	}
+
+	console.log(data)
 	return (
 		<div className={styles.reviewContainer} style={product ? { maxWidth: '20rem', width: '100%' } : {}}>
 			<div className="flex justify-between">
@@ -72,7 +74,10 @@ export const ReviewComp: FC<ReviewProps> = ({ product, data, user }) => {
 				<span>{user ? data?.product_name : data?.name}</span>
 				<CheckOutlined />
 			</div>
-			{!!data?.description && <span className={styles.comment}>{data?.description}</span>}
+			<div className="flex flex-col gap-3">
+				{!!data?.description && <span className={styles.comment}>{data?.description}</span>}
+				<div className="flex gap-3">{!!data?.images.length && data?.images.map(q => <Image src={q} alt="review_image" width={50} height={50} />)}</div>
+			</div>
 		</div>
 	)
 }
