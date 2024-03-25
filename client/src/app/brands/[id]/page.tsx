@@ -1,14 +1,17 @@
-'use client'
+import { getProducts, getReviews, getSellerData, getSellerProducts } from '@/api'
 
-import { useParams } from 'next/navigation'
-import React from 'react'
+type Props = {
+	params: {
+		id: string
+	}
+}
 
-type Props = {}
+const Page = async (props: Props) => {
+	const products = await getSellerProducts({ selle_id: props.params.id })
+	const sellerData = await getSellerData({ seller_id: props.params.id })
+	const reviews = await getReviews({ seller_id: props.params.id })
 
-const Page = (props: Props) => {
-	const { id } = useParams()
-	
-	return <div className='max-w-6xl mx-auto'>{id}</div>
+	return <div className="max-w-6xl mx-auto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, reprehenderit?</div>
 }
 
 export default Page
