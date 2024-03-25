@@ -56,9 +56,8 @@ const post = async <T>(url: string, data = {}): Promise<ApiResponse<T>> => {
 
 	if (response?.status !== 200) {
 		throttleAlert(response.message)
-
 		if (response?.status === 401) {
-			redirect('/unauthorized')
+			window.location.replace('/unauthorized')
 		}
 		return response
 	}
