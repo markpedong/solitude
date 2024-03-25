@@ -1,12 +1,10 @@
 import { OrderResponse } from '@/api'
 import { Divider } from 'antd'
 import Image from 'next/image'
-import React, { FC, SetStateAction, useRef } from 'react'
+import React, { FC, SetStateAction } from 'react'
 import { FaStore } from 'react-icons/fa'
 import styles from '../styles.module.scss'
-import { ModalForm, ProFormInstance, ProFormRate, ProFormText, ProFormTextArea } from '@ant-design/pro-components'
-import { REQUIRED } from '@/constants/helper'
-import { MODAL_FORM_PROPS } from '@/constants'
+import { useRouter } from 'next/navigation'
 
 type Props = {
 	data: OrderResponse
@@ -15,7 +13,7 @@ type Props = {
 
 const MainContent: FC<Props> = ({ data: orderedData, s }) => {
 	const total = orderedData?.products?.flatMap(q => q.products).reduce((acc, cur) => acc + cur.price, 0)
-	const formRef = useRef<ProFormInstance>()
+	const router = useRouter()
 
 	return (
 		<div className={styles.textContainer}>
@@ -24,7 +22,7 @@ const MainContent: FC<Props> = ({ data: orderedData, s }) => {
 					<div className={styles.sellerData}>
 						<FaStore />
 						<span>{q?.seller_name}</span>
-						<span>View Shop</span>
+						<span onClick={() => router.push(`/brand/${q?.seller_id}`)}>View Shop</span>
 					</div>
 					{q?.products.map((w, i) => (
 						<div className={styles.orderContainer} key={i}>

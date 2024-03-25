@@ -6,7 +6,7 @@ import { Input, Rate, message } from 'antd'
 import { FaStore } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 import { scaleSize } from '@/constants'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useAppSelector } from '@/redux/store'
 import { messageHelper } from '@/constants/antd'
 
@@ -17,6 +17,7 @@ type Props = {
 
 const RateSeller: FC<Props> = ({ data, s }) => {
 	const { id: group_id } = useParams()
+	const router = useRouter()
 	const { userData } = useAppSelector(s => s.userData)
 	const [reviews, setReviews] = useState([])
 	const [openContainers, setOpenContainers] = useState([])
@@ -68,7 +69,7 @@ const RateSeller: FC<Props> = ({ data, s }) => {
 						<div className={styles.sellerData}>
 							<FaStore />
 							<span>{w?.seller_name}</span>
-							<span>View Shop</span>
+							<span onClick={() => router.push(`/brand/${w?.seller_id}`)}>View Shop</span>
 						</div>
 						<div className={styles.sellerRate} onClick={() => openContainer(i)}>
 							<span className={styles.sellerH}>Seller Performance:</span>

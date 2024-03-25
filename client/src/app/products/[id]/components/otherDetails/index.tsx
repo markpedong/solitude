@@ -1,5 +1,5 @@
 import { SellerData, TProduct } from '@/api'
-import { capFrstLtr, dateParser, numSuffix } from '@/constants/helper'
+import { dateParser, numSuffix } from '@/constants/helper'
 import React, { FC } from 'react'
 import styles from './styles.module.scss'
 import { RightOutlined } from '@ant-design/icons'
@@ -9,6 +9,7 @@ import { IoStorefront } from 'react-icons/io5'
 import { motion } from 'framer-motion'
 import { scaleSize } from '@/constants'
 import dayjs from 'dayjs'
+import { useRouter } from 'next/navigation'
 
 type Props = {
 	data: TProduct
@@ -16,6 +17,8 @@ type Props = {
 }
 
 const OtherDetails: FC<Props> = ({ data, seller }) => {
+	const router = useRouter()
+
 	return (
 		<div>
 			<div className={styles.specsHeader}>Product Specifications</div>
@@ -65,7 +68,7 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 					<div className={styles.otherContainer}>
 						<motion.div className={styles.storeContainer} whileTap={scaleSize}>
 							<IoStorefront />
-							<span>View Shop</span>
+							<span onClick={() => router.push(`/brand/${data?.seller_id}`)}>View Shop</span>
 						</motion.div>
 						<div>
 							<span>Location: </span>
