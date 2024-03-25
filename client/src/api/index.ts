@@ -228,3 +228,6 @@ export const getReviews = params => post<RatingItem[]>('/rating/getReviews', par
 
 // /rating/deleteReview
 export const deleteReview = params => post('/rating/deleteReview', params)
+
+// /public/brands
+export const getBrands = () => post<SellerData[]>("/public/brands")

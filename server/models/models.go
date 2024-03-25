@@ -69,7 +69,7 @@ type Seller struct {
 	Phone      string                `json:"phone"`
 	Username   string                `json:"username"`
 	Location   string                `json:"location"`
-	Products   *[]Product            `json:"products" gorm:"foreignKey:SellerID"`
+	Products   []Product             `json:"products" gorm:"foreignKey:SellerID"`
 	Avatar     string                `json:"avatar"`
 	Followers  int                   `json:"followers"`
 	CreatedAt  int                   `json:"created_at" gorm:"autoCreateTime"`
@@ -161,6 +161,6 @@ type SellerReviews struct {
 	CreatedAt   int                   `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt   int                   `json:"updated_at" gorm:"autoUpdateTime:milli"`
 	DeletedAt   soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
-	SellerID    string                `json:"-"`
-	UserID      string                `json:"-"`
+	SellerID    string                `json:"seller_id"`
+	UserID      string                `json:"-" gorm:"user_id"`
 }

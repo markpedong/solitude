@@ -75,3 +75,36 @@
         }
     }
 }
+
+.brandItemContainer{
+    @apply flex flex-col items-center justify-center p-4 rounded-md;
+    background-color: var(--bg-secondary);
+
+    img {
+        @apply rounded-full size-20 bg-white mb-5; 
+    }
+}
+
+.brandItemTitle{
+    @apply text-center;
+    font-size: toRem(15);
+    line-height: toRem(15);
+    font-family: "Integral";
+}
+
+.brandItemDesc {
+    @apply flex justify-between items-center pt-3;
+    font-family: "Satoshi";
+    font-size: toRem(12)
+}
+
+.brandDesc{
+    @apply flex flex-col text-center w-full;
+    font-family: "Satoshi";
+    font-size: toRem(10);
+
+    span:last-child{
+        @apply font-bold;
+        font-size: toRem(12);
+    }
+}

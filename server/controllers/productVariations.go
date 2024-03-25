@@ -62,7 +62,7 @@ func AddVariation(ctx *gin.Context) {
 	}
 
 	var found bool
-	for _, v := range *currSeller.Products {
+	for _, v := range currSeller.Products {
 		if body.ProductID == v.ProductID {
 			found = true
 			break

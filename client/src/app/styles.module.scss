@@ -178,3 +178,14 @@
         @apply grid grid-flow-col overflow-scroll gap-5 px-5;
     }
 }
+
+.brandWrapper{
+    @apply grid gap-5 w-full px-5;
+    grid-template-columns: repeat(auto-fill, minmax(toRem(250), 1fr));
+}
+
+.brandPageHeader{
+    @apply text-center pb-4 tracking-wider font-bold;
+    font-family: "Integral";
+    font-size: toRem(40);
+}

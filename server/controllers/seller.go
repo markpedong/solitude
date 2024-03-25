@@ -129,7 +129,7 @@ func SellerSignup(ctx *gin.Context) {
 		Phone:      body.Phone,
 		Username:   body.Username,
 		Location:   body.Location,
-		Products:   &[]models.Product{},
+		Products:   []models.Product{},
 		Avatar:     body.Avatar,
 	}
 
@@ -199,4 +199,28 @@ func GetAllProductsBySellerID(ctx *gin.Context) {
 	}
 
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(currProduct))
+}
+
+func GetAllSellers(ctx *gin.Context) {
+	var sellers []models.Seller
+	if err := database.DB.Preload("Products").Preload("Reviews").Order("RANDOM()").Find(&sellers).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	var sellerResponse []models.JSONSeller
+	for _, v := range sellers {
+		seller := models.JSONSeller{
+			SellerID:   v.SellerID,
+			SellerName: v.SellerName,
+			Products:   int64(len(v.Products)),
+			Followers:  v.Followers,
+			Avatar:     v.Avatar,
+			Rating:     len(v.Reviews),
+		}
+
+		sellerResponse = append(sellerResponse, seller)
+	}
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(sellerResponse))
 }

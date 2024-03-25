@@ -281,7 +281,7 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 						</div>
 						<div>on sale</div>
 						<div onClick={() => router.push('/products')}>new arrivals</div>
-						<div>brands</div>
+						<div onClick={() => router.push('/brands')}>brands</div>
 					</div>
 					<Input
 						className={styles.input}
