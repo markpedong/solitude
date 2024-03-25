@@ -60,7 +60,7 @@ const Page = async () => {
 			<div className={styles.reviewWrapper}>
 				<div className={styles.reviewContainer}>
 					<span className={styles.header}>our happy customers</span>
-					{reviews?.data.length > 6 && (
+					{reviews?.data?.length > 6 && (
 						<div className={styles.arrowContainer}>
 							<FaArrowLeft />
 							<FaArrowRight />
