@@ -44,7 +44,7 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 				</div>
 			</div>
 			<div className={styles.specsHeader}>Product Description</div>
-			<span className='break-words'>{data?.description}</span>
+			<span className="break-words">{data?.description}</span>
 			<Divider />
 			<div className={styles.specsHeader}>Seller Info</div>
 			<div className={styles.sellerInfoWrapper}>
@@ -68,7 +68,9 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 					<div className={styles.otherContainer}>
 						<motion.div className={styles.storeContainer} whileTap={scaleSize}>
 							<IoStorefront />
-							<span onClick={() => router.push(`/brand/${data?.seller_id}`)}>View Shop</span>
+							<span className="cursor-pointer" onClick={() => router.push(`/brands/${data?.seller_id}`)}>
+								View Shop
+							</span>
 						</motion.div>
 						<div>
 							<span>Location: </span>

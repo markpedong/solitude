@@ -1,0 +1,41 @@
+@import "@/styles/_helpers.scss";
+
+.mainWrapper {
+    @apply py-6 px-3;
+}
+
+.headerWrapper {
+    @apply grid grid-cols-3;
+}
+
+.headerContainer {
+    @apply grid gap-5;
+}
+
+.header {
+    @apply flex items-center gap-3;
+    font-size: toRem(14);
+    line-height: toRem(14);
+    font-family: "Satoshi";
+    color: var(--color-primary);
+
+    :nth-child(2) {
+        color: var(--color-secondary);
+    }
+}
+
+.nameContainer {
+    @apply grid items-center;
+    grid-template-columns: 1fr 4fr;
+
+    img {
+        @apply size-16 rounded-full bg-white border border-solid border-gray-400;
+    }
+
+    .name {
+        @apply flex flex-col gap-4;
+        font-family: "Satoshi";
+        line-height: toRem(16);
+        font-size: toRem(16);
+    }
+}

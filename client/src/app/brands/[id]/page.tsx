@@ -12,9 +12,11 @@ const Page = async (props: Props) => {
 	const sellerData = await getSellerData({ seller_id: props.params.id })
 	const reviews = await getReviews({ seller_id: props.params.id })
 
-	return <div className="max-w-6xl mx-auto">
-		<Content products={products?.data} data={sellerData?.data} reviews={reviews?.data} />
-	</div>
+	return (
+		<div className="max-w-6xl mx-auto">
+			<Content products={products?.data} data={sellerData?.data} reviews={reviews?.data} />
+		</div>
+	)
 }
 
 export default Page
