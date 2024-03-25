@@ -1,4 +1,5 @@
 import { getProducts, getReviews, getSellerData, getSellerProducts } from '@/api'
+import Content from './components/content'
 
 type Props = {
 	params: {
@@ -11,7 +12,9 @@ const Page = async (props: Props) => {
 	const sellerData = await getSellerData({ seller_id: props.params.id })
 	const reviews = await getReviews({ seller_id: props.params.id })
 
-	return <div className="max-w-6xl mx-auto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, reprehenderit?</div>
+	return <div className="max-w-6xl mx-auto">
+		<Content products={products?.data} data={sellerData?.data} reviews={reviews?.data} />
+	</div>
 }
 
 export default Page
