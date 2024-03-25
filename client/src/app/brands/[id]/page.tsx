@@ -7,7 +7,8 @@ type Props = {}
 
 const Page = (props: Props) => {
 	const { id } = useParams()
-	return <div>{id}</div>
+	
+	return <div className='max-w-6xl mx-auto'>{id}</div>
 }
 
 export default Page

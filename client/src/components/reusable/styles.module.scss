@@ -86,7 +86,7 @@
 }
 
 .brandItemTitle{
-    @apply text-center;
+    @apply text-center cursor-pointer;
     font-size: toRem(15);
     line-height: toRem(15);
     font-family: "Integral";
