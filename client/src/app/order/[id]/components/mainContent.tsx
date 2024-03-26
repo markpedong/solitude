@@ -64,13 +64,17 @@ const MainContent: FC<Props> = ({ data: orderedData, s }) => {
                     </div> */}
 			</div>
 			<div className={styles.reviewRateContainer}>
-				{orderedData?.reviewed_seller === 0 && <span onClick={() => s(3)}>Rate Seller</span>}
-				{orderedData?.reviewed === 0 && (
-					<span className={styles.rateProduct} onClick={() => s(2)}>
-						Rate Products
-					</span>
+				{orderedData?.status === 5 && (
+					<>
+						{orderedData?.reviewed_seller === 0 && <span onClick={() => s(3)}>Rate Seller</span>}
+						{orderedData?.reviewed === 0 && (
+							<span className={styles.rateProduct} onClick={() => s(2)}>
+								Rate Products
+							</span>
+						)}
+						<span>Complete Order</span>
+					</>
 				)}
-				{orderedData?.status === 5 && <span>Complete Order</span>}
 			</div>
 		</div>
 	)
