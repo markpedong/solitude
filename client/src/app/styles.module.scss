@@ -10,6 +10,16 @@
     }
 }
 
+.productCategory {
+    @apply flex items-center gap-2 text-gray-500 mb-10 pl-5;
+    color: var(--color-secondary);
+    font-size: toRem(12);
+
+    span:last-child {
+        color: var(--color-primary);
+    }
+}
+
 .textContainer {
     @apply flex flex-col gap-5;
 

@@ -1,0 +1,23 @@
+@import '@/styles/_helpers.scss';
+
+.contentWrapper {
+    @apply grid gap-10 px-5;
+    grid-template-columns: repeat(auto-fill, minmax(toRem(200), 1fr));
+}
+
+
+.productCategory {
+    @apply flex items-center gap-2 text-gray-500 mb-10 pl-5;
+    color: var(--color-secondary);
+    font-size: toRem(12);
+
+    span:last-child {
+        color: var(--color-primary);
+    }
+}
+
+.salePageHeader{
+    @apply text-center pb-4 tracking-wider font-bold;
+    font-family: "Integral";
+    font-size: toRem(40);
+}

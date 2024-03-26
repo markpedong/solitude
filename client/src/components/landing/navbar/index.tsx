@@ -277,9 +277,10 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 					</motion.div>
 					<div className={styles.navbarHeader}>
 						<div onClick={() => router.push('/products')}>
-							shop <DownOutlined />
+							shop 
+							{/* <DownOutlined /> */}
 						</div>
-						<div>on sale</div>
+						<div onClick={() => router.push('/sale')}>on sale</div>
 						<div onClick={() => router.push('/products')}>new arrivals</div>
 						<div onClick={() => router.push('/brands')}>brands</div>
 					</div>

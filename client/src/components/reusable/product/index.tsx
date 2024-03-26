@@ -1,3 +1,5 @@
+'use client'
+
 import React, { FC } from 'react'
 import styles from './styles.module.scss'
 import { Rate } from 'antd'

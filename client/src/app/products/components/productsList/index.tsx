@@ -87,7 +87,7 @@ const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 				<RightOutlined />
 				<span>Shop</span>
 				<RightOutlined />
-				<span>T-shirts</span>
+				<span>Products</span>
 			</div>
 			<div className={styles.mainContainer}>
 				<div className={styles.filterContainer}>
