@@ -19,12 +19,12 @@ const CategoryEl: FC = () => {
 				<Image src={'/assets/landing/merchandise.jpeg'} alt="merchandise" height={100} width={100} />
 			</motion.div>
 			<motion.div className={styles.div3} whileHover={scaleSizeBig}>
-				<span>tools</span>
-				<Image src={'/assets/landing/items.jpeg'} alt="items" height={100} width={100} />
+				<span>household</span>
+				<Image src={'/assets/landing/household.jpeg'} alt="household" height={100} width={100} />
 			</motion.div>
 			<motion.div className={styles.div4} whileHover={scaleSizeBig}>
 				<span>crafting</span>
-				<Image src={'/assets/landing/crafting.png'} alt="crafting" height={100} width={100} />
+				<Image src={'/assets/landing/crafting.jpeg'} alt="crafting" height={100} width={100} />
 			</motion.div>
 		</div>
 	)
