@@ -99,9 +99,13 @@
             font-family: 'Satoshi';
             font-size: toRem(12);
 
-            :first-child {
+            div {
                 letter-spacing: toRem(1);
-                font-weight: 500
+                font-weight: 500;
+            }
+
+            span {
+                @apply cursor-pointer;
             }
         }
 
