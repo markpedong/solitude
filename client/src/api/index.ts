@@ -231,3 +231,6 @@ export const deleteReview = params => post('/rating/deleteReview', params)
 
 // /public/brands
 export const getBrands = () => post<SellerData[]>("/public/brands")
+
+// /subscribe
+export const subscribeNewsLetter = (params) => post("/subscribe", params)

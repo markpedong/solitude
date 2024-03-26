@@ -11,6 +11,7 @@ func UserRoutes(r *gin.Engine) {
 	r.POST("/seller/products", controllers.GetAllProductsBySellerID)
 	r.POST("/seller/getInfo", controllers.GetSellerData)
 	r.POST("/product/getDetails", controllers.GetProductsDetailsByID)
+	r.POST("/subscribe", controllers.AddNewsLetter)
 
 	public := r.Group("/public")
 	{

@@ -164,3 +164,8 @@ type SellerReviews struct {
 	SellerID    string                `json:"seller_id"`
 	UserID      string                `json:"-" gorm:"user_id"`
 }
+
+type NewsLetter struct {
+	ID    string `json:"id" gorm:"primaryKey"`
+	Email string `json:"email"`
+}

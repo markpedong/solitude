@@ -2,7 +2,9 @@ package controllers
 
 import (
 	"net/http"
+	"solitude/database"
 	"solitude/helpers"
+	"solitude/models"
 	"solitude/tokens"
 
 	"github.com/gin-gonic/gin"
@@ -53,4 +55,24 @@ func CheckToken(ctx *gin.Context) {
 	}
 
 	helpers.JSONResponse(ctx, "token verified!!", helpers.DataHelper(claims))
+}
+
+func AddNewsLetter(ctx *gin.Context) {
+	var body struct {
+		Email string `json:"email"`
+	}
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
+		return
+	}
+
+	newsLetterItem := models.NewsLetter{
+		ID:    helpers.NewUUID(),
+		Email: body.Email,
+	}
+	if err := database.DB.Create(&newsLetterItem).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	helpers.JSONResponse(ctx, "")
 }

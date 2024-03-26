@@ -42,6 +42,7 @@ func DBSet() {
 		&models.Orders{},
 		&models.ProductReviews{},
 		&models.SellerReviews{},
+		&models.NewsLetter{},
 	)
 	if err != nil {
 		log.Fatal(err.Error())

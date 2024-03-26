@@ -22,6 +22,14 @@ export const INPUT_LETTERS = {
 	}
 }
 
+export const INPUT_EMAIL = {
+	getValueFromEvent: e => {
+		const trimmedValue = e?.target.value?.trim();
+		const validEmail = trimmedValue.replace(/[^\w.@+-]/g, ''); // Remove characters not allowed in an email address
+		return validEmail;
+	}
+}
+
 export const INPUT_NUMBER = {
 	getValueFromEvent: e => {
 		const trimmedValue = e?.target.value?.trim()

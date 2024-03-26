@@ -1,25 +1,51 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import styles from './styles.module.scss'
 import { Divider, Input } from 'antd'
 import { FacebookOutlined, GithubOutlined, InstagramOutlined, MailOutlined, TwitterOutlined } from '@ant-design/icons'
 import Image from 'next/image'
+import { subscribeNewsLetter } from '@/api'
+import { messageHelper } from '@/constants/antd'
+import { motion } from 'framer-motion'
+import { scaleSize } from '@/constants'
 
 const Footer = () => {
+	const [email, setEmail] = useState('')
+
+	const handleSubscription = async () => {
+		const res = await subscribeNewsLetter({ email })
+		messageHelper(res)
+	}
 	return (
 		<div className={styles.footerWrapper}>
 			<div className={styles.newsLetterContainer}>
-				<span className={styles.title}>
-					STAY UPTO DATE ABOUT OUR LATEST OFFERS
-				</span>
+				<span className={styles.title}>STAY UPTO DATE ABOUT OUR LATEST OFFERS</span>
 				<div className={styles.inputContainer}>
-					<Input className={styles.input} prefix={<MailOutlined />} placeholder="Enter your email address" variant="filled" />
-					<div className={styles.button}>subscribe to newsletter</div>
-				</div>
+					<Input
+						className={styles.input}
+						prefix={<MailOutlined />}
+						value={email}
+						placeholder="Enter your email address"
+						variant="filled"
+						onChange={(e) => {
+							const trimmedValue = e?.target.value?.trim();
+							const validEmail = trimmedValue.replace(/[^\w.@+-]/g, ''); // Remove characters not allowed in an email address
+							
+							setEmail(validEmail)
+						}}
+					/>
+					<motion.div className={styles.button} whileTap={scaleSize} onClick={handleSubscription}>
+						subscribe to newsletter
+					</motion.div>
+				</div>	
 			</div>
 			<div className={styles.mainFooterContainer}>
 				<div className={styles.titleContainer}>
 					<span className={styles.title}>SOLITUDE</span>
-					<span className={styles.extraText}>We have clothes that suits your style and which you’re proud to wear. From women to men.</span>
+					<span className={styles.extraText}>
+						We have clothes that suits your style and which you’re proud to wear. From women to men.
+					</span>
 					<div className={styles.iconContainer}>
 						<TwitterOutlined />
 						<FacebookOutlined />
