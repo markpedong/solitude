@@ -25,15 +25,15 @@ const Page = async () => {
 					</Link>
 					<div className={styles.footerTextContainer}>
 						<div>
-							<span>{brands?.data.length > 9 ? `${brands?.data.length}+` : brands?.data.length}</span>
+							<span>{brands?.data?.length > 9 ? `${brands?.data?.length}+` : brands?.data?.length}</span>
 							<span>International Brands</span>
 						</div>
 						<div>
-							<span>{products?.data.length > 9 ? `${products?.data.length}+` : products?.data.length}</span>
+							<span>{products?.data?.length > 9 ? `${products?.data?.length}+` : products?.data?.length}</span>
 							<span>High Quality Products</span>
 						</div>
 						<div>
-							<span>{reviews?.data.length > 9 ? `${reviews?.data.length}+` : reviews?.data.length}</span>
+							<span>{reviews?.data?.length > 9 ? `${reviews?.data?.length}+` : reviews?.data?.length}</span>
 							<span>Happy Customer</span>
 						</div>
 					</div>
