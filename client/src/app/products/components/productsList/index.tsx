@@ -17,7 +17,7 @@ const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 	const [sort, setSort] = useState(1)
 	const [current, setCurrent] = useState(1)
 	const min = Math.min(...data.map(item => item.price))
-	const max = Math.max(...data.map(item => item.price));
+	const max = Math.max(...data.map(item => item.price))
 
 	const handleClickSort = e => setSort(e.key)
 
@@ -94,7 +94,7 @@ const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 			</div>
 			<div className={styles.mainContainer}>
 				<div className={styles.filterContainer}>
-					<div className={classNames(styles.header, "flex justify-between")}>
+					<div className={classNames(styles.header, 'flex justify-between')}>
 						<span>Filters</span>
 						<FilterOutlined />
 					</div>
@@ -124,9 +124,11 @@ const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 						))}
 					</div>
 					<Divider />
-					<div className={styles.paginationContainer}>
-						<Pagination total={data?.length} itemRender={itemRender} showQuickJumper={false} size="small" onChange={onChange} />
-					</div>
+					{data?.length > 30 && (
+						<div className={styles.paginationContainer}>
+							<Pagination total={data?.length} itemRender={itemRender} showQuickJumper={false} size="small" onChange={onChange} />
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
