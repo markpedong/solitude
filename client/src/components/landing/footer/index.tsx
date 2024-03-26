@@ -28,23 +28,24 @@ const Footer = () => {
 						value={email}
 						placeholder="Enter your email address"
 						variant="filled"
-						onChange={(e) => {
-							const trimmedValue = e?.target.value?.trim();
-							const validEmail = trimmedValue.replace(/[^\w.@+-]/g, ''); // Remove characters not allowed in an email address
-							
+						onChange={e => {
+							const trimmedValue = e?.target.value?.trim()
+							const validEmail = trimmedValue.replace(/[^\w.@+-]/g, '') // Remove characters not allowed in an email address
+
 							setEmail(validEmail)
 						}}
 					/>
 					<motion.div className={styles.button} whileTap={scaleSize} onClick={handleSubscription}>
 						subscribe to newsletter
 					</motion.div>
-				</div>	
+				</div>
 			</div>
 			<div className={styles.mainFooterContainer}>
 				<div className={styles.titleContainer}>
 					<span className={styles.title}>SOLITUDE</span>
 					<span className={styles.extraText}>
-						We have clothes that suits your style and which you’re proud to wear. From women to men.
+						We offer products that complement your style and that you're proud to own. From a variety of
+						categories to suit every preference.
 					</span>
 					<div className={styles.iconContainer}>
 						<TwitterOutlined />
