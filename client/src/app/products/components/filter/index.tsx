@@ -2,15 +2,46 @@
 
 import { CheckOutlined } from '@ant-design/icons'
 import { Collapse, Divider, Slider } from 'antd'
-import { FC } from 'react'
+import { FC, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import styles from './styles.module.scss'
 import { scaleSize } from '@/constants'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-const Filter: FC = () => {
+type Props = {
+	max: number
+	min: number
+}
+
+const Filter: FC<Props> = ({ max, min }) => {
+	const router = useRouter()
+	const pathname = usePathname()
+	const searchParams = useSearchParams()
+	const [priceArr, setPriceArr] = useState<number[]>([])
+
+	console.log(max, min)
+
+	const handleSubmitFilter = () => {
+		const current = new URLSearchParams(Array.from(searchParams.entries())) // -> has to use this form
+
+		if (!!!priceArr?.length) {
+			current.delete('min')
+			current.delete('max')
+		} else {
+			current.set('min', priceArr[0].toString())
+			current.set('max', priceArr[1].toString())
+		}
+
+		const search = current.toString()
+		const query = search ? `?${search}` : ''
+		router.push(`${pathname}${query}`)
+	}
+
+	const memoizedFilter = useMemo(() =>  <Slider range min={min} max={max} onChange={e => setPriceArr(e)} />, [])
+
 	return (
 		<div className={styles.filterWrapper}>
-			<Divider />
+			{/* <Divider />
 			<Collapse
 				expandIconPosition={'end'}
 				items={[
@@ -36,18 +67,18 @@ const Filter: FC = () => {
 					}
 				]}
 			/>
-			<Divider />
+			<Divider /> */}
 			<Collapse
 				expandIconPosition={'end'}
 				items={[
 					{
 						key: '1',
 						label: <div className={styles.header}>Price</div>,
-						children: <Slider range defaultValue={[0, 999]} />
+						children: memoizedFilter
 					}
 				]}
 			/>
-			<Divider />
+			{/* <Divider />
 			<Collapse
 				expandIconPosition={'end'}
 				items={[
@@ -138,9 +169,14 @@ const Filter: FC = () => {
 						)
 					}
 				]}
-			/>
-
-			<motion.div whileTap={scaleSize} className={styles.applyButton}>
+			/> */}
+			<motion.div whileTap={scaleSize} className={styles.resetBtn} onClick={() => {
+				router.push('/products')
+				router.refresh()
+			}}>
+				Reset Filters
+			</motion.div>
+			<motion.div whileTap={scaleSize} className={styles.applyButton} onClick={handleSubmitFilter}>
 				Apply Filters
 			</motion.div>
 		</div>

@@ -101,32 +101,35 @@ func EditProducts(ctx *gin.Context) {
 
 func GetAllProducts(ctx *gin.Context) {
 	var body struct {
-		Material     string `json:"material"`
-		Price        int    `json:"price"`
-		Gender       string `json:"gender"`
 		SearchParams string `json:"search"`
+		Max          string `json:"max"`
+		Min          string `json:"min"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
 
 	var query = database.DB.Order("created_at DESC")
-	if body.Material != "" {
-		query = query.Where("material = ?", body.Material)
-	}
-	if body.Price > 0 {
-		query = query.Where("price <= ?", body.Price)
-	}
-	if body.Gender != "" {
-		validGenders := map[string]bool{"male": true, "female": true, "others": true}
+	// if body.Material != "" {
+	// 	query = query.Where("material = ?", body.Material)
+	// }
+	// if body.Price > 0 {
+	// 	query = query.Where("price <= ?", body.Price)
+	// }
+	// if body.Gender != "" {
+	// 	validGenders := map[string]bool{"male": true, "female": true, "others": true}
 
-		if _, found := validGenders[body.Gender]; found {
-			query = query.Where("gender = ?", body.Gender)
-		} else {
-			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid Gender! Please check")
-			return
-		}
+	// 	if _, found := validGenders[body.Gender]; found {
+	// 		query = query.Where("gender = ?", body.Gender)
+	// 	} else {
+	// 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Invalid Gender! Please check")
+	// 		return
+	// 	}
+	// }
+	if body.Max != "" {
+		query = query.Where("price BETWEEN ? AND ?", body.Min, body.Max)
 	}
+
 	if body.SearchParams != "" {
 		// ARRAY[?]::text[] converts the single value "pants" into an array of strings, so that it can be compared to
 		// the categories array.

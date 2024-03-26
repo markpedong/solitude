@@ -15,6 +15,8 @@ import { TProduct } from '@/api'
 const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 	const [sort, setSort] = useState(1)
 	const [current, setCurrent] = useState(1)
+	const min = Math.min(...data.map(item => item.price))
+	const max = Math.max(...data.map(item => item.price));
 
 	const handleClickSort = e => setSort(e.key)
 
@@ -36,25 +38,25 @@ const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 		}
 	]
 
-	const renderFilter = () => {
-		return (
-			<ModalForm
-				title={
-					<div className={styles.header}>
-						<span>Filters</span>
-					</div>
-				}
-				submitter={false}
-				trigger={
-					<div className={styles.mobileFilter}>
-						<FilterOutlined />
-					</div>
-				}
-			>
-				<Filter />
-			</ModalForm>
-		)
-	}
+	// const renderFilter = () => {
+	// 	return (
+	// 		<ModalForm
+	// 			title={
+	// 				<div className={styles.header}>
+	// 					<span>Filters</span>
+	// 				</div>
+	// 			}
+	// 			submitter={false}
+	// 			trigger={
+	// 				<div className={styles.mobileFilter}>
+	// 					<FilterOutlined />
+	// 				</div>
+	// 			}
+	// 		>
+	// 			<Filter />
+	// 		</ModalForm>
+	// 	)
+	// }
 
 	const onChange: PaginationProps['onChange'] = page => {
 		setCurrent(page)
@@ -95,7 +97,7 @@ const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 						<span>Filters</span>
 						<FilterOutlined />
 					</div>
-					<Filter />
+					<Filter max={max} min={min} />
 				</div>
 				<div>
 					<div className={styles.productHeader}>

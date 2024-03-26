@@ -124,11 +124,18 @@
     }
 }
 
-.applyButton {
-    @apply flex items-center justify-center w-full mt-10 py-3 rounded-full cursor-pointer touch-none;
-    background-color: var(--color-primary);
+.applyButton, .resetBtn {
+    @apply flex items-center justify-center w-full my-3 py-3 rounded-full cursor-pointer touch-none;
     color: var(--white-color);
     font-size: toRem(14)
+}
+
+.applyButton{
+    background-color: var(--color-primary);
+}
+
+.resetBtn{
+    background-color: var(--color-secondary)
 }
 
 .mobileFilter {

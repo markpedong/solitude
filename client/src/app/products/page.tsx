@@ -2,7 +2,8 @@ import { getProducts } from '@/api'
 import ProductList from './components/productsList'
 
 const Products = async (params: any) => {
-	const products = await getProducts({ search: params.searchParams.search ?? '' })
+	const { search = '', min = '', max = '' } = params.searchParams
+	const products = await getProducts({ search, min, max })
 
 	return (
 		<div>
