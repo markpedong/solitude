@@ -56,7 +56,7 @@ const Page = async () => {
 			<LandingContent title="new arrival" products={products?.data} />
 			<LandingContent title="top selling" products={products?.data} />
 			<div className={styles.categoryWrapper}>
-				<PageHeader title="browse by dress style" />
+				<PageHeader title="browse by items" />
 				<CategoryEl />
 			</div>
 			<div className={styles.reviewWrapper}>
