@@ -1,0 +1,5 @@
+@import "@/styles/_helpers.scss";
+
+.reviewListWrapper {
+    @apply grid gap-5 p-5 grid-cols-3;
+}

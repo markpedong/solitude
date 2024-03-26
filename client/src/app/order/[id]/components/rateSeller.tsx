@@ -69,13 +69,15 @@ const RateSeller: FC<Props> = ({ data, s }) => {
 						<div className={styles.sellerData}>
 							<FaStore />
 							<span>{w?.seller_name}</span>
-							<span onClick={() => router.push(`/brand/${w?.seller_id}`)}>View Shop</span>
+							<span onClick={() => router.push(`/brands/${w?.seller_id}`)}>View Shop</span>
 						</div>
 						<div className={styles.sellerRate} onClick={() => openContainer(i)}>
 							<span className={styles.sellerH}>Seller Performance:</span>
 							<Rate allowClear={false} allowHalf defaultValue={0} onChange={value => handleRateChange(i, value)} />
 						</div>
-						{openContainers.includes(i) && <Input.TextArea rows={3} placeholder="Give Description........" onChange={e => handleInputChange(i, e)} />}
+						{openContainers.includes(i) && (
+							<Input.TextArea rows={3} placeholder="Give Description........" onChange={e => handleInputChange(i, e)} />
+						)}
 					</div>
 				))}
 			</div>

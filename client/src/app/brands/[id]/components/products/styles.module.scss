@@ -1,6 +1,6 @@
 @import "@/styles/_helpers.scss";
 
-.productListWrapper{
-    @apply grid p-5;
-    grid-template-columns: repeat(auto-fill, minmax(toRem(250), 1fr));
+.productListWrapper {
+    @apply grid gap-5 p-5;
+    grid-template-columns: repeat(auto-fill, minmax(toRem(120), 1fr));
 }

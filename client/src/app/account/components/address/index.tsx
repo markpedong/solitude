@@ -5,7 +5,7 @@ import { ADDRESS_TYPE, MODAL_FORM_PROPS, scaleSize, scaleSizeSm } from '@/consta
 import { Popconfirm } from 'antd'
 import { motion } from 'framer-motion'
 import { useAppSelector } from '@/redux/store'
-import { REQUIRED, afterModalformFinish } from '@/constants/helper'
+import { INPUT_LETTERS, INPUT_NUMBER, INPUT_TRIM, REQUIRED, afterModalformFinish } from '@/constants/helper'
 import { InfoItem, addDeliveryInfo, deleteDeliveryInfo, editDeliveryInfo, getDeliveryInfo, setDefault } from '@/api'
 import { messageHelper } from '@/constants/antd'
 import DeliveryInfo from '@/components/reusable/deliveryInfo'
@@ -67,7 +67,13 @@ const Address: FC = () => {
 		const isEdit = type === 'EDIT'
 		return (
 			<ModalForm
-				title={isEdit ? <span className={styles.addModalTitle}>Edit Address</span> : <span className={styles.addModalTitle}>add address</span>}
+				title={
+					isEdit ? (
+						<span className={styles.addModalTitle}>Edit Address</span>
+					) : (
+						<span className={styles.addModalTitle}>add address</span>
+					)
+				}
 				trigger={
 					isEdit ? (
 						<span className={styles.addressTrigger}>Edit</span>
@@ -111,13 +117,69 @@ const Address: FC = () => {
 					return afterModalformFinish(actionRef, res?.message, res?.success, formRef)
 				}}
 			>
-				<ProFormText colProps={{ span: 12 }} label="First Name" name="first_name" rules={[...REQUIRED]} placeholder="eg: John" />
-				<ProFormText colProps={{ span: 12 }} label="Last Name" name="last_name" rules={[...REQUIRED]} placeholder="eg: Smith" />
-				<ProFormText colProps={{ span: 12 }} label="Phone Number" name="phone" rules={[...REQUIRED]} placeholder="eg: +639798161248" />
-				<ProFormText colProps={{ span: 12 }} label="House" name="house" rules={[...REQUIRED]} placeholder="eg: Blk 65 Lot 20" />
-				<ProFormText colProps={{ span: 12 }} label="Street" name="street" rules={[...REQUIRED]} placeholder="eg: Harbor Drive" />
-				<ProFormText colProps={{ span: 12 }} label="City" name="city" rules={[...REQUIRED]} placeholder="eg: Manila" />
-				<ProFormText colProps={{ span: 12 }} label="Pin Code" name="pin_code" rules={[...REQUIRED]} placeholder="eg: 4684" />
+				<ProFormText
+					colProps={{ span: 12 }}
+					label="First Name"
+					name="first_name"
+					rules={[...REQUIRED]}
+					placeholder="eg: John"
+					fieldProps={{ maxLength: 30 }}
+					{...INPUT_LETTERS}
+				/>
+				<ProFormText
+					colProps={{ span: 12 }}
+					label="Last Name"
+					name="last_name"
+					rules={[...REQUIRED]}
+					placeholder="eg: Smith"
+					fieldProps={{ maxLength: 30 }}
+					{...INPUT_LETTERS}
+				/>
+				<ProFormText
+					colProps={{ span: 12 }}
+					label="Phone Number"
+					name="phone"
+					rules={[...REQUIRED]}
+					placeholder="eg: +639798161248"
+					fieldProps={{ maxLength: 30 }}
+					{...INPUT_NUMBER}
+				/>
+				<ProFormText
+					colProps={{ span: 12 }}
+					label="House"
+					name="house"
+					rules={[...REQUIRED]}
+					placeholder="eg: Blk 65 Lot 20"
+					fieldProps={{ maxLength: 30 }}
+					{...INPUT_LETTERS}
+				/>
+				<ProFormText
+					colProps={{ span: 12 }}
+					label="Street"
+					name="street"
+					rules={[...REQUIRED]}
+					placeholder="eg: Harbor Drive"
+					fieldProps={{ maxLength: 30 }}
+					{...INPUT_LETTERS}
+				/>
+				<ProFormText
+					colProps={{ span: 12 }}
+					label="City"
+					name="city"
+					rules={[...REQUIRED]}
+					placeholder="eg: Manila"
+					fieldProps={{ maxLength: 30 }}
+					{...INPUT_LETTERS}
+				/>
+				<ProFormText
+					colProps={{ span: 12 }}
+					label="Pin Code"
+					name="pin_code"
+					rules={[...REQUIRED]}
+					placeholder="eg: 4684"
+					fieldProps={{ maxLength: 30 }}
+					{...INPUT_NUMBER}
+				/>
 				<ProFormSelect
 					colProps={{ span: 12 }}
 					label="Address Type"

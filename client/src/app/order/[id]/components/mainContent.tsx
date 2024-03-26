@@ -22,7 +22,7 @@ const MainContent: FC<Props> = ({ data: orderedData, s }) => {
 					<div className={styles.sellerData}>
 						<FaStore />
 						<span>{q?.seller_name}</span>
-						<span onClick={() => router.push(`/brand/${q?.seller_id}`)}>View Shop</span>
+						<span onClick={() => router.push(`/brands/${q?.seller_id}`)}>View Shop</span>
 					</div>
 					{q?.products.map((w, i) => (
 						<div className={styles.orderContainer} key={i}>

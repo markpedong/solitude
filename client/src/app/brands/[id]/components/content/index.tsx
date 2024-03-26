@@ -9,6 +9,7 @@ import dayjs from 'dayjs'
 import Image from 'next/image'
 import { Tabs, TabsProps } from 'antd'
 import Products from '../products'
+import Ratings from '../ratings'
 
 type Props = { data: SellerData; products: TProduct[]; reviews: RatingItem[] }
 const Content: FC<Props> = ({ data, products, reviews }) => {
@@ -18,13 +19,13 @@ const Content: FC<Props> = ({ data, products, reviews }) => {
 		{
 			key: '1',
 			label: 'All Products',
-			children: <Products products={products}/>  
+			children: <Products products={products} />
 		},
 		{
 			key: '2',
-			label: 'Tab 2',
-			children: 'Content of Tab Pane 2'
-		},
+			label: 'Ratings',
+			children: <Ratings reviews={reviews} />
+		}
 		// {
 		// 	key: '3',
 		// 	label: 'Tab 3',
