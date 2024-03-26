@@ -8,9 +8,11 @@ type Props = {
 }
 
 const Page = async (props: Props) => {
-	const products = await getSellerProducts({ selle_id: props.params.id })
+	const products = await getSellerProducts({ seller_id: props.params.id })
 	const sellerData = await getSellerData({ seller_id: props.params.id })
 	const reviews = await getReviews({ seller_id: props.params.id })
+
+	console.log(products?.data)
 
 	return (
 		<div className="max-w-6xl mx-auto">

@@ -66,44 +66,6 @@
         div:nth-child(4) {
             grid-area: 3 / 1 / 4 / 2;
         }
-
-
-        // @media screen and (max-width:992px) {
-        //     @apply justify-items-center;
-
-        //     >div {
-        //         @apply px-5 py-10;
-
-        //         &:not(:first-child) {
-        //             width: auto;
-        //             height: auto;
-        //         }
-        //     }
-
-
-        //     .div1 {
-        //         @apply max-w-2xl p-20;
-        //         grid-area: 1 / 1 / 4 / 4;
-
-
-        //         img {
-        //             width: 100%;
-        //             height: auto;
-        //         }
-        //     }
-
-        //     .div2 {
-        //         grid-area: 4 / 1 / 5 / 2;
-        //     }
-
-        //     .div3 {
-        //         grid-area: 4 / 2 / 5 / 3;
-        //     }
-
-        //     .div4 {
-        //         grid-area: 4 / 3 / 5 / 4;
-        //     }
-        // }
     }
 
     .descriptionContainer {
@@ -171,7 +133,6 @@
 
         .variationContainer {
             @apply w-full flex justify-start items-center gap-3 py-2 overflow-scroll;
-            // border-top: toRem(1) solid var(--color-secondary);
 
             .label {
                 font-family: 'Satoshi';
@@ -192,29 +153,6 @@
             }
 
         }
-
-        // .variationContainer {
-        //     @apply w-full flex flex-col justify-center gap-2 py-2;
-        //     border-top: toRem(1) solid var(--color-secondary);
-
-        //     .label {
-        //         font-family: 'Satoshi';
-        //         font-size: toRem(12);
-        //         color: var(--color-primary)
-        //     }
-
-        //     div {
-        //         @apply flex gap-4 overflow-scroll;
-
-        //         span {
-        //             @apply px-3 rounded-full flex items-center capitalize whitespace-nowrap;
-        //             font-size: toRem(12);
-        //             color: var(--color-secondary);
-        //             height: toRem(25);
-        //             background-color: var(--bg-secondary);
-        //         }
-        //     }
-        // }
 
         .addToCartContainer {
             @apply flex flex-col gap-1 py-3;

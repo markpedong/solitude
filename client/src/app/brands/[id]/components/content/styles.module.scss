@@ -37,5 +37,32 @@
         font-family: "Satoshi";
         line-height: toRem(16);
         font-size: toRem(16);
+        font-weight: 700
+    }
+}
+
+.mainContainer{
+    @apply pt-10;
+    :global {
+        .ant-tabs-tab-btn {
+            color: var(--color-primary) !important;
+            font-family: 'Satoshi';
+            font-size: toRem(12) !important;
+            overflow: scroll;
+            width: 100%;
+            user-select: none
+        }
+
+        .ant-tabs-nav-list {
+            @apply px-5;
+            width: 100%;
+            justify-content: space-around;
+            overflow: scroll !important;
+        }
+
+        .ant-tabs-ink-bar {
+            width: 33.33% !important;
+            border-bottom: toRem(1) solid var(--color-primary);
+        }
     }
 }

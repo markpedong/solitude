@@ -8,6 +8,7 @@ import { RiUserFollowFill, RiUserUnfollowFill } from 'react-icons/ri'
 import dayjs from 'dayjs'
 import Image from 'next/image'
 import { Tabs, TabsProps } from 'antd'
+import Products from '../products'
 
 type Props = { data: SellerData; products: TProduct[]; reviews: RatingItem[] }
 const Content: FC<Props> = ({ data, products, reviews }) => {
@@ -16,19 +17,19 @@ const Content: FC<Props> = ({ data, products, reviews }) => {
 	const items: TabsProps['items'] = [
 		{
 			key: '1',
-			label: 'Tab 1',
-			children: 'Content of Tab Pane 1'
+			label: 'All Products',
+			children: <Products products={products}/>  
 		},
-		{
-			key: '2',
-			label: 'Tab 2',
-			children: 'Content of Tab Pane 2'
-		},
-		{
-			key: '3',
-			label: 'Tab 3',
-			children: 'Content of Tab Pane 3'
-		}
+		// {
+		// 	key: '2',
+		// 	label: 'Tab 2',
+		// 	children: 'Content of Tab Pane 2'
+		// },
+		// {
+		// 	key: '3',
+		// 	label: 'Tab 3',
+		// 	children: 'Content of Tab Pane 3'
+		// }
 	]
 
 	return (
@@ -38,6 +39,7 @@ const Content: FC<Props> = ({ data, products, reviews }) => {
 					<Image src={data?.avatar} alt="avatar" height={100} width={100} />
 					<div className={styles.name}>
 						<span>{data?.seller_name}</span>
+						<span></span>
 					</div>
 				</div>
 				<div className={styles.headerContainer}>
