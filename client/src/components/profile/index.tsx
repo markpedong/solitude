@@ -16,6 +16,7 @@ import { setSellerData, setUserData } from '@/redux/features/userSlice'
 import type { GetProp, UploadProps } from 'antd'
 import { LoadingOutlined, LockOutlined, PlusOutlined } from '@ant-design/icons'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
 
@@ -26,8 +27,9 @@ const Profile: FC = () => {
 	const [imageUrl, setImageUrl] = useState<string>()
 	const actionRef = useRef<ActionType>()
 	const formRef = useRef<ProFormInstance>()
+	const router = useRouter()
 	const dispatch = useDispatch()
-
+	
 	const handleFinish = async params => {
 		let res
 
@@ -48,7 +50,7 @@ const Profile: FC = () => {
 		}
 
 		setTimeout(() => {
-			window.location.reload()
+			router.refresh()
 		}, 1000)
 		return afterModalformFinish(actionRef, res.message, res.success, formRef)
 	}

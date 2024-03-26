@@ -22,7 +22,8 @@ const AddProduct: FC<Props> = ({ product }) => {
 	const [uploadedImages, setUploadedImages] = useState(product?.image.map(q => ({ url: q })))
 	const formRef = useRef<ProFormInstance>()
 	const actionRef = useRef<ActionType>()
-
+	const router = useRouter()
+	
 	return (
 		<div className={styles.addProductWrapper}>
 			<ProForm
@@ -68,7 +69,7 @@ const AddProduct: FC<Props> = ({ product }) => {
 						setUploadedImages([])
 					}
 
-					window.location.reload()
+					router.refresh()
 					return afterModalformFinish(actionRef, res?.message, res?.success, formRef)
 				}}
 			>
