@@ -6,6 +6,8 @@ import { Rate } from 'antd'
 import Image from 'next/image'
 import { TProduct } from '@/api'
 import { useRouter } from 'next/navigation'
+import { motion } from 'framer-motion'
+import { scaleSizeBig } from '@/constants'
 
 type Props = {
 	data: TProduct
@@ -15,7 +17,7 @@ const Product: FC<Props> = ({ data }) => {
 	const router = useRouter()
 
 	return (
-		<div className={styles.productContainer}>
+		<motion.div className={styles.productContainer} whileHover={scaleSizeBig}>
 			<div className={styles.imageContainer}>
 				<Image src={data?.image?.[0] ?? ''} alt="sample" width={300} height={300} priority />
 			</div>
@@ -33,7 +35,7 @@ const Product: FC<Props> = ({ data }) => {
 				{!!data?.discount_price && <span className={styles.price}>₱{data?.price}</span>}
 				{!!data?.discount && <span className={styles.price}>-{data?.discount}%</span>}
 			</div>
-		</div>
+		</motion.div>
 	)
 }
 

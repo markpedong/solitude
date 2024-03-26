@@ -59,9 +59,8 @@ export const ReviewComp: FC<ReviewProps> = ({ product, data, user }) => {
 		messageHelper(res)
 	}
 
-	console.log(data)
 	return (
-		<div className={styles.reviewContainer} style={product ? { maxWidth: '20rem', width: '100%' } : {}}>
+		<div className={styles.reviewContainer} key={data?.id} style={product ? { maxWidth: '20rem', width: '100%' } : {}}>
 			<div className="flex justify-between">
 				<Rate value={data?.rating} disabled />
 				{/* {user && (
@@ -76,7 +75,7 @@ export const ReviewComp: FC<ReviewProps> = ({ product, data, user }) => {
 			</div>
 			<div className="flex flex-col gap-3">
 				{!!data?.description && <span className={styles.comment}>{data?.description}</span>}
-				<div className="flex gap-3">{!!data?.images?.length && data?.images.map(q => <Image src={q} alt="review_image" width={50} height={50} />)}</div>
+				<div className="flex gap-3">{!!data?.images?.length && data?.images.map((q, i) => <Image key={`${q}-${i}`} src={q} alt="review_image" width={50} height={50} />)}</div>
 			</div>
 		</div>
 	)

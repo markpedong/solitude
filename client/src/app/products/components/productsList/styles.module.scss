@@ -86,7 +86,7 @@
 
 .productsWrapper {
     @apply grid py-5 gap-5 gap-y-10;
-    grid-template-columns: repeat(auto-fill, minmax(toRem(180), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(toRem(130), 1fr));
 
     @media screen and (max-width: 768px) {
         @apply grid-cols-2;

@@ -11,7 +11,7 @@ const Page = async () => {
 	const reviews = await getReviews({})
 
 	return (
-		<>
+		<div className='max-w-6xl mx-auto'>
 			<div className={styles.mainWrapper}>
 				<div className={styles.textContainer}>
 					<span className={styles.mainText}>FIND PRODUCTS THAT MATCHES YOUR NEEDS</span>
@@ -69,11 +69,11 @@ const Page = async () => {
 				</div>
 				<div className={styles.reviewsContainer}>
 					{reviews?.data?.map(q => (
-						<ReviewComp data={q} />
+						<ReviewComp data={q} key={q?.id}/>
 					))}
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }
 

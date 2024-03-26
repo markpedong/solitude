@@ -1,7 +1,7 @@
 @import '@/styles/_helpers.scss';
 
 .mainWrapper {
-    @apply max-w-6xl mx-auto gap-5 pt-10 grid pl-5 pr-5 items-center h-auto;
+    @apply gap-5 pt-10 grid pl-5 pr-5 items-center;
     grid-template-columns: minmax(toRem(300), 1fr) 1fr;
 
     @media screen and (max-width: 992px) {

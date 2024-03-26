@@ -36,7 +36,7 @@ const Rating: FC<RatingProps> = ({ products, curr, rating }) => {
 		() => (
 			<div className={styles.reviewWrapper}>
 				{rating?.map(q => (
-					<ReviewComp data={q} product={true} />
+					<ReviewComp data={q} product={true} key={q?.id} />
 				))}
 			</div>
 		),

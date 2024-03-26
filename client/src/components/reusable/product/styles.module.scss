@@ -2,13 +2,13 @@
 
 .productContainer {
     height: auto;
-    min-width: toRem(180);
+    min-width: toRem(100);
     font-family: 'Satoshi';
 
     .imageContainer {
         @apply rounded-xl flex items-center justify-center object-cover object-center mb-5 p-[0.5rem];
         background-color: #F0EEED;
-        height: toRem(180);
+        height: toRem(100);
 
         img {
             @apply w-auto h-full rounded-sm;
@@ -38,7 +38,7 @@
     .priceContainer {
         @apply flex items-center gap-2 pt-2;
 
-        font-size: toRem(16);
+        font-size: toRem(14);
         color: var(--color-primary);
 
         :nth-child(1) {
