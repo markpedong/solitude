@@ -3,35 +3,37 @@ import Image from 'next/image'
 import styles from './styles.module.scss'
 import Link from 'next/link'
 import CategoryEl from '@/components/landing/category'
-import { getProducts, getReviews } from '@/api'
+import { getBrands, getProducts, getReviews } from '@/api'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
 const Page = async () => {
-	const products = await getProducts({ search: '' })
+	const products = await getProducts({})
+	const brands = await getBrands()
 	const reviews = await getReviews({})
 
 	return (
-		<div className='max-w-6xl mx-auto'>
+		<div className="max-w-6xl mx-auto">
 			<div className={styles.mainWrapper}>
 				<div className={styles.textContainer}>
 					<span className={styles.mainText}>FIND PRODUCTS THAT MATCHES YOUR NEEDS</span>
 					<span className={styles.extraText}>
-						Browse through our diverse range of meticulously crafted garments, designed to bring out your individuality and cater to your sense of style.
+						Explore our exquisite collection of meticulously crafted pieces, each thoughtfully designed to accentuate your unique personality and elevate your personal
+						style.
 					</span>
 					<Link href={'/products'} className={styles.buttonContainer}>
 						Shop Now
 					</Link>
 					<div className={styles.footerTextContainer}>
 						<div>
-							<span>200+</span>
+							<span>{brands?.data.length > 9 ? `${brands?.data.length}+` : brands?.data.length}</span>
 							<span>International Brands</span>
 						</div>
 						<div>
-							<span>2000+</span>
+							<span>{products?.data.length > 9 ? `${products?.data.length}+` : products?.data.length}</span>
 							<span>High Quality Products</span>
 						</div>
 						<div>
-							<span>10000+</span>
+							<span>{reviews?.data.length > 9 ? `${reviews?.data.length}+` : reviews?.data.length}</span>
 							<span>Happy Customer</span>
 						</div>
 					</div>
@@ -69,7 +71,7 @@ const Page = async () => {
 				</div>
 				<div className={styles.reviewsContainer}>
 					{reviews?.data?.map(q => (
-						<ReviewComp data={q} key={q?.id}/>
+						<ReviewComp data={q} key={q?.id} />
 					))}
 				</div>
 			</div>
