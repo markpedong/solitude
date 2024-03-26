@@ -20,7 +20,7 @@ func GetSellerData(ctx *gin.Context) {
 
 	var foundSeller models.Seller
 	var productCount int64
-	var sellerReview int64
+	var sellerReview []models.SellerReviews
 	if err := database.DB.Where("seller_id = ?", body.SellerID).First(&foundSeller).Error; err != nil {
 		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "seller not found")
 		return
@@ -29,10 +29,11 @@ func GetSellerData(ctx *gin.Context) {
 		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
-	if err := database.DB.Model(&models.SellerReviews{}).Where("seller_id = ?", foundSeller.SellerID).Count(&sellerReview).Error; err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := database.DB.Find(&sellerReview, "seller_id = ?", foundSeller.SellerID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
+
 	response := models.JSONSeller{
 		SellerID:   foundSeller.SellerID,
 		CreatedAt:  foundSeller.CreatedAt,
@@ -40,7 +41,7 @@ func GetSellerData(ctx *gin.Context) {
 		SellerName: foundSeller.SellerName,
 		Phone:      foundSeller.Phone,
 		Location:   foundSeller.Location,
-		Rating:     int(sellerReview),
+		Rating:     len(sellerReview),
 		Avatar:     foundSeller.Avatar,
 		Email:      foundSeller.Email,
 		Products:   productCount,

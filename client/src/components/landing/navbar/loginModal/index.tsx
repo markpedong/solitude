@@ -12,7 +12,7 @@ import { LockOutlined, PhoneOutlined, RightOutlined, UserOutlined } from '@ant-d
 import { ProForm, ProFormInstance, ProFormSelect, ProFormText } from '@ant-design/pro-components'
 import { Flex } from 'antd'
 import Image from 'next/image'
-import { FC, MutableRefObject, useEffect } from 'react'
+import { FC, MutableRefObject } from 'react'
 import { useDispatch } from 'react-redux'
 import styles from '../styles.module.scss'
 
@@ -40,14 +40,13 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 		}
 	}
 
-	useEffect(() => {
-		console.log(type)
-	}, [type])
-
 	return (
 		<Flex className={styles.loginContainer} justify="space-between" gap={20}>
 			<div className={styles.loginImage}>
-				<Image alt="loginCover" src={create ? signUpModalCover : forgot ? forgotModalCover : seller ? sellerModalCover : loginModalCover} />
+				<Image
+					alt="loginCover"
+					src={create ? signUpModalCover : forgot ? forgotModalCover : seller ? sellerModalCover : loginModalCover}
+				/>
 			</div>
 			<Flex className={styles.loginForm} vertical>
 				<Flex className={styles.loginHeader} justify="center" align="center" gap={10}>
@@ -55,7 +54,15 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 					<span>SOLITUDE</span>
 				</Flex>
 				<Flex className={styles.loginHeaderText} justify="center" vertical>
-					<h1>{create ? 'Create an Account' : forgot ? 'Forgotten your Password?' : seller ? 'Got any products? Post it Here!' : `Hello, Let's Sign In`}</h1>
+					<h1>
+						{create
+							? 'Create an Account'
+							: forgot
+							? 'Forgotten your Password?'
+							: seller
+							? 'Got any products? Post it Here!'
+							: `Hello, Let's Sign In`}
+					</h1>
 					<span>
 						{create
 							? 'Register New Solitude Account'
@@ -84,7 +91,15 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 							placeholder=""
 							onChange={e => {
 								dispatch(setType(e))
-								formRef?.current?.resetFields(['email', 'username', 'first_name', 'last_name', 'password', 'phone', 'confirm_password'])
+								formRef?.current?.resetFields([
+									'email',
+									'username',
+									'first_name',
+									'last_name',
+									'password',
+									'phone',
+									'confirm_password'
+								])
 							}}
 						/>
 					)}
@@ -103,7 +118,15 @@ const ModalProfile: FC<Props> = ({ formRef }) => {
 								}
 							]}
 						/>
-						{create && <ProFormText name="username" placeholder="eg: johnsmith" label="Username" colProps={{ span: 12 }} rules={[...REQUIRED]} />}
+						{create && (
+							<ProFormText
+								name="username"
+								placeholder="eg: johnsmith"
+								label="Username"
+								colProps={{ span: 12 }}
+								rules={[...REQUIRED]}
+							/>
+						)}
 					</ProForm.Group>
 					{create && (
 						<ProForm.Group>

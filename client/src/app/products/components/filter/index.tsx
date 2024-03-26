@@ -19,8 +19,6 @@ const Filter: FC<Props> = ({ max, min }) => {
 	const searchParams = useSearchParams()
 	const [priceArr, setPriceArr] = useState<number[]>([])
 
-	console.log(max, min)
-
 	const handleSubmitFilter = () => {
 		const current = new URLSearchParams(Array.from(searchParams.entries())) // -> has to use this form
 

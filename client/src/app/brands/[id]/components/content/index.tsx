@@ -13,8 +13,6 @@ import Ratings from '../ratings'
 
 type Props = { data: SellerData; products: TProduct[]; reviews: RatingItem[] }
 const Content: FC<Props> = ({ data, products, reviews }) => {
-	console.log(data, products, reviews)
-
 	const items: TabsProps['items'] = [
 		{
 			key: '1',

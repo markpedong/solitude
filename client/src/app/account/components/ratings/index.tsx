@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import styles from './styles.module.scss'
-import { RatingItem, getReviews } from '@/api'
+import { RatingItem, getReviews, getSellerRatings } from '@/api'
 import { useAppSelector } from '@/redux/store'
 import { ReviewComp } from '@/components/reusable'
 import { messageHelper } from '@/constants/antd'
@@ -11,15 +11,19 @@ const Ratings = () => {
 	const [reviewItems, setReviewItems] = useState<RatingItem[]>([])
 
 	const fetchReviews = async () => {
-		const res = await getReviews(
-			omitBy(
-				{
-					user_id: userData?.id,
-					seller_id: sellerData?.seller_id
-				},
-				isEmpty
-			)
-		)
+		let res
+
+		if (!!userData?.id) {
+			res = await getReviews({
+				user_id: userData?.id
+			})
+		}
+
+		if (!!sellerData?.seller_id) {
+			res = await getSellerRatings({
+				seller_id: sellerData?.seller_id
+			})
+		}
 
 		if (res?.success) {
 			setReviewItems(res?.data ?? [])
@@ -27,7 +31,11 @@ const Ratings = () => {
 	}
 
 	const memoizedReviews = useMemo(() => {
-		return <div className="grid grid-cols-3 gap-5">{reviewItems ? reviewItems.map(q => <ReviewComp data={q} key={q?.id} />) : null}</div>
+		return (
+			<div className="grid grid-cols-3 gap-5">
+				{reviewItems ? reviewItems.map(q => <ReviewComp data={q} key={q?.id} />) : null}
+			</div>
+		)
 	}, [reviewItems])
 
 	useEffect(() => {

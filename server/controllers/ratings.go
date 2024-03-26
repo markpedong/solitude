@@ -10,6 +10,23 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func GetSellerReviews(ctx *gin.Context) {
+	var body struct {
+		SellerID string `json:"seller_id"`
+	}
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
+		return
+	}
+
+	var sellerReviews []models.SellerReviews
+	if err := database.DB.Find(&sellerReviews, "seller_id = ?", body.SellerID).Error; err != nil {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(sellerReviews))
+}
+
 func GetRatings(ctx *gin.Context) {
 	var body struct {
 		ProductID string `json:"product_id"`
