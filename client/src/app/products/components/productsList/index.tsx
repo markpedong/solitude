@@ -11,6 +11,7 @@ import { FC, useState } from 'react'
 import { ModalForm } from '@ant-design/pro-components'
 import { motion } from 'framer-motion'
 import { TProduct } from '@/api'
+import classNames from 'classnames'
 
 const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 	const [sort, setSort] = useState(1)
@@ -93,7 +94,7 @@ const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 			</div>
 			<div className={styles.mainContainer}>
 				<div className={styles.filterContainer}>
-					<div className={styles.header}>
+					<div className={classNames(styles.header, "flex justify-between")}>
 						<span>Filters</span>
 						<FilterOutlined />
 					</div>
