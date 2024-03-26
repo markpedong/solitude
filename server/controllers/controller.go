@@ -59,9 +59,13 @@ func CheckToken(ctx *gin.Context) {
 
 func AddNewsLetter(ctx *gin.Context) {
 	var body struct {
-		Email string `json:"email"`
+		Email string `json:"email" validate:"required,email"`
 	}
 	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
+		return
+	}
+	if body.Email == "" {
+		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, "email is required")
 		return
 	}
 
