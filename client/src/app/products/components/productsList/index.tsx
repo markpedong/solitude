@@ -99,7 +99,7 @@ const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 				</div>
 				<div>
 					<div className={styles.productHeader}>
-						<span className={styles.header}>Casual</span>
+						<span className={styles.header}>Products</span>
 						<div className={styles.showingContainer}>
 							<span className={styles.showing}>Showing {data?.length} Products</span>
 							<div className={styles.sortContainer}>
@@ -112,7 +112,7 @@ const ProductList: FC<{ data: TProduct[] }> = ({ data }) => {
 									</Flex>
 								</Dropdown>
 							</div>
-							{renderFilter()}
+							{/* {renderFilter()} */}
 						</div>
 					</div>
 					<div className={styles.productsWrapper}>
