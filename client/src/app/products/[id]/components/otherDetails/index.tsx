@@ -10,6 +10,8 @@ import { motion } from 'framer-motion'
 import { scaleSize } from '@/constants'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/navigation'
+import relativeTime from 'dayjs/plugin/relativeTime'
+dayjs.extend(relativeTime)
 
 type Props = {
 	data: TProduct
@@ -84,11 +86,7 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 						</div>
 						<div>
 							<span>Joined: </span>
-							<span>
-								{dayjs(+seller?.created_at).get('month') === 0
-									? `${dayjs(+seller?.created_at).get('days')} days ago`
-									: `${dayjs(+seller?.created_at).get('month')} months ago`}{' '}
-							</span>
+							<span>{dayjs.unix(+seller?.created_at).fromNow()}</span>
 						</div>
 					</div>
 				</div>

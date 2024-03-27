@@ -117,14 +117,14 @@ const ProductDetails: FC<Props> = ({ data, products, seller, reviews }) => {
 				<div className={styles.descriptionContainer}>
 					<span className={styles.productTitle}>{data?.product_name}</span>
 					{memoizedRateContainer}
-					<div className="grid grid-cols-5 mt-2 text-[0.9rem] leading-3 font-satoshi">
+					{/* <div className="grid grid-cols-5 mt-2 text-[0.9rem] leading-3 font-satoshi">
 						<span >Sold: </span>
 						<span className='font-semibold'>{data?.sold ?? "0"}</span>
 					</div>
 					<div className="grid grid-cols-5  text-[0.9rem] leading-3 font-satoshi">
 						<span >Stock: </span>
 						<span className='font-semibold'>{data?.stock ?? "0"}</span>
-					</div>
+					</div> */}
 					<div className={styles.priceContainer}>
 						{!!!data?.discount_price ? <span>₱{data?.price}</span> : <span>₱{data?.discount_price}</span>}
 						{!!data?.discount_price && <span>₱{data?.price}</span>}
