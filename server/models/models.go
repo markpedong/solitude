@@ -44,6 +44,7 @@ type Product struct {
 	Discount      int                   `json:"discount"`
 	DiscountPrice int                   `json:"discount_price"`
 	DeletedAt     soft_delete.DeletedAt `json:"-"  gorm:"softDelete:milli"`
+	Sold          int                   `json:"sold"`
 }
 type DeliveryInformation struct {
 	ID          string                `json:"id" validate:"required"  gorm:"primaryKey"`

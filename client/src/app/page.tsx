@@ -17,8 +17,8 @@ const Page = async () => {
 				<div className={styles.textContainer}>
 					<span className={styles.mainText}>FIND PRODUCTS THAT MATCHES YOUR NEEDS</span>
 					<span className={styles.extraText}>
-						Explore our exquisite collection of meticulously crafted pieces, each thoughtfully designed to accentuate your unique personality and elevate your personal
-						style.
+						Explore our exquisite collection of meticulously crafted pieces, each thoughtfully designed to
+						accentuate your unique personality and elevate your personal style.
 					</span>
 					<Link href={'/products'} className={styles.buttonContainer}>
 						Shop Now
@@ -29,17 +29,27 @@ const Page = async () => {
 							<span>International Brands</span>
 						</div>
 						<div>
-							<span>{products?.data?.length > 9 ? `${products?.data?.length}+` : products?.data?.length}</span>
+							<span>
+								{products?.data?.length > 9 ? `${products?.data?.length}+` : products?.data?.length}
+							</span>
 							<span>High Quality Products</span>
 						</div>
 						<div>
-							<span>{reviews?.data?.length > 9 ? `${reviews?.data?.length}+` : reviews?.data?.length}</span>
+							<span>
+								{reviews?.data?.length > 9 ? `${reviews?.data?.length}+` : reviews?.data?.length}
+							</span>
 							<span>Happy Customer</span>
 						</div>
 					</div>
 				</div>
 				<div className={styles.imageContainer}>
-					<Image src="/assets/landing/landingCover.png" alt="landing_cover" width={300} height={500} priority />
+					<Image
+						src="/assets/landing/landingCover.png"
+						alt="landing_cover"
+						width={300}
+						height={500}
+						priority
+					/>
 					<Image src="/assets/landing/star1.png" alt="landing_cover" width={100} height={100} />
 					<Image src="/assets/landing/star2.png" alt="landing_cover" width={100} height={100} />
 				</div>
@@ -53,7 +63,10 @@ const Page = async () => {
 					<Image src="/assets/footer/ck.png" alt="ck" width={100} height={100} />
 				</div>
 			</div>
-			<LandingContent title="new arrival" products={products?.data} />
+			<LandingContent
+				title="new arrival"
+				products={products?.data?.sort((a, b) => b.created_at - a.created_at)}
+			/>
 			<LandingContent title="top selling" products={products?.data} />
 			<div className={styles.categoryWrapper}>
 				<PageHeader title="browse by items" />
