@@ -38,6 +38,7 @@ export type TProduct = {
 	rating: number
 	discount: number
 	discount_price: number
+	sold: number
 }
 
 export const getProducts = params => post<TProduct[]>('/public/products', params)

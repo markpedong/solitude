@@ -3,8 +3,9 @@ import styles from './styles.module.scss'
 import { OrderItem } from '@/api'
 import Image from 'next/image'
 import { FaStore } from 'react-icons/fa6'
-import { COLOR_STATUS, ORDER_STATUS } from '@/constants'
+import { COLOR_STATUS, ORDER_STATUS, scaleSize } from '@/constants'
 import { useRouter } from 'next/navigation'
+import { motion } from 'framer-motion'
 
 type Props = {
 	data: OrderItem
@@ -36,9 +37,9 @@ const Order: FC<Props> = ({ data }) => {
 					<span>Order Total:</span>
 					{!!!data?.discount_price ? <span className={styles.price}>₱{data?.price}</span> : <span className={styles.price}>₱{data?.discount_price}</span>}
 				</div>
-				<span className={styles.rateBtn} onClick={() => router.push(`/order/${data?.group_id}`)}>
+				<motion.span whileTap={scaleSize} className={styles.rateBtn} onClick={() => router.push(`/order/${data?.group_id}`)}>
 					Show Details
-				</span>
+				</motion.span>
 			</div>
 		</div>
 	)
