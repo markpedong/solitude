@@ -69,8 +69,8 @@
 
         .title {
             font-family: 'Integral';
-            font-size: toRem(24);
-            line-height: toRem(24);
+            font-size: toRem(20);
+            line-height: toRem(20);
             font-weight: 600;
         }
 
@@ -85,8 +85,8 @@
             @apply flex gap-5 justify-start;
 
             svg {
-                width: toRem(20);
-                height: toRem(20);
+                width: toRem(17);
+                height: toRem(17);
             }
         }
     }
