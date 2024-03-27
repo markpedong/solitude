@@ -5,6 +5,8 @@ import React, { FC, SetStateAction } from 'react'
 import { FaStore } from 'react-icons/fa'
 import styles from '../styles.module.scss'
 import { useRouter } from 'next/navigation'
+import { motion } from 'framer-motion'
+import { scaleSize } from '@/constants'
 
 type Props = {
 	data: OrderResponse
@@ -22,7 +24,7 @@ const MainContent: FC<Props> = ({ data: orderedData, s }) => {
 					<div className={styles.sellerData}>
 						<FaStore />
 						<span>{q?.seller_name}</span>
-						<span onClick={() => router.push(`/brands/${q?.seller_id}`)}>View Shop</span>
+						<motion.span whileTap={scaleSize} onClick={() => router.push(`/brands/${q?.seller_id}`)}>View Shop</motion.span>
 					</div>
 					{q?.products.map((w, i) => (
 						<div className={styles.orderContainer} key={i}>

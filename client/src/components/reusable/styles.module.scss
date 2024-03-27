@@ -32,8 +32,8 @@
 }
 
 .productContainer {
-    @apply p-5 gap-5 overflow-scroll grid grid-flow-col mx-20;
-    grid-template-columns: repeat(auto-fill, minmax(toRem(150),1fr));
+    @apply py-5 gap-5 overflow-x-scroll grid grid-flow-col mx-20;
+    grid-template-columns:  repeat(auto-fill, minmax(toRem(180), 1fr));
 }
 
 .reviewContainer {

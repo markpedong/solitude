@@ -1,13 +1,13 @@
 @import '@/styles/_helpers.scss';
 
 .categoryContainer {
-    @apply grid pt-5 gap-5;
+    @apply grid pt-5 gap-y-3 gap-x-10;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
 
     >div {
         @apply relative rounded-3xl flex justify-between overflow-hidden;
-        height: toRem(140);
+        height: toRem(120);
         font-family: 'Satoshi';
         font-weight: 700;
         text-transform: capitalize;

@@ -1,9 +1,8 @@
 @import '@/styles/_helpers.scss';
 
 .productContainer {
-    height: auto;
-    min-width: toRem(100);
-    font-family: 'Satoshi';
+    @apply size-full font-satoshi;
+    min-width: toRem(170);
 
     .imageContainer {
         @apply rounded-xl flex items-center justify-center object-cover object-center mb-5 p-[0.5rem];
