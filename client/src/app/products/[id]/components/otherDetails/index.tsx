@@ -26,6 +26,7 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 				<div className={styles.labelContainer}>
 					{!!data?.categories?.length && <span>Category:</span>}
 					<span>Stock:</span>
+					<span>Sold:</span>
 					<span>Product Added:</span>
 				</div>
 				<div className={styles.detailsContainer}>
@@ -40,6 +41,7 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 						)}
 					</span>
 					<span>{data?.stock ?? '0'}</span>
+					<span>{data?.sold ?? '0'}</span>
 					<span>{dateParser(data?.created_at)}</span>
 				</div>
 			</div>
