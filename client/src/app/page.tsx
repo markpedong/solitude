@@ -25,18 +25,18 @@ const Page = async () => {
 					</Link>
 					<div className={styles.footerTextContainer}>
 						<div>
-							<span>{brands?.data?.length > 9 ? `${brands?.data?.length}+` : brands?.data?.length}</span>
+							<span>{brands?.data?.length > 9 ? `${Math.ceil(brands?.data?.length / 10) * 10}+` : brands?.data?.length ?? "0"}</span>
 							<span>International Brands</span>
 						</div>
 						<div>
 							<span>
-								{products?.data?.length > 9 ? `${products?.data?.length}+` : products?.data?.length}
+								{products?.data?.length > 9 ? `${Math.ceil(products?.data?.length / 10) * 10}+` : products?.data?.length ?? "0"}
 							</span>
 							<span>High Quality Products</span>
 						</div>
 						<div>
 							<span>
-								{reviews?.data?.length > 9 ? `${reviews?.data?.length}+` : reviews?.data?.length}
+								{reviews?.data?.length > 9 ? `${Math.ceil(reviews?.data?.length / 10) * 10}+` : reviews?.data?.length ?? "0"}
 							</span>
 							<span>Happy Customer</span>
 						</div>
