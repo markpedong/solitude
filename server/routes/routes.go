@@ -41,7 +41,7 @@ func UserRoutes(r *gin.Engine) {
 		cart.POST("/add", controllers.AddToCart)
 		cart.POST("/remove", controllers.RemoveItemFromCart)
 		cart.POST("/checkout", controllers.CheckoutOrder)
-
+		cart.POST("/payment/config", controllers.StripeConfig)
 	}
 
 	delivery := r.Group("/delivery")
