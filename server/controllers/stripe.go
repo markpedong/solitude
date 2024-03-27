@@ -1,14 +1,11 @@
 package controllers
 
 import (
-	"log"
 	"net/http"
 	"os"
 	"solitude/helpers"
 
 	"github.com/gin-gonic/gin"
-	"github.com/stripe/stripe-go/paymentintent"
-	"github.com/stripe/stripe-go/v72"
 )
 
 func StripeConfig(ctx *gin.Context) {
@@ -21,30 +18,30 @@ func StripeConfig(ctx *gin.Context) {
 	helpers.JSONResponse(ctx, "", helpers.DataHelper(key))
 }
 
-func StripeHandlePayment(ctx *gin.Context) {
-	stripeKey := os.Getenv("STRIPE_SECRET_KEY")
+// func StripeHandlePayment(ctx *gin.Context) {
+// 	stripeKey := os.Getenv("STRIPE_SECRET_KEY")
 
-	params := &stripe.PaymentIntentParams{
-		Amount:   stripe.Int64(int64(data.Price)),
-		Currency: stripe.String(string(stripe.CurrencyUSD)),
-		AutomaticPaymentMethods: &stripe.PaymentIntentAutomaticPaymentMethodsParams{
-			Enabled: stripe.Bool(true),
-		},
-	}
+// 	params := &stripe.PaymentIntentParams{
+// 		Amount:   stripe.Int64(int64(data.Price)),
+// 		Currency: stripe.String(string(stripe.CurrencyUSD)),
+// 		AutomaticPaymentMethods: &stripe.PaymentIntentAutomaticPaymentMethodsParams{
+// 			Enabled: stripe.Bool(true),
+// 		},
+// 	}
 
-	pi, err := paymentintent.New(params)
-	log.Printf("pi.New: %v", pi.ClientSecret)
+// 	pi, err := paymentintent.New(params)
+// 	log.Printf("pi.New: %v", pi.ClientSecret)
 
-	if err != nil {
-		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-		log.Printf("pi.New: %v", err)
-		return
-	}
+// 	if err != nil {
+// 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
+// 		log.Printf("pi.New: %v", err)
+// 		return
+// 	}
 
-	resp := map[string]interface{}{
-		"clientSecret": pi.ClientSecret,
-	}
+// 	resp := map[string]interface{}{
+// 		"clientSecret": pi.ClientSecret,
+// 	}
 
-	helpers.JSONResponse(ctx, "", helpers.DataHelper(resp))
+// 	helpers.JSONResponse(ctx, "", helpers.DataHelper(resp))
 
-}
+// }
