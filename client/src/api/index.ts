@@ -238,3 +238,6 @@ export const subscribeNewsLetter = params => post('/subscribe', params)
 
 // /rating/getSellerRatings
 export const getSellerRatings = params => post<RatingItem[]>('/rating/getSellerRatings', params)
+
+// /cart/payment/create
+export const addPaymentIntent = params => post('/cart/payment/create', params)

@@ -1,6 +1,6 @@
 'use client'
 
-import { InfoItem, checkout, getDeliveryInfo } from '@/api'
+import { InfoItem, addPaymentIntent, checkout, getDeliveryInfo } from '@/api'
 import isAuth from '@/components/isAuth'
 import DeliveryInfo from '@/components/reusable/deliveryInfo'
 import Cart from '@/components/reusable/cart'
@@ -69,7 +69,11 @@ const Content = () => {
 				<div className={styles.addressWrapper}>
 					<div className={styles.addressDetails}>
 						{deliveryInfo?.map(q => (
-							<DeliveryInfo key={q?.id} data={q} style={{ backgroundColor: infoID === q?.id ? 'rgba(0, 0, 0, 0.05)' : '' }} />
+							<DeliveryInfo
+								key={q?.id}
+								data={q}
+								style={{ backgroundColor: infoID === q?.id ? 'rgba(0, 0, 0, 0.05)' : '' }}
+							/>
 						))}
 					</div>
 					<Radio.Group onChange={e => setInfoID(e.target.value)} value={infoID}>
@@ -90,19 +94,30 @@ const Content = () => {
 			return
 		}
 
-		const res = await checkout({
-			user_id: id,
-			delivery_id: infoID,
-			payment_method: paymentMethod
-		})
+		let res
+		//call the payment intent first before this checkout endpoint
+		// only call payment intent if the payment method is banks
+		if (paymentMethod === 1) {
+			res = await checkout({
+				user_id: id,
+				delivery_id: infoID,
+				payment_method: paymentMethod
+			})
+		} else {
+			console.log(products?.reduce((acc, curr) => acc + curr.price, 0))
+			res = await addPaymentIntent({
+				total_amount: products?.reduce((acc, curr) => acc + curr.price, 0)
+			})
+		}
+
 		if (!res?.success) {
 			messageHelper(res)
 			return
 		}
 
 		messageHelper(res)
-		dispatch(setCart([]))
-		router.push('/account')
+		// dispatch(setCart([]))
+		// router.push('/account')
 	}
 
 	useEffect(() => {
@@ -125,14 +140,14 @@ const Content = () => {
 				<div className={styles.mainWrapper}>
 					<div className={styles.cartContainer}>
 						{userCart?.map(q => (
-							<>
+							<div key={q?.seller_id}>
 								<div className={styles.sellerName}>{q?.seller_name}</div>
 								{q.products &&
 									(q.products?.length > 1
 										? q.products.slice(0, -1).map(q => <Cart data={q} key={q?.checkout_id} />)
 										: q.products.map(q => <Cart data={q} key={q?.checkout_id} divider={false} />))}
 								{q.products?.length > 1 && <Cart data={q.products?.findLast(q => q)} divider={false} />}
-							</>
+							</div>
 						))}
 					</div>
 					<div className={styles.orderSummaryContainer}>
@@ -153,7 +168,7 @@ const Content = () => {
 							<span>Payment Method</span>
 							<Radio.Group value={paymentMethod} onChange={e => setPaymentMethod(e?.target.value)}>
 								<Radio value={1}>COD</Radio>
-								<Radio value={2}>Bank Transfer</Radio>
+								<Radio value={2}>Bank</Radio>
 								<Radio value={3}>GCash</Radio>
 							</Radio.Group>
 						</div>

@@ -32,7 +32,7 @@ const Cart: FC<Props> = ({ divider = true, data }) => {
 	return (
 		<>
 			<div className={styles.orderWrapper}>
-				<Image className={styles.image} src={data?.image} alt="image" width={100} height={100} />
+				<Image className={styles.image} src={data?.image} alt="image" width={100} height={100} priority />
 				<div className={styles.textContainer}>
 					<div className={styles.title}>
 						<span onClick={() => router.push(`/products/${data?.product_id}`)}>{data?.product_name}</span>
@@ -41,7 +41,11 @@ const Cart: FC<Props> = ({ divider = true, data }) => {
 					{!!data?.variations?.length && <div>Variation: {data?.variations?.map(q => `${q.label}:${q?.value}, `)}</div>}
 					<span className={styles.qty}>Quantity: {data?.quantity}</span>
 					<div className={styles.price}>
-						{!!!data?.discount_price ? <span>₱{numComma(data?.price)}</span> : <span>₱{numComma(data?.discount_price)}</span>}
+						{!!!data?.discount_price ? (
+							<span>₱{numComma(data?.price)}</span>
+						) : (
+							<span>₱{numComma(data?.discount_price)}</span>
+						)}
 						{!!data?.discount_price && <span>₱{numComma(data?.price)}</span>}
 						{!!data?.discount && <span>-{numComma(data?.discount)}%</span>}
 						{/* <div className={styles.addItemContainer}>

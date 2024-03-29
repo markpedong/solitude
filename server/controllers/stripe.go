@@ -1,47 +1,41 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
-	"os"
 	"solitude/helpers"
 
 	"github.com/gin-gonic/gin"
+	"github.com/stripe/stripe-go/v76"
+	"github.com/stripe/stripe-go/v76/paymentintent"
 )
 
-func StripeConfig(ctx *gin.Context) {
-	key := os.Getenv("STRIPE_PUBLISHABLE_KEY")
-	if key == "" {
-		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "check the key")
+func CreatePaymentIntent(ctx *gin.Context) {
+	var body struct {
+		TotalAmount int `json:"total_amount"`
+	}
+	if err := helpers.BindValidateJSON(ctx, &body); err != nil {
 		return
 	}
+	params := &stripe.PaymentIntentParams{
+		Amount:   stripe.Int64(int64(body.TotalAmount) * 100),
+		Currency: stripe.String(string(stripe.CurrencyPHP)),
+		AutomaticPaymentMethods: &stripe.PaymentIntentAutomaticPaymentMethodsParams{
+			Enabled: stripe.Bool(true),
+		},
+	}
+	pi, err := paymentintent.New(params)
+	if err != nil {
+		if stripeErr, ok := err.(*stripe.Error); ok {
+			fmt.Printf("A stripe error occured: %v\n", stripeErr.Error())
+			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, stripeErr.Error())
+			return
+		} else {
+			fmt.Printf("Other error occured: %v\n", err.Error())
+			helpers.ErrJSONResponse(ctx, http.StatusBadRequest, "Other error occured: %v\n")
+			return
+		}
+	}
 
-	helpers.JSONResponse(ctx, "", helpers.DataHelper(key))
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(pi.ClientSecret))
 }
-
-// func StripeHandlePayment(ctx *gin.Context) {
-// 	stripeKey := os.Getenv("STRIPE_SECRET_KEY")
-
-// 	params := &stripe.PaymentIntentParams{
-// 		Amount:   stripe.Int64(int64(data.Price)),
-// 		Currency: stripe.String(string(stripe.CurrencyUSD)),
-// 		AutomaticPaymentMethods: &stripe.PaymentIntentAutomaticPaymentMethodsParams{
-// 			Enabled: stripe.Bool(true),
-// 		},
-// 	}
-
-// 	pi, err := paymentintent.New(params)
-// 	log.Printf("pi.New: %v", pi.ClientSecret)
-
-// 	if err != nil {
-// 		helpers.ErrJSONResponse(ctx, http.StatusInternalServerError, err.Error())
-// 		log.Printf("pi.New: %v", err)
-// 		return
-// 	}
-
-// 	resp := map[string]interface{}{
-// 		"clientSecret": pi.ClientSecret,
-// 	}
-
-// 	helpers.JSONResponse(ctx, "", helpers.DataHelper(resp))
-
-// }

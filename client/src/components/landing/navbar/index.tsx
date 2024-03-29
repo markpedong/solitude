@@ -111,6 +111,8 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 			router.push('/account')
 		}
 
+		const cart = await checkCart({ user_id: id })
+		dispatch(setCart(cart?.data))
 		return afterModalformFinish(actionRef, res?.message, res?.success)
 	}
 
@@ -164,14 +166,14 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 		>
 			<div className={styles.orderContainer}>
 				{userCart?.map(q => (
-					<>
+					<div key={q?.seller_id}>
 						<div className={styles.sellerName}>{q?.seller_name}</div>
 						{!!q?.products?.length &&
 							(q.products?.length > 1
 								? q.products.slice(0, -1).map(q => <Cart data={q} key={q?.checkout_id} />)
 								: q.products.map(q => <Cart data={q} key={q?.checkout_id} divider={false} />))}
 						{q.products?.length > 1 && <Cart data={q.products?.findLast(q => q)} divider={false} />}
-					</>
+					</div>
 				))}
 			</div>
 		</ModalForm>

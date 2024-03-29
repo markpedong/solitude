@@ -10,6 +10,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/stripe/stripe-go/v76"
 )
 
 func init() {
@@ -47,6 +48,7 @@ func main() {
 	r := gin.New()
 	r.Use(CORSMiddleware())
 	r.Use(gin.Logger())
+	stripe.Key = os.Getenv("STRIPE_SECRET_KEY")
 
 	r.MaxMultipartMemory = 20 << 20
 	routes.UserRoutes(r)

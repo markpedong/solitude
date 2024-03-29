@@ -11,6 +11,7 @@ import { scaleSize } from '@/constants'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/navigation'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import { imgErrSrc } from '@/constants/antd'
 dayjs.extend(relativeTime)
 
 type Props = {
@@ -52,7 +53,7 @@ const OtherDetails: FC<Props> = ({ data, seller }) => {
 			<Divider />
 			<div className={styles.specsHeader}>Seller Info</div>
 			<div className={styles.sellerInfoWrapper}>
-				<Image className={styles.avatar} src={seller?.avatar} alt="seller" width={50} height={50} />
+				<Image className={styles.avatar} src={seller?.avatar || imgErrSrc} alt="seller" width={50} height={50} />
 				<div className={styles.sellerDetails}>
 					<div className={styles.otherContainer}>
 						<span className={styles.sellerName}>{seller?.seller_name}</span>
