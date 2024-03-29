@@ -3,7 +3,15 @@
 import { USER_TYPES } from '@/constants'
 import { INPUT_LETTERS, INPUT_NUMBER, INPUT_TRIM, REQUIRED, afterModalformFinish } from '@/constants/helper'
 import { useAppSelector } from '@/redux/store'
-import { ActionType, ModalForm, ProForm, ProFormDatePicker, ProFormInstance, ProFormRadio, ProFormText } from '@ant-design/pro-components'
+import {
+	ActionType,
+	ModalForm,
+	ProForm,
+	ProFormDatePicker,
+	ProFormInstance,
+	ProFormRadio,
+	ProFormText
+} from '@ant-design/pro-components'
 import { Button, Flex, Upload, message } from 'antd'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
@@ -29,7 +37,7 @@ const Profile: FC = () => {
 	const formRef = useRef<ProFormInstance>()
 	const router = useRouter()
 	const dispatch = useDispatch()
-	
+
 	const handleFinish = async params => {
 		let res
 
@@ -89,7 +97,7 @@ const Profile: FC = () => {
 					  }
 					: { ...sellerData }
 			}
-			trigger={<a className={classNames(styles.linkItem, jost.className)}>ACCOUNT</a>}
+			trigger={<span>Account</span>}
 			title={<span className={styles.profileTitle}>Your Information</span>}
 			submitter={{
 				resetButtonProps: false,
@@ -135,13 +143,31 @@ const Profile: FC = () => {
 						}
 					}}
 				>
-					{imageUrl ? <Image priority className={styles.profileImage} src={imageUrl} alt="avatar" width={100} height={100} /> : uploadButton}
+					{imageUrl ? (
+						<Image priority className={styles.profileImage} src={imageUrl} alt="avatar" width={100} height={100} />
+					) : (
+						uploadButton
+					)}
 				</Upload>
 				<ProForm.Group>
 					{type === USER_TYPES.USER ? (
 						<>
-							<ProFormText {...INPUT_LETTERS} label="First Name" name="first_name" placeholder="eg: John" rules={[...REQUIRED]} colProps={{ span: 21 }} />
-							<ProFormText {...INPUT_LETTERS} label="Last Name" name="last_name" placeholder="eg: Smith" rules={[...REQUIRED]} colProps={{ span: 21 }} />
+							<ProFormText
+								{...INPUT_LETTERS}
+								label="First Name"
+								name="first_name"
+								placeholder="eg: John"
+								rules={[...REQUIRED]}
+								colProps={{ span: 21 }}
+							/>
+							<ProFormText
+								{...INPUT_LETTERS}
+								label="Last Name"
+								name="last_name"
+								placeholder="eg: Smith"
+								rules={[...REQUIRED]}
+								colProps={{ span: 21 }}
+							/>
 						</>
 					) : (
 						<>
@@ -177,8 +203,21 @@ const Profile: FC = () => {
 			</Flex>
 
 			<ProForm.Group>
-				<ProFormText {...INPUT_TRIM} label="Email Address" name="email" placeholder="your@email.com" colProps={{ span: 12 }} rules={[...REQUIRED]} />
-				<ProFormText {...INPUT_TRIM} label="Username" name="username" placeholder="Your Username" colProps={{ span: 12 }} />
+				<ProFormText
+					{...INPUT_TRIM}
+					label="Email Address"
+					name="email"
+					placeholder="your@email.com"
+					colProps={{ span: 12 }}
+					rules={[...REQUIRED]}
+				/>
+				<ProFormText
+					{...INPUT_TRIM}
+					label="Username"
+					name="username"
+					placeholder="Your Username"
+					colProps={{ span: 12 }}
+				/>
 			</ProForm.Group>
 			<ProForm.Group>
 				<ProFormText.Password
@@ -232,7 +271,14 @@ const Profile: FC = () => {
 						]}
 						colProps={{ span: 12 }}
 					/>
-					<ProFormDatePicker label="Birthday" name="birthday" placeholder="MONTH" width="xl" colProps={{ span: 12 }} fieldProps={{ variant: 'outlined' }} />
+					<ProFormDatePicker
+						label="Birthday"
+						name="birthday"
+						placeholder="MONTH"
+						width="xl"
+						colProps={{ span: 12 }}
+						fieldProps={{ variant: 'outlined' }}
+					/>
 				</ProForm.Group>
 			)}
 		</ModalForm>

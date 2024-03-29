@@ -4,11 +4,25 @@ import { TProduct, checkCart, sellerLogin, sellerSignup, userLogin, userSignup }
 import Profile from '@/components/profile'
 import { USER_TYPES, scaleSize } from '@/constants'
 import { afterModalformFinish, capFrstLtr, clearUserData } from '@/constants/helper'
-import { resetBooleanData, setActiveLoginForm, setDarkMode, setIsBannerHidden, setLoginModalOpen } from '@/redux/features/booleanSlice'
+import {
+	resetBooleanData,
+	setActiveLoginForm,
+	setDarkMode,
+	setIsBannerHidden,
+	setLoginModalOpen
+} from '@/redux/features/booleanSlice'
 import { resetUserData, setCart, setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { setLocalStorage } from '@/utils/xLocalStorage'
-import { DownOutlined, MenuOutlined, MoonOutlined, SearchOutlined, ShoppingCartOutlined, SunOutlined, UserOutlined } from '@ant-design/icons'
+import {
+	DownOutlined,
+	MenuOutlined,
+	MoonOutlined,
+	SearchOutlined,
+	ShoppingCartOutlined,
+	SunOutlined,
+	UserOutlined
+} from '@ant-design/icons'
 import { ActionType, ModalForm, ProFormInstance } from '@ant-design/pro-components'
 import type { MenuProps } from 'antd'
 import { Drawer, Dropdown, Input, Select, Space, Typography } from 'antd'
@@ -24,6 +38,7 @@ import { messageHelper } from '@/constants/antd'
 import { IoSearch } from 'react-icons/io5'
 import type { SelectProps } from 'antd'
 import Image from 'next/image'
+import StaggeredDropDown from './dropdown'
 
 const jost = Jost({ weight: '400', subsets: ['latin'] })
 
@@ -272,12 +287,16 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 						<MenuItem title="new arrivals" />
 						<MenuItem title="brands" />
 					</Drawer>
-					<motion.div whileTap={scaleSize} className={classNames(styles.navbarLogo, 'cursor-pointer')} onClick={() => router.push('/')}>
+					<motion.div
+						whileTap={scaleSize}
+						className={classNames(styles.navbarLogo, 'cursor-pointer')}
+						onClick={() => router.push('/')}
+					>
 						SOLITUDE
 					</motion.div>
 					<div className={styles.navbarHeader}>
 						<div onClick={() => router.push('/products')}>
-							shop 
+							shop
 							{/* <DownOutlined /> */}
 						</div>
 						<div onClick={() => router.push('/sale')}>on sale</div>
@@ -312,13 +331,16 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 						<SearchOutlined className={styles.smallInput} />
 						{isLoggedIn && userCart?.length > 0 && !pathname.includes('/checkout') && memoizedCartButton}
 						{isLoggedIn ? (
-							<Dropdown menu={{ items }} placement="bottom" trigger={['click']}>
-								<UserOutlined className="cursor-pointer" onClick={e => e.preventDefault()} />
-							</Dropdown>
+							// <Dropdown menu={{ items }} placement="bottom" trigger={['click']}>
+							// 	<UserOutlined className="cursor-pointer" onClick={e => e.preventDefault()} />
+							// </Dropdown>
+							<StaggeredDropDown />
 						) : (
 							<UserOutlined onClick={() => dispatch(setLoginModalOpen(true))} />
 						)}
-						<motion.div whileTap={scaleSize}>{darkMode ? <MoonOutlined onClick={handleChangeTheme} /> : <SunOutlined onClick={handleChangeTheme} />}</motion.div>
+						<motion.div whileTap={scaleSize}>
+							{darkMode ? <MoonOutlined onClick={handleChangeTheme} /> : <SunOutlined onClick={handleChangeTheme} />}
+						</motion.div>
 					</div>
 				</div>
 			</div>
