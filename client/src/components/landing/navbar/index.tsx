@@ -1,21 +1,15 @@
 'use client'
 
 import { TProduct, checkCart, sellerLogin, sellerSignup, userLogin, userSignup } from '@/api'
-import Profile from '@/components/profile'
+import Cart from '@/components/reusable/cart'
 import { USER_TYPES, scaleSize } from '@/constants'
-import { afterModalformFinish, capFrstLtr, clearUserData } from '@/constants/helper'
-import {
-	resetBooleanData,
-	setActiveLoginForm,
-	setDarkMode,
-	setIsBannerHidden,
-	setLoginModalOpen
-} from '@/redux/features/booleanSlice'
-import { resetUserData, setCart, setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
+import { messageHelper } from '@/constants/antd'
+import { afterModalformFinish } from '@/constants/helper'
+import { setActiveLoginForm, setDarkMode, setIsBannerHidden, setLoginModalOpen } from '@/redux/features/booleanSlice'
+import { setCart, setSellerData, setType, setUserData, setUserToken } from '@/redux/features/userSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { setLocalStorage } from '@/utils/xLocalStorage'
 import {
-	DownOutlined,
 	MenuOutlined,
 	MoonOutlined,
 	SearchOutlined,
@@ -24,23 +18,15 @@ import {
 	UserOutlined
 } from '@ant-design/icons'
 import { ActionType, ModalForm, ProFormInstance } from '@ant-design/pro-components'
-import type { MenuProps } from 'antd'
-import { Drawer, Dropdown, Input, Select, Space, Typography } from 'antd'
+import { Drawer, Input } from 'antd'
 import classNames from 'classnames'
 import { motion } from 'framer-motion'
 import { usePathname, useRouter } from 'next/navigation'
 import { FC, useEffect, useMemo, useRef, useState } from 'react'
+import { IoSearch } from 'react-icons/io5'
+import StaggeredDropDown from './dropdown'
 import LoginModal from './loginModal'
 import styles from './styles.module.scss'
-import Cart from '@/components/reusable/cart'
-import { Jost } from 'next/font/google'
-import { messageHelper } from '@/constants/antd'
-import { IoSearch } from 'react-icons/io5'
-import type { SelectProps } from 'antd'
-import Image from 'next/image'
-import StaggeredDropDown from './dropdown'
-
-const jost = Jost({ weight: '400', subsets: ['latin'] })
 
 type Props = {
 	title: string
@@ -76,39 +62,6 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 	const onClose = () => {
 		setOpen(false)
 	}
-
-	const items: MenuProps['items'] = [
-		{
-			key: 'account',
-			label: <Profile />
-		},
-		{
-			key: 'details',
-			label: (
-				<span className={classNames(`uppercase`, jost.className)} onClick={() => router.push('/account')}>
-					details
-				</span>
-			)
-		},
-		{
-			key: 'logout',
-			danger: true,
-			label: (
-				<Typography.Link
-					className={styles.menuItems}
-					onClick={async () => {
-						clearUserData()
-						dispatch(resetUserData())
-						dispatch(resetBooleanData())
-						router.push('/')
-					}}
-					type="danger"
-				>
-					LOGOUT
-				</Typography.Link>
-			)
-		}
-	]
 
 	const handleFinish = async params => {
 		let res
@@ -307,37 +260,17 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 						className={styles.input}
 						placeholder="Search for a product"
 						prefix={<IoSearch />}
-						// options={options}
-						// autoClearSearchValue
 						ref={selectRef}
 						autoFocus={false}
 						allowClear
 						onPressEnter={e => {
 							router.push(`/products?search=${e?.currentTarget?.value}`)
 						}}
-						// onChange={e => {
-						// 	router.push(`/products/${e}`)
-						// }}
-						// optionRender={option => {
-						// 	return (
-						// 		<Space>
-						// 			<Image src={option?.data?.image} width={20} height={20} alt={String(option?.value)} />
-						// 			{option?.data?.label}
-						// 		</Space>
-						// 	)
-						// }}
 					/>
 					<div className={styles.userContainer}>
 						<SearchOutlined className={styles.smallInput} />
 						{isLoggedIn && userCart?.length > 0 && !pathname.includes('/checkout') && memoizedCartButton}
-						{isLoggedIn ? (
-							// <Dropdown menu={{ items }} placement="bottom" trigger={['click']}>
-							// 	<UserOutlined className="cursor-pointer" onClick={e => e.preventDefault()} />
-							// </Dropdown>
-							<StaggeredDropDown />
-						) : (
-							<UserOutlined onClick={() => dispatch(setLoginModalOpen(true))} />
-						)}
+						{isLoggedIn ? <StaggeredDropDown /> : <UserOutlined onClick={() => dispatch(setLoginModalOpen(true))} />}
 						<motion.div whileTap={scaleSize}>
 							{darkMode ? <MoonOutlined onClick={handleChangeTheme} /> : <SunOutlined onClick={handleChangeTheme} />}
 						</motion.div>
