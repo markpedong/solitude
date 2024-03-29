@@ -116,8 +116,8 @@ const Content = () => {
 		}
 
 		messageHelper(res)
-		// dispatch(setCart([]))
-		// router.push('/account')
+		dispatch(setCart([]))
+		router.push('/account')
 	}
 
 	useEffect(() => {
