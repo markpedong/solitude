@@ -53,7 +53,7 @@ const initialState: InitialSlice = {
 	},
 	type: 0,
 	token: '',
-	isLoggedIn: false
+	isLoggedIn: null
 }
 
 export const UserSlice = createSlice({

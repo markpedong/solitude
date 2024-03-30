@@ -49,8 +49,7 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 		userData: { userCart, id }
 	} = useAppSelector(s => s.userData)
 	const [open, setOpen] = useState(false)
-	const [cartModal, setCartModal] = useState(false)
-
+	const [cartModal, setCartModal] = useState<boolean>()
 	const create = activeLoginForm === 'create'
 	const user = activeLoginForm === 'user'
 	const seller = activeLoginForm === 'seller'
@@ -66,53 +65,47 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 	const handleFinish = async params => {
 		let res
 
-		if (create && type === USER_TYPES.USER) {
-			res = await userSignup(params)
-			dispatch(setType(USER_TYPES.USER))
-		}
-
-		if (create && type === USER_TYPES.SELLER) {
-			res = await sellerSignup(params)
-			dispatch(setType(USER_TYPES.SELLER))
-		}
-
-		if (user) {
+		if (create) {
+			if (type === USER_TYPES.USER) {
+				res = await userSignup(params)
+			} else if (type === USER_TYPES.SELLER) {
+				res = await sellerSignup(params)
+			}
+			dispatch(setType(type))
+		} else if (user) {
 			res = await userLogin(params)
 			dispatch(setType(USER_TYPES.USER))
-		}
-
-		if (seller) {
+		} else if (seller) {
 			res = await sellerLogin(params)
 			dispatch(setType(USER_TYPES.SELLER))
 		}
 
-		if (!!!res?.success) {
+		if (!res?.success) {
 			messageHelper(res)
 			return
 		}
 
-		if (create && type === USER_TYPES.USER) {
-			await dispatch(setUserData(res?.data))
+		if (create) {
+			if (type === USER_TYPES.USER) {
+				await dispatch(setUserData(res?.data))
+			} else if (type === USER_TYPES.SELLER) {
+				await dispatch(setSellerData(res?.data))
+			}
 		} else {
-			await dispatch(setSellerData(res?.data))
+			if (user) {
+				await dispatch(setUserData(res?.data))
+			} else if (seller) {
+				await dispatch(setSellerData(res?.data))
+			}
 		}
-		if (user) {
-			await dispatch(setUserData(res?.data))
-		} else {
-			await dispatch(setSellerData(res?.data))
-		}
-		await dispatch(setUserToken(res?.token))
-		await dispatch(setIsBannerHidden(true))
 
 		setLocalStorage('token', res?.token)
+		await dispatch(setUserToken(res?.token))
+		await dispatch(setIsBannerHidden(true))
 		formRef?.current?.resetFields()
 
-		if (pathname === '/' || '/unauthorized') {
-			router.push('/account')
-		}
+		window.location.replace('/account')
 
-		const cart = await checkCart({ user_id: id })
-		dispatch(setCart(cart?.data))
 		return afterModalformFinish(actionRef, res?.message, res?.success)
 	}
 

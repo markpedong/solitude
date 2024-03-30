@@ -12,6 +12,7 @@
 		"@ant-design/nextjs-registry": "^1.0.0",
 		"@ant-design/pro-components": "^2.6.52",
 		"@reduxjs/toolkit": "^2.2.2",
+		"@stripe/stripe-js": "^3.1.0",
 		"@types/qs": "^6.9.14",
 		"antd": "^5.15.3",
 		"classnames": "^2.5.1",

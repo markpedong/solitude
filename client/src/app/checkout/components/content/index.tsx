@@ -1,22 +1,22 @@
 'use client'
 
-import { InfoItem, addPaymentIntent, checkout, getDeliveryInfo } from '@/api'
+import { InfoItem, addPaymentIntent, checkout, getDeliveryInfo, stripeConfig } from '@/api'
 import isAuth from '@/components/isAuth'
 import DeliveryInfo from '@/components/reusable/deliveryInfo'
 import Cart from '@/components/reusable/cart'
-import { useAppDispatch, useAppSelector } from '@/redux/store'
+import { useAppSelector } from '@/redux/store'
 import { ArrowRightOutlined, PercentageOutlined, RightOutlined } from '@ant-design/icons'
 import { ModalForm } from '@ant-design/pro-components'
 import { Divider, Input, Radio, message } from 'antd'
 import classNames from 'classnames'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 import { motion } from 'framer-motion'
 import { scaleSize } from '@/constants'
 import { messageHelper } from '@/constants/antd'
 import { usePathname, useRouter } from 'next/navigation'
-import { setCart } from '@/redux/features/userSlice'
 import { numComma } from '@/constants/helper'
+import { loadStripe } from '@stripe/stripe-js'
 
 const Content = () => {
 	const router = useRouter()
@@ -29,8 +29,9 @@ const Content = () => {
 	const [deliveryInfo, setDeliveryInfo] = useState<InfoItem[]>([])
 	const [infoID, setInfoID] = useState('')
 	const [paymentMethod, setPaymentMethod] = useState(1)
+	const [paymentState, setPaymentState] = useState(1)
 	const pathname = usePathname()
-	const dispatch = useAppDispatch()
+	const paymentRef = useRef(null)
 
 	const fetchDeliveryDetails = async () => {
 		const res = await getDeliveryInfo({ user_id: id })
@@ -104,10 +105,16 @@ const Content = () => {
 				payment_method: paymentMethod
 			})
 		} else {
-			console.log(products?.reduce((acc, curr) => acc + curr.price, 0))
-			res = await addPaymentIntent({
+			setPaymentState(2)
+			res = await stripeConfig()
+			const stripe = await loadStripe(res?.data)
+
+			const w = await addPaymentIntent({
 				total_amount: products?.reduce((acc, curr) => acc + curr.price, 0)
 			})
+			const elements = stripe.elements({ clientSecret: w?.data })
+			const paymentElement = elements.create('payment')
+			paymentElement.mount('#payment-element')
 		}
 
 		if (!res?.success) {
@@ -116,8 +123,8 @@ const Content = () => {
 		}
 
 		messageHelper(res)
-		dispatch(setCart([]))
-		router.push('/account')
+		// dispatch(setCart([]))
+		// router.push('/account')
 	}
 
 	useEffect(() => {
@@ -151,57 +158,88 @@ const Content = () => {
 						))}
 					</div>
 					<div className={styles.orderSummaryContainer}>
-						<div className={styles.header}>Order Summary</div>
-						{!!deliveryInfo?.length && (
-							<div className="flex justify-between items-center">
-								<DeliveryInfo data={deliveryInfo?.find(q => q?.id === infoID)} />
-								{selectAddress()}
-							</div>
-						)}
-						{!!!deliveryInfo?.length && (
-							<motion.div whileTap={scaleSize} className={styles.addInfoBtn} onClick={() => router.push('/account')}>
-								Add Address
-							</motion.div>
-						)}
-						<Divider />
-						<div className={classNames(styles.paymentMethod)}>
-							<span>Payment Method</span>
-							<Radio.Group value={paymentMethod} onChange={e => setPaymentMethod(e?.target.value)}>
-								<Radio value={1}>COD</Radio>
-								<Radio value={2}>Bank</Radio>
-								<Radio value={3}>GCash</Radio>
-							</Radio.Group>
-						</div>
-						<Divider />
-						<div className={styles.subContent}>
-							<span>Subtotal</span>
-							<span>₱{numComma(products?.reduce((acc, curr) => acc + curr.price, 0))}</span>
-						</div>
-						<div className={classNames(styles.subContent, styles.discount)}>
-							{!!discount && <span>Discount (-{discount}%)</span>}
-							{!!discountPrice && <span>- ₱{discountPrice}</span>}
-						</div>
-						{/* <div className={styles.subContent}>
+						<div className={styles.header}>{paymentState === 1 ? 'Order Summary' : 'Card Payment'}</div>
+						{paymentState === 1 ? (
+							<>
+								{!!deliveryInfo?.length && (
+									<div className="flex justify-between items-center">
+										<DeliveryInfo data={deliveryInfo?.find(q => q?.id === infoID)} />
+										{selectAddress()}
+									</div>
+								)}
+								{!!!deliveryInfo?.length && (
+									<motion.div
+										whileTap={scaleSize}
+										className={styles.addInfoBtn}
+										onClick={() => router.push('/account')}
+									>
+										Add Address
+									</motion.div>
+								)}
+								<Divider />
+								<div className={classNames(styles.paymentMethod)}>
+									<span>Payment Method</span>
+									<Radio.Group value={paymentMethod} onChange={e => setPaymentMethod(e?.target.value)}>
+										<Radio value={1}>COD</Radio>
+										<Radio value={2}>Bank</Radio>
+										<Radio value={3}>GCash</Radio>
+									</Radio.Group>
+								</div>
+								<Divider />
+								<div className={styles.subContent}>
+									<span>Subtotal</span>
+									<span>₱{numComma(products?.reduce((acc, curr) => acc + curr.price, 0))}</span>
+								</div>
+								<div className={classNames(styles.subContent, styles.discount)}>
+									{!!discount && <span>Discount (-{discount}%)</span>}
+									{!!discountPrice && <span>- ₱{discountPrice}</span>}
+								</div>
+								{/* <div className={styles.subContent}>
 							<span>Delivery Fee</span>
 							<span>$15</span>
 						</div> */}
-						<Divider />
-						<div className={classNames(styles.subContent, styles.total)}>
-							<span>Total</span>
-							<span>₱{numComma(products?.reduce((acc, curr) => acc + curr.price, 0))}</span>
-						</div>
-						<div className={classNames(styles.subContent, styles.promoCode)}>
-							<Input placeholder="Add promo Code" prefix={<PercentageOutlined />} />
-							<div>Apply </div>
-						</div>
-						<motion.button
-							whileTap={!!deliveryInfo?.length && scaleSize}
-							className={styles.checkout}
-							style={{ background: !!!deliveryInfo?.length ? 'gray' : '' }}
-							onClick={checkoutItems}
-						>
-							Checkout <ArrowRightOutlined />
-						</motion.button>
+								<Divider />
+								<div className={classNames(styles.subContent, styles.total)}>
+									<span>Total</span>
+									<span>₱{numComma(products?.reduce((acc, curr) => acc + curr.price, 0))}</span>
+								</div>
+								<div className={classNames(styles.subContent, styles.promoCode)}>
+									<Input placeholder="Add promo Code" prefix={<PercentageOutlined />} />
+									<div>Apply </div>
+								</div>
+								<motion.button
+									whileTap={!!deliveryInfo?.length && scaleSize}
+									className={styles.checkout}
+									style={{ background: !!!deliveryInfo?.length ? 'gray' : '' }}
+									onClick={checkoutItems}
+								>
+									Checkout <ArrowRightOutlined />
+								</motion.button>
+							</>
+						) : (
+							<>
+								<div id="payment-element" ref={paymentRef} />
+								<div id="error-messages" />
+								<div className="flex justify-between pt-10">
+									<div
+										className="bg-black  cursor-pointer text-sm rounded-md text-white px-4 py-1"
+										onClick={() => setPaymentState(1)}
+									>
+										Pay
+									</div>
+									<div
+										className="bg-red-500  cursor-pointer text-sm rounded-md text-white px-4 py-1"
+										onClick={() => {
+											paymentRef?.current.remove()
+											fetchDeliveryDetails()
+											setPaymentState(1)
+										}}
+									>
+										Cancel
+									</div>
+								</div>
+							</>
+						)}
 					</div>
 				</div>
 			</div>

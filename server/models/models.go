@@ -23,7 +23,7 @@ type User struct {
 	Gender              string                `json:"gender"`
 	Birthday            string                `json:"birthday"`
 	Avatar              string                `json:"avatar"`
-	DeletedAt           soft_delete.DeletedAt
+	DeletedAt           soft_delete.DeletedAt `json:"-"`
 }
 
 type Product struct {

@@ -239,5 +239,8 @@ export const subscribeNewsLetter = params => post('/subscribe', params)
 // /rating/getSellerRatings
 export const getSellerRatings = params => post<RatingItem[]>('/rating/getSellerRatings', params)
 
-// /cart/payment/create
-export const addPaymentIntent = params => post('/cart/payment/create', params)
+// /stripe/config
+export const stripeConfig = () => post<string>('/stripe/config')
+
+// /stripe/create
+export const addPaymentIntent = params => post<string>('/stripe/create', params)

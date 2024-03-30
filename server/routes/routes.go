@@ -41,7 +41,6 @@ func UserRoutes(r *gin.Engine) {
 		cart.POST("/add", controllers.AddToCart)
 		cart.POST("/remove", controllers.RemoveItemFromCart)
 		cart.POST("/checkout", controllers.CheckoutOrder)
-		cart.POST("/payment/create", controllers.CreatePaymentIntent)
 	}
 
 	delivery := r.Group("/delivery")
@@ -69,6 +68,12 @@ func UserRoutes(r *gin.Engine) {
 		rating.POST("/add", controllers.AddProductRating)
 		rating.POST("/rateSeller", controllers.AddSellerRating)
 		rating.POST("/getSellerRatings", controllers.GetSellerReviews)
+	}
+
+	stripe := r.Group("/stripe")
+	{
+		stripe.POST("/config", controllers.StripeConfig)
+		stripe.POST("/create", controllers.CreatePaymentIntent)
 	}
 
 	user := r.Group("/user")

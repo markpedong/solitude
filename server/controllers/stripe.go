@@ -3,12 +3,23 @@ package controllers
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"solitude/helpers"
 
 	"github.com/gin-gonic/gin"
 	"github.com/stripe/stripe-go/v76"
 	"github.com/stripe/stripe-go/v76/paymentintent"
 )
+
+func StripeConfig(ctx *gin.Context) {
+	key := os.Getenv("STRIPE_PUBLISHABLE_KEY")
+	if key == "" {
+		helpers.ErrJSONResponse(ctx, http.StatusNotFound, "check the key")
+		return
+	}
+
+	helpers.JSONResponse(ctx, "", helpers.DataHelper(key))
+}
 
 func CreatePaymentIntent(ctx *gin.Context) {
 	var body struct {
