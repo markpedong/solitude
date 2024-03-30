@@ -4,7 +4,7 @@ import { InfoItem, addPaymentIntent, checkout, getDeliveryInfo, stripeConfig } f
 import isAuth from '@/components/isAuth'
 import DeliveryInfo from '@/components/reusable/deliveryInfo'
 import Cart from '@/components/reusable/cart'
-import { useAppSelector } from '@/redux/store'
+import { useAppDispatch, useAppSelector } from '@/redux/store'
 import { ArrowRightOutlined, PercentageOutlined, RightOutlined } from '@ant-design/icons'
 import { ModalForm } from '@ant-design/pro-components'
 import { Divider, Input, Radio, message } from 'antd'
@@ -16,7 +16,8 @@ import { scaleSize } from '@/constants'
 import { messageHelper } from '@/constants/antd'
 import { usePathname, useRouter } from 'next/navigation'
 import { numComma } from '@/constants/helper'
-import { loadStripe } from '@stripe/stripe-js'
+import { Stripe, StripeElements, loadStripe } from '@stripe/stripe-js'
+import { setCart } from '@/redux/features/userSlice'
 
 const Content = () => {
 	const router = useRouter()
@@ -30,8 +31,10 @@ const Content = () => {
 	const [infoID, setInfoID] = useState('')
 	const [paymentMethod, setPaymentMethod] = useState(1)
 	const [paymentState, setPaymentState] = useState(1)
+	const [stripe, setStripe] = useState<Stripe>()
+	const [stripeElements, setStripeElements] = useState<StripeElements>()
 	const pathname = usePathname()
-	const paymentRef = useRef(null)
+	const dispatch = useAppDispatch()
 
 	const fetchDeliveryDetails = async () => {
 		const res = await getDeliveryInfo({ user_id: id })
@@ -89,33 +92,17 @@ const Content = () => {
 		)
 	}
 
-	const checkoutItems = async () => {
+	const checkoutCOD = async () => {
 		if (!!!deliveryInfo?.length) {
 			message.error('add address to checkout')
 			return
 		}
 
-		let res
-		//call the payment intent first before this checkout endpoint
-		// only call payment intent if the payment method is banks
-		if (paymentMethod === 1) {
-			res = await checkout({
-				user_id: id,
-				delivery_id: infoID,
-				payment_method: paymentMethod
-			})
-		} else {
-			setPaymentState(2)
-			res = await stripeConfig()
-			const stripe = await loadStripe(res?.data)
-
-			const w = await addPaymentIntent({
-				total_amount: products?.reduce((acc, curr) => acc + curr.price, 0)
-			})
-			const elements = stripe.elements({ clientSecret: w?.data })
-			const paymentElement = elements.create('payment')
-			paymentElement.mount('#payment-element')
-		}
+		const res = await checkout({
+			user_id: id,
+			delivery_id: infoID,
+			payment_method: paymentMethod
+		})
 
 		if (!res?.success) {
 			messageHelper(res)
@@ -123,8 +110,46 @@ const Content = () => {
 		}
 
 		messageHelper(res)
-		// dispatch(setCart([]))
-		// router.push('/account')
+		dispatch(setCart([]))
+		router.push('/account')
+	}
+
+	const handleCancelPayment = () => {
+		const paymentElement = stripe.elements().getElement('payment')
+		paymentElement?.unmount()
+		setPaymentState(1)
+	}
+
+	const handleConfirmPayment = async () => {
+		const res = await stripe.confirmPayment({
+			elements: stripeElements,
+			redirect: 'if_required'
+		})
+
+		if (res?.error) {
+			const messages = document.getElementById('error-messages')
+			messages.innerText = res?.error.message
+			return
+		}
+
+		// after success, save to database the XXXX
+		checkoutCOD()
+	}
+
+	const checkOutBank = async () => {
+		setPaymentState(2)
+		const config = await stripeConfig()
+		const stripe = await loadStripe(config?.data)
+		setStripe(stripe)
+
+		const w = await addPaymentIntent({
+			total_amount: products?.reduce((acc, curr) => acc + curr.price, 0)
+		})
+		const elements = stripe?.elements({ clientSecret: w?.data })
+		const paymentElement = elements?.create('payment')
+
+		setStripeElements(elements)
+		paymentElement?.mount('#payment-element')
 	}
 
 	useEffect(() => {
@@ -159,7 +184,7 @@ const Content = () => {
 					</div>
 					<div className={styles.orderSummaryContainer}>
 						<div className={styles.header}>{paymentState === 1 ? 'Order Summary' : 'Card Payment'}</div>
-						{paymentState === 1 ? (
+						{paymentState === 1 && (
 							<>
 								{!!deliveryInfo?.length && (
 									<div className="flex justify-between items-center">
@@ -211,27 +236,30 @@ const Content = () => {
 									whileTap={!!deliveryInfo?.length && scaleSize}
 									className={styles.checkout}
 									style={{ background: !!!deliveryInfo?.length ? 'gray' : '' }}
-									onClick={checkoutItems}
+									onClick={() => {
+										paymentMethod === 1 && checkoutCOD()
+										paymentMethod === 2 && checkOutBank()
+									}}
 								>
 									Checkout <ArrowRightOutlined />
 								</motion.button>
 							</>
-						) : (
+						)}
+						{paymentState === 2 && (
 							<>
-								<div id="payment-element" ref={paymentRef} />
+								<div id="payment-element" />
 								<div id="error-messages" />
 								<div className="flex justify-between pt-10">
 									<div
 										className="bg-black  cursor-pointer text-sm rounded-md text-white px-4 py-1"
-										onClick={() => setPaymentState(1)}
+										onClick={handleConfirmPayment}
 									>
 										Pay
 									</div>
 									<div
 										className="bg-red-500  cursor-pointer text-sm rounded-md text-white px-4 py-1"
 										onClick={() => {
-											paymentRef?.current.remove()
-											fetchDeliveryDetails()
+											handleCancelPayment()
 											setPaymentState(1)
 										}}
 									>

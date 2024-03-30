@@ -1,8 +1,11 @@
 'use client'
 
+import { getSellerData, getUserData, updateSellerData, updateUserData, uploadImages } from '@/api'
 import { USER_TYPES } from '@/constants'
 import { INPUT_LETTERS, INPUT_NUMBER, INPUT_TRIM, REQUIRED, afterModalformFinish } from '@/constants/helper'
+import { setCart, setSellerData, setUserData } from '@/redux/features/userSlice'
 import { useAppSelector } from '@/redux/store'
+import { LoadingOutlined, LockOutlined, PlusOutlined } from '@ant-design/icons'
 import {
 	ActionType,
 	ModalForm,
@@ -12,27 +15,22 @@ import {
 	ProFormRadio,
 	ProFormText
 } from '@ant-design/pro-components'
+import type { GetProp, UploadProps } from 'antd'
 import { Button, Flex, Upload, message } from 'antd'
-import classNames from 'classnames'
 import dayjs from 'dayjs'
-import { Jost } from 'next/font/google'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { FC, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styles from './styles.module.scss'
-import { getSellerData, getUserData, updateSellerData, updateUserData, uploadImages } from '@/api'
-import { setSellerData, setUserData } from '@/redux/features/userSlice'
-import type { GetProp, UploadProps } from 'antd'
-import { LoadingOutlined, LockOutlined, PlusOutlined } from '@ant-design/icons'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
 
-const jost = Jost({ weight: '400', subsets: ['latin'] })
-
 const Profile: FC = () => {
 	const { userData, sellerData, type } = useAppSelector(state => state.userData)
+	const cart = userData?.userCart
 	const [imageUrl, setImageUrl] = useState<string>()
+	const [loading, setUploading] = useState(false)
 	const actionRef = useRef<ActionType>()
 	const formRef = useRef<ProFormInstance>()
 	const router = useRouter()
@@ -62,7 +60,6 @@ const Profile: FC = () => {
 		}, 1000)
 		return afterModalformFinish(actionRef, res.message, res.success, formRef)
 	}
-	const [loading, setUploading] = useState(false)
 
 	const beforeUpload = (file: FileType) => {
 		const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
@@ -109,16 +106,17 @@ const Profile: FC = () => {
 			}}
 			onOpenChange={async visible => {
 				if (visible) {
-					let data
+					let res
 					if (type === USER_TYPES.SELLER) {
-						data = await getSellerData({ seller_id: sellerData?.seller_id })
-						await dispatch(setSellerData(data?.data))
+						res = await getSellerData({ seller_id: sellerData?.seller_id })
+						await dispatch(setSellerData(res?.data))
 					} else {
-						data = await getUserData({ id: userData?.id })
-						await dispatch(setUserData(data?.data))
+						res = await getUserData({ id: userData?.id })
+						await dispatch(setUserData(res?.data))
+						await dispatch(setCart(cart))
 					}
 
-					setImageUrl(data?.data?.avatar)
+					setImageUrl(res?.data?.avatar)
 				}
 			}}
 			onFinish={handleFinish}

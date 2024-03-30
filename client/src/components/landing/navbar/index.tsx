@@ -104,7 +104,13 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 		await dispatch(setIsBannerHidden(true))
 		formRef?.current?.resetFields()
 
-		window.location.replace('/account')
+		// with token request
+		if (user) {
+			const cart = await checkCart({ user_id: res?.data.id })
+			dispatch(setCart(cart?.data))
+		}
+
+		router.replace('/account')
 
 		return afterModalformFinish(actionRef, res?.message, res?.success)
 	}
@@ -207,18 +213,11 @@ const Navbar: FC<{ products: TProduct[] }> = ({ products }) => {
 		[userCart?.length]
 	)
 
-	const fetchCart = async () => {
-		const cart = await checkCart({ user_id: id })
-
-		dispatch(setCart(cart?.data))
-	}
-
 	useEffect(() => {
 		document.documentElement.classList.toggle('dark', darkMode)
 	}, [darkMode])
 
 	useEffect(() => {
-		!!id && fetchCart()
 		dispatch(setLoginModalOpen(false))
 	}, [])
 
